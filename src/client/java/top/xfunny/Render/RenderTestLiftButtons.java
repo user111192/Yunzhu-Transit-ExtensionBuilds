@@ -28,6 +28,7 @@ import java.util.Comparator;
 public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private static final int HOVER_COLOR = 0xFFADD8E6;
 	private static final int PRESSED_COLOR = 0xFF0000FF;
+
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
 
 	/**
@@ -35,7 +36,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 	 *
 	 * @param dispatcher 控制器调度器参数，用于控制设备的操作
 	 */
-	public RenderTestLiftButtons(Argument dispatcher) {
+	public RenderTestLiftButtons(Argument dispatcher)	 {
 	    super(dispatcher); // 调用父类的构造函数，传递dispatcher参数
 	}
 
