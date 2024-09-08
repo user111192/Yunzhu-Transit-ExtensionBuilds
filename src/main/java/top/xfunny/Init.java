@@ -1,6 +1,9 @@
 package top.xfunny;
 
+import org.mtr.core.data.Position;
+import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.registry.Registry;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +18,16 @@ public final class Init {
 			BlockEntityTypes.init();
 			Items.init();
 
+
+
 			REGISTRY.init();
 
 
 		}
+
+		public static Position blockPosToPosition(BlockPos blockPos) {
+		return new Position(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+	}
 
 
 

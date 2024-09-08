@@ -244,10 +244,22 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	 	public static void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world, Lift lift, float width, float height) {
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final LiftDirection liftDirection = liftDetails.left();
+		final float y = height;
+		final float arrowSize = width / 6; // 设置箭头大小
+			final float gameTick = InitClient.getGameTick();
+		final float uv = (gameTick * ARROW_SPEED) % 1;
+		final int lineCount = 1;
 
-		MainRenderer.scheduleRender(QueuedRenderLayer.TEXT,(graphicsHolder, offset) -> {
+		 final float lineHeight = 1F / lineCount; // 计算每行的高度比例
+
+
+		MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(liftDetails.right().left(), 0xFFAA00).identifier, false,QueuedRenderLayer.TEXT,(graphicsHolder, offset) -> {
 			storedMatrixTransformations.transform(graphicsHolder, offset);
-			IDrawing.drawStringWithFont(graphicsHolder, liftDetails.right().left(), IGui.HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM, 0, height, width, -1, 18 / width, ARGB_WHITE, false, GraphicsHolder.getDefaultLight(), null);
+			//IDrawing.drawStringWithFont(graphicsHolder, liftDetails.right().left(), IGui.HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM, 0, height, width, -1, 18 / width, ARGB_WHITE, false, GraphicsHolder.getDefaultLight(), null);
+
+
+			IDrawing.drawTexture(graphicsHolder, -width / 2, y, width, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
 
 			graphicsHolder.pop();
 		});
@@ -318,7 +330,7 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	        MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 	            storedMatrixTransformations.transform(graphicsHolder, offset);
 	            // 绘制楼层信息纹理
-	            IDrawing.drawTexture(graphicsHolder, -width / 2, y, width, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+	            IDrawing.drawTexture(graphicsHolder, -width, y, width/2, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 	            graphicsHolder.pop();
 	        });
 	    }

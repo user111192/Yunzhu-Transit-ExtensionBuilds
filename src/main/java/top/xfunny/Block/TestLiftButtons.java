@@ -10,19 +10,18 @@ import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mapping.tool.HolderBase;
 
-import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
 
+import org.mtr.mod.InitClient;
 
 
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
+
 import org.mtr.mod.packet.PacketPressLiftButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import top.xfunny.Init;
+
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -70,9 +69,15 @@ public class TestLiftButtons extends BlockExtension implements DirectionHelper, 
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		// 检查玩家是否拿着刷子，并尝试更新按钮状态
 		final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
+			final org.mtr.mapping.holder.BlockEntity entity = world.getBlockEntity(pos);
+			Init.LOGGER.info(entity.toString());
+
+
+
+
 			final boolean unlocked = !IBlock.getStatePropertySafe(state, UNLOCKED);
 			world.setBlockState(pos, state.with(new Property<>(UNLOCKED.data), unlocked));
-			// 根据按钮是否解锁发送信息给玩家
+			player.sendMessage(Text.of((unlocked ? "已解锁" : "已锁定")), true);
 			//player.sendMessage((unlocked ? TranslationProvider.GUI_MTR_LIFT_BUTTONS_UNLOCKED : TranslationProvider.GUI_MTR_LIFT_BUTTONS_LOCKED).getText(), true);
 		});
 
