@@ -1,6 +1,6 @@
 package top.xfunny.Render;
 
-import org.joml.Math;
+
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.core.data.LiftFloor;
@@ -26,6 +26,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Block.TestLiftButtons;
 import top.xfunny.Item.YteLiftButtonsLink;
+import top.xfunny.TextureCache;
 
 import java.util.Comparator;
 
@@ -198,80 +199,45 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 		}
 		// 检查排序后的电梯位置列表是否非空
 if (!sortedPositionsAndLifts.isEmpty()) {
-    // 确定要渲染的电梯数量，最多为2个
-    final int count = Math.min(2, sortedPositionsAndLifts.size());
-    // 设置每个电梯显示的宽度，根据数量不同而变化
-    final float width = count == 1 ? 0.25F : 0.375F;
+	// 确定要渲染的电梯数量，最多为2个
+	final int count = Math.min(2, sortedPositionsAndLifts.size());
+	// 设置每个电梯显示的宽度，根据数量不同而变化
+	final float width = count == 1 ? 0.25F : 0.375F;
 
-    // 创建当前矩阵变换的副本以供后续修改
-    final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
-    // 添加旋转和平移变换
-    storedMatrixTransformations3.add(graphicsHolder -> {
-        graphicsHolder.rotateZDegrees(180);
-        graphicsHolder.translate(-width / 2, 0, 0);
-    });
+	// 创建当前矩阵变换的副本以供后续修改
+	final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
+	// 添加旋转和平移变换
+	storedMatrixTransformations3.add(graphicsHolder -> {
+		graphicsHolder.rotateZDegrees(180);
+		graphicsHolder.translate(-width / 2, 0, 0);
+	});
 
-    // 渲染黑色背景
-    MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
-        storedMatrixTransformations3.transform(graphicsHolder, offset);
-        IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
-        graphicsHolder.pop();
-    });
+	// 渲染黑色背景
+	MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
+		storedMatrixTransformations3.transform(graphicsHolder, offset);
+		IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
+		graphicsHolder.pop();
+	});
 
-    // 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
-    final boolean reverseRendering = count > 1 && reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
-    // 遍历要渲染的每个电梯
-    for (int i = 0; i < count; i++) {
-        // 计算当前电梯显示的x位置，考虑反转渲染顺序
-        final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-        // 创建另一个矩阵变换的副本用于当前电梯
-        final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-        // 添加平移变换以定位电梯显示
-        storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
+	// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
+	final boolean reverseRendering = count > 1 && reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
+	// 遍历要渲染的每个电梯
+	for (int i = 0; i < count; i++) {
+		// 计算当前电梯显示的x位置，考虑反转渲染顺序
+		final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
+		// 创建另一个矩阵变换的副本用于当前电梯
+		final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
+		// 添加平移变换以定位电梯显示
+		storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 
-        // 渲染当前电梯的显示
+		// 渲染当前电梯的显示
 		//todo：需要改动
-        renderLiftDisplay2(storedMatrixTransformations4,world, sortedPositionsAndLifts.get(i).right(), width*4 / count, 0.2F);
-    }
-}
+		renderLiftDisplay2(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4 / count, 0.2F);
 
-
-
-
-
-    }
-
-	 	public static void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world, Lift lift, float width, float height) {
-		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-		final LiftDirection liftDirection = liftDetails.left();
-		final float y = height;
-		final float arrowSize = width / 6; // 设置箭头大小
-			final float gameTick = InitClient.getGameTick();
-		final float uv = (gameTick * ARROW_SPEED) % 1;
-		final int lineCount = 1;
-
-		 final float lineHeight = 1F / lineCount; // 计算每行的高度比例
-
-
-		MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(liftDetails.right().left(), 0xFFAA00).identifier, false,QueuedRenderLayer.TEXT,(graphicsHolder, offset) -> {
-			storedMatrixTransformations.transform(graphicsHolder, offset);
-			//IDrawing.drawStringWithFont(graphicsHolder, liftDetails.right().left(), IGui.HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM, 0, height, width, -1, 18 / width, ARGB_WHITE, false, GraphicsHolder.getDefaultLight(), null);
-
-
-			IDrawing.drawTexture(graphicsHolder, -width / 2, y, width, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
-
-
-			graphicsHolder.pop();
-		});
-
-		if (liftDirection != LiftDirection.NONE) {
-			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/sign/lift_arrow.png"), false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, width , 0, width / 3, width / 3, 0, liftDirection == LiftDirection.UP ? 0 : 1, 1, liftDirection == LiftDirection.UP ? 1 : 0, Direction.UP, LIFT_DISPLAY_COLOR, GraphicsHolder.getDefaultLight());
-				graphicsHolder.pop();
-			});
-		}
 	}
+}}
+
+
 
 	/**
 	 * 渲染电梯显示面板2
@@ -315,6 +281,8 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	        });
 	    }
 
+
+
 	    // 渲染楼层信息
 	    if (!noFloorNumber || !noFloorDisplay) {
 	        float uvOffset = 0;
@@ -327,13 +295,45 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	        }
 	        final float uv = (goingUp ? -1 : 1) * uvOffset; // 根据电梯方向调整UV偏移
 	        final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
-	        MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+	        MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 	            storedMatrixTransformations.transform(graphicsHolder, offset);
 	            // 绘制楼层信息纹理
-	            IDrawing.drawTexture(graphicsHolder, -width, y, width/2, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+	            IDrawing.drawTexture(graphicsHolder, -width/2, y, width, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 	            graphicsHolder.pop();
 	        });
 	    }
+	}
+
+	public static void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world, Lift lift, float width, float height) {
+		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+		final LiftDirection liftDirection = liftDetails.left();
+		final float y = height;
+		final float arrowSize = width / 6; // 设置箭头大小
+			final float gameTick = InitClient.getGameTick();
+		final float uv = (gameTick * ARROW_SPEED) % 1;
+		final int lineCount = 1;
+
+		 final float lineHeight = 1F / lineCount; // 计算每行的高度比例
+
+
+		MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(liftDetails.right().left(), 0xFFAA00).identifier, false,QueuedRenderLayer.TEXT,(graphicsHolder, offset) -> {
+			storedMatrixTransformations.transform(graphicsHolder, offset);
+			//IDrawing.drawStringWithFont(graphicsHolder, liftDetails.right().left(), IGui.HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM, 0, height, width, -1, 18 / width, ARGB_WHITE, false, GraphicsHolder.getDefaultLight(), null);
+
+
+			IDrawing.drawTexture(graphicsHolder, -width / 2, y, width, arrowSize, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
+
+			graphicsHolder.pop();
+		});
+
+		if (liftDirection != LiftDirection.NONE) {
+			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/sign/lift_arrow.png"), false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				IDrawing.drawTexture(graphicsHolder, width , 0, width / 3, width / 3, 0, liftDirection == LiftDirection.UP ? 0 : 1, 1, liftDirection == LiftDirection.UP ? 1 : 0, Direction.UP, LIFT_DISPLAY_COLOR, GraphicsHolder.getDefaultLight());
+				graphicsHolder.pop();
+			});
+		}
 	}
 
 	public static ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> getLiftDetails(World world, Lift lift, BlockPos blockPos) {
@@ -380,6 +380,8 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 			return false;
 		}
 	}
+
+
 
 
 }
