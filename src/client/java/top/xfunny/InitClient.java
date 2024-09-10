@@ -38,6 +38,7 @@ public final class InitClient {
 			TextureCache.instance = new TextureCache();
 			lastMillis = System.currentTimeMillis();
 			gameMillis = 0;
+
 			TextureCache.instance.reload();
 
 			});

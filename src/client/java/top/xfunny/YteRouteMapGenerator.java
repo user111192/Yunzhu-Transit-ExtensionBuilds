@@ -3,7 +3,7 @@ package top.xfunny;
 import org.mtr.core.tool.Utilities;
 import org.mtr.mapping.holder.NativeImage;
 import org.mtr.mapping.holder.NativeImageFormat;
-import org.mtr.mod.Init;
+
 import org.mtr.mod.client.DynamicTextureCache;
 import org.mtr.mod.config.Config;
 import org.mtr.mod.data.IGui;
@@ -26,10 +26,11 @@ public class YteRouteMapGenerator implements IGui {
 	}
     public static NativeImage generateTestLiftPanel(String text, int textColor) {
 		try {
+			Init.LOGGER.info("贴图生成中");
 			final int width = Math.round(scale * 1.5F);
 			final int height = fontSizeSmall * 2 * text.split("\\|").length;
 			final int[] dimensions = new int[2];
-			final byte[] pixels = DynamicTextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall * 2, fontSizeSmall * 2, 0, IGui.HorizontalAlignment.CENTER);
+			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall * 2, fontSizeSmall * 2, 0, IGui.HorizontalAlignment.CENTER);
 			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), width, height, false);
 			nativeImage.fillRect(0, 0, width, height, 0);
 			drawString(nativeImage, pixels, width / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
@@ -37,6 +38,7 @@ public class YteRouteMapGenerator implements IGui {
 
 			return nativeImage;
 		} catch (Exception e) {
+			Init.LOGGER.error("贴图生成失败");
 			Init.LOGGER.error("", e);
 		}
 
