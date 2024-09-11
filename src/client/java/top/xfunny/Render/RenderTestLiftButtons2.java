@@ -232,7 +232,7 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 
 		// 渲染当前电梯的显示
 		//todo：需要改动
-		renderLiftDisplay2(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.035F,0.2F);
+		renderLiftDisplay2(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
 
 	}
 }}
@@ -298,7 +298,7 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	        MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 	            storedMatrixTransformations.transform(graphicsHolder, offset);
 	            // 绘制楼层信息纹理
-	            IDrawing.drawTexture(graphicsHolder, -width/2, y, width1*4, height1*4, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+	            IDrawing.drawTexture(graphicsHolder, -width+0.9F, y-0.07F, width1, height1, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 	            graphicsHolder.pop();
 	        });
 	    }

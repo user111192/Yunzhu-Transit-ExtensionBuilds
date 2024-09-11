@@ -28,9 +28,10 @@ public class YteRouteMapGenerator implements IGui {
 		try {
 			Init.LOGGER.info("贴图生成中");
 			final int width = Math.round(scale * 1.5F);
-			final int height = fontSizeSmall * 2 * text.split("\\|").length;
+			final int height = Math.round(scale * 1.5F) * text.split("\\|").length;
+			Init.LOGGER.info("width"+width+"|height"+height);
 			final int[] dimensions = new int[2];
-			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall * 2, fontSizeSmall * 2, 0, IGui.HorizontalAlignment.CENTER);
+			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall*4 , fontSizeSmall*4 , 0, IGui.HorizontalAlignment.CENTER,TextureCache.instance.testfont, TextureCache.instance.fontCjk1);//fontsize：字体大小
 			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), width, height, false);
 			nativeImage.fillRect(0, 0, width, height, 0);
 			drawString(nativeImage, pixels, width / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
