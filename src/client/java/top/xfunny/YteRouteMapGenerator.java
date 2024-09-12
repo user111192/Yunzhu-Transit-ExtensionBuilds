@@ -27,15 +27,26 @@ public class YteRouteMapGenerator implements IGui {
     public static NativeImage generateTestLiftPanel(String text, int textColor) {
 		try {
 			Init.LOGGER.info("贴图生成中");
-			final int width = Math.round(scale * 1.5F);
-			final int height = Math.round(scale * 1.5F) * text.split("\\|").length;
+			final int width;
+			if (TextureCache.instance.totalWidth > scale * 1.5F) {
+				width = TextureCache.instance.totalWidth;
+				Init.LOGGER.info("超出范围width"+width);
+			} else {
+				width = Math.round(scale * 1.5F);
+				Init.LOGGER.info("未超出范围width"+width+"TextureCache.instance.totalWidth:"+TextureCache.instance.totalWidth);
+			}
+			//final int width = Math.round(scale * 1.5F);
+			final int height = Math.round(scale * 1.5F);
+			Init.LOGGER.info("scale:"+scale);
 			Init.LOGGER.info("width"+width+"|height"+height);
 			final int[] dimensions = new int[2];
-			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall*4 , fontSizeSmall*4 , 0, IGui.HorizontalAlignment.CENTER,TextureCache.instance.testfont, TextureCache.instance.fontCjk1);//fontsize：字体大小
+			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall*4 , fontSizeSmall*4 , 0,TextureCache.instance.testfont, TextureCache.instance.fontCjk1);//fontsize：字体大小
 			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), width, height, false);
 			nativeImage.fillRect(0, 0, width, height, 0);
-			drawString(nativeImage, pixels, width / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
+			drawString(nativeImage, pixels, width , height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
 			clearColor(nativeImage, invertColor(ARGB_BLACK));
+			Init.LOGGER.info("nativeImageWidth"+nativeImage.getWidth());
+			top.xfunny.Util.img.saveNativeImageAsPng(nativeImage, "F:\\Documents\\GitHub\\yunzhu-transit-extension-template-1.20.1\\output_image.png");
 
 			return nativeImage;
 		} catch (Exception e) {

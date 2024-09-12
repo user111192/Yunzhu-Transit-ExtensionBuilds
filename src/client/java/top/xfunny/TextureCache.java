@@ -23,10 +23,14 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.text.AttributedString;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 import java.util.function.Supplier;
+
+import java.util.List;
+
 
 public class TextureCache {
 	public static TextureCache instance = new TextureCache();
@@ -34,6 +38,7 @@ public class TextureCache {
 	public Font font1;
 	public Font fontCjk1;
 	public Font testfont;
+	public int totalWidth;
 	private final Object2ObjectLinkedOpenHashMap<String, DynamicResource> dynamicResources = new Object2ObjectLinkedOpenHashMap<>();
 	private final ObjectOpenHashSet<String> generatingResources = new ObjectOpenHashSet<>();
 	private final ObjectArrayList<Runnable> resourceRegistryQueue = new ObjectArrayList<>();
@@ -65,126 +70,111 @@ public class TextureCache {
 
 
 
-	/**
-	 * 根据给定的文本和格式参数，生成一个包含文本像素的字节数组。
-	 *
-	 * @param text           需要转换为像素的文本。
-	 * @param dimensions     用于存储生成图像的宽度和高度的数组。
-	 * @param maxWidth       图像的最大宽度。
-	 * @param maxHeight      图像的最大高度。
-	 * @param fontSizeCjk    CJK（中日韩）文本的字体大小。
-	 * @param fontSize       非CJK文本的字体大小。
-	 * @param padding        文本周围的填充值。
-	 * @param horizontalAlignment  文本的水平对齐方式，如果为null则表示单行显示，默认为左对齐。
-	 * @param font           非CJK文本的字体。
-	 * @param fontCjk        CJK文本的字体。
-	 * @return               包含文本像素的字节数组。如果最大宽度小于等于0，则返回空数组。
-	 */
-public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int maxHeight, int fontSizeCjk, int fontSize, int padding, @Nullable IGui.HorizontalAlignment horizontalAlignment, Font font, Font fontCjk) {
+
+
+
+
+public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int maxHeight, int fontSizeCjk, int fontSize, int padding, Font font, Font fontCjk) {
     if (maxWidth <= 0) {
         dimensions[0] = 0;
         dimensions[1] = 0;
         return new byte[0];
     }
 
-    final boolean oneRow = horizontalAlignment == null;
-    final String[] defaultTextSplit = IGui.textOrUntitled(text).split("\\|");
-    final String[] textSplit;
-    if (Config.getClient().getLanguageDisplay() == LanguageDisplay.NORMAL) {
-        textSplit = defaultTextSplit;
-    } else {
-        final String[] tempTextSplit = Arrays.stream(IGui.textOrUntitled(text).split("\\|"))
-                                             .filter(textPart -> IGui.isCjk(textPart) == (Config.getClient().getLanguageDisplay() == LanguageDisplay.CJK_ONLY))
-                                             .toArray(String[]::new);
-        textSplit = tempTextSplit.length == 0 ? defaultTextSplit : tempTextSplit;
-    }
-
-    final AttributedString[] attributedStrings = new AttributedString[textSplit.length];
-    final int[] textWidths = new int[textSplit.length];
-    final int[] fontSizes = new int[textSplit.length];
+    // 初始化字体渲染上下文
     final FontRenderContext context = new FontRenderContext(new AffineTransform(), false, false);
 
-    int totalHeight = 0;
-    int maxWidthActual = 0;
+    // 初始化总宽度和高度
+    totalWidth = 0;
+    int totalHeight = maxHeight;
 
-    for (int index = 0; index < textSplit.length; index++) {
-        final int newFontSize = IGui.isCjk(textSplit[index]) || font.canDisplayUpTo(textSplit[index]) >= 0 ? fontSizeCjk : fontSize;
-        final Font fontSized = font.deriveFont(Font.PLAIN, newFontSize);
-        final Font fontCjkSized = fontCjk.deriveFont(Font.PLAIN, newFontSize);
+    // 计算每个字符的宽度和缩放后的高度
+    List<BufferedImage> characterImages = new ArrayList<>();
 
-        attributedStrings[index] = new AttributedString(textSplit[index]);
-        fontSizes[index] = newFontSize;
+    for (int i = 0; i < text.length(); i++) {
+        char character = text.charAt(i);
+        // 选择合适的字体
+        Font selectedFont = IGui.isCjk(Character.toString(character)) ? fontCjk.deriveFont(Font.PLAIN, fontSizeCjk) : font.deriveFont(Font.PLAIN, fontSize);
+        Rectangle2D charBounds = selectedFont.getStringBounds(Character.toString(character), context);
 
-        int textWidth = 0;
-        double maxCharHeight = 0;
+        // 获取字符原始宽度和高度
+        double charWidth = charBounds.getWidth();
+        double charHeight = charBounds.getHeight();
 
-        for (int characterIndex = 0; characterIndex < textSplit[index].length(); characterIndex++) {
-            final char character = textSplit[index].charAt(characterIndex);
-            final Font newFont = chooseFont(character, fontSized, fontCjkSized, newFontSize);
+        // 计算缩放比例
+        double scaleFactor = maxHeight / charHeight;
 
-            Rectangle2D charBounds = newFont.getStringBounds(textSplit[index].substring(characterIndex, characterIndex + 1), context);
-            textWidth += charBounds.getWidth();
-            maxCharHeight = Math.max(maxCharHeight, charBounds.getHeight());
+        // 缩放后的字符宽度
+        int scaledWidth = (int) (charWidth * scaleFactor);
 
-            attributedStrings[index].addAttribute(TextAttribute.FONT, newFont, characterIndex, characterIndex + 1);
-        }
+        // 创建灰度图像，宽度为缩放后的宽度，高度为 maxHeight
+        BufferedImage charImage = new BufferedImage(scaledWidth, maxHeight, BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D graphics2D = charImage.createGraphics();
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        textWidths[index] = textWidth;
-        totalHeight += maxCharHeight;  // 累计文本高度
-        maxWidthActual = Math.max(maxWidthActual, Math.min(maxWidth, textWidth));
-    }
-
-    int imageWidth = Math.min(maxWidthActual + (oneRow ? 0 : padding * 2), maxWidth);
-    int imageHeight = Math.min(totalHeight + (oneRow ? 0 : padding * 2), maxHeight);
-
-    BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_BYTE_GRAY);
-    Graphics2D graphics2D = image.createGraphics();
-    graphics2D.setColor(Color.WHITE);
-    graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-    // 设置绘制边界，确保字符不会超出图像边界
-    graphics2D.setClip(0, 0, imageWidth, imageHeight);
-
-    // 确保字符垂直居中渲染
-    int yOffset = (imageHeight - totalHeight) / 2;  // 计算初始Y轴偏移，确保文本区域垂直居中
-
-    for (int index = 0; index < textSplit.length; index++) {
-        int xOffset = (imageWidth - textWidths[index]) / 2;  // 水平居中，计算X轴偏移
-
-        // 使用FontMetrics来获取正确的基线位置
-        FontMetrics fontMetrics = graphics2D.getFontMetrics(font.deriveFont(Font.PLAIN, fontSizes[index]));
+        // 设置垂直居中的偏移量
+        FontMetrics fontMetrics = graphics2D.getFontMetrics(selectedFont);
         int ascent = fontMetrics.getAscent();
-        int descent = fontMetrics.getDescent();
-        int lineHeight = ascent + descent;  // 获取行高，确保文本基线的正确对齐
+        int verticalOffset = (maxHeight - (int) charHeight) / 2 + ascent;
 
-        // 确保文本基线按照行高绘制
-        for (int characterIndex = 0; characterIndex < textSplit[index].length(); characterIndex++) {
-            final char character = textSplit[index].charAt(characterIndex);
-            final Font newFont = chooseFont(character, font.deriveFont(Font.PLAIN, fontSizes[index]), fontCjk.deriveFont(Font.PLAIN, fontSizes[index]), fontSizes[index]);
+        // 设置字体
+        graphics2D.setFont(selectedFont);
 
-            Rectangle2D charBounds = newFont.getStringBounds(textSplit[index].substring(characterIndex, characterIndex + 1), context);
+        // 绘制字符，保证垂直居中
+        graphics2D.drawString(Character.toString(character), 0, verticalOffset);
 
-            // 绘制字符并更新X轴偏移，防止字符重叠
-            graphics2D.setFont(newFont);
-            graphics2D.drawString(String.valueOf(character), xOffset, yOffset + ascent);  // 使用基线对齐渲染
-            xOffset += charBounds.getWidth() + padding;  // 加入字符宽度和填充间隔
+        // 添加字符宽度的 padding
+        totalWidth += scaledWidth + padding;
 
-            // 防止字符超出图像宽度边界
-            if (xOffset > imageWidth) {
-                break;
-            }
-        }
+        // 将处理后的字符图像保存
+        characterImages.add(charImage);
 
-        yOffset += lineHeight;  // 更新Y轴偏移，每行按行高递增
+        // 释放资源
+        graphics2D.dispose();
     }
 
-    dimensions[0] = imageWidth;
-    dimensions[1] = imageHeight;
-    byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
-    graphics2D.dispose();
-    image.flush();
+    // 如果总宽度超出了 maxWidth，则需要缩放
+    /*if (totalWidth > maxWidth) {
+        double scaleDownFactor = (double) maxWidth / totalWidth;
+        totalWidth = maxWidth;
+
+        // 按比例缩放每个字符的宽度
+        for (int i = 0; i < characterImages.size(); i++) {
+            BufferedImage charImage = characterImages.get(i);
+            int newWidth = (int) (charImage.getWidth() * scaleDownFactor);
+            BufferedImage scaledImage = new BufferedImage(newWidth, maxHeight, BufferedImage.TYPE_BYTE_GRAY);
+            Graphics2D g2d = scaledImage.createGraphics();
+            g2d.drawImage(charImage, 0, 0, newWidth, maxHeight, null);
+            g2d.dispose();
+            characterImages.set(i, scaledImage);
+        }
+    }*/
+
+    // 创建总图像
+    BufferedImage finalImage = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_BYTE_GRAY);
+    Graphics2D finalGraphics = finalImage.createGraphics();
+    finalGraphics.setColor(Color.WHITE);
+
+    // 拼接每个字符的图像
+    int xOffset = 0;
+    for (BufferedImage charImage : characterImages) {
+        finalGraphics.drawImage(charImage, xOffset, 0, null);
+        xOffset += charImage.getWidth() + padding;
+    }
+
+    finalGraphics.dispose();
+
+    // 返回图像字节数组
+    dimensions[0] = totalWidth;
+    dimensions[1] = totalHeight;
+    byte[] pixels = ((DataBufferByte) finalImage.getRaster().getDataBuffer()).getData();
+    finalImage.flush();
+
     return pixels;
 }
+
+
 
 
 	/**

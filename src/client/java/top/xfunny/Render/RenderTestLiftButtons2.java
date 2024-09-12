@@ -32,7 +32,7 @@ import java.util.Comparator;
 
 public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xFFADD8E6;
+	private static final int HOVER_COLOR = 0xFFADD8E6;
 	private static final int PRESSED_COLOR = 0xFF0000FF;
 	private static final int LIFT_DISPLAY_COLOR = 0xFF00FF00;
 	private static final float ARROW_SPEED = 0.04F;
@@ -44,14 +44,14 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
 
 
-    public RenderTestLiftButtons2(Argument dispatcher) {
+	public RenderTestLiftButtons2(Argument dispatcher) {
 		super(dispatcher);
 	}//构造方法
 
 
-    @Override
-    public void render(TestLiftButtons.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
-        final World world = blockEntity.getWorld2();
+	@Override
+	public void render(TestLiftButtons.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
+		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
 		}
@@ -93,10 +93,10 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 
 			// Figure out whether the up and down buttons should be rendered
 			TestLiftButtons.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
-				 // 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
-    // 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
-    // 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
-    // 这里使用lambda表达式来处理按钮状态的逻辑
+				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
+				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
+				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
+				// 这里使用lambda表达式来处理按钮状态的逻辑
 				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
 				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 				instructionDirections.forEach(liftDirection -> {
@@ -139,103 +139,103 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 		// 根据按钮状态渲染按钮
 		// 第一个按钮的渲染逻辑
 		if (buttonStates[0]) {
-		    // 根据按钮的按下状态和鼠标位置选择不同的渲染层
-		    MainRenderer.scheduleRender(
-		        BUTTON_TEXTURE,
-		        false,
-		        buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-		        (graphicsHolder, offset) -> {
-		            // 应用存储的矩阵变换
-		            storedMatrixTransformations2.transform(graphicsHolder, offset);
-		            // 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-		            IDrawing.drawTexture(
-		                graphicsHolder,
-		                -1.5F / 16,
-		                (buttonStates[1] ? 0.5F : 2.5F) / 16,
-		                3F / 16,
-		                3F / 16,
-		                0,
-		                0,
-		                1,
-		                1,
-		                facing,
-		                buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
-		                light
-		            );
-		            // 弹出当前图形状态
-		            graphicsHolder.pop();
-		        }
-		    );
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-1.5F / 16,
+								(buttonStates[1] ? 0.5F : 2.5F) / 16,
+								3F / 16,
+								3F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
 		}
 		// 第二个按钮的渲染逻辑
 		if (buttonStates[1]) {
-		    // 根据按钮的按下状态和鼠标位置选择不同的渲染层
-		    MainRenderer.scheduleRender(
-		        BUTTON_TEXTURE,
-		        false,
-		        buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-		        (graphicsHolder, offset) -> {
-		            // 应用存储的矩阵变换
-		            storedMatrixTransformations2.transform(graphicsHolder, offset);
-		            // 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-		            IDrawing.drawTexture(
-		                graphicsHolder,
-		                -1.5F / 16,
-		                (buttonStates[0] ? 4.5F : 2.5F) / 16,
-		                3F / 16,
-		                3F / 16,
-		                0,
-		                1,
-		                1,
-		                0,
-		                facing,
-		                buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
-		                light
-		            );
-		            // 弹出当前图形状态
-		            graphicsHolder.pop();
-		        }
-		    );
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-1.5F / 16,
+								(buttonStates[0] ? 4.5F : 2.5F) / 16,
+								3F / 16,
+								3F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
 		}
 		// 检查排序后的电梯位置列表是否非空
-if (!sortedPositionsAndLifts.isEmpty()) {
-	// 确定要渲染的电梯数量，最多为2个
-	final int count = Math.min(2, sortedPositionsAndLifts.size());
-	// 设置每个电梯显示的宽度，根据数量不同而变化
-	final float width = count == 1 ? 0.25F : 0.375F;
+		if (!sortedPositionsAndLifts.isEmpty()) {
+			// 确定要渲染的电梯数量，最多为2个
+			final int count = Math.min(2, sortedPositionsAndLifts.size());
+			// 设置每个电梯显示的宽度，根据数量不同而变化
+			final float width = count == 1 ? 0.25F : 0.375F;
 
-	// 创建当前矩阵变换的副本以供后续修改
-	final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
-	// 添加旋转和平移变换
-	storedMatrixTransformations3.add(graphicsHolder -> {
-		graphicsHolder.rotateZDegrees(180);
-		graphicsHolder.translate(-width / 2, 0, 0);
-	});
+			// 创建当前矩阵变换的副本以供后续修改
+			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
+			// 添加旋转和平移变换
+			storedMatrixTransformations3.add(graphicsHolder -> {
+				graphicsHolder.rotateZDegrees(180);
+				graphicsHolder.translate(-width / 2, 0, 0);
+			});
 
-	// 渲染黑色背景
-	MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
-		storedMatrixTransformations3.transform(graphicsHolder, offset);
-		IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
-		graphicsHolder.pop();
-	});
+			// 渲染黑色背景
+			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
+				storedMatrixTransformations3.transform(graphicsHolder, offset);
+				IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
+				graphicsHolder.pop();
+			});
 
-	// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
-	final boolean reverseRendering = count > 1 && reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
-	// 遍历要渲染的每个电梯
-	for (int i = 0; i < count; i++) {
-		// 计算当前电梯显示的x位置，考虑反转渲染顺序
-		final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-		// 创建另一个矩阵变换的副本用于当前电梯
-		final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-		// 添加平移变换以定位电梯显示
-		storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
+			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
+			final boolean reverseRendering = count > 1 && reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
+			// 遍历要渲染的每个电梯
+			for (int i = 0; i < count; i++) {
+				// 计算当前电梯显示的x位置，考虑反转渲染顺序
+				final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
+				// 创建另一个矩阵变换的副本用于当前电梯
+				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
+				// 添加平移变换以定位电梯显示
+				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 
-		// 渲染当前电梯的显示
-		//todo：需要改动
-		renderLiftDisplay2(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
+				// 渲染当前电梯的显示
+				//todo：需要改动
+				renderLiftDisplay2(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
 
-	}
-}}
+			}
+		}}
 
 
 
@@ -250,58 +250,81 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 	 * @param lift 电梯对象，表示当前操作的电梯
 	 */
 	private void renderLiftDisplay2(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
-	    // 获取电梯的详细信息，包括运行方向和楼层信息
-	    final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-	    final LiftDirection liftDirection = liftDetails.left();
-	    final String floorNumber = liftDetails.right().left();
-	    final String floorDescription = liftDetails.right().right();
+		// 获取电梯的详细信息，包括运行方向和楼层信息
+		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+		final LiftDirection liftDirection = liftDetails.left();
+		final String floorNumber = liftDetails.right().left();
+		final String floorDescription = liftDetails.right().right();
 
-	    // 判断楼层编号和描述是否为空
-	    final boolean noFloorNumber = floorNumber.isEmpty();
-	    final boolean noFloorDisplay = floorDescription.isEmpty();
+		// 判断楼层编号和描述是否为空
+		final boolean noFloorNumber = floorNumber.isEmpty();
+		final boolean noFloorDisplay = floorDescription.isEmpty();
 
-	    // 计算需要渲染的行数
-	    final int lineCount = (noFloorNumber ? 0 : floorNumber.split("\\|").length) + (noFloorDisplay ? 0 : floorDescription.split("\\|").length);
-	    final float lineHeight = 1F / lineCount; // 计算每行的高度比例
-	    final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
-	    final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-	    final float arrowSize = width / 6; // 设置箭头大小
-	    final float y = height; // 箭头的Y轴位置
+		// 计算需要渲染的行数
+		final int lineCount = (noFloorNumber ? 0 : floorNumber.split("\\|").length) + (noFloorDisplay ? 0 : floorDescription.split("\\|").length);
+		final float lineHeight = 1F / lineCount; // 计算每行的高度比例
+		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
+		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
+		final float arrowSize = width / 6; // 设置箭头大小
+		final float y = height; // 箭头的Y轴位置
 
-	    // 渲染电梯运行方向的箭头
-	    if (liftDirection != LiftDirection.NONE) {
-	        final float uv = (gameTick * ARROW_SPEED) % 1;
-	        final int color = goingUp ? 0xFF00FF00 : 0xFFFF0000; // 根据运行方向设置箭头颜色
-	        MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-	            storedMatrixTransformations.transform(graphicsHolder, offset);
-	            // 根据电梯运行方向绘制箭头
-	            IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.2F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-	            //IDrawing.drawTexture(graphicsHolder, width / 2, y, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-	            graphicsHolder.pop();
-	        });
-	    }
+		// 渲染电梯运行方向的箭头
+		if (liftDirection != LiftDirection.NONE) {
+			final float uv = (gameTick * ARROW_SPEED) % 1;
+			final int color = goingUp ? 0xFF00FF00 : 0xFFFF0000; // 根据运行方向设置箭头颜色
+			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				// 根据电梯运行方向绘制箭头
+				IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.2F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				//IDrawing.drawTexture(graphicsHolder, width / 2, y, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				graphicsHolder.pop();
+			});
+		}
 
 
 
-	    // 渲染楼层信息
-	    if (!noFloorNumber || !noFloorDisplay) {
-	        float uvOffset = 0;
-	        if (lineCount > 1) {
-	            // 计算楼层信息的滚动UV偏移
-	            uvOffset = (float) Math.floor((gameTick % (SLIDE_INTERVAL * lineCount)) / SLIDE_INTERVAL) * lineHeight;
-	            if ((gameTick % SLIDE_INTERVAL) > SLIDE_INTERVAL - SLIDE_TIME) {
-	                uvOffset += lineHeight * ((gameTick % SLIDE_INTERVAL) - SLIDE_INTERVAL + SLIDE_TIME) / SLIDE_TIME;
-	            }
-	        }
-	        final float uv = (goingUp ? -1 : 1) * uvOffset; // 根据电梯方向调整UV偏移
-	        final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
-	        MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-	            storedMatrixTransformations.transform(graphicsHolder, offset);
-	            // 绘制楼层信息纹理
-	            IDrawing.drawTexture(graphicsHolder, -width+0.9F, y-0.07F, width1, height1, 0, uv, 1, lineHeight + uv, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-	            graphicsHolder.pop();
-	        });
-	    }
+		// 渲染楼层信息
+		if (!noFloorNumber || !noFloorDisplay) {
+			float uvOffset = 0;
+
+			if (lineCount > 1) {
+				// 计算楼层信息的滚动UV偏移
+				uvOffset = (float) Math.floor((gameTick % (SLIDE_INTERVAL * lineCount)) / SLIDE_INTERVAL) * lineHeight;
+				if ((gameTick % SLIDE_INTERVAL) > SLIDE_INTERVAL - SLIDE_TIME) {
+					uvOffset += lineHeight * ((gameTick % SLIDE_INTERVAL) - SLIDE_INTERVAL + SLIDE_TIME) / SLIDE_TIME;
+				}
+			}
+
+			float offset1 = 0;
+
+			if (TextureCache.instance.totalWidth > width1) {
+				// 计算当前的水平位置偏移
+				float scrollSpeed = 0.02F;
+				offset1 = (gameTick * scrollSpeed) % TextureCache.instance.totalWidth;
+
+				// 如果走马灯移动到末端，回到起始位置
+				if (offset1 > TextureCache.instance.totalWidth - width1) {
+					offset1 = offset1 - TextureCache.instance.totalWidth;
+				}
+			} else {
+				// 如果不需要走马灯，保持位置不变
+				offset1 = 0;
+			}
+
+
+
+
+			final float uvX = offset1;// 根据电梯方向调整UV偏移
+			final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
+			MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				// 绘制楼层信息纹理
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, uvX, 0, uvX+1, lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
+//楼层数字尺寸设置
+				graphicsHolder.pop();
+			});
+		}
 	}
 
 	public static void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world, Lift lift, float width, float height) {
@@ -309,11 +332,11 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 		final LiftDirection liftDirection = liftDetails.left();
 		final float y = height;
 		final float arrowSize = width / 6; // 设置箭头大小
-			final float gameTick = InitClient.getGameTick();
+		final float gameTick = InitClient.getGameTick();
 		final float uv = (gameTick * ARROW_SPEED) % 1;
 		final int lineCount = 1;
 
-		 final float lineHeight = 1F / lineCount; // 计算每行的高度比例
+		final float lineHeight = 1F / lineCount; // 计算每行的高度比例
 
 
 		MainRenderer.scheduleRender(DynamicTextureCache.instance.getLiftPanelDisplay(liftDetails.right().left(), 0xFFAA00).identifier, false,QueuedRenderLayer.TEXT,(graphicsHolder, offset) -> {
@@ -353,7 +376,7 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 		return new ObjectObjectImmutablePair<>(lift.getDirection(), new ObjectObjectImmutablePair<>(floorNumber, floorDescription));
 	}
 
-    public static void renderLiftObjectLink(StoredMatrixTransformations storedMatrixTransformations, World world, Vector3d position1, Vector3d position2, boolean holdingLinker) {
+	public static void renderLiftObjectLink(StoredMatrixTransformations storedMatrixTransformations, World world, Vector3d position1, Vector3d position2, boolean holdingLinker) {
 		if (holdingLinker) {
 			MainRenderer.scheduleRender(QueuedRenderLayer.LINES, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
@@ -371,7 +394,7 @@ if (!sortedPositionsAndLifts.isEmpty()) {
 		}
 	}
 
-		private static boolean reverseRendering(Direction direction, BlockPos blockPos1, BlockPos blockPos2) {
+	private static boolean reverseRendering(Direction direction, BlockPos blockPos1, BlockPos blockPos2) {
 		if (direction.getOffsetX() != 0) {
 			return Math.signum(blockPos2.getX() - blockPos1.getX()) == direction.getOffsetX();
 		} else if (direction.getOffsetZ() != 0) {
