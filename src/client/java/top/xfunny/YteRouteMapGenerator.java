@@ -26,27 +26,32 @@ public class YteRouteMapGenerator implements IGui {
 	}
     public static NativeImage generateTestLiftPanel(String text, int textColor) {
 		try {
+
 			Init.LOGGER.info("贴图生成中");
-			final int width;
-			if (TextureCache.instance.totalWidth > scale * 1.5F) {
-				width = TextureCache.instance.totalWidth;
-				Init.LOGGER.info("超出范围width"+width);
-			} else {
-				width = Math.round(scale * 1.5F);
-				Init.LOGGER.info("未超出范围width"+width+"TextureCache.instance.totalWidth:"+TextureCache.instance.totalWidth);
-			}
+
+			final int totalWidth;
+
 			//final int width = Math.round(scale * 1.5F);
 			final int height = Math.round(scale * 1.5F);
-			Init.LOGGER.info("scale:"+scale);
-			Init.LOGGER.info("width"+width+"|height"+height);
+
 			final int[] dimensions = new int[2];
-			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, width, height, fontSizeSmall*4 , fontSizeSmall*4 , 0,TextureCache.instance.testfont, TextureCache.instance.fontCjk1);//fontsize：字体大小
-			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), width, height, false);
-			nativeImage.fillRect(0, 0, width, height, 0);
-			drawString(nativeImage, pixels, width , height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
+			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, 90, height, fontSizeSmall*4 , fontSizeSmall*10 ,0, TextureCache.instance.testfont1, TextureCache.instance.fontCjk1);//fontsize：字体大小
+			if (TextureCache.instance.totalWidth > scale * 1.5F) {
+				totalWidth = TextureCache.instance.totalWidth;
+				Init.LOGGER.info("超出范围width"+totalWidth);
+			} else {
+				totalWidth = Math.round(scale * 1.5F);
+				Init.LOGGER.info("未超出范围width"+totalWidth+"TextureCache.instance.totalWidth:"+TextureCache.instance.totalWidth);
+			}
+			Init.LOGGER.info("scale:"+scale);
+
+			Init.LOGGER.info("width"+totalWidth+"|height"+height);
+			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
+			nativeImage.fillRect(0, 0, totalWidth, height, 0);
+			drawString(nativeImage, pixels, totalWidth / 2, height / 2 , dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
 			clearColor(nativeImage, invertColor(ARGB_BLACK));
 			Init.LOGGER.info("nativeImageWidth"+nativeImage.getWidth());
-			top.xfunny.Util.img.saveNativeImageAsPng(nativeImage, "F:\\Documents\\GitHub\\yunzhu-transit-extension-template-1.20.1\\output_image.png");
+			//top.xfunny.Util.img.saveNativeImageAsPng(nativeImage, "output_image.png");
 
 			return nativeImage;
 		} catch (Exception e) {

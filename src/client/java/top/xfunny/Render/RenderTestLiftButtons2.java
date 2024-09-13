@@ -295,18 +295,22 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 				}
 			}
 
-			float offset1 = 0;
+			float offset1;
 
 			if (TextureCache.instance.totalWidth > width1) {
-				// 计算当前的水平位置偏移
-				float scrollSpeed = 0.02F;
-				offset1 = (gameTick * scrollSpeed) % TextureCache.instance.totalWidth;
+				//Init.LOGGER.info("超出范围");
+				// 基于固定的滚动速度调整
+				float scrollSpeed = 24F;
+				float scaledSpeed = scrollSpeed * (width1 / TextureCache.instance.totalWidth); // 根据显示宽度和纹理总宽度缩放速度
+				offset1 = (gameTick * scaledSpeed) % TextureCache.instance.totalWidth;
 
 				// 如果走马灯移动到末端，回到起始位置
 				if (offset1 > TextureCache.instance.totalWidth - width1) {
 					offset1 = offset1 - TextureCache.instance.totalWidth;
+
 				}
 			} else {
+				//Init.LOGGER.info("未超出范围");
 				// 如果不需要走马灯，保持位置不变
 				offset1 = 0;
 			}
@@ -314,12 +318,14 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 
 
 
+
 			final float uvX = offset1;// 根据电梯方向调整UV偏移
 			final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
+
 			MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 绘制楼层信息纹理
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, uvX, 0, uvX+1, lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, uvX, 0, uvX+0.1F, lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
 
 //楼层数字尺寸设置
 				graphicsHolder.pop();

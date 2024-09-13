@@ -38,6 +38,7 @@ public class TextureCache {
 	public Font font1;
 	public Font fontCjk1;
 	public Font testfont;
+	public Font testfont1;
 	public int totalWidth;
 	private final Object2ObjectLinkedOpenHashMap<String, DynamicResource> dynamicResources = new Object2ObjectLinkedOpenHashMap<>();
 	private final ObjectOpenHashSet<String> generatingResources = new ObjectOpenHashSet<>();
@@ -118,11 +119,14 @@ public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int max
         int ascent = fontMetrics.getAscent();
         int verticalOffset = (maxHeight - (int) charHeight) / 2 + ascent;
 
+		//设置水平居中偏移量
+		int horizontalOffset = (scaledWidth - (int) charWidth) / 2;
+
         // 设置字体
         graphics2D.setFont(selectedFont);
 
         // 绘制字符，保证垂直居中
-        graphics2D.drawString(Character.toString(character), 0, verticalOffset);
+        graphics2D.drawString(Character.toString(character), horizontalOffset, verticalOffset);
 
         // 添加字符宽度的 padding
         totalWidth += scaledWidth + padding;
@@ -254,6 +258,17 @@ public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int max
 					}
 				});
 			}
+
+			while (testfont1 == null) {
+				ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/kone-modernization.ttf"), inputStream -> {
+					try {
+						testfont1 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+					} catch (Exception e) {
+						Init.LOGGER.error("", e);
+					}
+				});
+			}
+
 
 			final NativeImage nativeImage = supplier.get();
 
