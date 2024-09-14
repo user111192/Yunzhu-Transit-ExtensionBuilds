@@ -27,6 +27,7 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Block.TestLiftButtons;
 import top.xfunny.Item.YteLiftButtonsLink;
 import top.xfunny.TextureCache;
+import top.xfunny.YteRouteMapGenerator;
 
 import java.util.Comparator;
 
@@ -275,7 +276,7 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
-				IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.2F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.24F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 				//IDrawing.drawTexture(graphicsHolder, width / 2, y, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 				graphicsHolder.pop();
 			});
@@ -296,10 +297,12 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 			}
 
 			float offset1;
+			float offset2;
+			final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
 
-			if (TextureCache.instance.totalWidth > width1) {
-				//Init.LOGGER.info("超出范围");
-				// 基于固定的滚动速度调整
+			if (text.length() > 2) {
+
+
 				float scrollSpeed = 24F;
 				float scaledSpeed = scrollSpeed * (width1 / TextureCache.instance.totalWidth); // 根据显示宽度和纹理总宽度缩放速度
 				offset1 = (gameTick * scaledSpeed) % TextureCache.instance.totalWidth;
@@ -309,27 +312,40 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 					offset1 = offset1 - TextureCache.instance.totalWidth;
 
 				}
+				float finalOffset = offset1;
+				MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				// 绘制楼层信息纹理
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 1 /text.length() +0.0001F*text.length(), lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
+//楼层数字尺寸设置
+				graphicsHolder.pop();
+			});
+
+
+
 			} else {
 				//Init.LOGGER.info("未超出范围");
 				// 如果不需要走马灯，保持位置不变
-				offset1 = 0;
+
+				MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				// 绘制楼层信息纹理
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
+//楼层数字尺寸设置
+				graphicsHolder.pop();
+			});
 			}
 
 
 
 
 
-			final float uvX = offset1;// 根据电梯方向调整UV偏移
-			final String text = String.format("%s%s%s", floorNumber, noFloorNumber || noFloorDisplay ? "" : "|", floorDescription); // 合并楼层信息文本
 
-			MainRenderer.scheduleRender(TextureCache.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
-				// 绘制楼层信息纹理
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, uvX, 0, uvX+0.1F, lineHeight, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
 
-//楼层数字尺寸设置
-				graphicsHolder.pop();
-			});
+
+
 		}
 	}
 
