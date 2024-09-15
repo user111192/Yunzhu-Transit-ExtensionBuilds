@@ -2,66 +2,23 @@ package top.xfunny;
 
 import org.mtr.core.tool.Utilities;
 import org.mtr.mapping.holder.NativeImage;
-import org.mtr.mapping.holder.NativeImageFormat;
-
-import org.mtr.mod.client.DynamicTextureCache;
 import org.mtr.mod.config.Config;
 import org.mtr.mod.data.IGui;
 
-import java.util.Locale;
 
 public class YteRouteMapGenerator implements IGui {
-    private static int scale;
+	private static int scale;
 	private static int lineSize;
-
 	private static int fontSizeBig;
 	private static int fontSizeSmall;
 
-    	public static void setConstants() {
+	public static void setConstants() {
 		scale = (int) Math.pow(2, Config.getClient().getDynamicTextureResolution() + 5);
 		lineSize = scale / 8;
-
 		fontSizeBig = lineSize * 2;
 		fontSizeSmall = fontSizeBig / 2;
 	}
-    public static NativeImage generateTestLiftPanel(String text, int textColor) {
-		try {
-
-			Init.LOGGER.info("贴图生成中");
-
-			final int totalWidth;
-
-			//final int width = Math.round(scale * 1.5F);
-			final int height = Math.round(scale * 1.5F);
-
-			final int[] dimensions = new int[2];
-			final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, 90, height, fontSizeSmall*4 , fontSizeSmall*10 ,0, TextureCache.instance.testfont1, TextureCache.instance.fontCjk1);//fontsize：字体大小
-			if (TextureCache.instance.totalWidth > scale * 1.5F) {
-				totalWidth = TextureCache.instance.totalWidth;
-				Init.LOGGER.info("超出范围width"+totalWidth);
-			} else {
-				totalWidth = Math.round(scale * 1.5F);
-				Init.LOGGER.info("未超出范围width"+totalWidth+"TextureCache.instance.totalWidth:"+TextureCache.instance.totalWidth);
-			}
-			Init.LOGGER.info("scale:"+scale);
-
-			Init.LOGGER.info("width"+totalWidth+"|height"+height);
-			final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
-			nativeImage.fillRect(0, 0, totalWidth, height, 0);
-			drawString(nativeImage, pixels, totalWidth / 2, height / 2 , dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
-			clearColor(nativeImage, invertColor(ARGB_BLACK));
-			Init.LOGGER.info("nativeImageWidth"+nativeImage.getWidth());
-			//top.xfunny.Util.img.saveNativeImageAsPng(nativeImage, "output_image.png");
-
-			return nativeImage;
-		} catch (Exception e) {
-			Init.LOGGER.error("贴图生成失败");
-			Init.LOGGER.error("", e);
-		}
-
-		return null;
-	}
-    	private static void clearColor(NativeImage nativeImage, int color) {
+	public static void clearColor(NativeImage nativeImage, int color) {
 		for (int x = 0; x < nativeImage.getWidth(); x++) {
 			for (int y = 0; y < nativeImage.getHeight(); y++) {
 				if (nativeImage.getColor(x, y) == color) {
@@ -70,8 +27,7 @@ public class YteRouteMapGenerator implements IGui {
 			}
 		}
 	}
-
-    	private static void drawString(NativeImage nativeImage, byte[] pixels, int x, int y, int[] textDimensions, IGui.HorizontalAlignment horizontalAlignment, IGui.VerticalAlignment verticalAlignment, int backgroundColor, int textColor, boolean rotate90) {
+	public static void drawString(NativeImage nativeImage, byte[] pixels, int x, int y, int[] textDimensions, IGui.HorizontalAlignment horizontalAlignment, IGui.VerticalAlignment verticalAlignment, int backgroundColor, int textColor, boolean rotate90) {
 		if (((backgroundColor >> 24) & 0xFF) > 0) {
 			for (int drawX = 0; drawX < textDimensions[rotate90 ? 1 : 0]; drawX++) {
 				for (int drawY = 0; drawY < textDimensions[rotate90 ? 0 : 1]; drawY++) {
@@ -99,7 +55,7 @@ public class YteRouteMapGenerator implements IGui {
 		}
 	}
 
-    	private static void blendPixel(NativeImage nativeImage, int x, int y, int color) {
+	private static void blendPixel(NativeImage nativeImage, int x, int y, int color) {
 		if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
 			final float percent = (float) ((color >> 24) & 0xFF) / 0xFF;
 			if (percent > 0) {
@@ -118,16 +74,16 @@ public class YteRouteMapGenerator implements IGui {
 		}
 	}
 
-    private static void drawPixelSafe(NativeImage nativeImage, int x, int y, int color) {
+	private static void drawPixelSafe(NativeImage nativeImage, int x, int y, int color) {
 		if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
 			nativeImage.setPixelColor(x, y, invertColor(color));
 		}
 	}
 
-    	private static int invertColor(int color) {
+	public static int invertColor(int color) {
 		return ((color & ARGB_BLACK) != 0 ? ARGB_BLACK : 0) + ((color & 0xFF) << 16) + (color & 0xFF00) + ((color & 0xFF0000) >> 16);
 	}
 
 
-	}
+}
 

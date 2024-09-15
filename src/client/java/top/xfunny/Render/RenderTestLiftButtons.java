@@ -24,7 +24,7 @@ import top.xfunny.Block.TestLiftButtons;
 import top.xfunny.Item.YteLiftButtonsLink;
 
 import java.util.Comparator;
-
+//已弃用
 public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private static final int HOVER_COLOR = 0xFFADD8E6;
 	private static final int PRESSED_COLOR = 0xFF0000FF;

@@ -2,9 +2,9 @@ package top.xfunny.Util;
 
 import java.io.IOException;
     import java.io.File;
-import java.io.IOException;
+
 import org.mtr.mapping.holder.NativeImage;
-public class img {
+public class ImageGenerator {
 
 
 public static void saveNativeImageAsPng(NativeImage image, String outputPath) {

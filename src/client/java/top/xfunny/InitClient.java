@@ -41,7 +41,7 @@ public final class InitClient {
 
 			TextureCache.instance.reload();
 
-			});
+		});
 
 
 

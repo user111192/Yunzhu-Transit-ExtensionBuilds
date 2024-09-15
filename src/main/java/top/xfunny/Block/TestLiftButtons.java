@@ -9,18 +9,11 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mapping.tool.HolderBase;
-
-
 import org.mtr.mod.InitClient;
-
-
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
-
 import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.Init;
-
-
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +22,6 @@ import java.util.function.Consumer;
 public class TestLiftButtons extends BlockExtension implements DirectionHelper, BlockWithEntity {
 
 	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-
 	public TestLiftButtons() {
 		super(BlockHelper.createBlockSettings(true));
 	}

@@ -9,7 +9,6 @@ import top.xfunny.Init;
 
 public class YteLiftButtonsLink extends ItemBlockClickingBase {
     private final boolean isConnector;
-
 	public YteLiftButtonsLink(boolean isConnector, ItemSettings itemSettings) {
 		super(itemSettings.maxCount(1));
 		this.isConnector = isConnector;
@@ -48,8 +47,6 @@ public class YteLiftButtonsLink extends ItemBlockClickingBase {
 			}else{
 				Init.LOGGER.info("未连接");
 			}
-
-
 		}
 	}
 
