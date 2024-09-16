@@ -193,7 +193,7 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());
 			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F : 0.375F;
+			final float width = count == 1 ? 0.25F: 0.495F;
 
 			// 创建当前矩阵变换的副本以供后续修改
 			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();

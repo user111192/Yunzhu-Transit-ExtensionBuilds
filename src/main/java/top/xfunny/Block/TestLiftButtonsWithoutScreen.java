@@ -12,6 +12,7 @@ import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
+import top.xfunny.BlockEntityTypes;
 import top.xfunny.Init;
 
 import javax.annotation.Nonnull;
@@ -209,7 +210,7 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 		 * @param state 方块实体的状态
 		 */
 		public BlockEntity(BlockPos pos, BlockState state) {
-			super(top.xfunny.BlockEntityTypes.TEST_LIFT_BUTTONS.get(), pos, state);
+			super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state);
 		}
 
 		/**
