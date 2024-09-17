@@ -12,7 +12,6 @@ import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -20,28 +19,25 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-
-import top.xfunny.Block.TestLiftButtons;
-import top.xfunny.Block.TestLiftButtonsWithoutScreen;
+import top.xfunny.Block.OtisSeries1Button;
+import top.xfunny.Block.OtisSeries1Button;
 import top.xfunny.Item.YteLiftButtonsLink;
-import top.xfunny.Resource.TextureList;
-import top.xfunny.TextureCache;
-import top.xfunny.Util.GetLiftDetails;
 import top.xfunny.Util.ReverseRendering;
+
 import java.util.Comparator;
 
-public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<TestLiftButtonsWithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
 	private static final int HOVER_COLOR = 0xFFA55000;
 	private static final int PRESSED_COLOR = 0xFFD70000;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
 
-	public RenderTestLiftButtonsWithoutScreen(Argument dispatcher) {
+	public RenderOtisSeries1Button(Argument dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(TestLiftButtonsWithoutScreen.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
+	public void render(OtisSeries1Button.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -55,7 +51,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 		final BlockPos blockPos = blockEntity.getPos2();
 		final BlockState blockState = world.getBlockState(blockPos);
 		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
-		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLink || Block.getBlockFromItem(item).data instanceof TestLiftButtons);
+		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLink || Block.getBlockFromItem(item).data instanceof OtisSeries1Button);
 
 		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
 		// 参数为方块的中心位置坐标 (x, y, z)
@@ -83,7 +79,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			TestLiftButtons.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
+			OtisSeries1Button.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
@@ -110,7 +106,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
 		final boolean lookingAtTopHalf;
 		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtons.UNLOCKED)) {
+		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, OtisSeries1Button.UNLOCKED)) {
 			lookingAtTopHalf = false;
 			lookingAtBottomHalf = false;
 		} else {

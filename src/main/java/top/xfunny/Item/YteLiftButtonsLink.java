@@ -4,6 +4,7 @@ import org.mtr.mapping.holder.*;
 
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.item.ItemBlockClickingBase;
+import top.xfunny.Block.OtisSeries1Button;
 import top.xfunny.Block.TestLiftButtons;
 import top.xfunny.Block.TestLiftButtonsWithoutScreen;
 import top.xfunny.Init;
@@ -32,7 +33,7 @@ public class YteLiftButtonsLink extends ItemBlockClickingBase {
 	@Override
 	protected boolean clickCondition(ItemUsageContext context) {
 		final Block block = context.getWorld().getBlockState(context.getBlockPos()).getBlock();
-		return block.data instanceof BlockLiftTrackFloor || block.data instanceof TestLiftButtons || block.data instanceof TestLiftButtonsWithoutScreen;
+		return block.data instanceof BlockLiftTrackFloor || block.data instanceof TestLiftButtons || block.data instanceof TestLiftButtonsWithoutScreen || block.data instanceof OtisSeries1Button;
 	}
 
 	private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
@@ -48,6 +49,10 @@ public class YteLiftButtonsLink extends ItemBlockClickingBase {
 			}
 			else if (blockEntity1.data instanceof TestLiftButtonsWithoutScreen.BlockEntity) {
 				((TestLiftButtonsWithoutScreen.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
+				Init.LOGGER.info("已连接");
+			}
+			else if (blockEntity1.data instanceof OtisSeries1Button.BlockEntity) {
+				((OtisSeries1Button.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
 				Init.LOGGER.info("已连接");
 			}
 			else{

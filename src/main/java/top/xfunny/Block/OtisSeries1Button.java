@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class TestLiftButtonsWithoutScreen extends BlockExtension implements DirectionHelper, BlockWithEntity {
+public class OtisSeries1Button extends BlockExtension implements DirectionHelper, BlockWithEntity {
 
 	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-	public TestLiftButtonsWithoutScreen() {
+	public OtisSeries1Button() {
 		super(BlockHelper.createBlockSettings(true));
 	}
 
@@ -36,7 +36,7 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 	 * @param callback      a callback for the lift and floor index, only run if the lift floor track exists in the lift
 	 *                      关于电梯和楼层索引的回调函数，只有当电梯地板轨道存在于电梯中时才运行
 	 */
-	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, TestLiftButtonsWithoutScreen.FloorLiftCallback callback) {
+	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, OtisSeries1Button.FloorLiftCallback callback) {
 		// 获取实例中的所有电梯数据
 		MinecraftClientData.getInstance().lifts.forEach(lift -> {
 			// 获取电梯轨道位置对应的楼层索引
@@ -92,11 +92,11 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 					// 客户端按钮按下特殊处理
 					if (world.isClient()) {
 						final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
-						if (blockEntity != null && blockEntity.data instanceof TestLiftButtonsWithoutScreen.BlockEntity) {
+						if (blockEntity != null && blockEntity.data instanceof OtisSeries1Button.BlockEntity) {
 							// 检查并记录上下按钮状态
 							final boolean[] buttonStates = {false, false};
-							((TestLiftButtonsWithoutScreen.BlockEntity) blockEntity.data).trackPositions.forEach(trackPosition ->
-									TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
+							((OtisSeries1Button.BlockEntity) blockEntity.data).trackPositions.forEach(trackPosition ->
+									OtisSeries1Button.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
 									}));
 
 							// 根据按钮状态决定电梯方向
@@ -109,7 +109,7 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 
 							// 创建并发送按电梯按钮事件
 							final PressLift pressLift = new PressLift();
-							((TestLiftButtonsWithoutScreen.BlockEntity) blockEntity.data).trackPositions.forEach(trackPosition ->
+							((OtisSeries1Button.BlockEntity) blockEntity.data).trackPositions.forEach(trackPosition ->
 									pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection));
 							InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
 
@@ -175,7 +175,7 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 	@Nonnull
 	@Override
 	public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new TestLiftButtonsWithoutScreen.BlockEntity(blockPos, blockState);
+		return new OtisSeries1Button.BlockEntity(blockPos, blockState);
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class TestLiftButtonsWithoutScreen extends BlockExtension implements Dire
 		 * @param state 方块实体的状态
 		 */
 		public BlockEntity(BlockPos pos, BlockState state) {
-			super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state);
+			super(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1.get(), pos, state);
 		}
 
 		/**
