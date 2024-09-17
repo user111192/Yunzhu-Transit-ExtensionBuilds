@@ -28,9 +28,10 @@ import java.util.Comparator;
 
 public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR = 0xFFA55000;
-	private static final int PRESSED_COLOR = 0xFFD70000;
-	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
+	private static final int HOVER_COLOR = 0xFFFFFFFF;
+	private static final int PRESSED_COLOR = 0xFFFFCB3B;
+	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_button.png");
+	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_arrow.png");
 
 	public RenderOtisSeries1Button(Argument dispatcher) {
 		super(dispatcher);
@@ -137,21 +138,52 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonStates[1] ? 0.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-1.25F / 16,
+								(buttonStates[1] ? 2.9F : 2.5F) / 16,
+								1F / 16,
+								1F / 16,
 								0,
 								0,
 								1,
 								1,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFFFFFFF,
 								light
 						);
 						// 弹出当前图形状态
 						graphicsHolder.pop();
 					}
+
+			);
+		}
+		if (buttonStates[0]) {
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					ARROW_TEXTURE,
+					false,
+					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								0.25F / 16,
+								(buttonStates[1] ? 2.9F : 2.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFFFFFFF,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+
 			);
 		}
 		// 第二个按钮的渲染逻辑
@@ -167,18 +199,49 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonStates[0] ? 4.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-1.25F / 16,
+								(buttonStates[0] ? 4.1F : 2.5F) / 16,
+								1F / 16,
+								1F / 16,
 								0,
 								1,
 								1,
 								0,
 								facing,
-								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFFFFFFF,
 								light
 						);
+
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+		}
+		if (buttonStates[1]) {
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					ARROW_TEXTURE,
+					false,
+					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								0.25F / 16,
+								(buttonStates[0] ? 4.1F : 2.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFFFFFFF,
+								light
+						);
+
 						// 弹出当前图形状态
 						graphicsHolder.pop();
 					}
