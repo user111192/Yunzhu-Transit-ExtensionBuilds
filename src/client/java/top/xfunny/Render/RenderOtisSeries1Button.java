@@ -33,6 +33,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_button.png");
 	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_arrow.png");
 
+
 	public RenderOtisSeries1Button(Argument dispatcher) {
 		super(dispatcher);
 	}
@@ -73,7 +74,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
 				RenderLiftObjectLink.RenderLiftObjectLink(
 						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.5, facing.getOffsetZ() / 2F),
+						new Vector3d(facing.getOffsetX() / 2F, 0.2, facing.getOffsetZ() / 2F),
 						new Vector3d(trackPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, trackPosition.getY() - blockPos.getY() + 0.5, trackPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
 						holdingLinker
 				);
@@ -124,157 +125,142 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
 		});
 
-		// 根据按钮状态渲染按钮
-		// 第一个按钮的渲染逻辑
-		if (buttonStates[0]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-1.25F / 16,
-								(buttonStates[1] ? 2.9F : 2.5F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFFFFFFF,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-
-			);
-		}
-		if (buttonStates[0]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					ARROW_TEXTURE,
-					false,
-					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								0.25F / 16,
-								(buttonStates[1] ? 2.9F : 2.5F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFFFFFFF,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-
-			);
-		}
-		// 第二个按钮的渲染逻辑
-		if (buttonStates[1]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-1.25F / 16,
-								(buttonStates[0] ? 4.1F : 2.5F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFFFFFFF,
-								light
-						);
-
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
-		if (buttonStates[1]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					ARROW_TEXTURE,
-					false,
-					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								0.25F / 16,
-								(buttonStates[0] ? 4.1F : 2.5F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFFFFFFF,
-								light
-						);
-
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
-		// 检查排序后的电梯位置列表是否非空
-		if (!sortedPositionsAndLifts.isEmpty()) {
-			// 确定要渲染的电梯数量，最多为2个
-			final int count = Math.min(2, sortedPositionsAndLifts.size());
-			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F : 0.375F;
-
-			// 创建当前矩阵变换的副本以供后续修改
-			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
+		final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
 			// 添加旋转和平移变换
 			storedMatrixTransformations3.add(graphicsHolder -> {
 				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(-width / 2, 0, 0);
+				graphicsHolder.translate(-0.5F / 2, 0, 0.001);
 			});
 
+		// 根据按钮状态渲染按钮
+		// 第一个按钮的渲染逻辑
+		if (buttonStates[0]) {
+			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
+				storedMatrixTransformations3.transform(graphicsHolder, offset);
+				IDrawing.drawTexture(graphicsHolder, 0.15F, (buttonStates[1] ? -5.4F : -4.8F) / 16, 0.2F, 0.1F, Direction.UP, light);
+				graphicsHolder.pop();
+			});
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.INTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-1.25F / 16,
+								(buttonStates[1] ? 2.9F : 3.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFFFFFFF,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+
+			);
+			MainRenderer.scheduleRender(
+					ARROW_TEXTURE,
+					false,
+					QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								0.25F / 16,
+								(buttonStates[1] ? 2.9F : 3.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								0xFFFFFFFF,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+
+			);
 
 
-			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
-			final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
-			// 遍历要渲染的每个电梯
-			for (int i = 0; i < count; i++) {
-				// 计算当前电梯显示的x位置，考虑反转渲染顺序
-				final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-				// 创建另一个矩阵变换的副本用于当前电梯
-				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				// 添加平移变换以定位电梯显示
-				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
-			}
+		}
+
+		// 第二个按钮的渲染逻辑
+		if (buttonStates[1]) {
+			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
+				storedMatrixTransformations3.transform(graphicsHolder, offset);
+				IDrawing.drawTexture(graphicsHolder, 0.15F, (buttonStates[0] ? -4.2F : -4.8F) / 16, 0.2F, 0.1F, Direction.UP, light);
+				graphicsHolder.pop();
+			});
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-1.25F / 16,
+								(buttonStates[0] ? 4.1F : 3.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFFFFFFF,
+								light
+						);
+
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+			MainRenderer.scheduleRender(
+					ARROW_TEXTURE,
+					false,
+					QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								0.25F / 16,
+								(buttonStates[0] ? 4.1F : 3.5F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								0xFFFFFFFF,
+								light
+						);
+
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
 		}
 	}
 }
