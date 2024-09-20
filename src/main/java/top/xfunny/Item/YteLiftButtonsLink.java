@@ -7,6 +7,7 @@ import org.mtr.mod.item.ItemBlockClickingBase;
 import top.xfunny.Block.OtisSeries1Button;
 import top.xfunny.Block.TestLiftButtons;
 import top.xfunny.Block.TestLiftButtonsWithoutScreen;
+import top.xfunny.Block.TestLiftHallLanterns;
 import top.xfunny.Init;
 
 public class YteLiftButtonsLink extends ItemBlockClickingBase {
@@ -33,7 +34,7 @@ public class YteLiftButtonsLink extends ItemBlockClickingBase {
 	@Override
 	protected boolean clickCondition(ItemUsageContext context) {
 		final Block block = context.getWorld().getBlockState(context.getBlockPos()).getBlock();
-		return block.data instanceof BlockLiftTrackFloor || block.data instanceof TestLiftButtons || block.data instanceof TestLiftButtonsWithoutScreen || block.data instanceof OtisSeries1Button;
+		return block.data instanceof BlockLiftTrackFloor || block.data instanceof TestLiftButtons || block.data instanceof TestLiftButtonsWithoutScreen || block.data instanceof OtisSeries1Button || block.data instanceof TestLiftHallLanterns;
 	}
 
 	private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
@@ -45,6 +46,10 @@ public class YteLiftButtonsLink extends ItemBlockClickingBase {
 			Init.LOGGER.info("if运行了");
 			if (blockEntity1.data instanceof TestLiftButtons.BlockEntity) {
 				((TestLiftButtons.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
+				Init.LOGGER.info("已连接");
+			}
+			else if (blockEntity1.data instanceof TestLiftHallLanterns.BlockEntity) {
+				((TestLiftHallLanterns.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
 				Init.LOGGER.info("已连接");
 			}
 			else if (blockEntity1.data instanceof TestLiftButtonsWithoutScreen.BlockEntity) {
