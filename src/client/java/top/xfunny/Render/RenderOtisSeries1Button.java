@@ -21,8 +21,6 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Block.OtisSeries1Button;
 import top.xfunny.Item.YteLiftButtonsLink;
-
-
 import java.util.Comparator;
 
 public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {

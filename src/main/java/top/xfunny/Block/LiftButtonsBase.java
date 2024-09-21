@@ -1,24 +1,26 @@
 package top.xfunny.Block;
 
 import org.mtr.core.data.Lift;
+import org.mtr.core.data.LiftDirection;
+import org.mtr.core.operation.PressLift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
-import org.mtr.mapping.tool.HolderBase;
+import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
+import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.Init;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class TestLiftHallLanterns extends BlockExtension implements DirectionHelper, BlockWithEntity {
-    public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-	public TestLiftHallLanterns() {
+public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
+	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+	public LiftButtonsBase() {
 		super(BlockHelper.createBlockSettings(true));
 	}
-
 	/**
 	 * 检查电梯轨道位置是否存在上下按钮的客户端方法
 	 * 本方法主要用于确定在给定的电梯轨道位置是否有上下按钮，以及通知相关的回调函数
@@ -28,7 +30,7 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 	 * @param callback      a callback for the lift and floor index, only run if the lift floor track exists in the lift
 	 *                      关于电梯和楼层索引的回调函数，只有当电梯地板轨道存在于电梯中时才运行
 	 */
-	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, TestLiftHallLanterns.FloorLiftCallback callback) {
+	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, LiftButtonsBase.FloorLiftCallback callback) {
 		// 获取实例中的所有电梯数据
 		MinecraftClientData.getInstance().lifts.forEach(lift -> {
 			// 获取电梯轨道位置对应的楼层索引
@@ -48,7 +50,7 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 		});
 	}
 
-	@Nonnull
+		@Nonnull
 	@Override
 	// 处理按钮的使用交互
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -73,18 +75,52 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 			if (player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get())) {
 				Init.LOGGER.info("onUse2");
 				return ActionResult.PASS;
+
+
 			} else {
-				return ActionResult.FAIL;
+				// 检查按钮是否解锁，并处理客户端按钮按下逻辑
+				final boolean unlocked = IBlock.getStatePropertySafe(state, UNLOCKED);
+				final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
+
+				if (unlocked && hitY < 0.5) {
+					// 客户端按钮按下特殊处理
+					if (world.isClient()) {
+						final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
+						if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
+							// 检查并记录上下按钮状态
+							final boolean[] buttonStates = {false, false};
+							((LiftButtonsBase.BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+									LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
+									}));
+
+							// 根据按钮状态决定电梯方向
+							final LiftDirection liftDirection;
+							if (buttonStates[0] && buttonStates[1]) {
+								liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
+							} else {
+								liftDirection = buttonStates[0] ? LiftDirection.DOWN : LiftDirection.UP;
+							}
+
+							// 创建并发送按电梯按钮事件
+							final PressLift pressLift = new PressLift();
+							((LiftButtonsBase.BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+									pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection));
+							InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
+
+							return ActionResult.SUCCESS;
+						} else {
+							return ActionResult.FAIL;
+						}
+					}
+
+					return ActionResult.SUCCESS;
+				} else {
+					return ActionResult.FAIL;
+				}
 			}
 		}
 	}
 
-	/**
-	 * 根据玩家面对的方向设置方块的状态
-	 *
-	 * @param ctx ItemPlacementContext 放置物品的上下文，包含放置时的信息，如玩家面对的方向等
-	 * @return BlockState 返回根据上下文信息调整后的方块状态
-	 */
 	@Override
 	public BlockState getPlacementState2(ItemPlacementContext ctx) {
 		// 获取玩家面对的方向
@@ -93,76 +129,16 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 		return getDefaultState2().with(new Property<>(FACING.data), facing.data);
 	}
 
-	@Nonnull
-	@Override
-	/**
- * 重写getOutlineShape方法，用于获取扩展的碰撞箱形状。
- * 此方法主要用于游戏中的渲染和碰撞检测。
- *
- * @param state 当前区块的状态
- * @param world 世界视图，用于访问世界数据
- * @param pos 块的位置
- * @param context 形状上下文，用于在不同的情境下获取正确的形状信息
- * @return 返回计算得到的扩展碰撞箱形状，决不会返回null
- *
- * 注释解释：
- * 1. @Nonnull 注解表明该方法不会返回null值。
- * 2. @Override 注解表示该方法是父类方法的重写。
- * 3. 该方法委托IBlock工具类根据方向动态计算碰撞箱的形状和位置。
- * 4. 使用getStatePropertySafe方法安全地获取状态的属性值，以避免潜在的NullPointerException。
- */
-
-	public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return IBlock.getVoxelShapeByDirection(4, 0, 0, 12, 16, 1, IBlock.getStatePropertySafe(state, FACING));
-	}
-
-	/**
-	 * 创建方块实体扩展
-	 * 此方法用于实例化与电梯按钮相关的方块实体
-	 *
-	 * @param blockPos 方块的位置
-	 * @param blockState 方块的状态
-	 * @return 返回一个新的 {@code BlockEntityExtension} 实例，代表电梯按钮的方块实体
-	 */
-	@Nonnull
-	@Override
-	public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new TestLiftHallLanterns.BlockEntity(blockPos, blockState);
-	}
-
-	/**
-	 * 添加块属性
-	 * 此方法用于向块的属性列表中添加方向和解锁状态属性
-	 *
-	 * @param properties 块的属性列表，包含所有与块相关的属性
-	 */
-	@Override
-	public void addBlockProperties(List<HolderBase<?>> properties) {
-		// 添加块的方向属性
-		properties.add(FACING);
-		// 添加块的解锁状态属性
-		properties.add(UNLOCKED);
-	}
-
-	/**
-	 * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension
-	 * 主要功能是通过CompoundTag来读取和写入特定位置集合
-	 */
-	public static class BlockEntity extends BlockEntityExtension {
+	public static class BlockEntityBase extends BlockEntityExtension {
 
 		// 用于在CompoundTag中标识地板位置数组的键
 		private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
 		// 存储需要追踪的位置的集合
 		private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
 
-		/**
-		 * 构造一个新的BlockEntity实例
-		 *
-		 * @param pos 方块实体的位置
-		 * @param state 方块实体的状态
-		 */
-		public BlockEntity(BlockPos pos, BlockState state) {
-			super(top.xfunny.BlockEntityTypes.TEST_LIFT_HALL_LANTERNS.get(), pos, state);
+
+		public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
+			super(type, blockPos, blockState);
 		}
 
 		/**
@@ -222,8 +198,6 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 			}
 			// 更新数据状态，标记数据为“脏”，表示需要保存或同步
 			markDirty2();
-
-
 		}
 		/**
 		 * 对每个轨道位置执行给定的操作
@@ -238,15 +212,28 @@ public class TestLiftHallLanterns extends BlockExtension implements DirectionHel
 		}
 	}
 
-	/**
-	 * FloorLiftCallback是一个函数式接口，用于定义楼层升降操作的回调函数
-	 * 回调函数在电梯系统中很常见，用于处理特定楼层的到达或离开事件
-	 *
-	 * //@param floor 电梯到达的楼层编号，用于标识事件发生的地点
-	 * //@param lift 当前操作的电梯对象，用于访问或操作电梯状态
-	 */
 	@FunctionalInterface
 	public interface FloorLiftCallback {
 		void accept(int floor, Lift lift);
 	}
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
