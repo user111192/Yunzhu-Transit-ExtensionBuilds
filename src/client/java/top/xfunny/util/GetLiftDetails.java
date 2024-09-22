@@ -1,4 +1,4 @@
-package top.xfunny.Util;
+package top.xfunny.util;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;

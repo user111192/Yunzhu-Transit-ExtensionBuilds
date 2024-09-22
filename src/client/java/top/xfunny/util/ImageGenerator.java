@@ -1,4 +1,4 @@
-package top.xfunny.Util;
+package top.xfunny.util;
 
 import java.io.IOException;
     import java.io.File;

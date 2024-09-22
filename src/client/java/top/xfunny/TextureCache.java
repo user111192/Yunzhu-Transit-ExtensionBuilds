@@ -6,10 +6,9 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHa
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
-import org.mtr.mapping.mapper.ResourceManagerHelper;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
-import top.xfunny.Resource.FontList;
+import top.xfunny.resource.FontList;
 
 import javax.annotation.Nullable;
 import java.awt.*;

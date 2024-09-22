@@ -1,9 +1,11 @@
-package top.xfunny.Block;
+package top.xfunny.block;
 
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
+import top.xfunny.block.base.LiftButtonsBase;
+
 import javax.annotation.Nonnull;
 import java.util.List;
 

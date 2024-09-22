@@ -1,4 +1,4 @@
-package top.xfunny.Block;
+package top.xfunny.block;
 
 import org.mtr.core.data.Lift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;

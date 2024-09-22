@@ -1,4 +1,4 @@
-package top.xfunny.Util;
+package top.xfunny.util;
 
 import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.Direction;

@@ -12,10 +12,7 @@ import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.item.ItemBlockClickingBase;
 
 
-import top.xfunny.Render.RenderOtisSeries1Button;
-import top.xfunny.Render.RenderTestLiftButtons2;
-import top.xfunny.Render.RenderTestLiftButtonsWithoutScreen;
-import top.xfunny.Render.RenderTestLiftHallLanterns;
+import top.xfunny.render.*;
 
 
 public final class InitClient {
@@ -26,9 +23,10 @@ public final class InitClient {
     public static void init() {
 
 
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_BUTTONS, RenderTestLiftButtons2::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_BUTTONS, RenderTestLiftButtons::new);
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_HALL_LANTERNS, RenderTestLiftHallLanterns::new);
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN, RenderTestLiftButtonsWithoutScreen::new);
+		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_PANEL, RenderTestLiftPanel::new);
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1, RenderOtisSeries1Button::new);
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_2, RenderOtisSeries1Button::new);
 

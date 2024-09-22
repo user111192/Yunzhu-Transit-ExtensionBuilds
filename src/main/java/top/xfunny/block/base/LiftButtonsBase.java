@@ -1,4 +1,4 @@
-package top.xfunny.Block;
+package top.xfunny.block.base;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
@@ -11,6 +11,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.Init;
+import top.xfunny.LiftFloorRegistry;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		});
 	}
 
-		@Nonnull
+	@Nonnull
 	@Override
 	// 处理按钮的使用交互
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -72,12 +73,11 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 			return ActionResult.SUCCESS;
 		} else {
 			// 如果玩家手持电梯连接器或移除器，允许进行其他操作
-			if (player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get())) {
+			if (player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
 				Init.LOGGER.info("onUse2");
 				return ActionResult.PASS;
-
-
-			} else {
+			}
+			else {
 				// 检查按钮是否解锁，并处理客户端按钮按下逻辑
 				final boolean unlocked = IBlock.getStatePropertySafe(state, UNLOCKED);
 				final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
@@ -129,7 +129,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		return getDefaultState2().with(new Property<>(FACING.data), facing.data);
 	}
 
-	public static class BlockEntityBase extends BlockEntityExtension {
+	public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry {
 
 		// 用于在CompoundTag中标识地板位置数组的键
 		private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";

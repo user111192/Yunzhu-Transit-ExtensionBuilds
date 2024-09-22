@@ -1,4 +1,4 @@
-package top.xfunny.Render;
+package top.xfunny.render;
 
 
 import org.mtr.core.data.Lift;
@@ -19,8 +19,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.Block.OtisSeries1Button;
-import top.xfunny.Item.YteLiftButtonsLink;
+import top.xfunny.block.OtisSeries1Button;
+import top.xfunny.item.YteGroupLiftButtonsLinker;
+import top.xfunny.item.YteLiftButtonsLinker;
 import java.util.Comparator;
 
 public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
@@ -50,7 +51,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		final BlockPos blockPos = blockEntity.getPos2();
 		final BlockState blockState = world.getBlockState(blockPos);
 		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
-		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLink || Block.getBlockFromItem(item).data instanceof OtisSeries1Button);
+		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
 
 		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
 		// 参数为方块的中心位置坐标 (x, y, z)

@@ -1,4 +1,4 @@
-package top.xfunny.Render;
+package top.xfunny.render;
 
 import org.mtr.mapping.holder.Vector3d;
 import org.mtr.mod.render.MainRenderer;

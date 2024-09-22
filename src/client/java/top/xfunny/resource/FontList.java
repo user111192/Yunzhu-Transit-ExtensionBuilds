@@ -1,4 +1,4 @@
-package top.xfunny.Resource;
+package top.xfunny.resource;
 
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.ResourceManagerHelper;

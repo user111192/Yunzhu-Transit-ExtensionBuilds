@@ -1,4 +1,5 @@
-package top.xfunny.Render;
+package top.xfunny.render;
+
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
@@ -11,7 +12,6 @@ import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -19,30 +19,25 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.Block.OtisSeries1Button;
-import top.xfunny.Block.TestLiftButtons;
-import top.xfunny.Block.TestLiftButtonsWithoutScreen;
-import top.xfunny.Block.TestLiftHallLanterns;
-import top.xfunny.Item.YteLiftButtonsLink;
-import top.xfunny.Resource.TextureList;
-import top.xfunny.TextureCache;
-import top.xfunny.Util.GetLiftDetails;
-import top.xfunny.Util.ReverseRendering;
-
+import top.xfunny.block.OtisSeries1Button;
+import top.xfunny.block.TestLiftButtonsWithoutScreen;
+import top.xfunny.item.YteGroupLiftButtonsLinker;
+import top.xfunny.item.YteLiftButtonsLinker;
+import top.xfunny.util.ReverseRendering;
 import java.util.Comparator;
 
-public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<TestLiftButtonsWithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
+
 	private static final int HOVER_COLOR = 0xFFA55000;
 	private static final int PRESSED_COLOR = 0xFFD70000;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
 
-	public RenderTestLiftHallLanterns(Argument dispatcher) {
+	public RenderTestLiftButtonsWithoutScreen(Argument dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(TestLiftHallLanterns.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
-
+	public void render(TestLiftButtonsWithoutScreen.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -56,8 +51,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		final BlockPos blockPos = blockEntity.getPos2();
 		final BlockState blockState = world.getBlockState(blockPos);
 		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
-		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLink || Block.getBlockFromItem(item).data instanceof TestLiftButtons);
-
+		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
 		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
 		// 参数为方块的中心位置坐标 (x, y, z)
 		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
@@ -84,7 +78,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			TestLiftButtons.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
+			TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
@@ -95,11 +89,9 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 					switch (liftDirection) {
 						case DOWN:
 							buttonStates[2] = true;
-							top.xfunny.Init.LOGGER.info("blockstates:"+buttonStates[2]);
 							break;
 						case UP:
 							buttonStates[3] = true;
-							top.xfunny.Init.LOGGER.info("blockstates:"+buttonStates[3]);
 							break;
 					}
 				});
@@ -113,7 +105,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
 		final boolean lookingAtTopHalf;
 		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtons.UNLOCKED)) {
+		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtonsWithoutScreen.UNLOCKED)) {
 			lookingAtTopHalf = false;
 			lookingAtBottomHalf = false;
 		} else {
@@ -137,7 +129,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					QueuedRenderLayer.EXTERIOR,
+					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
@@ -153,7 +145,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 								1,
 								1,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR : ARGB_GRAY,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
 								light
 						);
 						// 弹出当前图形状态
@@ -167,7 +159,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					QueuedRenderLayer.EXTERIOR,
+					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
@@ -183,7 +175,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 								1,
 								0,
 								facing,
-								buttonStates[3] ? PRESSED_COLOR : ARGB_GRAY,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
 								light
 						);
 						// 弹出当前图形状态
@@ -222,9 +214,3 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		}
 	}
 }
-
-
-
-
-
-
