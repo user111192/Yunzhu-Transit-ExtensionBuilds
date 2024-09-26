@@ -1,15 +1,12 @@
 package top.xfunny.item;
 
 import org.mtr.mapping.holder.*;
-
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.item.ItemBlockClickingBase;
-import top.xfunny.LiftFloorRegistry;
-import top.xfunny.block.*;
 import top.xfunny.Init;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import top.xfunny.LiftFloorRegistry;
+
+import static top.xfunny.item.LinkerValidTypes.VALID_TYPES;
 
 public class YteLiftButtonsLinker extends ItemBlockClickingBase {
 	private final boolean isConnector;
@@ -34,17 +31,6 @@ public class YteLiftButtonsLinker extends ItemBlockClickingBase {
 		Init.LOGGER.info("Connected lift buttons at " + posStart.getY() + " and " + posEnd.getY());
 	}
 
-
-
-	private static final Set<Class<?>> VALID_TYPES = new HashSet<>(Arrays.asList(
-			BlockLiftTrackFloor.class,
-			TestLiftButtons.class,
-			TestLiftButtonsWithoutScreen.class,
-			OtisSeries1Button.class,
-			TestLiftHallLanterns.class,
-			TestLiftPanel.class
-
-	));
 
 	private boolean isValidType(Object data) {
 		return VALID_TYPES.contains(data.getClass());
