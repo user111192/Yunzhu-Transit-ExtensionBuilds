@@ -13,6 +13,7 @@ public class LinkerValidTypes {
             TestLiftButtons.class,
             TestLiftButtonsWithoutScreen.class,
             OtisSeries1Button.class,
+            OtisSeries1Screen.class,
             TestLiftHallLanterns.class,
             TestLiftPanel.class
     ));

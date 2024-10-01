@@ -61,7 +61,7 @@ public class RouteMapList implements IGui {
             final int totalWidth;
             final int height = Math.round(scale * 1.5F);
             final int[] dimensions = new int[2];
-            final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, 90, height, fontSizeSmall*4 , fontSizeSmall*10 ,0, FontList.instance.testfont1, FontList.instance.fontCjk1);//fontsize：字体大小
+            final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH), dimensions, 90, height, fontSizeSmall*4 , fontSizeSmall*20 ,0, FontList.instance.testfont1, FontList.instance.fontCjk1);//fontsize：字体大小
             if (TextureCache.instance.totalWidth > scale * 1.5F) {
                 totalWidth = TextureCache.instance.totalWidth;
                 Init.LOGGER.info("超出范围width"+totalWidth);

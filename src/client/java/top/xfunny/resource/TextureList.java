@@ -13,4 +13,8 @@ public class TextureList {
 		return TextureCache.instance.getResource(String.format("test_lift_panel_display_%s", originalText), () -> RouteMapList.generateTestLiftPanel(originalText, textColor), TextureCache.DefaultRenderingColor.BLACK);
 	}
 
+	public TextureCache.DynamicResource getOtisSeries1ScreenDisplay(String originalText, int textColor) {
+		return TextureCache.instance.getResource(String.format("test_lift_panel_display_%s", originalText), () -> RouteMapList.generateTestLiftPanel(originalText, textColor), TextureCache.DefaultRenderingColor.BLACK);
+	}
+
 }

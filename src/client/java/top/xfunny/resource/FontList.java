@@ -10,6 +10,7 @@ public class FontList {
 
 	Font font1;
 	Font fontCjk1;
+	Font otis_series1;
 	Font testfont;
 	Font testfont1;
 
