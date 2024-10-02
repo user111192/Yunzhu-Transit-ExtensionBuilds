@@ -180,9 +180,6 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 		// 判断楼层编号和描述是否为空
 		final boolean noFloorNumber = floorNumber.isEmpty();
 		final boolean noFloorDisplay = floorDescription.isEmpty();
-		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
-		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-		final float arrowSize = width / 6; // 设置箭头大小
 		final float y = height; // 箭头的Y轴位置
 
 		// 渲染楼层信息

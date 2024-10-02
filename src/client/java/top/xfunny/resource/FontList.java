@@ -12,13 +12,13 @@ public class FontList {
 	Font fontCjk1;
 	Font otis_series1;
 	Font testfont;
-	Font testfont1;
+	Font koneModernization;
 
 	public void FontReload(){
 		font1 = null;
 		fontCjk1 = null;
 		testfont = null;
-		testfont1 = null;
+		koneModernization = null;
 	}
 
 	public void FlonList(){
@@ -54,10 +54,10 @@ public class FontList {
 			});
 		}
 
-		while (testfont1 == null) {
+		while (koneModernization == null) {
 			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/kone-modernization.ttf"), inputStream -> {
 				try {
-					testfont1 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+					koneModernization = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				} catch (Exception e) {
 					Init.LOGGER.error("", e);
 				}
