@@ -20,6 +20,7 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.YteRouteMapGenerator;
 import top.xfunny.block.OtisSeries1Button;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
@@ -167,9 +168,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 					false,
 					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.5F / 16,
@@ -215,13 +214,9 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 			// 遍历要渲染的每个电梯
 			for (int i = 0; i < count; i++) {
-				// 计算当前电梯显示的x位置，考虑反转渲染顺序
 				final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-				// 创建另一个矩阵变换的副本用于当前电梯
 				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				// 添加平移变换以定位电梯显示
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
-
 				// 渲染当前电梯的显示
 				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
 
@@ -257,30 +252,29 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 		// 渲染楼层信息
 		if (!noFloorNumber || !noFloorDisplay) {
 			float offset1;
-			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : ""); // 合并楼层信息文本
+			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
+			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).width;
 
 			if (text.length() > 2) {
-				float scrollSpeed = 24F;
-				float scaledSpeed = scrollSpeed * (width1 / TextureCache.instance.totalWidth); // 根据显示宽度和纹理总宽度缩放速度
-				offset1 = (gameTick * scaledSpeed) % TextureCache.instance.totalWidth;
-				// 如果走马灯移动到末端，回到起始位置
-				if (offset1 > TextureCache.instance.totalWidth - width1) {
-					offset1 = offset1 - TextureCache.instance.totalWidth;
+				float scrollSpeed = 0.002F;
+				offset1 = (gameTick * scrollSpeed);
 
+				if (offset1 > totalWidth - width1) {
+					offset1 = offset1 - totalWidth;
 				}
 				float finalOffset = offset1;
 				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
-				// 绘制楼层信息纹理
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 1 /text.length() +0.0001F*text.length(), 1F, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-				graphicsHolder.pop();
+
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, (finalOffset+ 0.3F+(float) 1 /text.length()), 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					graphicsHolder.pop();
 				});
 			} else {
-				// 如果不需要走马灯，保持位置不变
+
 				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
-				// 绘制楼层信息纹理
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1F, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+
+				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 				graphicsHolder.pop();
 			});
 			}

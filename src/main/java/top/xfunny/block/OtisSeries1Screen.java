@@ -11,7 +11,7 @@ import top.xfunny.block.base.LiftPanelBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class OtisSeries1Screen extends LiftButtonsBase {
+public class OtisSeries1Screen extends LiftPanelBase {
     public OtisSeries1Screen() {
         super();
     }
