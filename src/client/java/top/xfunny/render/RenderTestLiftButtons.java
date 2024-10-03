@@ -256,27 +256,26 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).width;
 
 			if (text.length() > 2) {
-				float scrollSpeed = 0.002F;
+				float scrollSpeed = 0.008F;
 				offset1 = (gameTick * scrollSpeed);
-
 				if (offset1 > totalWidth - width1) {
 					offset1 = offset1 - totalWidth;
 				}
 				float finalOffset = offset1;
 				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
+					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, (finalOffset+ 0.3F+(float) 1 /text.length()), 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 170 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {
 
 				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
+					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-				IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-				graphicsHolder.pop();
-			});
+					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					graphicsHolder.pop();
+				});
 			}
 		}
 	}

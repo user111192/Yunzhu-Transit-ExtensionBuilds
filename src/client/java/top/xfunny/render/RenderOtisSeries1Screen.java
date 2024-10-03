@@ -103,7 +103,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0, -0.375F, width, 0.25F, Direction.UP, light);
+				IDrawing.drawTexture(graphicsHolder, 0, -0.375F, 0.16F, 0.2F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 
@@ -126,30 +126,25 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-		final LiftDirection liftDirection = liftDetails.left();
 		final String floorNumber = liftDetails.right().left();
 		final String floorDescription = liftDetails.right().right();
 
 		// 判断楼层编号和描述是否为空
 		final boolean noFloorNumber = floorNumber.isEmpty();
 		final boolean noFloorDisplay = floorDescription.isEmpty();
-		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
 		final float y = height; // 箭头的Y轴位置
 
 
 
 		// 渲染楼层信息
 		if (!noFloorNumber || !noFloorDisplay) {
-
 			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : ""); // 合并楼层信息文本
-
-				// 如果不需要走马灯，保持位置不变
-				MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x00FF00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-					storedMatrixTransformations.transform(graphicsHolder, offset);
-					// 绘制楼层信息纹理
-					IDrawing.drawTexture(graphicsHolder, -width + 0.95F, y + 0.325F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-					graphicsHolder.pop();
-				});
+			int totalWidth = TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).width;
+			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
+				IDrawing.drawTexture(graphicsHolder, -width + 1F, y + 0.377F, width1/2, height1/2, 0, 0, (float) 210 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+				graphicsHolder.pop();
+			});
 
 		}
 	}

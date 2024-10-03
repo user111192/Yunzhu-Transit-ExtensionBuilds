@@ -47,7 +47,7 @@ public class TextureCache {
 		generatingResources.clear();
 	}
 
-	public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int maxHeight, int fontSizeCjk, int fontSize, int padding, Font font, Font fontCjk) {
+	public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int fontSize, int padding, Font font) {
         if (maxWidth <= 0) {
             dimensions[0] = 0;
             dimensions[1] = 0;

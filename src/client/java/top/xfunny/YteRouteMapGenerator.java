@@ -16,7 +16,7 @@ public class YteRouteMapGenerator implements IGui {
 	private static int fontSizeBig;
 	private static int fontSizeSmall;
 
-	public static NativeImage generateImage(String text, int textColor, Font font, Font fontCjk,int fontSize,int fontSizeCjk,int padding) {
+	public static NativeImage generateImage(String text, int textColor, Font font,int fontSize,int padding) {
 		scale = (int) Math.pow(2, Config.getClient().getDynamicTextureResolution() + 5);
         lineSize = scale / 8;
         fontSizeBig = lineSize * 2;
@@ -29,12 +29,9 @@ public class YteRouteMapGenerator implements IGui {
             final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH),
                     dimensions,
                     90,
-                    height,
-                    fontSizeSmall*fontSizeCjk,
                     fontSizeSmall*fontSize,
                     padding,
-                    font,
-                    fontCjk);//fontsize：字体大小
+                    font);
             if (TextureCache.instance.totalWidth > scale * 1.5F) {
                 totalWidth = TextureCache.instance.totalWidth;
                 Init.LOGGER.info("超出范围width"+totalWidth);
