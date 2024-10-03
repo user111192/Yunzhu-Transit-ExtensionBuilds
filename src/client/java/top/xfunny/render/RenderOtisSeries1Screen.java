@@ -103,7 +103,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0, -0.375F, 0.16F, 0.2F, Direction.UP, light);
+				IDrawing.drawTexture(graphicsHolder, 0, -0.375F, width, 0.25F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 
