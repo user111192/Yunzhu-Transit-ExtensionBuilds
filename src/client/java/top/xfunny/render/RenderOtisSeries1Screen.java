@@ -103,7 +103,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0, -0.375F, width, 0.25F, Direction.UP, light);
+				IDrawing.drawTexture(graphicsHolder, 0.0125F, -0.365F, 0.225F, 0.225F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 
@@ -142,7 +142,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			int totalWidth = TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).width;
 			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, -width + 1F, y + 0.377F, width1/2, height1/2, 0, 0, (float) 210 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, -width + 0.975F, y + 0.355F, width1/1.5F, height1/1.5F, 0, 0, (float) 210 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
 				graphicsHolder.pop();
 			});
 
