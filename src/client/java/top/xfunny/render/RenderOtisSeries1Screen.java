@@ -118,12 +118,12 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 
 				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
+				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count,0.2F);
 
 			}
 		}
 	}
-	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
+	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final String floorNumber = liftDetails.right().left();
@@ -136,13 +136,17 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 
 
 
+
 		// 渲染楼层信息
 		if (!noFloorNumber || !noFloorDisplay) {
 			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : ""); // 合并楼层信息文本
 			int totalWidth = TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).width;
+			int maxWidth = text.length()>=2? 210:104;
+			float textureWidth = text.length()>=2? 0.13F:0.13F/2;
+			float x =text.length()>=2?-width+0.98F:-width+1.04F;
 			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, -width + 1F, y + 0.377F, width1/2, height1/2, 0, 0, (float) 210 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, x, y + 0.375F, textureWidth, 0.12F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
 				graphicsHolder.pop();
 			});
 

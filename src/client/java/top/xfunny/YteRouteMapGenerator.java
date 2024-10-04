@@ -32,13 +32,10 @@ public class YteRouteMapGenerator implements IGui {
                     fontSizeSmall*fontSize,
                     padding,
                     font);
-            if (TextureCache.instance.totalWidth > scale * 1.5F) {
+
                 totalWidth = TextureCache.instance.totalWidth;
-                Init.LOGGER.info("超出范围width"+totalWidth);
-            } else {
-                totalWidth = Math.round(scale * 1.5F);
-                Init.LOGGER.info("未超出范围width"+totalWidth+"TextureCache.instance.totalWidth:"+TextureCache.instance.totalWidth);
-            }
+
+
             Init.LOGGER.info("scale:"+scale);
             Init.LOGGER.info("width"+totalWidth+"|height"+height);
             final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
