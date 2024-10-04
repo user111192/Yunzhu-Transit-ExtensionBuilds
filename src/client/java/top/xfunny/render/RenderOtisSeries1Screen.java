@@ -30,10 +30,6 @@ import top.xfunny.util.ReverseRendering;
 import java.util.Comparator;
 
 public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Screen.BlockEntity> implements DirectionHelper, IGui, IBlock {
-
-	private static final float ARROW_SPEED = 0.04F;
-	private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_arrow.png");
-	private Lift lift = null;
 	public RenderOtisSeries1Screen(Argument dispatcher) {
 		super(dispatcher);
 	}
@@ -146,11 +142,9 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			float x =text.length()>=2?-width+0.98F:-width+1.04F;
 			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
-<<<<<<< HEAD
-				IDrawing.drawTexture(graphicsHolder, x, y + 0.375F, textureWidth, 0.12F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
-=======
-				IDrawing.drawTexture(graphicsHolder, -width + 0.975F, y + 0.355F, width1/1.5F, height1/1.5F, 0, 0, (float) 210 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
->>>>>>> bafa4cd813579e35e1baeba44ed5d4c8e5010d85
+
+				IDrawing.drawTexture(graphicsHolder, x, y + 0.372F, textureWidth, 0.12F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+
 				graphicsHolder.pop();
 			});
 
