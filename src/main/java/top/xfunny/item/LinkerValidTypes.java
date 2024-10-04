@@ -16,6 +16,7 @@ public class LinkerValidTypes {
             OtisSeries1Screen.class,
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
-            SchindlerDSeriesD2Button.class
+            SchindlerDSeriesD2Button.class,
+            SchindlerMSeriesPushButton.class
     ));
 }

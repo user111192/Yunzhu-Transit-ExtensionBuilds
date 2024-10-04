@@ -143,7 +143,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 
-				IDrawing.drawTexture(graphicsHolder, x, y + 0.372F, textureWidth, 0.12F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, x - 0.04F, y + 0.365F, textureWidth, 0.12F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
 
 				graphicsHolder.pop();
 			});
