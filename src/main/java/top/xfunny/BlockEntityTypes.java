@@ -17,7 +17,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Screen.BlockEntity> OTIS_SERIES_1_SCREEN_1;
     public static final BlockEntityTypeRegistryObject<SchindlerDSeriesD2Button.BlockEntity> SCHINDLER_D_SERIES_D2BUTTON;
-    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesPushButton.BlockEntity> SCHINDLER_M_SERIES_PUSHBUTTON;
+    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesButton.BlockEntity> SCHINDLER_M_SERIES_BUTTON;
 
 
     static {
@@ -29,7 +29,7 @@ public class BlockEntityTypes {
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_2::get);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), OtisSeries1Screen.BlockEntity::new, Blocks.OTIS_SERIES_1_SCREEN_1::get);
         SCHINDLER_D_SERIES_D2BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_d_series_d2button.json"), SchindlerDSeriesD2Button.BlockEntity::new, Blocks.SCHINDLER_D_SERIES_D2BUTTON::get);
-        SCHINDLER_M_SERIES_PUSHBUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_pushbutton.json"), SchindlerMSeriesPushButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_PUSHBUTTON::get);
+        SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_pushbutton.json"), SchindlerMSeriesButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_BUTTON::get);
     }
 
     public static void init() {

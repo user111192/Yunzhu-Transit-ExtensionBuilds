@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"1": "yte:block/metal",
-		"2": "yte:block/panel-back3",
+		"2": "yte:block/panel",
 		"particle": "yte:block/metal"
 	},
 	"elements": [

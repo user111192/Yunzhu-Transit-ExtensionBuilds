@@ -10,20 +10,20 @@ import top.xfunny.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class SchindlerMSeriesPushButton extends LiftButtonsBase {
-    public SchindlerMSeriesPushButton()
+public class SchindlerMSeriesButton extends LiftButtonsBase {
+    public SchindlerMSeriesButton()
     {
         super();
     }
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(5, 0, 0, 11, 10, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(5, 0, 0, 11, 8, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SchindlerMSeriesPushButton.BlockEntity(blockPos, blockState);
+        return new SchindlerMSeriesButton.BlockEntity(blockPos, blockState);
     }
     @Override
     public void addBlockProperties(List<HolderBase<?>> properties) {
@@ -32,7 +32,7 @@ public class SchindlerMSeriesPushButton extends LiftButtonsBase {
     }
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.SCHINDLER_M_SERIES_PUSHBUTTON.get(), pos, state);
+            super(BlockEntityTypes.SCHINDLER_M_SERIES_BUTTON.get(), pos, state);
         }
     }
 }

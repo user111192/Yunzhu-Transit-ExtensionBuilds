@@ -18,26 +18,27 @@ import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
-import top.xfunny.block.SchindlerMSeriesPushButton;
+import top.xfunny.block.SchindlerMSeriesButton;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<SchindlerMSeriesPushButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerMSeriesButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR =  0xFFDD0000;
+	private static final int HOVER_COLOR =  0xFFFF9999;
 	private static final int PRESSED_COLOR = 0xFFFF0000;
-	private static final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_pushbutton_up.png");
-	private static final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_pushbutton_up.png");
-    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_pushbutton_light.png");
-	public RenderSchindlerMSeriesPushButton(Argument dispatcher) {
+	private static final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_button_up.png");
+	private static final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_button_down.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_button_light.png");
+	private static final Identifier LOGO = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_logo_1.png");
+	public RenderSchindlerMSeriesButton(Argument dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(SchindlerMSeriesPushButton.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
+	public void render(SchindlerMSeriesButton.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -78,7 +79,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			SchindlerMSeriesPushButton.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
+			SchindlerMSeriesButton.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
@@ -105,7 +106,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
 		final boolean lookingAtTopHalf;
 		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, SchindlerMSeriesPushButton.UNLOCKED)) {
+		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, SchindlerMSeriesButton.UNLOCKED)) {
 			lookingAtTopHalf = false;
 			lookingAtBottomHalf = false;
 		} else {
@@ -128,6 +129,33 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 			graphicsHolder.translate(0, 0, 0.4958 - SMALL_OFFSET);
 		});
 
+		//schindler logo
+		MainRenderer.scheduleRender(
+				LOGO,
+				false,
+				QueuedRenderLayer.EXTERIOR,
+				(graphicsHolder, offset) -> {
+					storedMatrixTransformations2.transform(graphicsHolder, offset);
+					IDrawing.drawTexture(
+								graphicsHolder,
+								-2.8F / 16,
+								5.42F / 16,
+								0.16F / 16,
+								2.56F / 16,
+								1,
+								1,
+								0,
+								0,
+								facing,
+								ARGB_WHITE,
+								light
+						);
+					graphicsHolder.pop();
+				}
+		);
+
+
+
 		// 根据按钮状态渲染按钮
 		// 第一个按钮的渲染逻辑
 		if (buttonStates[0]) {
@@ -142,16 +170,16 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 27,
-								(float) ((buttonStates[0] ? 5.5F : 4F) / 16.125F),
-								2F / 27,
-								2F / 224,
-								0,
-								0,
+								-1.0F / 16,
+								(buttonStates[1] ? 1.5F : 3F) / 16,
+								2F / 16,
+								2F / 16,
 								1,
 								1,
+								0,
+								0,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFFF5547A,
+								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : 0xFF878787,
 								light
 						);
 						// 弹出当前图形状态
@@ -159,7 +187,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 					}
 			);
 			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE_UP,
+					BUTTON_TEXTURE_DOWN,
 					false,
 					QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
@@ -168,14 +196,14 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 21,
-								(buttonStates[1] ? 2.5F : 4F) / 18F,
-								2F / 21,
-								2F / 32,
-								0,
-								0,
+								-1.0F / 16,
+								(buttonStates[1] ? 1.5F : 3F) / 16,
+								2F / 16,
+								2F / 16,
 								1,
 								1,
+								0,
+								0,
 								facing,
 								ARGB_WHITE,
 								light
@@ -198,16 +226,16 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 27,
-								(float) ((buttonStates[0] ? 5.5F : 4F) / 30.125F),
-								2F / 27,
-								2F / 224,
+								-1.0F / 16,
+								(buttonStates[0] ? 4.5F : 3F) / 16,
+								2F / 16,
+								2F / 16,
+								1,
+								1,
 								0,
-								1,
-								1,
 								0,
 								facing,
-								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFFF5547A,
+								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : 0xFF878787,
 								light
 						);
 						// 弹出当前图形状态
@@ -224,13 +252,13 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 21,
-                                (float) ((buttonStates[0] ? 5.5F : 4F) / 18.5),
-								2F / 21,
-								2F / 32,
+								-1.0F / 16,
+								(buttonStates[0] ? 4.5F : 3F) / 16,
+								2F / 16,
+								2F / 16,
+								1,
+								1,
 								0,
-								1,
-								1,
 								0,
 								facing,
 								ARGB_WHITE,
