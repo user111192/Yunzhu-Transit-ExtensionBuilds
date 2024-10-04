@@ -13,6 +13,7 @@ public class FontList {
 	Font otis_series1;
 	Font testfont;
 	Font koneModernization;
+	Font schindler_m_series;
 
 	public void FontReload(){
 		font1 = null;
@@ -56,6 +57,15 @@ public class FontList {
 
 		while (koneModernization == null) {
 			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/kone-modernization.ttf"), inputStream -> {
+				try {
+					koneModernization = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+				} catch (Exception e) {
+					Init.LOGGER.error("", e);
+				}
+			});
+		}
+		while (schindler_m_series == null) {
+			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler_mseries_font.ttf"), inputStream -> {
 				try {
 					koneModernization = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				} catch (Exception e) {

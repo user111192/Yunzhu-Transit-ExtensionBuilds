@@ -27,7 +27,7 @@ import java.util.Comparator;
 
 public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<SchindlerMSeriesPushButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR =  0xFF90FF90;
+	private static final int HOVER_COLOR =  0xFFDD0000;
 	private static final int PRESSED_COLOR = 0xFFFF0000;
 	private static final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_pushbutton_up.png");
 	private static final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_pushbutton_up.png");
@@ -142,10 +142,10 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 4,
-								(buttonStates[1] ? 2.5F : 4F) / 16,
-								2F / 32,
-								2F / 128,
+								-1.0F / 27,
+								(float) ((buttonStates[0] ? 5.5F : 4F) / 16.125F),
+								2F / 27,
+								2F / 224,
 								0,
 								0,
 								1,
@@ -159,7 +159,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 					}
 			);
 			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE_DOWN,
+					BUTTON_TEXTURE_UP,
 					false,
 					QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
@@ -169,7 +169,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.0F / 21,
-								(buttonStates[1] ? 2.5F : 4F) / 20,
+								(buttonStates[1] ? 2.5F : 4F) / 18F,
 								2F / 21,
 								2F / 32,
 								0,
@@ -198,10 +198,10 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.0F / 4,
-								(buttonStates[0] ? 5.5F : 4F) / 16,
-								2F / 32,
-								2F / 128,
+								-1.0F / 27,
+								(float) ((buttonStates[0] ? 5.5F : 4F) / 30.125F),
+								2F / 27,
+								2F / 224,
 								0,
 								1,
 								1,
@@ -225,7 +225,7 @@ public class RenderSchindlerMSeriesPushButton extends BlockEntityRenderer<Schind
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.0F / 21,
-								(buttonStates[0] ? 5.5F : 4F) / 16,
+                                (float) ((buttonStates[0] ? 5.5F : 4F) / 18.5),
 								2F / 21,
 								2F / 32,
 								0,
