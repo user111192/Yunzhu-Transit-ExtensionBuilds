@@ -20,6 +20,8 @@ public class Blocks {
     public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_D2BUTTON;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_BUTTON;
+    public static final BlockRegistryObject SCHINDLER_M_SERIES_TOUCH_BUTTON;
+    public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_1;
 
 
     static {
@@ -33,6 +35,8 @@ public class Blocks {
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), () -> new Block(new OtisSeries1Screen()), CreativeModeTabs.ESCALATORS_LIFTS);
         SCHINDLER_D_SERIES_D2BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_d2button"), () -> new Block(new SchindlerDSeriesD2Button()), CreativeModeTabs.ESCALATORS_LIFTS);
         SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_button"), () -> new Block(new SchindlerMSeriesButton()), CreativeModeTabs.ESCALATORS_LIFTS);
+        SCHINDLER_M_SERIES_TOUCH_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_touch_button"), () -> new Block(new SchindlerMSeriesTouchButton()), CreativeModeTabs.ESCALATORS_LIFTS);
+        SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), () -> new Block(new SchindlerMSeriesScreen1()), CreativeModeTabs.ESCALATORS_LIFTS);
 
 
 

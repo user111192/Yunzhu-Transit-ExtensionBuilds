@@ -17,6 +17,8 @@ public class LinkerValidTypes {
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             SchindlerDSeriesD2Button.class,
-            SchindlerMSeriesButton.class
+            SchindlerMSeriesButton.class,
+            SchindlerMSeriesTouchButton.class,
+            SchindlerMSeriesScreen1.class
     ));
 }
