@@ -6,40 +6,36 @@ import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
-import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.YteRouteMapGenerator;
-import top.xfunny.block.OtisSeries1Button;
 import top.xfunny.block.TestLiftHallLanterns;
+import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.resource.TextureList;
-import top.xfunny.TextureCache;
 import top.xfunny.util.GetLiftDetails;
-import top.xfunny.util.ReverseRendering;
+
 import java.util.Comparator;
+import java.util.Objects;
 
 public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR = 0xFFADD8E6;
 	private static final int PRESSED_COLOR = 0xFF0000FF;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
 	private static String CurrentFloorNumber = "";
+
+
 
 	public RenderTestLiftHallLanterns(Argument dispatcher) {
 		super(dispatcher);
@@ -95,23 +91,38 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
 				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 				CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
-				ObjectArraySet<LiftDirection> isDestinationLevel = lift.hasInstruction(lift.getFloorIndex(top.xfunny.Init.blockPosToPosition(trackPosition)));
 
-				top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
-				top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));
-				top.xfunny.Init.LOGGER.info("isDestinationLevel:"+isDestinationLevel);
-//todo:目标外呼blockstates[]
+				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+				String floorNumber = liftDetails.right().left();
+				LiftDirection buttonDirection = LiftButtonsBase.getButtonDirection();
 
-				instructionDirections.forEach(liftDirection -> {
-					switch (liftDirection) {
+				//top.xfunny.Init.LOGGER.info("liftDetails:"+liftDetails);
+
+				//top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
+				//top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));
+				//top.xfunny.Init.LOGGER.info("isDestinationLevel:"+isDestinationLevel);
+				//top.xfunny.Init.LOGGER.info("buttondirection:"+LiftButtonsBase.getButtonDirection());
+
+
+
+
+
+
+					switch (buttonDirection) {
 						case DOWN:
-							buttonStates[2] = true;
+							if(Objects.equals(CurrentFloorNumber, floorNumber)){
+								buttonStates[2] = true;
+								//top.xfunny.Init.LOGGER.info("down");
+							}
 							break;
 						case UP:
-							buttonStates[3] = true;
+							if(Objects.equals(CurrentFloorNumber, floorNumber)){
+								buttonStates[3] = true;
+								//top.xfunny.Init.LOGGER.info("up");
+							}
 							break;
 					}
-				});
+
 			});
 		});
 		//top.xfunny.Init.LOGGER.info("sortedPositionsAndLifts:"+sortedPositionsAndLifts);

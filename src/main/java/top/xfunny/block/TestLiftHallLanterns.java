@@ -11,7 +11,7 @@ import top.xfunny.block.base.LiftPanelBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TestLiftHallLanterns extends LiftPanelBase {
+public class TestLiftHallLanterns extends LiftButtonsBase {
 	public TestLiftHallLanterns() {
 		super();
 	}

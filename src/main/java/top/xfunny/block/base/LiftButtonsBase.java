@@ -14,15 +14,27 @@ import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
+import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
 	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-	final boolean[] buttonStates = {false, false};
+	public static LiftDirection liftDirection = NONE;
+	private static final Queue<LiftDirection> directionQueue = new LinkedList<>();
+	private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+	private static LiftDirection buttonDirection = NONE;
 	public LiftButtonsBase() {
 		super(BlockHelper.createBlockSettings(true));
+		Init.LOGGER.info("LiftButtonsBase init");
 	}
+
 	/**
 	 * 检查电梯轨道位置是否存在上下按钮的客户端方法
 	 * 本方法主要用于确定在给定的电梯轨道位置是否有上下按钮，以及通知相关的回调函数
@@ -52,10 +64,13 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		});
 	}
 
+
+
 	@Nonnull
 	@Override
 	// 处理按钮的使用交互
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+
 		// 检查玩家是否拿着刷子，并尝试更新按钮状态
 		final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
 			final org.mtr.mapping.holder.BlockEntity entity = world.getBlockEntity(pos);
@@ -89,17 +104,28 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 						final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
 						if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
 							// 检查并记录上下按钮状态
-
+							final boolean[] buttonStates = {false, false};
 							((LiftButtonsBase.BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
 									LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
 									}));
 
 							// 根据按钮状态决定电梯方向
-							final LiftDirection liftDirection;
+
 							if (buttonStates[0] && buttonStates[1]) {
 								liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
+								if(hitY<0.25){
+									setLiftDirection(LiftDirection.DOWN);
+								}else{
+									setLiftDirection(LiftDirection.UP);
+								}
+
 							} else {
 								liftDirection = buttonStates[0] ? LiftDirection.DOWN : LiftDirection.UP;
+								if(buttonStates[0]){
+									setLiftDirection(LiftDirection.DOWN);
+								}else{
+									setLiftDirection(LiftDirection.UP);
+								}
 							}
 
 							// 创建并发送按电梯按钮事件
@@ -107,7 +133,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 							((LiftButtonsBase.BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
 									pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection));
 							InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
-
 							return ActionResult.SUCCESS;
 						} else {
 							return ActionResult.FAIL;
@@ -121,6 +146,38 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 			}
 		}
 	}
+
+	public static LiftDirection setLiftDirection(LiftDirection direction) {
+		directionQueue.add(direction);
+		updateLiftDirection();
+		return direction;
+	}
+
+	public static void scheduleQueueUpdate() {
+		executor.scheduleAtFixedRate(LiftButtonsBase::updateQueue, 5, 5, TimeUnit.SECONDS);
+	}
+
+	private static void updateQueue() {
+		if (!directionQueue.isEmpty()) {
+			directionQueue.poll();
+			updateLiftDirection();
+		}else{
+			buttonDirection = NONE;
+		}
+	}
+
+	private static void updateLiftDirection() {
+		if (!directionQueue.isEmpty()) {
+			buttonDirection = directionQueue.peek();
+		}
+		Init.LOGGER.info(String.valueOf(directionQueue));
+		Init.LOGGER.info(String.valueOf(buttonDirection));
+	}
+
+	public static LiftDirection getButtonDirection() {
+		return buttonDirection;
+	}
+
 
 	@Override
 	public BlockState getPlacementState2(ItemPlacementContext ctx) {
