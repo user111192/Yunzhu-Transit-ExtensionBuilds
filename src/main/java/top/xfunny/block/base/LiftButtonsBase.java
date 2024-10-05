@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
 	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+	final boolean[] buttonStates = {false, false};
 	public LiftButtonsBase() {
 		super(BlockHelper.createBlockSettings(true));
 	}
@@ -88,7 +89,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 						final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
 						if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
 							// 检查并记录上下按钮状态
-							final boolean[] buttonStates = {false, false};
+
 							((LiftButtonsBase.BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
 									LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
 									}));

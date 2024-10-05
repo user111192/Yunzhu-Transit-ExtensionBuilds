@@ -101,7 +101,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
 
 		// Sort list and only render the two closest lifts
 		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
-
+        //top.xfunny.Init.LOGGER.info("sortedPositionsAndLifts: " + sortedPositionsAndLifts);
 		// Check whether the player is looking at the top or bottom button
 		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
 		final boolean lookingAtTopHalf;

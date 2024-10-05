@@ -67,7 +67,7 @@ public class FontList {
 		while (schindler_m_series == null) {
 			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler_mseries_font.ttf"), inputStream -> {
 				try {
-					koneModernization = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+					schindler_m_series = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				} catch (Exception e) {
 					Init.LOGGER.error("", e);
 				}
