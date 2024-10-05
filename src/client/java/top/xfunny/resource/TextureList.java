@@ -18,6 +18,6 @@ public class TextureList {
 		return TextureCache.instance.getResource(String.format("otis_series1_screen_display_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.koneModernization,8,0), TextureCache.DefaultRenderingColor.BLACK);
 	}
 	public TextureCache.DynamicResource getSchindlerMSeriesScreen1Display(String originalText, int textColor) {
-		return TextureCache.instance.getResource(String.format("schindler_m_series_screen_1_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.schindler_m_series,8,0), TextureCache.DefaultRenderingColor.BLACK);
+		return TextureCache.instance.getResource(String.format("schindler_m_series_screen_1_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.schindler_m_series,10,0), TextureCache.DefaultRenderingColor.BLACK);
 	}
 }
