@@ -2,6 +2,7 @@ package top.xfunny;
 
 import org.mtr.mapping.holder.Block;
 import org.mtr.mapping.holder.Identifier;
+import org.mtr.mapping.mapper.BlockHelper;
 import org.mtr.mapping.registry.BlockRegistryObject;
 import org.mtr.mod.CreativeModeTabs;
 
@@ -22,6 +23,9 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_M_SERIES_BUTTON;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_TOUCH_BUTTON;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_1;
+    public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_ENTRANCE;
+    public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_EXIT;
+    public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_BARE;
 
 
     static {
@@ -37,6 +41,9 @@ public class Blocks {
         SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_button"), () -> new Block(new SchindlerMSeriesButton()), CreativeModeTabs.ESCALATORS_LIFTS);
         SCHINDLER_M_SERIES_TOUCH_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_touch_button"), () -> new Block(new SchindlerMSeriesTouchButton()), CreativeModeTabs.ESCALATORS_LIFTS);
         SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), () -> new Block(new SchindlerMSeriesScreen1()), CreativeModeTabs.ESCALATORS_LIFTS);
+        PAT_P01_TICKET_BARRIER_ENTRANCE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_entrance"), () -> new Block(new PATTicketBarrier(true)), CreativeModeTabs.RAILWAY_FACILITIES);
+        PAT_P01_TICKET_BARRIER_EXIT = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_exit"), () -> new Block(new PATTicketBarrier(false)), CreativeModeTabs.RAILWAY_FACILITIES);
+        PAT_P01_TICKET_BARRIER_BARE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_bare"), () -> new Block(new PATTicketBarrierBareBlock(BlockHelper.createBlockSettings(false).strength(4.0f).nonOpaque())), CreativeModeTabs.RAILWAY_FACILITIES);
 
 
 
