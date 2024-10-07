@@ -56,7 +56,7 @@ public class TestLiftButtons extends LiftButtonsBase {
 	 */
 	public static class BlockEntity extends BlockEntityBase {
 		public BlockEntity(BlockPos pos, BlockState state) {
-			super(top.xfunny.BlockEntityTypes.TEST_LIFT_BUTTONS.get(), pos, state);
+			super(top.xfunny.BlockEntityTypes.TEST_LIFT_BUTTONS.get(), pos, state, false);
 		}
 	}
 

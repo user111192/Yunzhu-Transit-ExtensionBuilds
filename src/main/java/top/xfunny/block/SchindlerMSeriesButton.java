@@ -32,7 +32,7 @@ public class SchindlerMSeriesButton extends LiftButtonsBase {
     }
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.SCHINDLER_M_SERIES_BUTTON.get(), pos, state);
+            super(BlockEntityTypes.SCHINDLER_M_SERIES_BUTTON.get(), pos, state, false);
         }
     }
 }

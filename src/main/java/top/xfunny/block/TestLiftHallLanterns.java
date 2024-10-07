@@ -5,15 +5,17 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
-import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.block.base.LiftPanelBase;
+import top.xfunny.block.base.LiftHallLanternsBase;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TestLiftHallLanterns extends LiftButtonsBase {
+public class TestLiftHallLanterns extends LiftHallLanternsBase {
 	public TestLiftHallLanterns() {
 		super();
+
+
+
 	}
 
 	@Nonnull
@@ -54,6 +56,7 @@ public class TestLiftHallLanterns extends LiftButtonsBase {
 	public static class BlockEntity extends BlockEntityBase {
 		public BlockEntity(BlockPos pos, BlockState state) {
 			super(BlockEntityTypes.TEST_LIFT_HALL_LANTERNS.get(), pos, state);
+
 		}
 	}
 }

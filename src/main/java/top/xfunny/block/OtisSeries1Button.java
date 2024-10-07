@@ -42,7 +42,7 @@ public class OtisSeries1Button extends LiftButtonsBase {
 
 	public static class BlockEntity extends BlockEntityBase {
 		public BlockEntity(BlockPos pos, BlockState state) {
-			super(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1.get(), pos, state);
+			super(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1.get(), pos, state, false);
 		}
 	}
 }

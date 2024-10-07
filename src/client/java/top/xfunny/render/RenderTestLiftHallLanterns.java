@@ -4,7 +4,6 @@ package top.xfunny.render;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
@@ -21,7 +20,6 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.TestLiftHallLanterns;
-import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.util.GetLiftDetails;
@@ -33,7 +31,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 
 	private static final int PRESSED_COLOR = 0xFF0000FF;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
-	private static String CurrentFloorNumber = "";
+
 
 
 
@@ -89,40 +87,43 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
 				// 这里使用lambda表达式来处理按钮状态的逻辑
 				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
-				CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
-
+				String CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
 				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 				String floorNumber = liftDetails.right().left();
-				LiftDirection buttonDirection = LiftButtonsBase.getButtonDirection();
+				LiftDirection buttonDirection = blockEntity.getButtonDirection();
 
 				//top.xfunny.Init.LOGGER.info("liftDetails:"+liftDetails);
-
 				//top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
 				//top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));
 				//top.xfunny.Init.LOGGER.info("isDestinationLevel:"+isDestinationLevel);
 				//top.xfunny.Init.LOGGER.info("buttondirection:"+LiftButtonsBase.getButtonDirection());
+				//top.xfunny.Init.LOGGER.info("doorvalue:"+lift.getDoorValue());
 
-
-
-
-
-
+				if(lift.getDoorValue()!=0) {
 					switch (buttonDirection) {
 						case DOWN:
-							if(Objects.equals(CurrentFloorNumber, floorNumber)){
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
 								buttonStates[2] = true;
-								//top.xfunny.Init.LOGGER.info("down");
+								top.xfunny.Init.LOGGER.info("down");
+								blockEntity.setLanternMark(true);
 							}
 							break;
 						case UP:
-							if(Objects.equals(CurrentFloorNumber, floorNumber)){
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
 								buttonStates[3] = true;
-								//top.xfunny.Init.LOGGER.info("up");
+								top.xfunny.Init.LOGGER.info("up");
+								blockEntity.setLanternMark(true);
 							}
 							break;
 					}
+				}else{
 
+					if (blockEntity.getLanternMark()){
+						blockEntity.updateQueue();
+						top.xfunny.Init.LOGGER.info("已关门，清除一个元素");
+						blockEntity.setLanternMark(false);
+					}
+				}
 			});
 		});
 		//top.xfunny.Init.LOGGER.info("sortedPositionsAndLifts:"+sortedPositionsAndLifts);

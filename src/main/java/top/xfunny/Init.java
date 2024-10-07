@@ -17,9 +17,10 @@ public final class Init {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final Registry REGISTRY = new Registry();
 
+
 	public static void init()
 	{
-		LiftButtonsBase.scheduleQueueUpdate();
+
 		Blocks.init();
 		BlockEntityTypes.init();
 		Items.init();
