@@ -19,6 +19,8 @@ public class Blocks {
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
     public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
 
+    public static final BlockRegistryObject LIFT_TRACK_EMPTY_FLOOR;
+
 
     static {
 
@@ -29,6 +31,7 @@ public class Blocks {
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), () -> new Block(new OtisSeries1Button()), CreativeModeTabs.ESCALATORS_LIFTS);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), () -> new Block(new OtisSeries1Button()), CreativeModeTabs.ESCALATORS_LIFTS);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), () -> new Block(new OtisSeries1Screen()), CreativeModeTabs.ESCALATORS_LIFTS);
+        LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "lift_empty_floor"), () -> new Block(new EmptyFloor()), CreativeModeTabs.ESCALATORS_LIFTS);
 
     }
 
