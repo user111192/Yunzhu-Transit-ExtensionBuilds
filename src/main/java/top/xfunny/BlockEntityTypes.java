@@ -1,7 +1,5 @@
 package top.xfunny;
 
-//import com.google.gson.JsonArray;
-//import net.minecraft.resource.ResourceManager;
 import org.mtr.mapping.registry.BlockEntityTypeRegistryObject;
 
 import org.mtr.mapping.holder.Identifier;
@@ -18,6 +16,10 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Screen.BlockEntity> OTIS_SERIES_1_SCREEN_1;
+    public static final BlockEntityTypeRegistryObject<SchindlerDSeriesD2Button.BlockEntity> SCHINDLER_D_SERIES_D2BUTTON;
+    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesButton.BlockEntity> SCHINDLER_M_SERIES_BUTTON;
+    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesTouchButton.BlockEntity> SCHINDLER_M_SERIES_TOUCH_BUTTON;
+    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen1.BlockEntity> SCHINDLER_M_SERIES_SCREEN_1;
     public static final BlockEntityTypeRegistryObject<EmptyFloor.BlockEntity> LIFT_TRACK_EMPTY_FLOOR;
 
 
@@ -29,7 +31,11 @@ public class BlockEntityTypes {
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_1::get);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_2::get);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), OtisSeries1Screen.BlockEntity::new, Blocks.OTIS_SERIES_1_SCREEN_1::get);
-        LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_empty_floor"), EmptyFloor.BlockEntity::new, Blocks.LIFT_TRACK_EMPTY_FLOOR::get);
+        SCHINDLER_D_SERIES_D2BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_d_series_d2button.json"), SchindlerDSeriesD2Button.BlockEntity::new, Blocks.SCHINDLER_D_SERIES_D2BUTTON::get);
+        SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_button.json"), SchindlerMSeriesButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_BUTTON::get);
+        SCHINDLER_M_SERIES_TOUCH_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_touch_button.json"), SchindlerMSeriesTouchButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_TOUCH_BUTTON::get);
+        SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), SchindlerMSeriesScreen1.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_1::get);
+        LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), EmptyFloor.BlockEntity::new, Blocks.LIFT_TRACK_EMPTY_FLOOR::get);
     }
 
     public static void init() {

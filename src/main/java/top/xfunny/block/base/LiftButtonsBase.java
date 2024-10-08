@@ -179,8 +179,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 									pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection));
 							InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
 							return ActionResult.SUCCESS;
-						} else {
-							return ActionResult.FAIL;
 						}
 					}
 
@@ -212,7 +210,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
 		// 用于在CompoundTag中标识地板位置数组的键
 		private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
-		private static final String KEY_BUTTON_FLOOR_POS = "button_floor_pos";
+		private static final String KEY_LANTERN_FLOOR_POS = "lantern_floor_pos";
 		// 存储需要追踪的位置的集合
 		private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
 		private final ObjectOpenHashSet<BlockPos> lanternPositions = new ObjectOpenHashSet<>();
@@ -304,7 +302,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 			for (final long position : compoundTag.getLongArray(KEY_TRACK_FLOOR_POS)) {
 				trackPositions.add(BlockPos.fromLong(position));
 			}
-			for (final long position : compoundTag.getLongArray(KEY_BUTTON_FLOOR_POS)) {
+			for (final long position : compoundTag.getLongArray(KEY_LANTERN_FLOOR_POS)) {
 				lanternPositions.add(BlockPos.fromLong(position));
 			}
 		}
@@ -329,7 +327,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 			// 将收集到的trackPositions长整型列表以数组的形式存储到compoundTag中
 			// 使用的键是KEY_TRACK_FLOOR_POS，值是trackPositionsList数组
 			compoundTag.putLongArray(KEY_TRACK_FLOOR_POS, trackPositionsList);
-			compoundTag.putLongArray(KEY_BUTTON_FLOOR_POS, lanternPositionsList);
+			compoundTag.putLongArray(KEY_LANTERN_FLOOR_POS, lanternPositionsList);
 		}
 
 		/**
@@ -371,6 +369,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 				connectedLantern = false;
 				Init.LOGGER.info("已移除到站灯");
 			}
+			markDirty2();
 		}
 
 		/**
@@ -384,6 +383,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		public void forEachTrackPosition(Consumer<BlockPos> consumer) {
 			trackPositions.forEach(consumer);
 		}
+
 
 
 	}

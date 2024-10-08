@@ -5,9 +5,8 @@ import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
-
 import org.mtr.mod.client.MinecraftClientData;
-import org.mtr.mod.packet.PacketPressLiftButton;
+import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 
@@ -21,11 +20,8 @@ import java.util.function.Consumer;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftHallLanternsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
-    public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
 	public static LiftDirection liftDirection = NONE;
-
-
-
 	private static LiftDirection buttonDirection = NONE;
 	public LiftHallLanternsBase() {
 		super(BlockHelper.createBlockSettings(true));
@@ -86,15 +82,18 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		return getDefaultState2().with(new Property<>(FACING.data), facing.data);
 	}
 
-	public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry {
+	public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
 
 
 
 		// 用于在CompoundTag中标识地板位置数组的键
 		private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
+		private static final String KEY_BUTTON_FLOOR_POS = "button_floor_pos";
+		private static final String KEY_BUTTON_DIRECTION = "button_direction";
 		// 存储需要追踪的位置的集合
+		private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
 		private final ObjectOpenHashSet<BlockPos> buttonPositions = new ObjectOpenHashSet<>();
-		private final Queue<LiftDirection> directionQueue = new LinkedList<>();
+		public final Queue<LiftDirection> directionQueue = new LinkedList<>();
 		private boolean lanternMark = false;
 		private boolean connectedButton;
 
@@ -121,53 +120,53 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 
 		public LiftDirection setLiftDirection(LiftDirection direction) {
 			directionQueue.add(direction);
-			Init.LOGGER.info("setLiftDirection()");
+			Init.LOGGER.info("LiftHallLanternBase,setLiftDirection():"+directionQueue);
 			updateLiftDirection();
 			return direction;
 		}
 
 		public void updateQueue() {
-			Init.LOGGER.info("updateQueue()");
 			if (!directionQueue.isEmpty()) {
 				directionQueue.poll();
 				updateLiftDirection();
-				Init.LOGGER.info("updateQueue()时不为空");
+				Init.LOGGER.info("LiftHallLanternBase,updateQueue()时不为空");
 			} else {
-				//buttonDirection = LiftDirection.NONE;
-				Init.LOGGER.info("updateQueue()时为空");
-				Init.LOGGER.info("directionQueue"+directionQueue);
+				buttonDirection = LiftDirection.NONE;
+				Init.LOGGER.info("LiftHallLanternBase,updateQueue()时为空");
 			}
 		}
 
 
 		private  void updateLiftDirection() {
 			if (!directionQueue.isEmpty()) {
-				Init.LOGGER.info("更新方向时direction不为空");
 				buttonDirection = directionQueue.peek();
-			}else{
-				Init.LOGGER.info("更新方向时为空");
+				Init.LOGGER.info("LiftHallLanternBase,updateLiftDirection():"+buttonDirection);
 			}
-
-
 		}
 
 		public  LiftDirection getButtonDirection() {
+			//Init.LOGGER.info("LiftHallLanternBase,getButtonDirection():"+buttonDirection);
 			return buttonDirection;
 		}
 
 		/**
-		 * 从CompoundTag中读取数据，用于加载位置信息到buttonPositions集合中
+		 * 从CompoundTag中读取数据，用于加载位置信息到trackPositions集合中
 		 *
 		 * @param compoundTag 包含方块实体数据的CompoundTag
 		 */
 		@Override
 		public void readCompoundTag(CompoundTag compoundTag) {
+			Init.LOGGER.info("LiftHallLanternBase,readCompoundTag()");
 			// 清空当前位置集合，准备加载新的数据
+			trackPositions.clear();
 			buttonPositions.clear();
 
 			// 从CompoundTag中读取名为KEY_TRACK_FLOOR_POS的长整型数组
-			// 每个长整型代表一个BlockPos位置，将其转换并添加到buttonPositions集合中
+			// 每个长整型代表一个BlockPos位置，将其转换并添加到trackPositions集合中
 			for (final long position : compoundTag.getLongArray(KEY_TRACK_FLOOR_POS)) {
+				trackPositions.add(BlockPos.fromLong(position));
+			}
+			for (final long position : compoundTag.getLongArray(KEY_BUTTON_FLOOR_POS)) {
 				buttonPositions.add(BlockPos.fromLong(position));
 			}
 		}
@@ -180,16 +179,19 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		 */
 		@Override
 		public void writeCompoundTag(CompoundTag compoundTag) {
-			// 创建一个临时的List，用于存储buttonPositions的长整型表示
+			// 创建一个临时的List，用于存储trackPositions的长整型表示
+			final List<Long> trackPositionsList = new ArrayList<>();
 			final List<Long> buttonPositionsList = new ArrayList<>();
 
-			// 遍历buttonPositions集合，将每个位置转换为长整型并添加到buttonPositionsList中
+			// 遍历trackPositions集合，将每个位置转换为长整型并添加到trackPositionsList中
 			// 这里的转换是为了以长整型数组的形式存储这些位置信息
+			trackPositions.forEach(position -> trackPositionsList.add(position.asLong()));
 			buttonPositions.forEach(position -> buttonPositionsList.add(position.asLong()));
 
-			// 将收集到的buttonPositions长整型列表以数组的形式存储到compoundTag中
-			// 使用的键是KEY_TRACK_FLOOR_POS，值是buttonPositionsList数组
-			compoundTag.putLongArray(KEY_TRACK_FLOOR_POS, buttonPositionsList);
+			// 将收集到的trackPositions长整型列表以数组的形式存储到compoundTag中
+			// 使用的键是KEY_TRACK_FLOOR_POS，值是trackPositionsList数组
+			compoundTag.putLongArray(KEY_TRACK_FLOOR_POS, trackPositionsList);
+			compoundTag.putLongArray(KEY_BUTTON_FLOOR_POS, buttonPositionsList);
 		}
 
 		/**
@@ -202,15 +204,43 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		public void registerFloor(BlockPos pos, boolean isAdd) {
 			Init.LOGGER.info("正在操作");
 			if (isAdd) {
-				// 如果是添加操作，则将位置添加到跟踪列表中
-				connectedButton = true;
-				Init.LOGGER.info("已添加");
+				if (trackPositions.isEmpty()){
+					// 如果是添加操作，则将位置添加到跟踪列表中
+					trackPositions.add(pos);
+					Init.LOGGER.info("已添加");
+				}else {
+					Init.LOGGER.info("只能连接一个楼层轨道");
+				}
+
 			} else {
 				// 如果是非添加操作，则从跟踪列表中移除该位置
-				connectedButton = false;
+				trackPositions.remove(pos);
 				Init.LOGGER.info("已移除");
 			}
 			// 更新数据状态，标记数据为“脏”，表示需要保存或同步
+			markDirty2();
+		}
+
+		public void registerButton(BlockPos blockPos, boolean isAdd) {
+			Init.LOGGER.info("正在操作");
+			if (isAdd) {
+				if(buttonPositions.isEmpty()){
+					// 如果是添加操作，则将位置添加到跟踪列表中
+					buttonPositions.add(blockPos);
+					connectedButton= true;
+					Init.LOGGER.info("按钮已添加");
+				}else {
+					Init.LOGGER.info("只能连接一个按钮");
+				}
+
+
+			} else {
+				buttonPositions.remove(blockPos);
+				connectedButton= false;
+				Init.LOGGER.info("按钮已移除");
+				Init.LOGGER.info("blockpos:"+blockPos);
+				Init.LOGGER.info("buttonPositions"+buttonPositions);
+			}
 			markDirty2();
 		}
 		/**
@@ -222,6 +252,9 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		 * @param consumer 执行的操作，接受 {@link BlockPos} 作为参数每个轨道位置都将传递给这个操作
 		 */
 		public void forEachTrackPosition(Consumer<BlockPos> consumer) {
+			trackPositions.forEach(consumer);
+		}
+		public void forEachButtonPosition(Consumer<BlockPos> consumer) {
 			buttonPositions.forEach(consumer);
 		}
 	}

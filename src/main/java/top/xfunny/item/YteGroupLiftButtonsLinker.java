@@ -6,8 +6,11 @@ import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.item.ItemBlockClickingBase;
+import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
+import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.block.base.LiftHallLanternsBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -207,25 +210,35 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         return false;
     }
 
-    private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
-        final BlockEntity blockEntity1 = world.getBlockEntity(blockPos1);
-        final BlockEntity blockEntity2 = world.getBlockEntity(blockPos2);
+   	private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
+		final BlockEntity blockEntity1 = world.getBlockEntity(blockPos1);
+		final BlockEntity blockEntity2 = world.getBlockEntity(blockPos2);
 
+		// 合并日志输出，减少信息泄露风险
+		if (blockEntity1 != null && blockEntity2 != null) {
+			Init.LOGGER.info("正在尝试连接 {} 和 {}", blockPos1, blockPos2);
 
-        if (blockEntity1 != null && blockEntity2 != null) {
-            Init.LOGGER.info("正在尝试连接 {} 和 {}", blockPos1, blockPos2);
-            if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
-                if (blockEntity1.data instanceof LiftFloorRegistry) {
-                    ((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos2, isAdd);
-                    Init.LOGGER.info("已成功连接 {} 和 {}", blockPos1, blockPos2);
-                } else {
-                    Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
-                }
-            } else {
-                Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
-            }
-        } else {
-            Init.LOGGER.warn("BlockEntity 为空，无法连接 {} 和 {}", blockPos1, blockPos2);
-        }
-    }
+			// 简化类型检查
+			if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
+				if (blockEntity1.data instanceof LiftFloorRegistry) {
+					((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos2, isAdd);
+					Init.LOGGER.info("已成功连接 {} 和 {}", blockPos1, blockPos2);
+				} else {
+					Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
+				}
+			} else if(blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase){
+				if (blockEntity1.data instanceof LiftHallLanternsBase.BlockEntityBase) {
+					((ButtonRegistry) blockEntity2.data).registerButton(blockPos1, isAdd);
+					((ButtonRegistry) blockEntity1.data).registerButton(blockPos2, isAdd);
+					Init.LOGGER.info("到站灯已成功连接 {} 和 {}", blockPos1.toShortString(), blockPos2.toShortString());
+				} else {
+					Init.LOGGER.info("到站灯未能连接 {} 和 {}", blockPos1, blockPos2);
+				}
+			}else{
+				Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
+			}
+		} else {
+			Init.LOGGER.warn("BlockEntity 为空，无法连接 {} 和 {}", blockPos1, blockPos2);
+		}
+	}
 }
