@@ -66,6 +66,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
 		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
+
 		// 遍历每个轨道位置，进行后续处理
 		blockEntity.forEachTrackPosition(trackPosition -> {
 			// 手持连接器进行连线
@@ -99,6 +100,8 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 				});
 			});
 		});
+
+
 
 		// Sort list and only render the two closest lifts
 		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));

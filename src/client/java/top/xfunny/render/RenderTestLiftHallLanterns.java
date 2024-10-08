@@ -1,9 +1,9 @@
 package top.xfunny.render;
 
+
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
@@ -17,28 +17,30 @@ import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
+import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.OtisSeries1Button;
-import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftHallLanterns;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.util.ReverseRendering;
+import top.xfunny.util.GetLiftDetails;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
-	private static final int HOVER_COLOR = 0xFFA55000;
-	private static final int PRESSED_COLOR = 0xFFD70000;
+
+	private static final int PRESSED_COLOR = 0xFF0000FF;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
+
+
+
 
 	public RenderTestLiftHallLanterns(Argument dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(TestLiftHallLanterns.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
-
+	public void render(TestLiftHallLanterns.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -59,7 +61,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 
 
 		// 定义一个布尔数组，用于记录按钮的状态
-		// 数组顺序：向下按钮存在、向上按钮存在、向下按钮被按下、向上按钮被按下
+		// 数组顺序：0向下按钮存在、1向上按钮存在、2向下按钮被按下、3向上按钮被按下
 		final boolean[] buttonStates = {false, false, false, false};
 
 		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
@@ -79,45 +81,55 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			TestLiftButtons.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
+			TestLiftHallLanterns.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
 				// 这里使用lambda表达式来处理按钮状态的逻辑
 				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
-				instructionDirections.forEach(liftDirection -> {
-					switch (liftDirection) {
+				String CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
+				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+				String floorNumber = liftDetails.right().left();
+				LiftDirection buttonDirection = blockEntity.getButtonDirection();
+
+				//top.xfunny.Init.LOGGER.info("liftDetails:"+liftDetails);
+				//top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
+				//top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));
+				//top.xfunny.Init.LOGGER.info("isDestinationLevel:"+isDestinationLevel);
+				//top.xfunny.Init.LOGGER.info("buttondirection:"+LiftButtonsBase.getButtonDirection());
+				//top.xfunny.Init.LOGGER.info("doorvalue:"+lift.getDoorValue());
+
+				if(lift.getDoorValue()!=0) {
+					switch (buttonDirection) {
 						case DOWN:
-							buttonStates[2] = true;
-							top.xfunny.Init.LOGGER.info("blockstates:"+buttonStates[2]);
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
+								buttonStates[2] = true;
+								top.xfunny.Init.LOGGER.info("down");
+								blockEntity.setLanternMark(true);
+							}
 							break;
 						case UP:
-							buttonStates[3] = true;
-							top.xfunny.Init.LOGGER.info("blockstates:"+buttonStates[3]);
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
+								buttonStates[3] = true;
+								top.xfunny.Init.LOGGER.info("up");
+								blockEntity.setLanternMark(true);
+							}
 							break;
 					}
-				});
+				}else{
+
+					if (blockEntity.getLanternMark()){
+						blockEntity.updateQueue();
+						top.xfunny.Init.LOGGER.info("已关门，清除一个元素");
+						blockEntity.setLanternMark(false);
+					}
+				}
 			});
 		});
+		//top.xfunny.Init.LOGGER.info("sortedPositionsAndLifts:"+sortedPositionsAndLifts);
 
 		// Sort list and only render the two closest lifts
 		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
-
-		// Check whether the player is looking at the top or bottom button
-		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-		final boolean lookingAtTopHalf;
-		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtons.UNLOCKED)) {
-			lookingAtTopHalf = false;
-			lookingAtBottomHalf = false;
-		} else {
-			final Vector3d hitLocation = hitResult.getPos();
-			final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
-			final boolean inBlock = hitY < 0.5 && Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
-			lookingAtTopHalf = inBlock && (!buttonStates[0] || hitY > 0.25);
-			lookingAtBottomHalf = inBlock && (!buttonStates[1] || hitY < 0.25);
-		}
 
 		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
 		storedMatrixTransformations2.add(graphicsHolder -> {
@@ -148,7 +160,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 								1,
 								1,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR : ARGB_GRAY,
+								buttonStates[2] ? PRESSED_COLOR :ARGB_GRAY,
 								light
 						);
 						// 弹出当前图形状态
@@ -164,9 +176,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 					false,
 					QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.5F / 16,
@@ -186,40 +196,6 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 					}
 			);
 		}
-		// 检查排序后的电梯位置列表是否非空
-		if (!sortedPositionsAndLifts.isEmpty()) {
-			// 确定要渲染的电梯数量，最多为2个
-			final int count = Math.min(2, sortedPositionsAndLifts.size());
-			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F : 0.375F;
-
-			// 创建当前矩阵变换的副本以供后续修改
-			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
-			// 添加旋转和平移变换
-			storedMatrixTransformations3.add(graphicsHolder -> {
-				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(-width / 2, 0, 0);
-			});
-
-
-
-			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
-			final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
-			// 遍历要渲染的每个电梯
-			for (int i = 0; i < count; i++) {
-				// 计算当前电梯显示的x位置，考虑反转渲染顺序
-				final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-				// 创建另一个矩阵变换的副本用于当前电梯
-				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				// 添加平移变换以定位电梯显示
-				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
-			}
-		}
 	}
+
 }
-
-
-
-
-
-

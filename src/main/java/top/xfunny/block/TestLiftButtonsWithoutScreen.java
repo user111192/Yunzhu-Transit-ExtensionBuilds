@@ -40,7 +40,7 @@ public class TestLiftButtonsWithoutScreen extends LiftButtonsBase {
 	public static class BlockEntity extends BlockEntityBase {
 
 		public BlockEntity(BlockPos pos, BlockState state) {
-			super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state);
+			super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state, false);
 		}
 	}
 

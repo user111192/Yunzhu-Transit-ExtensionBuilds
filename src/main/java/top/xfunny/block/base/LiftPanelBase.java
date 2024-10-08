@@ -8,6 +8,7 @@ import org.mtr.mod.client.MinecraftClientData;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -22,6 +23,26 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
 		MinecraftClientData.getInstance().lifts.forEach(lift -> {
 			// 获取电梯轨道位置对应的楼层索引
 			final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
+			// 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
+			if (floorIndex >= 0) {
+				callback.accept(floorIndex, lift);
+			}
+		});
+	}
+
+    public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, LiftButtonsBase.FloorLiftCallback callback) {
+		// 获取实例中的所有电梯数据
+		MinecraftClientData.getInstance().lifts.forEach(lift -> {
+			// 获取电梯轨道位置对应的楼层索引
+			final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
+			// 如果楼层索引大于0，则表示存在向下按钮
+			if (floorIndex > 0) {
+				buttonStates[0] = true;
+			}
+			// 如果楼层索引在有效范围内（不是顶层也不是底层），则表示存在向上按钮
+			if (floorIndex >= 0 && floorIndex < lift.getFloorCount() - 1) {
+				buttonStates[1] = true;
+			}
 			// 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
 			if (floorIndex >= 0) {
 				callback.accept(floorIndex, lift);
@@ -57,6 +78,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
         private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
 
 
+
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);
         }
@@ -75,6 +97,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
             // 每个长整型代表一个BlockPos位置，将其转换并添加到trackPositions集合中
             for (final long position : compoundTag.getLongArray(KEY_TRACK_FLOOR_POS)) {
                 trackPositions.add(BlockPos.fromLong(position));
+
             }
         }
 
@@ -130,12 +153,18 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
         public void forEachTrackPosition(Consumer<BlockPos> consumer) {
             trackPositions.forEach(consumer);
         }
+
+		@Nullable
+		public ObjectOpenHashSet<BlockPos> getTrackPosition() {
+			return trackPositions;
+		}
     }
 
     @FunctionalInterface
     public interface FloorLiftCallback {
         void accept(int floor, Lift lift);
     }
+
 
 
 }

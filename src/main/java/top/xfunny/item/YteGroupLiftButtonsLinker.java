@@ -90,6 +90,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
     private void checkPosition(World world, BlockPos pos,BlockPos otherPos, boolean facing) {
         Init.LOGGER.info("checkPosition");
 
+
         if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackBase) {
             Init.LOGGER.info("上");
             if (!findMark(pos.up(1))) {
@@ -101,7 +102,19 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
             else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
+        }
+        if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
+            Init.LOGGER.info("下");
+            if (!findMark(pos.down(1))) {
+                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
+                array[1] = pos.down(1);
+                array[2] = otherPos.down(1);
+                mark.add(pos);
+            }
+            else {
+                Init.LOGGER.info("重复位置，跳过");
+            }
+        }if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
             Init.LOGGER.info("南");
             if (!findMark(pos.south(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-南");
@@ -123,18 +136,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
             else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            Init.LOGGER.info("下");
-            if (!findMark(pos.down(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
-                array[1] = pos.down(1);
-                array[2] = otherPos.down(1);
-                mark.add(pos);
-            }
-            else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        } if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
+        }  if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
             Init.LOGGER.info("东");
             if (!findMark(pos.east(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
