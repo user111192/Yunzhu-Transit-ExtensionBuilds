@@ -3,6 +3,7 @@ package top.xfunny.block.base;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.core.operation.PressLift;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
@@ -27,9 +31,6 @@ import static org.mtr.core.data.LiftDirection.NONE;
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
 	public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
 	public static LiftDirection liftDirection = NONE;
-
-
-
 	private static LiftDirection buttonDirection = NONE;
 	public LiftButtonsBase() {
 		super(BlockHelper.createBlockSettings(true));
@@ -71,7 +72,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 	@Override
 	// 处理按钮的使用交互
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
+		ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
 
 
@@ -79,9 +80,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
 			final BlockEntity entity = world.getBlockEntity(pos);
 			Init.LOGGER.info(entity.toString());
-
-
-
 
 			final boolean unlocked = !IBlock.getStatePropertySafe(state, UNLOCKED);
 			world.setBlockState(pos, state.with(new Property<>(UNLOCKED.data), unlocked));
@@ -108,52 +106,75 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
 
 						final BlockEntity blockEntity = world.getBlockEntity(pos);
-
-
 						ObjectOpenHashSet<BlockPos> lp = ((BlockEntityBase) blockEntity.data).getLanternPositions();
 						BlockPos[] blockPosArray = lp.toArray(new BlockPos[0]);
-						BlockPos lanternPos = null;
+						BlockPos lanternPos;
 						if (blockPosArray.length > 0) {
 							lanternPos = blockPosArray[0];
 							System.out.println("到站灯坐标为：" + lanternPos.toShortString());
 						} else {
+							lanternPos = null;
 							System.out.println("到站灯坐标为空");
 						}
 
 
+						// 检查并记录上下按钮状态
+						final boolean[] buttonStates = {false, false};
+						((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+								LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
+									ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floor);
+									if(instructionDirections.contains(LiftDirection.UP)){
+										((BlockEntityBase) blockEntity.data).directionMarkUp = false;
+									}else{
+										((BlockEntityBase) blockEntity.data).directionMarkUp = true;
+									}
+									if(instructionDirections.contains(LiftDirection.DOWN)){
+										((BlockEntityBase) blockEntity.data).directionMarkDown = false;
+									}else{
+										((BlockEntityBase) blockEntity.data).directionMarkDown = true;
+									}
+									//Init.LOGGER.info("directionMarkDown:" + ((BlockEntityBase) blockEntity.data).directionMarkDown);
+								}));
 
-						if (blockEntity != null && blockEntity.data instanceof BlockEntityBase) {
-							// 检查并记录上下按钮状态
-							final boolean[] buttonStates = {false, false};
-							((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
-									LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
-									}));
+						// 根据按钮状态决定电梯方向
 
-							// 根据按钮状态决定电梯方向
+						if (buttonStates[0] && buttonStates[1]) {
+							liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
+							executorService.schedule(() ->{
 
-							if (buttonStates[0] && buttonStates[1]) {
-								liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
 								if (((BlockEntityBase) blockEntity.data).isLantern) {
 									Init.LOGGER.info("该外呼有到站灯");
-									if (hitY < 0.25) {
+									if (hitY < 0.25 && ((BlockEntityBase) blockEntity.data).directionMarkUp) {
 										((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.DOWN);
-									} else {
+									} else if(((BlockEntityBase) blockEntity.data).directionMarkDown){
 										((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.UP);
 									}
 								} else if (lanternPos!= null) {
 									Init.LOGGER.info("该外呼已连接到站灯");
-									if (hitY < 0.25) {
-										((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos).data).setLiftDirection(LiftDirection.DOWN);
-									} else {
-										((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos).data).setLiftDirection(LiftDirection.UP);
+									if (hitY < 0.25 && ((BlockEntityBase) blockEntity.data).directionMarkUp) {
+										Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
+										Init.LOGGER.info("lpo:" + lpo[0].toString());
+										((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 ->
+												((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos1).data).setLiftDirection(LiftDirection.DOWN)
+										);
+									} else if(((BlockEntityBase) blockEntity.data).directionMarkDown) {
+										Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
+										Init.LOGGER.info("lpo:" + lpo[0].toString());
+										((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 ->
+												((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos1).data).setLiftDirection(LiftDirection.UP)
+										);
 									}
 								} else{
 									Init.LOGGER.info("该外呼未连接到站灯");
 								}
+							}, 500, TimeUnit.MILLISECONDS);
 
 
-							} else {
-								liftDirection = buttonStates[0] ? LiftDirection.DOWN : LiftDirection.UP;
+
+						} else {
+							liftDirection = buttonStates[0] ? LiftDirection.DOWN : LiftDirection.UP;
+
+							executorService.schedule(() ->{
 								if (((BlockEntityBase) blockEntity.data).isLantern) {
 									if (buttonStates[0]) {
 										((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.DOWN);
@@ -163,23 +184,36 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 								} else if (lanternPos!= null) {
 									Init.LOGGER.info("该外呼已连接到站灯");
 									if (buttonStates[0]) {
-										((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos).data).setLiftDirection(LiftDirection.DOWN);
+										Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
+										Init.LOGGER.info("lpo:" + lpo[0].toString());
+										((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 ->
+												((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos1).data).setLiftDirection(LiftDirection.DOWN)
+										);
+
 									} else {
-										((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos).data).setLiftDirection(LiftDirection.UP);
+										Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
+										Init.LOGGER.info("lpo:" + lpo[0].toString());
+										((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 ->
+												((LiftHallLanternsBase.BlockEntityBase) world.getBlockEntity(lanternPos1).data).setLiftDirection(LiftDirection.UP)
+										);
 									}
 								}
 								else{
 									Init.LOGGER.info("该外呼未连接到站灯");
 								}
-							}
-
-							// 创建并发送按电梯按钮事件
-							final PressLift pressLift = new PressLift();
-							((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
-									pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection));
-							InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
-							return ActionResult.SUCCESS;
+							}, 500, TimeUnit.MILLISECONDS);
 						}
+
+						// 创建并发送按电梯按钮事件
+						final PressLift pressLift = new PressLift();
+						((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+								pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection)
+						);
+
+
+
+						InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
+						return ActionResult.SUCCESS;
 					}
 
 					return ActionResult.SUCCESS;
@@ -189,11 +223,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 			}
 		}
 	}
-
-
-
-
-
 	@Override
 	public BlockState getPlacementState2(ItemPlacementContext ctx) {
 		// 获取玩家面对的方向
@@ -205,6 +234,8 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 	public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
 		private boolean isLantern;
 		private boolean connectedLantern;
+		private boolean directionMarkUp = true;
+		private boolean directionMarkDown = true;
 
 
 
@@ -249,8 +280,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 		public boolean getLanternMark(){
 			return lanternMark;
 		}
-
-
 		public LiftDirection setLiftDirection(LiftDirection direction) {
 			directionQueue.add(direction);
 			Init.LOGGER.info("setLiftDirection()");

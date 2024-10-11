@@ -92,7 +92,7 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
             this.floorNumber = floorNumber;
             this.floorDescription = floorDescription;
             markDirty2();
-    }
+        }
 
         public String getFloorNumber() {
             return floorNumber;

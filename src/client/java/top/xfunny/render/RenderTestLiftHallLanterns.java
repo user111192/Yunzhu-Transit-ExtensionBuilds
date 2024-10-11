@@ -107,9 +107,8 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				String CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
 				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 				String floorNumber = liftDetails.right().left();
-				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 				LiftDirection buttonDirection = blockEntity.getButtonDirection();
-				//top.xfunny.Init.LOGGER.info("Directions:"+lift.getDirection());
+				//top.xfunny.Init.LOGGER.info("Directions:"+lift.hasInstruction(floorIndex)+"轨道位置："+trackPosition.toShortString());
 				//top.xfunny.Init.LOGGER.info("liftDetails:"+liftDetails);
 				//top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
 				//top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));

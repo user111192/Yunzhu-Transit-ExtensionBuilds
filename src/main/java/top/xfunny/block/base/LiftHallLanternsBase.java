@@ -2,19 +2,23 @@ package top.xfunny.block.base;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
+import org.mtr.core.operation.PressLiftInstruction;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
+import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
+import org.mtr.mod.render.RenderLifts;
 import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
+import top.xfunny.Items;
 import top.xfunny.LiftFloorRegistry;
+import top.xfunny.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
@@ -37,7 +41,7 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 	 * @param callback      a callback for the lift and floor index, only run if the lift floor track exists in the lift
 	 *                      关于电梯和楼层索引的回调函数，只有当电梯地板轨道存在于电梯中时才运行
 	 */
-	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, LiftHallLanternsBase.FloorLiftCallback callback) {
+	public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, FloorLiftCallback callback) {
 		// 获取实例中的所有电梯数据
 		MinecraftClientData.getInstance().lifts.forEach(lift -> {
 			// 获取电梯轨道位置对应的楼层索引
@@ -57,22 +61,61 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		});
 	}
 
+	public static void callbackLift(BlockPos trackPosition, FloorLiftCallback callback){
+		MinecraftClientData.getInstance().lifts.forEach(lift -> {
+			final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
+			if (floorIndex >= 0) {
+				callback.accept(floorIndex, lift);
+			}
+		});
+	}
+
 
 
 	@Nonnull
 	@Override
 	public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
+			final BlockEntity entity = world.getBlockEntity(pos);
+			Init.LOGGER.info(entity.toString());
+			((BlockEntityBase) entity.data).clearQueue();
+			player.sendMessage(Text.of("已清除方向队列"), true);
+			//player.sendMessage((unlocked ? TranslationProvider.GUI_MTR_LIFT_BUTTONS_UNLOCKED : TranslationProvider.GUI_MTR_LIFT_BUTTONS_LOCKED).getText(), true);
+		});
+
+		if (result == ActionResult.SUCCESS) {
+			return ActionResult.SUCCESS;
+		}
+
 		if (world.isClient()) {
+
+
+
+			final BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity != null && blockEntity.data instanceof BlockEntityBase){
+				final boolean[] buttonStates = {false, false};
+				((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+						LiftHallLanternsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
+							ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floor);
+							if(instructionDirections.contains(LiftDirection.UP)){
+								((BlockEntityBase) blockEntity.data).directionMarkUp = false;
+							}else{
+								((BlockEntityBase) blockEntity.data).directionMarkUp = true;
+							}
+							if(instructionDirections.contains(LiftDirection.DOWN)){
+								((BlockEntityBase) blockEntity.data).directionMarkDown = false;
+							}else{
+								((BlockEntityBase) blockEntity.data).directionMarkDown = true;
+							}
+							Init.LOGGER.info("directionMarkDown:" + ((BlockEntityBase) blockEntity.data).directionMarkDown);
+						}));
+			}
+
 			return ActionResult.SUCCESS;
 		} else {
-			return player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get()) ? ActionResult.PASS : ActionResult.FAIL;
+			return player.isHolding(Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get()) ? ActionResult.PASS : ActionResult.FAIL;
 		}
 	}
-
-
-
-
-
 
 	@Override
 	public BlockState getPlacementState2(ItemPlacementContext ctx) {
@@ -96,6 +139,8 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		public final Queue<LiftDirection> directionQueue = new LinkedList<>();
 		private boolean lanternMark = false;
 		private boolean connectedButton;
+		private boolean directionMarkUp = false;
+		private boolean directionMarkDown = false;
 
 
 
@@ -103,6 +148,30 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 
 		public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
 			super(type, blockPos, blockState);
+		}
+
+		public void markDirection(World world, BlockPos pos) {
+			if (world.isClient()) {
+				final BlockEntity blockEntity = world.getBlockEntity(pos);
+				if (blockEntity != null && blockEntity.data instanceof BlockEntityBase){
+					final boolean[] buttonStates = {false, false};
+					((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
+							LiftHallLanternsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
+								ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floor);
+								if(instructionDirections.contains(LiftDirection.UP)){
+									((BlockEntityBase) blockEntity.data).directionMarkUp = false;
+								}else{
+									((BlockEntityBase) blockEntity.data).directionMarkUp = true;
+								}
+								if(instructionDirections.contains(LiftDirection.DOWN)){
+									((BlockEntityBase) blockEntity.data).directionMarkDown = false;
+								}else{
+									((BlockEntityBase) blockEntity.data).directionMarkDown = true;
+								}
+								Init.LOGGER.info("directionMarkDown:" + ((BlockEntityBase) blockEntity.data).directionMarkDown);
+							}));
+				}
+			}
 		}
 
 		public void getConnectedButton(boolean connectedButton) {
@@ -119,8 +188,33 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 
 
 		public LiftDirection setLiftDirection(LiftDirection direction) {
-			directionQueue.add(direction);
-			Init.LOGGER.info("LiftHallLanternBase,setLiftDirection():"+directionQueue);
+			Init.LOGGER.info("---------------------------------------------------------------");
+			forEachTrackPosition(pos -> {
+				callbackLift(pos, (floor, lift) -> {
+					Init.LOGGER.info("callback成功：" + lift.hasInstruction(floor)+ "楼层："+ floor+ "轨道坐标："+ pos.toShortString()+ "电梯信息："+lift.getDirection());
+					Init.LOGGER.info("overlappingFloors:" + lift.overlappingFloors(lift)+":"+lift.getCurrentFloor());
+					Init.LOGGER.info("楼层数:" + lift.getFloorCount());
+					String CurrentFloorNumber = RenderLifts.getLiftDetails(Objects.requireNonNull(this.getWorld2()), lift, pos).right().left();
+					ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(this.getWorld2(), lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+					String floorNumber = liftDetails.right().left();
+					LiftDirection liftDirection = liftDetails.left();
+
+					if(Objects.equals(CurrentFloorNumber, floorNumber)){
+						ObjectArraySet<LiftDirection> liftDirections = lift.hasInstruction(floor);
+						if(!liftDirections.contains(direction)){
+							directionQueue.add(direction);
+							Init.LOGGER.info("方向添加成功！--电梯位于该楼层"+directionQueue);
+						}else{
+							Init.LOGGER.info("已存在该方向！");
+						}
+					}else if(liftDirection!=NONE){
+						directionQueue.add(direction);
+						Init.LOGGER.info("方向添加成功！--电梯正在运行"+direction);
+					} else{
+						Init.LOGGER.info("暂不添加！"+lift.hasInstruction(floor));
+					}
+				});
+			});
 			updateLiftDirection();
 			return direction;
 		}
@@ -131,9 +225,15 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 				updateLiftDirection();
 				Init.LOGGER.info("LiftHallLanternBase,updateQueue()时不为空");
 			} else {
-				buttonDirection = LiftDirection.NONE;
+				buttonDirection = NONE;
 				Init.LOGGER.info("LiftHallLanternBase,updateQueue()时为空");
 			}
+		}
+
+		public void clearQueue() {
+			directionQueue.clear();
+			buttonDirection = NONE;
+			Init.LOGGER.info("方向队列"+directionQueue);
 		}
 
 
@@ -141,6 +241,7 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 			if (!directionQueue.isEmpty()) {
 				buttonDirection = directionQueue.peek();
 				Init.LOGGER.info("LiftHallLanternBase,updateLiftDirection():"+buttonDirection);
+				Init.LOGGER.info("方向队列"+directionQueue);
 			}
 		}
 
