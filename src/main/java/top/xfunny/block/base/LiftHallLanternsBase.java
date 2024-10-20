@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftHallLanternsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
-	private static LiftDirection buttonDirection = NONE;
+
 	public LiftHallLanternsBase() {
 		super(BlockHelper.createBlockSettings(true));
 		Init.LOGGER.info("LiftHallLanternsBase init");
@@ -112,8 +112,9 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		private boolean lanternMark = false;
 		public boolean thread = true;
 		public BlockPos selfPos;
+		private LiftDirection buttonDirection = NONE;
 
-        public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
+		public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
 			super(type, blockPos, blockState);
 		}
 
@@ -153,8 +154,12 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 							directionQueue.add(direction);
 							updateLiftDirection();
 						}else{
-							Init.LOGGER.info("发生错误，已清空队列");
-							directionQueue.clear();
+							try {
+								throw new Exception("发生错误，已清空队列");
+							} catch (Exception e) {
+								Init.LOGGER.error("发生错误，已清空队列", e);
+								directionQueue.clear();
+							}
 						}
 					}else{
 						Init.LOGGER.info("不满足条件1");
@@ -175,11 +180,11 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 					}
 
 					executor.schedule(() -> {
-					if(thread){
-						Init.thread(getTrackPosition(), blockEntityBase, CurrentFloorNumber);
-					}else{
-						Init.LOGGER.info("线程已经开启");
-					}}, 501, TimeUnit.MILLISECONDS);
+						if(thread){
+							Init.thread(getTrackPosition(), blockEntityBase, CurrentFloorNumber);
+						}else{
+							Init.LOGGER.info("线程已经开启");
+						}}, 501, TimeUnit.MILLISECONDS);
 				});
 			});
 		}
@@ -192,12 +197,10 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 					String floorNumber = liftDetails.right().left();
 					if(Objects.equals(floorNumber, CurrentFloorNumber)){
 						if (!directionQueue.isEmpty()) {
-
 							directionQueue.poll();
 							updateLiftDirection();
 							Init.LOGGER.info("LiftHallLanternBase,updateQueue()时不为空"+ directionQueue);
 						} else {
-
 							Init.LOGGER.info("LiftHallLanternBase,updateQueue()时为空");
 						}
 					}else{
@@ -216,7 +219,7 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		}
 
 
-		private  void updateLiftDirection() {
+		public void updateLiftDirection() {
 			if (!directionQueue.isEmpty()) {
 				buttonDirection = directionQueue.peek();
 				Init.LOGGER.info("LiftHallLanternBase,updateLiftDirection():"+buttonDirection);

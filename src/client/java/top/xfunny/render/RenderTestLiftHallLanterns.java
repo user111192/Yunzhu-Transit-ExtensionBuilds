@@ -10,7 +10,7 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.Init;
+
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -19,6 +19,7 @@ import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.Init;
 import top.xfunny.block.TestLiftHallLanterns;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
@@ -30,8 +31,8 @@ import java.util.Objects;
 
 public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int PRESSED_COLOR = 0xFF0000FF;
-	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_button.png");
+	private static final int PRESSED_COLOR = 0xFFCCFF33;
+	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/test_lift_lanterns_arrow.png");
 
 
 
@@ -114,7 +115,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				//top.xfunny.Init.LOGGER.info("doorvalue:"+lift.getDoorValue());
 
 				if(lift.getDoorValue()!=0) {
-					top.xfunny.Init.LOGGER.info(String.valueOf(buttonDirection));
+					//top.xfunny.Init.LOGGER.info(String.valueOf(buttonDirection));
 					switch (buttonDirection) {
 						case DOWN:
 							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
@@ -163,10 +164,10 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonStates[1] ? 0.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-2.0F / 16,
+								(buttonStates[1] ? 3.5F : 6.5F) / 16,
+								4F / 16,
+								4F / 16,
 								0,
 								0,
 								1,
@@ -191,10 +192,10 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonStates[0] ? 4.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-2.0F / 16,
+								(buttonStates[0] ? 8.5F : 6.5F) / 16,
+								4F / 16,
+								4F / 16,
 								0,
 								1,
 								1,

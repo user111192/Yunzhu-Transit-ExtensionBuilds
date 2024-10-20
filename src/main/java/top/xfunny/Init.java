@@ -63,6 +63,7 @@ public final class Init {
 								Init.LOGGER.info("电梯楼层:" +floorNumber);
 								Init.LOGGER.info("电梯开门程度:" + lift.getDoorValue());
 								Init.LOGGER.info("队列:" + blockEntityBase.getQuene());
+								Init.LOGGER.info("电梯方向:" + blockEntityBase.getButtonDirection());
 								if(blockEntityBase.getQuene().isEmpty()){
 									Init.LOGGER.info("队列为空，关闭线程");
 									blockEntityBase.thread = true;
@@ -76,9 +77,9 @@ public final class Init {
 								if(lift.getDoorValue() == 0 && blockEntityBase.getLanternMark() && Objects.equals(floorNumber, CurrentFloorNumber)){
 									Init.LOGGER.info("电梯门已关闭，尝试清除一个元素");
 									blockEntityBase.updateQueue();
+									blockEntityBase.updateLiftDirection();
 									blockEntityBase.setLanternMark(false);
 								}
-
 							});
 						}
 					},
