@@ -11,7 +11,6 @@ import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -19,14 +18,12 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.TextureCache;
-import top.xfunny.block.OtisSeries1Screen;
 import top.xfunny.block.OtisSeries1Screen;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.TextureList;
-import top.xfunny.util.GetLiftDetails;
-import top.xfunny.util.ReverseRendering;
+import top.xfunny.util.ClientGetLiftDetails;
+
 import java.util.Comparator;
 
 public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Screen.BlockEntity> implements DirectionHelper, IGui, IBlock {
@@ -121,7 +118,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 	}
 	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
-		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final String floorNumber = liftDetails.right().left();
 		final String floorDescription = liftDetails.right().right();
 

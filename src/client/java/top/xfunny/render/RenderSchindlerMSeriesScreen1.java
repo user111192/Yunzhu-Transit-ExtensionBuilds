@@ -18,12 +18,11 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.OtisSeries1Screen;
 import top.xfunny.block.SchindlerMSeriesScreen1;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.TextureList;
-import top.xfunny.util.GetLiftDetails;
+import top.xfunny.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
@@ -118,7 +117,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
 	}
 	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
-		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final String floorNumber = liftDetails.right().left();
 		final String floorDescription = liftDetails.right().right();
 

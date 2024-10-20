@@ -9,7 +9,7 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.World;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 
-public class GetLiftDetails {
+public class ClientGetLiftDetails {
     public static ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> getLiftDetails(World world, Lift lift, BlockPos blockPos) {
 		final LiftFloor liftFloor = lift.getCurrentFloor();
 		final BlockEntity floorEntity = world.getBlockEntity(blockPos);

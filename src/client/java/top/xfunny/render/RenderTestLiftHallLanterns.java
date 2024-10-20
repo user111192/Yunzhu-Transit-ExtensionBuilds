@@ -4,7 +4,6 @@ package top.xfunny.render;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
@@ -21,11 +20,10 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.TestLiftHallLanterns;
-import top.xfunny.block.TestLiftPanel;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.util.GetLiftDetails;
+import top.xfunny.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -84,8 +82,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		});
 		// 遍历每个轨道位置，进行后续处理
 		blockEntity.forEachTrackPosition(trackPosition -> {
-			// 手持连接器进行连线
-
+            // 手持连接器进行连线
 			if (world.getBlockState(trackPosition).getBlock().data instanceof BlockLiftTrackFloor ) {
 
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
@@ -105,10 +102,10 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				// 这里使用lambda表达式来处理按钮状态的逻辑
 				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
 				String CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
-				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 				String floorNumber = liftDetails.right().left();
 				LiftDirection buttonDirection = blockEntity.getButtonDirection();
-				//top.xfunny.Init.LOGGER.info("Directions:"+lift.hasInstruction(floorIndex)+"轨道位置："+trackPosition.toShortString());
+				//top.xfunny.Init.LOGGER.info("Directions:"+lift.hasInstruction(floorIndex));
 				//top.xfunny.Init.LOGGER.info("liftDetails:"+liftDetails);
 				//top.xfunny.Init.LOGGER.info("currentFloorNumber:"+CurrentFloorNumber);
 				//top.xfunny.Init.LOGGER.info("LiftDetails:"+RenderLifts.getLiftDetails(world, lift, trackPosition));
@@ -117,28 +114,26 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				//top.xfunny.Init.LOGGER.info("doorvalue:"+lift.getDoorValue());
 
 				if(lift.getDoorValue()!=0) {
-					//top.xfunny.Init.LOGGER.info("renderhallquene:"+blockEntity.directionQueue);
+					top.xfunny.Init.LOGGER.info(String.valueOf(buttonDirection));
 					switch (buttonDirection) {
 						case DOWN:
 							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
 								buttonStates[2] = true;
 								//top.xfunny.Init.LOGGER.info("down");
-								blockEntity.setLanternMark(true);
+
 							}
 							break;
 						case UP:
 							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
 								buttonStates[3] = true;
 								//top.xfunny.Init.LOGGER.info("up");
-								blockEntity.setLanternMark(true);
+
 							}
 							break;
 					}
 				}else{
 					if (blockEntity.getLanternMark()){
-						blockEntity.updateQueue();
-						top.xfunny.Init.LOGGER.info("已关门，清除一个元素");
-						blockEntity.setLanternMark(false);
+						//top.xfunny.Init.LOGGER.info("directionQueue:"+blockEntity.getQuene());
 					}
 				}
 			});
