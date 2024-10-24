@@ -18,7 +18,7 @@ public class SchindlerMSeriesScreen1 extends LiftPanelBase {
     @Nonnull
 	@Override
 	public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return IBlock.getVoxelShapeByDirection(4, 0, 0, 12, 8, 1, IBlock.getStatePropertySafe(state, FACING));
+		return IBlock.getVoxelShapeByDirection(4.5, 5.5, 0, 11.5, 12.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
 	}
 
     @Nonnull

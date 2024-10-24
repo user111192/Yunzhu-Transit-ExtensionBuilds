@@ -47,7 +47,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
 		final BlockState blockState = world.getBlockState(blockPos);
 		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
-		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY() + 0.3, blockPos.getZ() + 0.559);
+		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
 
 		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
 		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -90,8 +90,9 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
 			// 添加旋转和平移变换
 			storedMatrixTransformations3.add(graphicsHolder -> {
 				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(-width / 2, 0, 0);
+				graphicsHolder.translate(-width / 2, -0.315, 0.04958);
 			});
+
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);

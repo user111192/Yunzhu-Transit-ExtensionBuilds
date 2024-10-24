@@ -136,7 +136,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
 			int totalWidth = TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).width;
 			int maxWidth = text.length()>=2? 210:104;
 			float textureWidth = text.length()>=2? 0.13F:0.13F/2;
-			float x =text.length()>=2?-width+0.98F:-width+1.04F;
+			float x =text.length()>=2?-width+0.98F:-width+1.044F;
 			MainRenderer.scheduleRender(TextureList.instance.getOtisSeries1ScreenDisplay(text, 0x1d953f).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 
