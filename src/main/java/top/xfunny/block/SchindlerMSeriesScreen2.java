@@ -18,7 +18,7 @@ public class SchindlerMSeriesScreen2 extends LiftHallLanternsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(-1, 3, 0, 17, 6, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(-1, 9, 0, 17, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

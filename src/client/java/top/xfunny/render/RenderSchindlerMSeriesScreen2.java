@@ -34,12 +34,12 @@ import java.util.Objects;
 import static org.mtr.mod.render.RenderLifts.renderLiftDisplay;
 
 public class RenderSchindlerMSeriesScreen2 extends BlockEntityRenderer<SchindlerMSeriesScreen2.BlockEntity> implements DirectionHelper, IGui, IBlock {
-    private static final int PRESSED_COLOR = 0xFFCCFF33;
+	private static final int PRESSED_COLOR = 0xFFFFCC00;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
-public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
+	public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		super(dispatcher);
 	}
-    	@Override
+	@Override
 	public void render(SchindlerMSeriesScreen2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
@@ -73,7 +73,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, buttonPosition, FACING);
 				RenderLiftObjectLink.RenderButtonObjectLink(
 						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.5, facing.getOffsetZ() / 2F),
+						new Vector3d(facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
 						new Vector3d(buttonPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, buttonPosition.getY() - blockPos.getY() + 0.5, buttonPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
 						holdingLinker
 				);
@@ -134,7 +134,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					QueuedRenderLayer.EXTERIOR,
+					buttonStates[2] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
@@ -142,7 +142,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 						IDrawing.drawTexture(
 								graphicsHolder,
 								3.5F / 16,
-								3.4F / 16,
+								9.5F / 16,
 								1.8F / 16,
 								2.2F / 16,
 								0,
@@ -158,19 +158,78 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 					}
 			);
 		}
+
+		if (buttonStates[0] && !buttonStates[1]) {
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[2] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-5.3F / 16,
+								9.5F / 16,
+								1.8F / 16,
+								2.2F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								buttonStates[2] ? PRESSED_COLOR :ARGB_WHITE,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+		}
+
 		// 第二个按钮的渲染逻辑
 		if (buttonStates[1]) {
 			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					QueuedRenderLayer.EXTERIOR,
+					buttonStates[3] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-5.3F / 16,
-								3.4F / 16,
+								9.5F / 16,
+								1.8F / 16,
+								2.2F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								buttonStates[3] ? PRESSED_COLOR : ARGB_WHITE,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+		}
+
+		if (buttonStates[1] && !buttonStates[0]) {
+			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
+			MainRenderer.scheduleRender(
+					BUTTON_TEXTURE,
+					false,
+					buttonStates[3] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						IDrawing.drawTexture(
+								graphicsHolder,
+								3.5F / 16,
+								9.5F / 16,
 								1.8F / 16,
 								2.2F / 16,
 								0,
@@ -204,7 +263,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(org.mtr.mod.Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0, -0.342F, width, 0.12F, Direction.UP, light);
+				IDrawing.drawTexture(graphicsHolder, 0.01F, -0.717F, 0.23F, 0.12F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 
@@ -220,7 +279,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		}
 	}
 
-		private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
+	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final LiftDirection liftDirection = liftDetails.left();
@@ -233,36 +292,23 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
 		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
 		final float arrowSize = width / 6; // 设置箭头大小
-		final float y = height; // 箭头的Y轴位置
+
 
 		// 渲染楼层信息
 		if (!noFloorNumber || !noFloorDisplay) {
-			float offset1;
+
 			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
 			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFF0000).width;
-
-			if (text.length() > 2) {
-				float scrollSpeed = 0.008F;
-				offset1 = (gameTick * scrollSpeed);
-				if (offset1 > totalWidth - width1) {
-					offset1 = offset1 - totalWidth;
-				}
-				float finalOffset = offset1;
-				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+			int maxWidth = text.length()>=2? 172:86;
+			float textureWidth = text.length()>=2? 0.16F:0.16F/2;
+			float x =text.length()>=2?-width+0.92F:-width+0.999F;
+				MainRenderer.scheduleRender(TextureList.instance.getSchindlerMSeriesScreen2Display(text, 0xFF0000).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 170 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, x, -0.237F, textureWidth, 0.16F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
-			} else {
 
-				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-					storedMatrixTransformations.transform(graphicsHolder, offset);
-
-					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-					graphicsHolder.pop();
-				});
-			}
 		}
 	}
 }

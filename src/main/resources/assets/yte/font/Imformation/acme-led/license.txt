@@ -1,0 +1,8 @@
+﻿The FontStruction “ACME LED”
+(https://fontstruct.com/fontstructions/show/551194) by Ethan2226  is licensed
+under a Creative Commons Attribution Share Alike license
+(http://creativecommons.org/licenses/by-sa/3.0/).
+“ACME LED” was originally cloned (copied) from the FontStruction
+“Dijitol” (https://fontstruct.com/fontstructions/show/351128) by
+“zavaboy”, which is licensed under a Creative Commons Attribution Share
+Alike license (http://creativecommons.org/licenses/by-sa/3.0/).
