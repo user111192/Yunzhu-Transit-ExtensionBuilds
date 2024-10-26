@@ -35,7 +35,7 @@ import static org.mtr.mod.render.RenderLifts.renderLiftDisplay;
 
 public class RenderSchindlerMSeriesScreen2 extends BlockEntityRenderer<SchindlerMSeriesScreen2.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFCCFF33;
-	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/test_lift_lanterns_arrow.png");
+	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
 public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		super(dispatcher);
 	}
@@ -124,7 +124,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
 		storedMatrixTransformations2.add(graphicsHolder -> {
 			graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+			graphicsHolder.translate(0, 0, 0.4968 - SMALL_OFFSET);
 		});
 
 		// 根据按钮状态渲染按钮
@@ -141,16 +141,16 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-2.0F / 16,
-								(buttonStates[1] ? 3.5F : 6.5F) / 16,
-								4F / 16,
-								4F / 16,
+								3.5F / 16,
+								3.4F / 16,
+								1.8F / 16,
+								2.2F / 16,
 								0,
 								0,
 								1,
 								1,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR :ARGB_GRAY,
+								buttonStates[2] ? PRESSED_COLOR :ARGB_WHITE,
 								light
 						);
 						// 弹出当前图形状态
@@ -169,16 +169,16 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-2.0F / 16,
-								(buttonStates[0] ? 8.5F : 6.5F) / 16,
-								4F / 16,
-								4F / 16,
+								-5.3F / 16,
+								3.4F / 16,
+								1.8F / 16,
+								2.2F / 16,
 								0,
 								1,
 								1,
 								0,
 								facing,
-								buttonStates[3] ? PRESSED_COLOR : ARGB_GRAY,
+								buttonStates[3] ? PRESSED_COLOR : ARGB_WHITE,
 								light
 						);
 						// 弹出当前图形状态
@@ -204,7 +204,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 			// 渲染黑色背景
 			MainRenderer.scheduleRender(new Identifier(org.mtr.mod.Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
+				IDrawing.drawTexture(graphicsHolder, 0, -0.342F, width, 0.12F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 

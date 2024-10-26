@@ -19,6 +19,7 @@ public class LinkerValidTypes {
             SchindlerDSeriesD2Button.class,
             SchindlerMSeriesButton.class,
             SchindlerMSeriesTouchButton.class,
-            SchindlerMSeriesScreen1.class
+            SchindlerMSeriesScreen1.class,
+            SchindlerMSeriesScreen2.class
     ));
 }
