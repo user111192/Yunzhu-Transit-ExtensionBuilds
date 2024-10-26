@@ -212,7 +212,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 			for (int i = 0; i < count; i++) {
 				final double x = (i + 0.5) * width / count;
 				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
+				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.5, -SMALL_OFFSET));
 				// 渲染当前电梯的显示
 				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
 
@@ -239,7 +239,7 @@ public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
 		if (!noFloorNumber || !noFloorDisplay) {
 			float offset1;
 			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
-			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).width;
+			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFF0000).width;
 
 			if (text.length() > 2) {
 				float scrollSpeed = 0.008F;

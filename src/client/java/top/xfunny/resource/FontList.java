@@ -12,6 +12,7 @@ public class FontList {
 	Font fontCjk1;
 	Font otis_series1;
 	Font testfont;
+	Font acmeled;
 	Font koneModernization;
 	Font schindler_m_series;
 
@@ -49,6 +50,16 @@ public class FontList {
 			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler-m-series-lop-nz-thin-1-beta.ttf"), inputStream -> {
 				try {
 					testfont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+				} catch (Exception e) {
+					Init.LOGGER.error("", e);
+				}
+			});
+		}
+
+		while (acmeled == null) {
+			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/acme-led.ttf"), inputStream -> {
+				try {
+					acmeled = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				} catch (Exception e) {
 					Init.LOGGER.error("", e);
 				}
