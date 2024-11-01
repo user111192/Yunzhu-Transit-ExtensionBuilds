@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class LiftPanelBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
-    public LiftPanelBase() {
+    private final boolean isOdd;
+    public LiftPanelBase(Boolean isOdd) {
         super(BlockHelper.createBlockSettings(true));
+        this.isOdd = isOdd;
     }
 
     	public static void LiftCheck(BlockPos trackPosition, LiftButtonsBase.FloorLiftCallback callback) {

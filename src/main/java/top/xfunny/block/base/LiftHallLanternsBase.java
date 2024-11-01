@@ -28,10 +28,12 @@ import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftHallLanternsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
 
-	public LiftHallLanternsBase() {
+	private final boolean isOdd;
+
+	public LiftHallLanternsBase(Boolean isOdd) {
 		super(BlockHelper.createBlockSettings(true));
 		Init.LOGGER.info("LiftHallLanternsBase init");
-
+		this.isOdd = isOdd;
 	}
 
 	/**
@@ -108,11 +110,12 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		// 存储需要追踪的位置的集合
 		private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
 		private final ObjectOpenHashSet<BlockPos> buttonPositions = new ObjectOpenHashSet<>();
-		public final Queue<LiftDirection> directionQueue = new LinkedList<>();
+		public final LinkedList<LiftDirection> directionQueue = new LinkedList<>();
 		private boolean lanternMark = false;
 		public boolean thread = true;
 		public BlockPos selfPos;
 		private LiftDirection buttonDirection = NONE;
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
 		public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
 			super(type, blockPos, blockState);
@@ -126,9 +129,8 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 			return lanternMark;
 		}
 
-		public void setLiftDirection(LiftDirection direction, BlockEntityBase blockEntityBase) {
+		public void setLiftDirection(LiftDirection direction) {
 
-			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 			Init.LOGGER.info("（到站灯）检测到按下了："+ direction);
 			Init.LOGGER.info("添加前的方向队列："+ directionQueue);
 			Init.LOGGER.info("添加前的方向队列(get方法)："+ getQuene());
@@ -141,19 +143,18 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 					String CurrentFloorNumber = RenderLifts.getLiftDetails(Objects.requireNonNull(this.getWorld2()), lift, pos).right().left();
 					ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(this.getWorld2(), lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 					String floorNumber = liftDetails.right().left();
-					LiftDirection liftDirection = liftDetails.left();
 					ObjectArraySet<LiftDirection> liftDirections = lift.hasInstruction(floor);
 					Queue<LiftDirection> directionQueue = this.getQuene();
 					float LiftDoorValue = lift.getDoorValue();
 
-//条件1：轨道当前楼层与按钮楼层一致，且电梯没有开门
-					if(LiftDoorValue==0 && Objects.equals(CurrentFloorNumber, floorNumber)){
+
+					if(LiftDoorValue==0 && Objects.equals(CurrentFloorNumber, floorNumber)){//轨道当前楼层与按钮楼层一致，且电梯没有开门
 						Init.LOGGER.info("满足条件1");
-						if(liftDirections.isEmpty()){
+						if(liftDirections.isEmpty()){//指令列表为空
 							Init.LOGGER.info("方向添加成功！--电梯无指令");
 							directionQueue.add(direction);
 							updateLiftDirection();
-						}else{
+						}else{//指令列表不为空：电梯经过本层但不停
 							try {
 								throw new Exception("发生错误，已清空队列");
 							} catch (Exception e) {
@@ -181,7 +182,7 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 
 					executor.schedule(() -> {
 						if(thread){
-							Init.thread(getTrackPosition(), blockEntityBase, CurrentFloorNumber);
+							Init.thread(getTrackPosition(), this, CurrentFloorNumber);
 						}else{
 							Init.LOGGER.info("线程已经开启");
 						}}, 501, TimeUnit.MILLISECONDS);
@@ -197,7 +198,13 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 					String floorNumber = liftDetails.right().left();
 					if(Objects.equals(floorNumber, CurrentFloorNumber)){
 						if (!directionQueue.isEmpty()) {
-							directionQueue.poll();
+							if(directionQueue.contains(lift.getDirection())){
+								directionQueue.remove(lift.getDirection());
+							}else{
+								Init.LOGGER.info(String.valueOf(lift.getDirection())+":"+directionQueue);
+								directionQueue.poll();
+								Init.LOGGER.info("没有找到对应的方向");
+							}
 							updateLiftDirection();
 							Init.LOGGER.info("LiftHallLanternBase,updateQueue()时不为空"+ directionQueue);
 						} else {
@@ -211,19 +218,19 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		}
 
 		public void clearQueue() {
-			while (!directionQueue.isEmpty()) {
-				directionQueue.poll();
-			}
+			directionQueue.clear();
 			buttonDirection = NONE;
-			Init.LOGGER.info("清除一个元素后的方向队列"+directionQueue);
 		}
 
 
 		public void updateLiftDirection() {
 			if (!directionQueue.isEmpty()) {
-				buttonDirection = directionQueue.peek();
-				Init.LOGGER.info("LiftHallLanternBase,updateLiftDirection():"+buttonDirection);
-				Init.LOGGER.info("更新后的方向队列"+directionQueue);
+				forEachTrackPosition(pos -> {
+				callbackLift(pos, (floor, lift) -> {
+					LiftDirection tempLiftDirection = lift.getDirection();
+					buttonDirection = directionQueue.contains(tempLiftDirection)?  tempLiftDirection : NONE;
+				});
+			});
 			}
 		}
 

@@ -5,6 +5,7 @@ import org.mtr.core.data.Position;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.MathHelper;
+import org.mtr.mapping.holder.World;
 import org.mtr.mapping.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public final class Init {
 		return new BlockPos(MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
 	}
 
-	public static void thread(BlockPos pos, LiftHallLanternsBase.BlockEntityBase blockEntityBase,String CurrentFloorNumber) {
+	public static void thread(BlockPos pos, LiftHallLanternsBase.BlockEntityBase blockEntityBase, String CurrentFloorNumber) {
 		Thread t = new Thread(() -> {
 			blockEntityBase.thread = false;
 			blockEntityBase.setLanternMark(false);
@@ -56,26 +57,36 @@ public final class Init {
 					new Runnable() {
 						@Override
 						public void run() {
+							top.xfunny.Init.LOGGER.info("线程正在运行,pos:"+blockEntityBase.getPos2().toShortString());
 							callbackLift(pos, (floor, lift) -> {
+								final World world = blockEntityBase.getWorld2();
 								ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = GetLiftDetails.getLiftDetails(Objects.requireNonNull(blockEntityBase.getWorld2()), lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 								String floorNumber = liftDetails.right().left();
-								Init.LOGGER.info("当前楼层:" + CurrentFloorNumber);
-								Init.LOGGER.info("电梯楼层:" +floorNumber);
-								Init.LOGGER.info("电梯开门程度:" + lift.getDoorValue());
-								Init.LOGGER.info("队列:" + blockEntityBase.getQuene());
-								Init.LOGGER.info("电梯方向:" + blockEntityBase.getButtonDirection());
+								//Init.LOGGER.info("当前方块实体："+blockEntityBase);
+								//Init.LOGGER.info("当前楼层:" + CurrentFloorNumber);
+								//Init.LOGGER.info("电梯楼层:" +floorNumber);
+								//Init.LOGGER.info("电梯开门程度:" + lift.getDoorValue());
+								//Init.LOGGER.info("队列:" + blockEntityBase.getQuene());
+								//Init.LOGGER.info("电梯方向:" + blockEntityBase.getButtonDirection());
+
 								if(blockEntityBase.getQuene().isEmpty()){
 									Init.LOGGER.info("队列为空，关闭线程");
 									blockEntityBase.thread = true;
 									scheduler.shutdown();
 								}
-								if(lift.getDoorValue() == 1){
+								if(world == null){
+									Init.LOGGER.info("存档已关闭，关闭线程");
+									blockEntityBase.thread = true;
+									scheduler.shutdown();
+								}
+								if(lift.getDoorValue() == 1 && Objects.equals(floorNumber, CurrentFloorNumber)){
 									blockEntityBase.setLanternMark(true);
 								}
-								Init.LOGGER.info("mark:" + blockEntityBase.getLanternMark());
+								//Init.LOGGER.info("mark:" + blockEntityBase.getLanternMark());
+
 
 								if(lift.getDoorValue() == 0 && blockEntityBase.getLanternMark() && Objects.equals(floorNumber, CurrentFloorNumber)){
-									Init.LOGGER.info("电梯门已关闭，尝试清除一个元素");
+									Init.LOGGER.info("电梯门已关闭，尝试清除一个元素"+"电梯楼层："+floorNumber+"当前外呼楼层："+CurrentFloorNumber);
 									blockEntityBase.updateQueue();
 									blockEntityBase.updateLiftDirection();
 									blockEntityBase.setLanternMark(false);

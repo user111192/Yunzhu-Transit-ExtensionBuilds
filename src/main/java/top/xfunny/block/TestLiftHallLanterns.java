@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TestLiftHallLanterns extends LiftHallLanternsBase {
 	public TestLiftHallLanterns() {
-		super();
+		super(true);
 	}
 
 	@Nonnull

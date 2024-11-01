@@ -33,12 +33,13 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 
 	private static final int PRESSED_COLOR = 0xFFCCFF33;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/test_lift_lanterns_arrow.png");
+	private final boolean isOdd;
 
 
 
-
-	public RenderTestLiftHallLanterns(Argument dispatcher) {
+	public RenderTestLiftHallLanterns(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
+		this.isOdd = isOdd;
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		});
 		// 遍历每个轨道位置，进行后续处理
 		blockEntity.forEachTrackPosition(trackPosition -> {
-            // 手持连接器进行连线
+			// 手持连接器进行连线
 			if (world.getBlockState(trackPosition).getBlock().data instanceof BlockLiftTrackFloor ) {
 
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
@@ -114,6 +115,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 				//top.xfunny.Init.LOGGER.info("buttondirection:"+LiftButtonsBase.getButtonDirection());
 				//top.xfunny.Init.LOGGER.info("doorvalue:"+lift.getDoorValue());
 
+
 				if(lift.getDoorValue()!=0) {
 					switch (buttonDirection) {
 						case DOWN:
@@ -126,6 +128,11 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 								buttonStates[3] = true;
 							}
 							break;
+						case NONE:
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
+								buttonStates[2] = true;
+								buttonStates[3] = true;
+							}
 					}
 				}else{
 					if (blockEntity.getLanternMark()){

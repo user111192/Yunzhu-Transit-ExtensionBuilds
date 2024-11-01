@@ -27,8 +27,10 @@ import top.xfunny.util.ClientGetLiftDetails;
 import java.util.Comparator;
 
 public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<SchindlerMSeriesScreen1.BlockEntity> implements DirectionHelper, IGui, IBlock {
-	public RenderSchindlerMSeriesScreen1(Argument dispatcher) {
+	private final boolean isOdd;
+	public RenderSchindlerMSeriesScreen1(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
+		this.isOdd = isOdd;
 	}
 
 	@Override

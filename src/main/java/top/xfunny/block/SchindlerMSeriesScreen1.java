@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SchindlerMSeriesScreen1 extends LiftPanelBase {
     public SchindlerMSeriesScreen1() {
-        super();
+        super(true);
     }
 
     @Nonnull

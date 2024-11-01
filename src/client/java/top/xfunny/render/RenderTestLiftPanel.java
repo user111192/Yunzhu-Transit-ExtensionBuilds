@@ -33,8 +33,10 @@ public class RenderTestLiftPanel extends BlockEntityRenderer<TestLiftPanel.Block
 	private static final float ARROW_SPEED = 0.04F;
 	private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_arrow.png");
 	private Lift lift = null;
-	public RenderTestLiftPanel(Argument dispatcher) {
+	private final boolean isOdd;
+	public RenderTestLiftPanel(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
+		this.isOdd = isOdd;
 	}
 
 	@Override

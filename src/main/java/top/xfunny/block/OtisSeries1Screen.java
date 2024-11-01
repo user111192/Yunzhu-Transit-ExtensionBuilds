@@ -13,7 +13,7 @@ import java.util.List;
 
 public class OtisSeries1Screen extends LiftPanelBase {
     public OtisSeries1Screen() {
-        super();
+        super(true);
     }
 
     @Nonnull

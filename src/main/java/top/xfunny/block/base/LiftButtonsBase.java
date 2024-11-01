@@ -3,7 +3,6 @@ package top.xfunny.block.base;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.core.operation.PressLift;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
@@ -20,19 +19,43 @@ import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
     public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-    public static LiftDirection liftDirection = NONE;
-    private static LiftDirection buttonDirection = NONE;
+
 
     public LiftButtonsBase() {
         super(BlockHelper.createBlockSettings(true));
         Init.LOGGER.info("LiftButtonsBase init");
+    }
+
+    public static class LiftButtonDescriptor {
+        private boolean hasUpButton;
+        private boolean hasDownButton;
+
+        public LiftButtonDescriptor(boolean hasUpButton,boolean hasDownButton) {
+            this.hasDownButton = hasDownButton;
+            this.hasUpButton = hasUpButton;
+        }
+
+        public boolean hasUpButton() {
+            return hasUpButton;
+        }
+
+        public boolean hasDownButton() {
+            return hasDownButton;
+        }
+
+        public void setHasUpButton(boolean hasUpButton) {
+            this.hasUpButton = hasUpButton;
+        }
+
+        public void setHasDownButton(boolean hasDownButton) {
+            this.hasDownButton = hasDownButton;
+        }
     }
 
     /**
@@ -40,22 +63,23 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
      * 本方法主要用于确定在给定的电梯轨道位置是否有上下按钮，以及通知相关的回调函数
      *
      * @param trackPosition the position of the lift floor track 电梯轨道的位置
-     * @param buttonStates  an array with at least 2 elements: has down button, has up button 一个至少包含两个元素的数组，表示是否有向下和向上的按钮
      * @param callback      a callback for the lift and floor index, only run if the lift floor track exists in the lift
      *                      关于电梯和楼层索引的回调函数，只有当电梯地板轨道存在于电梯中时才运行
      */
-    public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, FloorLiftCallback callback) {
+    public static void hasButtonsClient(BlockPos trackPosition, LiftButtonDescriptor descriptor,FloorLiftCallback callback) {
+
         // 获取实例中的所有电梯数据
         MinecraftClientData.getInstance().lifts.forEach(lift -> {
+
             // 获取电梯轨道位置对应的楼层索引
             final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
             // 如果楼层索引大于0，则表示存在向下按钮
             if (floorIndex > 0) {
-                buttonStates[0] = true;
+                descriptor.setHasDownButton(true);
             }
             // 如果楼层索引在有效范围内（不是顶层也不是底层），则表示存在向上按钮
             if (floorIndex >= 0 && floorIndex < lift.getFloorCount() - 1) {
-                buttonStates[1] = true;
+                descriptor.setHasUpButton(true);
             }
             // 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
             if (floorIndex >= 0) {
@@ -76,10 +100,8 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         // 检查玩家是否拿着刷子，并尝试更新按钮状态
         final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
             final BlockEntity entity = world.getBlockEntity(pos);
-//todo:测试使用刷子清空到站灯队列是否有效
-            ((BlockEntityBase) entity.data).lanternPositions.forEach(lanternPos1 ->
-                    ((LiftHallLanternsBase.BlockEntityBase) Objects.requireNonNull(world.getBlockEntity(lanternPos1)).data).clearQueue()
-            );
+            //todo:测试使用刷子清空到站灯队列是否有效
+            ((BlockEntityBase) entity.data).lanternPositions.forEach(lanternPos1 -> ((LiftHallLanternsBase.BlockEntityBase) Objects.requireNonNull(world.getBlockEntity(lanternPos1)).data).clearQueue());
             final boolean unlocked = !IBlock.getStatePropertySafe(state, UNLOCKED);
             world.setBlockState(pos, state.with(new Property<>(UNLOCKED.data), unlocked));
             player.sendMessage(Text.of((unlocked ? "已解锁" : "已锁定")), true);
@@ -98,119 +120,91 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                 final boolean unlocked = IBlock.getStatePropertySafe(state, UNLOCKED);
                 final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
 
+                // 当按钮已解锁，且玩家点击到按钮区域时执行
                 if (unlocked && hitY < 0.5) {
                     // 客户端按钮按下特殊处理
                     if (world.isClient()) {
 
-
                         final BlockEntity blockEntity = world.getBlockEntity(pos);
-                        ObjectOpenHashSet<BlockPos> lp = null;
-                        if (blockEntity != null) {
-                            lp = ((BlockEntityBase) blockEntity.data).getLanternPositions();
-                        }
-                        BlockPos[] blockPosArray = null;
-                        if (lp != null) {
-                            blockPosArray = lp.toArray(new BlockPos[0]);
-                        }
-                        BlockPos lanternPos;
-                        if (blockPosArray.length > 0) {
-                            lanternPos = blockPosArray[0];
-                            System.out.println("到站灯坐标为：" + lanternPos.toShortString());
-                        } else {
-                            lanternPos = null;
-                            System.out.println("到站灯坐标为空");
-                        }
+                        final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
 
+                        ObjectOpenHashSet<BlockPos> lp = data.getLanternPositions();
+
+                        if (lp.isEmpty())
+                        {
+                            System.out.println("到站灯坐标为空");
+                        } else {
+                            lp.forEach(lpos -> {
+                                System.out.println("到站灯坐标为：" + lpos.toShortString());
+                            });
+                        }
 
                         // 检查并记录上下按钮状态
-                        final boolean[] buttonStates = {false, false};
-                        if (blockEntity != null) {
-                            ((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
-                                    LiftButtonsBase.hasButtonsClient(trackPosition, buttonStates, (floor, lift) -> {
-                                    }));
-                        }
+                        LiftButtonDescriptor descriptor = new LiftButtonDescriptor(false,false);
+                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {}));
 
 
-                        if (buttonStates[0] && buttonStates[1]) {
-                            liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
+                        // 同时具有上下方向的按钮
+                        if (descriptor.hasDownButton() && descriptor.hasUpButton()) {
+                            data.liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
 
 
-                            if (((BlockEntityBase) blockEntity.data).isLantern) {
-                                Init.LOGGER.info("该外呼有到站灯");
+                            // 判断外呼按钮是否有内建到站灯
+                            if (data.buttonHasBuiltInLantern) {
+                                Init.LOGGER.info("该外呼有内建到站灯");
                                 if (hitY < 0.25) {
-                                    ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.DOWN);
+                                    data.setLiftDirection(LiftDirection.DOWN);
                                 } else {
-                                    ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.UP);
+                                    data.setLiftDirection(LiftDirection.UP);
                                 }
-                            } else if (lanternPos != null) {
+                            } else if (!lp.isEmpty()) {
                                 Init.LOGGER.info("该外呼已连接到站灯");
-                                if (hitY < 0.25) {
-                                    Init.LOGGER.info("玩家按下:" + LiftDirection.DOWN);
-                                    Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
-                                    Init.LOGGER.info("lpo:" + lpo[0].toString());
-                                    ((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 -> {
+
+                                lp.forEach(lanternPos1 -> {
                                         BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
                                         if (blockEntityLantern != null) {
                                             LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                            lanternData.setLiftDirection(LiftDirection.DOWN, lanternData);
+
+                                            if (hitY < 0.25) {
+                                                lanternData.setLiftDirection(LiftDirection.DOWN);
+                                                Init.LOGGER.info("玩家按下:" + LiftDirection.DOWN);
+                                            }
+                                            else {
+                                                lanternData.setLiftDirection(LiftDirection.UP);
+                                                Init.LOGGER.info("玩家按下:" + LiftDirection.UP);
+                                            }
                                             lanternData.selfPos = lanternPos1;
                                         }
                                     });
 
-                                } else {
-                                    Init.LOGGER.info("玩家按下:" + LiftDirection.UP);
-                                    Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
-                                    Init.LOGGER.info("lpo:" + lpo[0].toString());
-                                    ((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 -> {
-                                        BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                        if (blockEntityLantern != null) {
-                                            LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                            lanternData.setLiftDirection(LiftDirection.UP, lanternData);
-                                            lanternData.selfPos = lanternPos1;
-                                        }
-                                    });
-                                }
                             } else {
                                 Init.LOGGER.info("该外呼未连接到站灯");
                             }
 
 
-                        } else {
-                            liftDirection = buttonStates[0] ? LiftDirection.DOWN : LiftDirection.UP;
+                        } else {  // 只有单个方向的按钮
+                            data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
 
-
-                            if (((BlockEntityBase) blockEntity.data).isLantern) {
-                                if (buttonStates[0]) {
+                            // 判断外呼按钮是否有内建到站灯
+                            if (data.buttonHasBuiltInLantern) {
+                                if (descriptor.hasDownButton) {
                                     ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.DOWN);
                                 } else {
                                     ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.UP);
                                 }
-                            } else if (lanternPos != null) {
+                            } else if (!lp.isEmpty()) {
                                 Init.LOGGER.info("该外呼已连接到站灯");
-                                if (buttonStates[0]) {
-                                    Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
-                                    Init.LOGGER.info("lpo:" + lpo[0].toString());
-                                     ((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 -> {
+
+
+                                data.lanternPositions.forEach(lanternPos1 -> {
                                         BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
                                         if (blockEntityLantern != null) {
                                             LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                            lanternData.setLiftDirection(LiftDirection.DOWN, lanternData);
+                                            lanternData.setLiftDirection(descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP);
                                             lanternData.selfPos = lanternPos1;
                                         }
                                     });
 
-                                } else {
-                                    Object[] lpo = ((BlockEntityBase) blockEntity.data).lanternPositions.toArray();
-                                    Init.LOGGER.info("lpo:" + lpo[0].toString());
-                                    ((BlockEntityBase) blockEntity.data).lanternPositions.forEach(lanternPos1 -> {
-                                        BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                        if (blockEntityLantern != null) {
-                                            LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                            lanternData.setLiftDirection(LiftDirection.UP, lanternData);
-                                            lanternData.selfPos = lanternPos1;
-                                        }
-                                    });
-                                }
                             } else {
                                 Init.LOGGER.info("该外呼未连接到站灯");
                             }
@@ -219,10 +213,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
                         // 创建并发送按电梯按钮事件
                         final PressLift pressLift = new PressLift();
-                        ((BlockEntityBase) blockEntity.data).trackPositions.forEach(trackPosition ->
-                                pressLift.add(Init.blockPosToPosition(trackPosition), liftDirection)
-                        );
-
+                        data.trackPositions.forEach(trackPosition -> pressLift.add(Init.blockPosToPosition(trackPosition), data.liftDirection));
 
                         InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
                         return ActionResult.SUCCESS;
@@ -244,11 +235,12 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         return getDefaultState2().with(new Property<>(FACING.data), facing.data);
     }
 
+    @FunctionalInterface
+    public interface FloorLiftCallback {
+        void accept(int floor, Lift lift);
+    }
+
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
-        private boolean isLantern;
-        private boolean connectedLantern;
-
-
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
         private static final String KEY_LANTERN_FLOOR_POS = "lantern_floor_pos";
@@ -256,12 +248,17 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
         private final ObjectOpenHashSet<BlockPos> lanternPositions = new ObjectOpenHashSet<>();
         private final Queue<LiftDirection> directionQueue = new LinkedList<>();
+
+        private boolean buttonHasBuiltInLantern;
+        private boolean connectedLantern;
+        private LiftDirection buttonDirection = NONE;
+        private LiftDirection liftDirection = NONE;
         private boolean lanternMark = false;
 
 
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState, Boolean isLantern1) {
             super(type, blockPos, blockState);
-            isLantern = isLantern1;
+            buttonHasBuiltInLantern = isLantern1;
         }
 
         public ObjectOpenHashSet<BlockPos> getLanternPositions() {
@@ -269,19 +266,19 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         }
 
         public boolean getIsLantern() {
-            return isLantern;
+            return buttonHasBuiltInLantern;
         }
 
         public boolean getConnectedLantern() {
             return connectedLantern;
         }
 
-        public void setLanternMark(boolean mark) {
-            lanternMark = mark;
-        }
-
         public boolean getLanternMark() {
             return lanternMark;
+        }
+
+        public void setLanternMark(boolean mark) {
+            lanternMark = mark;
         }
 
         public LiftDirection setLiftDirection(LiftDirection direction) {
@@ -417,11 +414,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         }
 
 
-    }
-
-    @FunctionalInterface
-    public interface FloorLiftCallback {
-        void accept(int floor, Lift lift);
     }
 
 

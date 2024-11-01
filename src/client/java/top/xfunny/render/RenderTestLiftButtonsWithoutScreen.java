@@ -21,6 +21,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.OtisSeries1Button;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
+import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.util.ReverseRendering;
@@ -58,8 +59,9 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 
 
 		// 定义一个布尔数组，用于记录按钮的状态
-		// 数组顺序：向下按钮存在、向上按钮存在、向下按钮被按下、向上按钮被按下
-		final boolean[] buttonStates = {false, false, false, false};
+		// 数组顺序：向下按钮被按下、向上按钮被按下
+		final boolean[] buttonStates = {false, false};
+		LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false,false);
 
 		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
 		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -78,7 +80,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
+			TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
@@ -88,10 +90,10 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 				instructionDirections.forEach(liftDirection -> {
 					switch (liftDirection) {
 						case DOWN:
-							buttonStates[2] = true;
+							buttonStates[0] = true;
 							break;
 						case UP:
-							buttonStates[3] = true;
+							buttonStates[1] = true;
 							break;
 					}
 				});
@@ -112,8 +114,8 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 			final Vector3d hitLocation = hitResult.getPos();
 			final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
 			final boolean inBlock = hitY < 0.5 && Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
-			lookingAtTopHalf = inBlock && (!buttonStates[0] || hitY > 0.25);
-			lookingAtBottomHalf = inBlock && (!buttonStates[1] || hitY < 0.25);
+			lookingAtTopHalf = inBlock && (!buttonDescriptor.hasDownButton() || hitY > 0.25);
+			lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < 0.25);
 		}
 
 		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
@@ -124,12 +126,12 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 
 		// 根据按钮状态渲染按钮
 		// 第一个按钮的渲染逻辑
-		if (buttonStates[0]) {
+		if (buttonDescriptor.hasDownButton()) {
 			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					buttonStates[2] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					buttonStates[0] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
@@ -137,7 +139,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.5F / 16,
-								(buttonStates[1] ? 0.5F : 2.5F) / 16,
+								(buttonDescriptor.hasUpButton() ? 0.5F : 2.5F) / 16,
 								3F / 16,
 								3F / 16,
 								0,
@@ -145,7 +147,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 								1,
 								1,
 								facing,
-								buttonStates[2] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
+								buttonStates[0] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_GRAY,
 								light
 						);
 						// 弹出当前图形状态
@@ -154,12 +156,12 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 			);
 		}
 		// 第二个按钮的渲染逻辑
-		if (buttonStates[1]) {
+		if (buttonDescriptor.hasUpButton()) {
 			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
-					buttonStates[3] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+					buttonStates[1] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
@@ -167,7 +169,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 						IDrawing.drawTexture(
 								graphicsHolder,
 								-1.5F / 16,
-								(buttonStates[0] ? 4.5F : 2.5F) / 16,
+								(buttonDescriptor.hasDownButton() ? 4.5F : 2.5F) / 16,
 								3F / 16,
 								3F / 16,
 								0,
@@ -175,7 +177,7 @@ public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<Test
 								1,
 								0,
 								facing,
-								buttonStates[3] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
+								buttonStates[1] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_GRAY,
 								light
 						);
 						// 弹出当前图形状态

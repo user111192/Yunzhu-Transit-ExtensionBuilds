@@ -10,9 +10,9 @@ import top.xfunny.block.base.LiftHallLanternsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class SchindlerMSeriesScreen2 extends LiftHallLanternsBase {
-    public SchindlerMSeriesScreen2() {
-        super();
+public class SchindlerMSeriesScreen2Odd extends LiftHallLanternsBase {
+    public SchindlerMSeriesScreen2Odd() {
+        super(true);
     }
 
     @Nonnull
@@ -24,7 +24,7 @@ public class SchindlerMSeriesScreen2 extends LiftHallLanternsBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SchindlerMSeriesScreen2.BlockEntity(blockPos, blockState);
+        return new SchindlerMSeriesScreen2Odd.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class SchindlerMSeriesScreen2 extends LiftHallLanternsBase {
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_2.get(), pos, state);
+            super(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_2_ODD.get(), pos, state);
         }
     }
 }

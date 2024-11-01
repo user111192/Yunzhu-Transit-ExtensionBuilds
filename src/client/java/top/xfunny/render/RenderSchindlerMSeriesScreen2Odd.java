@@ -19,28 +19,27 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
-import top.xfunny.block.SchindlerMSeriesScreen2;
+import top.xfunny.block.SchindlerMSeriesScreen2Odd;
 import top.xfunny.block.TestLiftHallLanterns;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
-import top.xfunny.util.ReverseRendering;
 
 import java.util.Comparator;
 import java.util.Objects;
 
-import static org.mtr.mod.render.RenderLifts.renderLiftDisplay;
-
-public class RenderSchindlerMSeriesScreen2 extends BlockEntityRenderer<SchindlerMSeriesScreen2.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerMSeriesScreen2Odd extends BlockEntityRenderer<SchindlerMSeriesScreen2Odd.BlockEntity> implements DirectionHelper, IGui, IBlock {
 	private static final int PRESSED_COLOR = 0xFFFFCC00;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
-	public RenderSchindlerMSeriesScreen2(Argument dispatcher) {
+	private final boolean isOdd;
+	public RenderSchindlerMSeriesScreen2Odd(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
+		this.isOdd = isOdd;
 	}
 	@Override
-	public void render(SchindlerMSeriesScreen2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+	public void render(SchindlerMSeriesScreen2Odd.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -109,6 +108,12 @@ public class RenderSchindlerMSeriesScreen2 extends BlockEntityRenderer<Schindler
 							break;
 						case UP:
 							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
+								buttonStates[3] = true;
+							}
+							break;
+						case NONE:
+							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
+								buttonStates[2] = true;
 								buttonStates[3] = true;
 							}
 							break;
@@ -302,13 +307,12 @@ public class RenderSchindlerMSeriesScreen2 extends BlockEntityRenderer<Schindler
 			int maxWidth = text.length()>=2? 172:86;
 			float textureWidth = text.length()>=2? 0.16F:0.16F/2;
 			float x =text.length()>=2?-width+0.92F:-width+0.999F;
-				MainRenderer.scheduleRender(TextureList.instance.getSchindlerMSeriesScreen2Display(text, 0xFF0000).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-					storedMatrixTransformations.transform(graphicsHolder, offset);
+			MainRenderer.scheduleRender(TextureList.instance.getSchindlerMSeriesScreen2OddDisplay(text, 0xFF0000).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+				storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, x, -0.237F, textureWidth, 0.16F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-					graphicsHolder.pop();
-				});
-
+				IDrawing.drawTexture(graphicsHolder, x, -0.237F, textureWidth, 0.16F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+				graphicsHolder.pop();
+			});
 		}
 	}
 }

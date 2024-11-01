@@ -27,8 +27,10 @@ import top.xfunny.util.ClientGetLiftDetails;
 import java.util.Comparator;
 
 public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Screen.BlockEntity> implements DirectionHelper, IGui, IBlock {
-	public RenderOtisSeries1Screen(Argument dispatcher) {
+	private final boolean isOdd;
+	public RenderOtisSeries1Screen(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
+		this.isOdd = isOdd;
 	}
 
 	@Override

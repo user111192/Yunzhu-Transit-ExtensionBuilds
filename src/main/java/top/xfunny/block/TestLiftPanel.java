@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TestLiftPanel extends LiftPanelBase {
     public TestLiftPanel() {
-        super();
+        super(true);
     }
 
     @Nonnull
