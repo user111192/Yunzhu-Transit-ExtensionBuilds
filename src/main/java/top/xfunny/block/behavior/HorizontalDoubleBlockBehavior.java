@@ -1,10 +1,10 @@
 package top.xfunny.block.behavior;
 
-import top.xfunny.data.BlockProperties;
-import top.xfunny.util.BlockUtil;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
+import top.xfunny.data.BlockProperties;
+import top.xfunny.util.BlockUtil;
 
 import java.util.List;
 

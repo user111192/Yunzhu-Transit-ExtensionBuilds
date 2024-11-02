@@ -1,8 +1,8 @@
 package top.xfunny.block.base;
 
-import top.xfunny.util.BlockUtil;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockExtension;
+import top.xfunny.util.BlockUtil;
 
 import java.util.function.BiConsumer;
 

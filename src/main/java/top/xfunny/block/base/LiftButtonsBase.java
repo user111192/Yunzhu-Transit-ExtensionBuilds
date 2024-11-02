@@ -367,7 +367,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          * @param pos   需要注册或取消注册的楼层位置，使用BlockPos表示
          * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
          */
-        public void registerFloor(BlockPos pos, boolean isAdd) {
+        public void registerFloor(World world, BlockPos pos, boolean isAdd) {
             Init.LOGGER.info("正在操作");
             if (isAdd) {
                 // 如果是添加操作，则将位置添加到跟踪列表中
@@ -385,7 +385,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         }
 
 
-        public void registerButton(BlockPos blockPos, boolean isAdd) {
+        public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
             if (isAdd) {
                 // 如果是添加操作，则将位置添加到跟踪列表中
                 lanternPositions.add(blockPos);

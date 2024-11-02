@@ -1,20 +1,16 @@
 package top.xfunny.item;
 
-import org.mtr.core.data.Lift;
-import org.mtr.core.data.LiftFloor;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.ItemExtension;
-import org.mtr.mod.block.*;
-import org.mtr.mod.generated.lang.TranslationProvider;
-import org.mtr.mod.item.ItemBlockClickingBase;
+import org.mtr.mod.block.BlockLiftTrackBase;
+import org.mtr.mod.block.BlockLiftTrackFloor;
+import org.mtr.mod.block.IBlock;
 import top.xfunny.Init;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
 

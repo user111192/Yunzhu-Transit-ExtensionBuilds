@@ -5,7 +5,6 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
-import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.block.base.LiftPanelBase;
 
 import javax.annotation.Nonnull;

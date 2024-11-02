@@ -6,7 +6,6 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHa
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
-import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import top.xfunny.resource.FontList;
 
@@ -17,13 +16,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 import java.util.function.Supplier;
-import java.util.List;
-
-import static org.mtr.mod.data.IGui.ARGB_BLACK;
 
 
 public class TextureCache {

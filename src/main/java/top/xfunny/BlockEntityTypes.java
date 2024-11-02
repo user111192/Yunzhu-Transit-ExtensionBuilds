@@ -1,10 +1,7 @@
 package top.xfunny;
 
-import org.mtr.mapping.registry.BlockEntityTypeRegistryObject;
-
 import org.mtr.mapping.holder.Identifier;
-
-
+import org.mtr.mapping.registry.BlockEntityTypeRegistryObject;
 import top.xfunny.block.*;
 
 public class BlockEntityTypes {
@@ -21,7 +18,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesTouchButton.BlockEntity> SCHINDLER_M_SERIES_TOUCH_BUTTON;
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen1.BlockEntity> SCHINDLER_M_SERIES_SCREEN_1;
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen2Odd.BlockEntity> SCHINDLER_M_SERIES_SCREEN_2_ODD;
-    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen2Odd.BlockEntity> SCHINDLER_M_SERIES_SCREEN_2_EVEN;
+    public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen2Even.BlockEntity> SCHINDLER_M_SERIES_SCREEN_2_EVEN;
 
     public static final BlockEntityTypeRegistryObject<EmptyFloor.BlockEntity> LIFT_TRACK_EMPTY_FLOOR;
 

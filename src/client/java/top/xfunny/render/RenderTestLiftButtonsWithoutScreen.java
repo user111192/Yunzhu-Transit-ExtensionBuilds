@@ -19,12 +19,12 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.OtisSeries1Button;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.util.ReverseRendering;
+
 import java.util.Comparator;
 
 public class RenderTestLiftButtonsWithoutScreen extends BlockEntityRenderer<TestLiftButtonsWithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {

@@ -22,6 +22,7 @@ import top.xfunny.Init;
 import top.xfunny.block.SchindlerMSeriesScreen2Odd;
 import top.xfunny.block.TestLiftHallLanterns;
 import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.block.base.LiftHallLanternsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.TextureList;
@@ -30,16 +31,16 @@ import top.xfunny.util.ClientGetLiftDetails;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class RenderSchindlerMSeriesScreen2Odd extends BlockEntityRenderer<SchindlerMSeriesScreen2Odd.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerMSeriesScreen2<T extends LiftHallLanternsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
 	private static final int PRESSED_COLOR = 0xFFFFCC00;
 	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
 	private final boolean isOdd;
-	public RenderSchindlerMSeriesScreen2Odd(Argument dispatcher, Boolean isOdd) {
+	public RenderSchindlerMSeriesScreen2(Argument dispatcher, Boolean isOdd) {
 		super(dispatcher);
 		this.isOdd = isOdd;
 	}
 	@Override
-	public void render(SchindlerMSeriesScreen2Odd.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+	public void render(T blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -56,7 +57,8 @@ public class RenderSchindlerMSeriesScreen2Odd extends BlockEntityRenderer<Schind
 		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
 		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
 		// 参数为方块的中心位置坐标 (x, y, z)
-		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+		//z轴区分连接体和非连接体
+		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), !isOdd? blockPos.getZ() + 1 : blockPos.getZ() + 0.5);
 
 
 		// 定义一个布尔数组，用于记录按钮的状态
@@ -84,7 +86,7 @@ public class RenderSchindlerMSeriesScreen2Odd extends BlockEntityRenderer<Schind
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
 				RenderLiftObjectLink.RenderLiftObjectLink(
 						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.5, facing.getOffsetZ() / 2F),
+						new Vector3d(facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
 						new Vector3d(trackPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, trackPosition.getY() - blockPos.getY() + 0.5, trackPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
 						holdingLinker
 				);
@@ -287,16 +289,14 @@ public class RenderSchindlerMSeriesScreen2Odd extends BlockEntityRenderer<Schind
 	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-		final LiftDirection liftDirection = liftDetails.left();
+
 		final String floorNumber = liftDetails.right().left();
 		final String floorDescription = liftDetails.right().right();
 
 		// 判断楼层编号和描述是否为空
 		final boolean noFloorNumber = floorNumber.isEmpty();
 		final boolean noFloorDisplay = floorDescription.isEmpty();
-		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
-		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-		final float arrowSize = width / 6; // 设置箭头大小
+
 
 
 		// 渲染楼层信息

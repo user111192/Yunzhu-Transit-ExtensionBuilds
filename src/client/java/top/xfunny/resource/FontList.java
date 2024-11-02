@@ -1,8 +1,9 @@
 package top.xfunny.resource;
 
-import org.mtr.mapping.holder.*;
+import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.mapper.ResourceManagerHelper;
 import top.xfunny.Init;
+
 import java.awt.*;
 
 public class FontList {

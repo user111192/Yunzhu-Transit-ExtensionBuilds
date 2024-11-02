@@ -1,9 +1,9 @@
 package top.xfunny.util;
 
-import java.io.IOException;
-    import java.io.File;
-
 import org.mtr.mapping.holder.NativeImage;
+
+import java.io.File;
+import java.io.IOException;
 public class ImageGenerator {
 
 

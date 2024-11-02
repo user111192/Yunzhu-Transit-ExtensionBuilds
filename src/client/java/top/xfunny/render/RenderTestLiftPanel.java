@@ -26,6 +26,7 @@ import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 import top.xfunny.util.ReverseRendering;
+
 import java.util.Comparator;
 
 public class RenderTestLiftPanel extends BlockEntityRenderer<TestLiftPanel.BlockEntity> implements DirectionHelper, IGui, IBlock {

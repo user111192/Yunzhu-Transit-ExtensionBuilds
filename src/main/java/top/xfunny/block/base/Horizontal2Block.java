@@ -1,10 +1,9 @@
 package top.xfunny.block.base;
 
-import top.xfunny.block.behavior.HorizontalDoubleBlockBehavior;
-import top.xfunny.util.BlockUtil;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
+import top.xfunny.block.behavior.HorizontalDoubleBlockBehavior;
 
 import java.util.List;
 

@@ -4,8 +4,6 @@ import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.Item;
 import org.mtr.mapping.registry.ItemRegistryObject;
 import org.mtr.mod.CreativeModeTabs;
-
-
 import top.xfunny.item.FloorAutoSetter;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;

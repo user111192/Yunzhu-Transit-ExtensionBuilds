@@ -5,8 +5,8 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
+import top.xfunny.Init;
 import top.xfunny.block.base.LiftHallLanternsBase;
-import top.xfunny.data.BlockProperties;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -15,18 +15,21 @@ import static top.xfunny.block.behavior.HorizontalDoubleBlockBehavior.IS_LEFT;
 
 public class SchindlerMSeriesScreen2Even extends LiftHallLanternsBase {
     public SchindlerMSeriesScreen2Even() {
-        super(true,false,true);
+        super(false);
     }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(IBlock.getStatePropertySafe(state, IS_LEFT)) {
-            return IBlock.getVoxelShapeByDirection(-1, 7, 0, 16, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        switch (IBlock.getStatePropertySafe(state,SIDE)){
+            case LEFT -> {
+                return IBlock.getVoxelShapeByDirection(7, 9, 0, 16, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
+            }
+            case RIGHT -> {
+                return IBlock.getVoxelShapeByDirection(0, 9, 0, 9, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
+            }
         }
-        else {
-            return IBlock.getVoxelShapeByDirection(0, 9, 0, 9, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
-        }
+        return VoxelShapes.empty();
     }
 
     @Nonnull
@@ -38,6 +41,7 @@ public class SchindlerMSeriesScreen2Even extends LiftHallLanternsBase {
     @Override
     public void addBlockProperties(List<HolderBase<?>> properties) {
         properties.add(FACING);
+        properties.add(SIDE);
     }
 
     public static class BlockEntity extends BlockEntityBase {

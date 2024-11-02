@@ -6,7 +6,6 @@ import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.mapper.BlockHelper;
 import org.mtr.mapping.registry.BlockRegistryObject;
 import org.mtr.mod.CreativeModeTabs;
-
 import top.xfunny.block.*;
 
 

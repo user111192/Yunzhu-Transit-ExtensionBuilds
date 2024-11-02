@@ -1,8 +1,8 @@
 package top.xfunny.block.base;
 
-import top.xfunny.data.BlockProperties;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.tool.HolderBase;
+import top.xfunny.data.BlockProperties;
 
 import java.util.List;
 

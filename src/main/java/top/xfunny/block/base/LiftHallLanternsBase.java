@@ -8,6 +8,7 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
+import org.mtr.mod.block.BlockLiftPanelBase;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.render.RenderLifts;
@@ -18,6 +19,7 @@ import top.xfunny.LiftFloorRegistry;
 import top.xfunny.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,7 +28,8 @@ import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
-public abstract class LiftHallLanternsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
+
+public abstract class LiftHallLanternsBase extends BlockExtension implements DirectionHelper, BlockWithEntity, IBlock{
 
 	private final boolean isOdd;
 
@@ -75,7 +78,6 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 	}
 
 
-
 	@Nonnull
 	@Override
 	public ActionResult onUse2(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockHitResult hit) {
@@ -95,13 +97,53 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		}
 	}
 
+	@Nonnull
+	@Override
+	public BlockState getStateForNeighborUpdate2(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos){
+		if(!isOdd){
+			if (IBlock.getSideDirection(state) == direction && !neighborState.isOf(new Block(this))) {
+				return Blocks.getAirMapped().getDefaultState();
+			} else {
+				return state;
+			}
+		}else{
+			return state;
+		}
+	}
+
 	@Override
 	public BlockState getPlacementState2(ItemPlacementContext ctx) {
-		// 获取玩家面对的方向
 		final Direction facing = ctx.getPlayerFacing();
-		// 根据默认状态和玩家面对的方向来设置方块状态，并返回
-		return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+		if(!isOdd){
+			return IBlock.isReplaceable(ctx, facing.rotateYClockwise(), 2) ? getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), IBlock.EnumSide.LEFT) : null;
+		}else{
+			return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+		}
 	}
+
+	@Override
+	public void onPlaced2(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack){
+		if(!world.isClient()){
+			final Direction facing = IBlock.getStatePropertySafe(state, FACING);
+			if(!isOdd){
+				world.setBlockState(pos.offset(facing.rotateYClockwise()), getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), IBlock.EnumSide.RIGHT), 3);
+			}
+			world.updateNeighbors(pos, Blocks.getAirMapped());
+			state.updateNeighbors(new WorldAccess(world.data), pos, 3);
+		}
+	}
+
+	@Override
+	public void onBreak2(World world, BlockPos pos, BlockState state, PlayerEntity player){
+		if(!isOdd){
+			if (IBlock.getStatePropertySafe(state, SIDE) == IBlock.EnumSide.RIGHT) {
+				IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
+			}
+		}
+		super.onBreak2(world, pos, state, player);
+	}
+
+
 
 	public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
 		// 用于在CompoundTag中标识地板位置数组的键
@@ -226,11 +268,11 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		public void updateLiftDirection() {
 			if (!directionQueue.isEmpty()) {
 				forEachTrackPosition(pos -> {
-				callbackLift(pos, (floor, lift) -> {
-					LiftDirection tempLiftDirection = lift.getDirection();
-					buttonDirection = directionQueue.contains(tempLiftDirection)?  tempLiftDirection : NONE;
+					callbackLift(pos, (floor, lift) -> {
+						LiftDirection tempLiftDirection = lift.getDirection();
+						buttonDirection = directionQueue.contains(tempLiftDirection)?  tempLiftDirection : NONE;
+					});
 				});
-			});
 			}
 		}
 
@@ -322,29 +364,42 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		 * @param pos   需要注册或取消注册的楼层位置，使用BlockPos表示
 		 * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
 		 */
-		public void registerFloor(BlockPos pos, boolean isAdd) {
+		public void registerFloor(World world, BlockPos pos, boolean isAdd) {
 			Init.LOGGER.info("正在操作");
-			if (isAdd) {
-				if (trackPositions.isEmpty()){
-					// 如果是添加操作，则将位置添加到跟踪列表中
-					trackPositions.add(pos);
-					Init.LOGGER.info("已添加");
-				}else {
-					Init.LOGGER.info("只能连接一个楼层轨道");
+			if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+				final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
+				if (blockEntity != null && blockEntity.data instanceof LiftHallLanternsBase.BlockEntityBase) {
+					((LiftHallLanternsBase.BlockEntityBase) blockEntity.data).registerFloor(world, pos, isAdd);
 				}
-
 			} else {
-				// 如果是非添加操作，则从跟踪列表中移除该位置
-				trackPositions.remove(pos);
-				Init.LOGGER.info("已移除");
+				if (isAdd) {
+					if (trackPositions.isEmpty()){
+						// 如果是添加操作，则将位置添加到跟踪列表中
+						trackPositions.add(pos);
+						Init.LOGGER.info("已添加");
+					}else {
+						Init.LOGGER.info("只能连接一个楼层轨道");
+					}
+
+				} else {
+					// 如果是非添加操作，则从跟踪列表中移除该位置
+					trackPositions.remove(pos);
+					Init.LOGGER.info("已移除");
+				}
+				// 更新数据状态，标记数据为“脏”，表示需要保存或同步
+				markDirty2();
 			}
-			// 更新数据状态，标记数据为“脏”，表示需要保存或同步
-			markDirty2();
 		}
 
-		public void registerButton(BlockPos blockPos, boolean isAdd) {
+		public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
 			Init.LOGGER.info("正在操作");
-			if (isAdd) {
+			if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+				final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
+				if (blockEntity != null && blockEntity.data instanceof LiftHallLanternsBase.BlockEntityBase) {
+					((LiftHallLanternsBase.BlockEntityBase) blockEntity.data).registerButton(world, blockPos, isAdd);
+				}
+			}else{
+				if (isAdd) {
 				if(buttonPositions.isEmpty()){
 					// 如果是添加操作，则将位置添加到跟踪列表中
 					buttonPositions.add(blockPos);
@@ -361,6 +416,8 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 				Init.LOGGER.info("buttonPositions"+buttonPositions);
 			}
 			markDirty2();
+			}
+
 		}
 		/**
 		 * 对每个轨道位置执行给定的操作
