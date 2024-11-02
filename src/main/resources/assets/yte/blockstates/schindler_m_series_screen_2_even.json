@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=north,left=true": {
+			"model": "yte:block/schindler_m_series_screen_2_left"
+		},
+		"facing=east,left=true": {
+			"model": "yte:block/schindler_m_series_screen_2_left",
+			"y": 90
+		},
+		"facing=south,left=true": {
+			"model": "yte:block/schindler_m_series_screen_2_left",
+			"y": 180
+		},
+		"facing=west,left=true": {
+			"model": "yte:block/schindler_m_series_screen_2_left",
+			"y": 270
+		},
+		"facing=north,left=false": {
+			"model": "yte:block/schindler_m_series_screen_2_right"
+		},
+		"facing=east,left=false": {
+			"model": "yte:block/schindler_m_series_screen_2_right",
+			"y": 90
+		},
+		"facing=south,left=false": {
+			"model": "yte:block/schindler_m_series_screen_2_right",
+			"y": 180
+		},
+		"facing=west,left=false": {
+			"model": "yte:block/schindler_m_series_screen_2_right",
+			"y": 270
+		}
+	}
+}
