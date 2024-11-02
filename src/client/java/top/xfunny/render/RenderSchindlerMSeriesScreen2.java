@@ -58,7 +58,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftHallLanternsBase.BlockE
 		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
 		// 参数为方块的中心位置坐标 (x, y, z)
 		//z轴区分连接体和非连接体
-		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), !isOdd? blockPos.getZ() + 1 : blockPos.getZ() + 0.5);
+		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
 
 
 		// 定义一个布尔数组，用于记录按钮的状态
@@ -74,7 +74,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftHallLanternsBase.BlockE
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, buttonPosition, FACING);
 				RenderLiftObjectLink.RenderButtonObjectLink(
 						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
+						new Vector3d(!isOdd ? (facing.getOffsetX() / 2F) + 0.5 : facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
 						new Vector3d(buttonPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, buttonPosition.getY() - blockPos.getY() + 0.5, buttonPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
 						holdingLinker
 				);
@@ -132,6 +132,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftHallLanternsBase.BlockE
 		storedMatrixTransformations2.add(graphicsHolder -> {
 			graphicsHolder.rotateYDegrees(-facing.asRotation());
 			graphicsHolder.translate(0, 0, 0.4968 - SMALL_OFFSET);
+			graphicsHolder.translate(!isOdd? -0.5 : 0 , 0, 0);
 		});
 
 		// 根据按钮状态渲染按钮
