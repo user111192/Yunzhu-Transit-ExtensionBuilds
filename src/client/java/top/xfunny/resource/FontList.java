@@ -16,12 +16,14 @@ public class FontList {
 	Font acmeled;
 	Font koneModernization;
 	Font schindler_m_series;
+	Font mitsubishi_modern;
 
 	public void FontReload(){
 		font1 = null;
 		fontCjk1 = null;
 		testfont = null;
 		koneModernization = null;
+		mitsubishi_modern = null;
 	}
 
 	public void FlonList(){
@@ -80,6 +82,15 @@ public class FontList {
 			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler_mseries_font.ttf"), inputStream -> {
 				try {
 					schindler_m_series = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+				} catch (Exception e) {
+					Init.LOGGER.error("", e);
+				}
+			});
+		}
+		while (mitsubishi_modern == null) {
+			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/mitsubishi_modern.ttf"), inputStream -> {
+				try {
+					mitsubishi_modern = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				} catch (Exception e) {
 					Init.LOGGER.error("", e);
 				}

@@ -28,4 +28,7 @@ public class TextureList {
 	public TextureCache.DynamicResource getSchindlerMSeriesScreen2EvenDisplay(String originalText, int textColor) {
 		return TextureCache.instance.getResource(String.format("schindler_m_series_screen_2_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.acmeled,10,0), TextureCache.DefaultRenderingColor.BLACK);
 	}
+	public TextureCache.DynamicResource getMitsubishiNexWayButton1Display(String originalText, int textColor) {
+		return TextureCache.instance.getResource(String.format("mitsubishi_nexway_button_1_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.mitsubishi_modern,10,0), TextureCache.DefaultRenderingColor.BLACK);
+	}
 }
