@@ -35,7 +35,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 	private static final int HOVER_COLOR = 0xFFFFFFFF;
 	private static final int PRESSED_COLOR = 0xFFFF8800;
 	private static final float ARROW_SPEED = 0.0F;
-	private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/lift_arrow.png");
+	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
 	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
 	public RenderMitsubishiNexWayButton1(Argument dispatcher) {
@@ -143,10 +143,10 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 28,
-								(buttonDescriptor.hasUpButton() ? 0.5F : 2.5F) / 14,
-								3F / 32,
-								3F / 32,
+								-1.5F / 16,
+								(buttonDescriptor.hasUpButton() ? 0.5F : 2.5F) / 16,
+								3F / 16,
+								3F / 16,
 								0,
 								0,
 								1,
@@ -171,10 +171,10 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 28,
-								(buttonDescriptor.hasDownButton() ? 4.5F : 2.5F) / 20,
-								3F / 32,
-								3F / 32,
+								-1.5F / 16,
+								(buttonDescriptor.hasDownButton() ? 4.5F : 2.5F) / 16,
+								3F / 16,
+								3F / 16,
 								0,
 								1,
 								1,
@@ -234,7 +234,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		// 渲染电梯运行方向的箭头
 		if (liftDirection != LiftDirection.NONE) {
 			final float uv = (gameTick * ARROW_SPEED) % 1;
-			final int color = goingUp ? 0xFF00FF00 : 0xFFFF0000; // 根据运行方向设置箭头颜色
+			final int color = 0xFFFFAA00; // 根据运行方向设置箭头颜色
 			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
