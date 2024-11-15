@@ -32,11 +32,12 @@ import java.util.Comparator;
 
 public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<MitsubishiNexWayButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR = 0xFFFFFFFF;
+	private static final int HOVER_COLOR = 0xFFFFCC66;
 	private static final int PRESSED_COLOR = 0xFFFF8800;
 	private static final float ARROW_SPEED = 0.0F;
 	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
-	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
+	private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
 	public RenderMitsubishiNexWayButton1(Argument dispatcher) {
 		super(dispatcher);
@@ -126,7 +127,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
 		storedMatrixTransformations2.add(graphicsHolder -> {
 			graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+			graphicsHolder.translate(0, 0, 0.471 - SMALL_OFFSET);
 		});
 
 		// 根据按钮状态渲染按钮
@@ -136,6 +137,32 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
+					QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						// 应用存储的矩阵变换
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-0.55F / 16,
+								(buttonDescriptor.hasUpButton() ? 2.3F : 3.2F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								0,
+								1,
+								1,
+								facing,
+								ARGB_WHITE,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+			MainRenderer.scheduleRender(
+					LIGHT_TEXTURE,
+					false,
 					buttonStates[0] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						// 应用存储的矩阵变换
@@ -143,10 +170,10 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonDescriptor.hasUpButton() ? 0.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-0.55F / 16,
+								(buttonDescriptor.hasUpButton() ? 2.3F : 3.2F) / 16,
+								1F / 16,
+								1F / 16,
 								0,
 								0,
 								1,
@@ -166,15 +193,39 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			MainRenderer.scheduleRender(
 					BUTTON_TEXTURE,
 					false,
+					QueuedRenderLayer.EXTERIOR,
+					(graphicsHolder, offset) -> {
+						storedMatrixTransformations2.transform(graphicsHolder, offset);
+						IDrawing.drawTexture(
+								graphicsHolder,
+								-0.55F / 16,
+								(buttonDescriptor.hasDownButton() ? 4.2F : 3.2F) / 16,
+								1F / 16,
+								1F / 16,
+								0,
+								1,
+								1,
+								0,
+								facing,
+								ARGB_WHITE,
+								light
+						);
+						// 弹出当前图形状态
+						graphicsHolder.pop();
+					}
+			);
+			MainRenderer.scheduleRender(
+					LIGHT_TEXTURE,
+					false,
 					buttonStates[1] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
 					(graphicsHolder, offset) -> {
 						storedMatrixTransformations2.transform(graphicsHolder, offset);
 						IDrawing.drawTexture(
 								graphicsHolder,
-								-1.5F / 16,
-								(buttonDescriptor.hasDownButton() ? 4.5F : 2.5F) / 16,
-								3F / 16,
-								3F / 16,
+								-0.55F / 16,
+								(buttonDescriptor.hasDownButton() ? 4.2F : 3.2F) / 16,
+								1F / 16,
+								1F / 16,
 								0,
 								1,
 								1,
@@ -193,14 +244,14 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());
 			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F: 0.495F;
+			final float width = count == 1 ? 0.25F: 0.29F;
 
 			// 创建当前矩阵变换的副本以供后续修改
 			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
 			// 添加旋转和平移变换
 			storedMatrixTransformations3.add(graphicsHolder -> {
 				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(-width / 2, 0, 0);
+				graphicsHolder.translate(count == 1 ? -width / 2 : -width * 1.95, 0, 0.003F);
 			});
 
 			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
@@ -211,12 +262,12 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
+				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.105F,0.168F,0.14F, count);
 
 			}
 		}
 	}
-	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
+	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height, int count) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final LiftDirection liftDirection = liftDetails.left();
@@ -228,7 +279,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		final boolean noFloorDisplay = floorDescription.isEmpty();
 		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
 		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-		final float arrowSize = width / 6; // 设置箭头大小
+		final float arrowSize = (float) 1 / 6; // 设置箭头大小
 		final float y = height; // 箭头的Y轴位置
 
 		// 渲染电梯运行方向的箭头
@@ -238,7 +289,9 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
-				IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.24F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				//IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/5.1F+arrowSize : -width/10.1F+arrowSize , y, arrowSize / 3, arrowSize / 3, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.05F : -width/4+arrowSize+0.37F, y-0.01F, arrowSize/2.5F, arrowSize/2.5F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+
 				graphicsHolder.pop();
 			});
 		}
@@ -258,15 +311,13 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 170 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.95F, y + 0.03F, width1, height1, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {
-
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
-
-					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.98F : 0.95F), y + 0.03F, text.length() == 1 ? width1 / 2 : width1, height1, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			}

@@ -1,6 +1,7 @@
 package top.xfunny;
 
 import org.mtr.mapping.holder.BlockPos;
+import org.mtr.mapping.holder.BlockState;
 import org.mtr.mapping.holder.World;
 
 public interface ButtonRegistry {

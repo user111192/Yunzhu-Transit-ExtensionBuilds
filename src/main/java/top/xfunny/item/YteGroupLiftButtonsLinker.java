@@ -221,7 +221,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
 			// 简化类型检查
 			if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
 				if (blockEntity1.data instanceof LiftFloorRegistry) {
-					((LiftFloorRegistry) blockEntity1.data).registerFloor(world, blockPos2, isAdd);
+					((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos1, world, blockPos2, isAdd);
 					Init.LOGGER.info("已成功连接 {} 和 {}", blockPos1, blockPos2);
 				} else {
 					Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);

@@ -364,12 +364,12 @@ public abstract class LiftHallLanternsBase extends BlockExtension implements Dir
 		 * @param pos   需要注册或取消注册的楼层位置，使用BlockPos表示
 		 * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
 		 */
-		public void registerFloor(World world, BlockPos pos, boolean isAdd) {
+		public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
 			Init.LOGGER.info("正在操作");
 			if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
 				final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
 				if (blockEntity != null && blockEntity.data instanceof LiftHallLanternsBase.BlockEntityBase) {
-					((LiftHallLanternsBase.BlockEntityBase) blockEntity.data).registerFloor(world, pos, isAdd);
+					((LiftHallLanternsBase.BlockEntityBase) blockEntity.data).registerFloor(selfPos, world, pos, isAdd);
 				}
 			} else {
 				if (isAdd) {

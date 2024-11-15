@@ -1,8 +1,9 @@
 package top.xfunny;
 
 import org.mtr.mapping.holder.BlockPos;
+import org.mtr.mapping.holder.BlockState;
 import org.mtr.mapping.holder.World;
 
 public interface LiftFloorRegistry {
-    void registerFloor(World world, BlockPos blockPos, boolean isAdd);
+    void registerFloor(BlockPos selfPos, World world, BlockPos blockPos, boolean isAdd);
 }

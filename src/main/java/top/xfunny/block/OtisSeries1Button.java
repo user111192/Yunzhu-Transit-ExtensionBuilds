@@ -37,6 +37,7 @@ public class OtisSeries1Button extends LiftButtonsBase {
 		properties.add(FACING);
 		// 添加块的解锁状态属性
 		properties.add(UNLOCKED);
+		properties.add(SINGLE);
 	}
 
 

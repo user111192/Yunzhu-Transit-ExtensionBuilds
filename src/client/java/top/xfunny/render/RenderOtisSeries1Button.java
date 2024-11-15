@@ -138,7 +138,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 
 		// 根据按钮状态渲染按钮
 		// 第一个按钮的渲染逻辑
-		if (buttonStates[0]) {
+		if (buttonDescriptor.hasDownButton()) {
 			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
 				IDrawing.drawTexture(graphicsHolder, 0.15F, (buttonStates[1] ? -5.4F : -4.8F) / 16, 0.2F, 0.1F, Direction.UP, light);
@@ -204,7 +204,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		}
 
 		// 第二个按钮的渲染逻辑
-		if (buttonStates[1]) {
+		if (buttonDescriptor.hasUpButton()) {
 			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
 				IDrawing.drawTexture(graphicsHolder, 0.15F, (buttonDescriptor.hasDownButton() ? -4.2F : -4.8F) / 16, 0.2F, 0.1F, Direction.UP, light);

@@ -127,15 +127,11 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 								buttonStates[3] = true;
 							}
 							break;
-						case NONE:
+						/*case NONE:
 							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
 								buttonStates[2] = true;
 								buttonStates[3] = true;
-							}
-					}
-				}else{
-					if (blockEntity.getLanternMark()){
-						//top.xfunny.Init.LOGGER.info("directionQueue:"+blockEntity.getQuene());
+							}*/
 					}
 				}
 			});

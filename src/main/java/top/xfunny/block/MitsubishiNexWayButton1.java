@@ -50,6 +50,7 @@ public class MitsubishiNexWayButton1 extends LiftButtonsBase {
 		properties.add(FACING);
 		// 添加块的解锁状态属性
 		properties.add(UNLOCKED);
+		properties.add(SINGLE);
 	}
 	/**
 	 * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension

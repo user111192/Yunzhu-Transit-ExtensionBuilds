@@ -25,6 +25,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
     public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+    public static final BooleanProperty SINGLE = BooleanProperty.of("single");
 
 
     public LiftButtonsBase() {
@@ -94,7 +95,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     // 处理按钮的使用交互
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
 
 
         // 检查玩家是否拿着刷子，并尝试更新按钮状态
@@ -161,21 +162,21 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                                 Init.LOGGER.info("该外呼已连接到站灯");
 
                                 lp.forEach(lanternPos1 -> {
-                                        BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                        if (blockEntityLantern != null) {
-                                            LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
+                                    BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
+                                    if (blockEntityLantern != null) {
+                                        LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
 
-                                            if (hitY < 0.25) {
-                                                lanternData.setLiftDirection(LiftDirection.DOWN);
-                                                Init.LOGGER.info("玩家按下:" + LiftDirection.DOWN);
-                                            }
-                                            else {
-                                                lanternData.setLiftDirection(LiftDirection.UP);
-                                                Init.LOGGER.info("玩家按下:" + LiftDirection.UP);
-                                            }
-                                            lanternData.selfPos = lanternPos1;
+                                        if (hitY < 0.25) {
+                                            lanternData.setLiftDirection(LiftDirection.DOWN);
+                                            Init.LOGGER.info("玩家按下:" + LiftDirection.DOWN);
                                         }
-                                    });
+                                        else {
+                                            lanternData.setLiftDirection(LiftDirection.UP);
+                                            Init.LOGGER.info("玩家按下:" + LiftDirection.UP);
+                                        }
+                                        lanternData.selfPos = lanternPos1;
+                                    }
+                                });
 
                             } else {
                                 Init.LOGGER.info("该外呼未连接到站灯");
@@ -197,13 +198,13 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
 
                                 data.lanternPositions.forEach(lanternPos1 -> {
-                                        BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                        if (blockEntityLantern != null) {
-                                            LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                            lanternData.setLiftDirection(descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP);
-                                            lanternData.selfPos = lanternPos1;
-                                        }
-                                    });
+                                    BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
+                                    if (blockEntityLantern != null) {
+                                        LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
+                                        lanternData.setLiftDirection(descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP);
+                                        lanternData.selfPos = lanternPos1;
+                                    }
+                                });
 
                             } else {
                                 Init.LOGGER.info("该外呼未连接到站灯");
@@ -322,6 +323,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void readCompoundTag(CompoundTag compoundTag) {
+
             // 清空当前位置集合，准备加载新的数据
             trackPositions.clear();
             lanternPositions.clear();
@@ -345,6 +347,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void writeCompoundTag(CompoundTag compoundTag) {
+
             // 创建一个临时的List，用于存储trackPositions的长整型表示
             final List<Long> trackPositionsList = new ArrayList<>();
             final List<Long> lanternPositionsList = new ArrayList<>();
@@ -367,17 +370,27 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          * @param pos   需要注册或取消注册的楼层位置，使用BlockPos表示
          * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
          */
-        public void registerFloor(World world, BlockPos pos, boolean isAdd) {
+        public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
+
             Init.LOGGER.info("正在操作");
+            final boolean single = IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
             if (isAdd) {
+
                 // 如果是添加操作，则将位置添加到跟踪列表中
                 trackPositions.add(pos);
+                if(trackPositions.size() != 1 && single){
+                    final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
+                    world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+                }
 
                 Init.LOGGER.info("已添加");
             } else {
                 // 如果是非添加操作，则从跟踪列表中移除该位置
                 trackPositions.remove(pos);
-
+                if(trackPositions.size() == 1 && !single){
+                    final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
+                    world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+                }
                 Init.LOGGER.info("已移除");
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
@@ -415,8 +428,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
 
     }
-
-
 }
 
 
