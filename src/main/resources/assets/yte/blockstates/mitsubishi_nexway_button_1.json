@@ -64,7 +64,8 @@
 				"single": "false"
 			},
 			"apply": {
-				"model": "yte:block/mitsubishi_nexway_button_1"
+				"model": "yte:block/mitsubishi_nexway_button_1",
+				"y": 180
 			}
 		},
 		{

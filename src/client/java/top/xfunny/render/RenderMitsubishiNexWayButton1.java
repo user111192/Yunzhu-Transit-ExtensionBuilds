@@ -279,7 +279,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		final boolean noFloorDisplay = floorDescription.isEmpty();
 		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
 		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-		final float arrowSize = (float) 1 / 6; // 设置箭头大小
+		final float arrowSize = (float) 1 / 7; // 设置箭头大小
 		final float y = height; // 箭头的Y轴位置
 
 		// 渲染电梯运行方向的箭头
@@ -290,7 +290,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
 				//IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/5.1F+arrowSize : -width/10.1F+arrowSize , y, arrowSize / 3, arrowSize / 3, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.05F : -width/4+arrowSize+0.37F, y-0.01F, arrowSize/2.5F, arrowSize/2.5F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.08F : -width/4+arrowSize+0.37F, y-0.01F, arrowSize/2.5F, arrowSize/2.5F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 
 				graphicsHolder.pop();
 			});
@@ -311,7 +311,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.95F, y + 0.03F, width1, height1, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.5F, y + 0.03F, width1, height1, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {
