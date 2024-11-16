@@ -244,14 +244,14 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());
 			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F: 0.29F;
+			final float width = 0.25F;//todo：可添加条件判断区分不同电梯数量下的宽度
 
 			// 创建当前矩阵变换的副本以供后续修改
 			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
 			// 添加旋转和平移变换
 			storedMatrixTransformations3.add(graphicsHolder -> {
 				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(count == 1 ? -width / 2 : -width * 1.95, 0, 0.003F);
+				graphicsHolder.translate(count == 1 ? -width / 2 : -width * 2.485 , 0, 0.003F);
 			});
 
 			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
@@ -262,7 +262,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.105F,0.168F,0.14F, count);
+				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.105F,0.190F,0.14F, count);
 
 			}
 		}
@@ -290,7 +290,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
 				//IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/5.1F+arrowSize : -width/10.1F+arrowSize , y, arrowSize / 3, arrowSize / 3, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.08F : -width/4+arrowSize+0.37F, y-0.01F, arrowSize/2.5F, arrowSize/2.5F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.08F : -width/4+arrowSize+0.449F, y-0.01F, arrowSize/2.5F, arrowSize/2.5F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 
 				graphicsHolder.pop();
 			});
@@ -311,13 +311,13 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.5F, y + 0.03F, width1, height1, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.955F, y + 0.03F, width1 / 1.3F, height1 / 1.3F, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
-					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.98F : 0.95F), y + 0.03F, text.length() == 1 ? width1 / 2 : width1, height1, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.98F : 0.96F), y + 0.03F, text.length() == 1 ? width1 / 2 : width1 / 1.3F, height1 / 1.3F, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			}
