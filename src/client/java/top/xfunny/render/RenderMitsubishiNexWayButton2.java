@@ -21,6 +21,7 @@ import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.MitsubishiNexWayButton1;
+import top.xfunny.block.MitsubishiNexWayButton2;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -30,7 +31,7 @@ import top.xfunny.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<MitsubishiNexWayButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<MitsubishiNexWayButton2.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
 	private static final int HOVER_COLOR = 0xFFFFCC66;
 	private static final int PRESSED_COLOR = 0xFFFF8800;
@@ -39,12 +40,12 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
 	private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
-	public RenderMitsubishiNexWayButton1(Argument dispatcher) {
+	public RenderMitsubishiNexWayButton2(Argument dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	public void render(MitsubishiNexWayButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
+	public void render(MitsubishiNexWayButton2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -86,7 +87,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 			}
 
 			// Figure out whether the up and down buttons should be rendered
-			MitsubishiNexWayButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+			MitsubishiNexWayButton2.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
 				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
@@ -113,7 +114,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
 		final boolean lookingAtTopHalf;
 		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, MitsubishiNexWayButton1.UNLOCKED)) {
+		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, MitsubishiNexWayButton2.UNLOCKED)) {
 			lookingAtTopHalf = false;
 			lookingAtBottomHalf = false;
 		} else {
@@ -127,7 +128,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
 		storedMatrixTransformations2.add(graphicsHolder -> {
 			graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.471 - SMALL_OFFSET);
+			graphicsHolder.translate(0, 0, 0.498 - SMALL_OFFSET);
 		});
 
 		// 根据按钮状态渲染按钮
@@ -290,7 +291,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
 				//IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/5.1F+arrowSize : -width/10.1F+arrowSize , y, arrowSize / 3, arrowSize / 3, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.083F : -width/4+arrowSize+0.456F, y-0.01F, arrowSize/2.85F, arrowSize/2.9F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.083F : -width/4+arrowSize+0.456F, y+0.01F, arrowSize/2.85F, arrowSize/2.9F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 
 				graphicsHolder.pop();
 			});
@@ -311,13 +312,13 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.955F, y + 0.03F, width1 / 1.2F, height1 / 1.4F, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.955F, y + 0.13F, width1 / 1.2F, height1 / 1.4F, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {
 				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
-					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.983F : 0.957F), y + 0.03F, text.length() == 1 ? width1 / 2.5F : width1 / 1.2F, height1 / 1.4F, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.983F : 0.957F), y + 0.05F, text.length() == 1 ? width1 / 2.5F : width1 / 1.2F, height1 / 1.4F, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			}
