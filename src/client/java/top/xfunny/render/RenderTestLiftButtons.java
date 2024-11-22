@@ -24,6 +24,7 @@ import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
+import top.xfunny.resource.FontList;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 import top.xfunny.util.ReverseRendering;
@@ -254,6 +255,8 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			float offset1;
 			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
 			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).width;
+
+
 
 			if (text.length() > 2) {
 				float scrollSpeed = 0.008F;

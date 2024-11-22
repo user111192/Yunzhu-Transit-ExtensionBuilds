@@ -3,9 +3,20 @@ package top.xfunny.resource;
 import top.xfunny.TextureCache;
 import top.xfunny.YteRouteMapGenerator;
 
+import java.awt.*;
+
 
 public class TextureList {
 	public static TextureList instance = new TextureList();
+
+
+	public TextureCache.DynamicResource renderFont(String id, String originalText, int textColor, Font font, int fontSize) {
+		return TextureCache.instance.getResource(String.format("%s_%s", id,originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor, font, fontSize,0), TextureCache.DefaultRenderingColor.BLACK);
+	}
+
+
+
+
 	public TextureCache.DynamicResource getTestLiftButtonsDisplay(String originalText, int textColor) {
 		return TextureCache.instance.getResource(String.format("test_lift_buttons_display_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.testfont,4,0), TextureCache.DefaultRenderingColor.BLACK);
 	}
