@@ -85,7 +85,6 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
 		blockEntity.forEachTrackPosition(trackPosition -> {
 			// 手持连接器进行连线
 			if (world.getBlockState(trackPosition).getBlock().data instanceof BlockLiftTrackFloor ) {
-
 				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
 				RenderLiftObjectLink.RenderLiftObjectLink(
 						storedMatrixTransformations1,

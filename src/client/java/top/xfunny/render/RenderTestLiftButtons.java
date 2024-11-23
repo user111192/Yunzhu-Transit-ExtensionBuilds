@@ -24,7 +24,6 @@ import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.resource.FontList;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 import top.xfunny.util.ReverseRendering;
@@ -44,7 +43,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 	}
 
 	@Override
-	public void render(TestLiftButtons.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
+	public void render(TestLiftButtons.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
 		final World world = blockEntity.getWorld2();
 		if (world == null) {
 			return;
@@ -67,7 +66,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 		// 定义一个布尔数组，用于记录按钮的状态
 		// 数组顺序：向下按钮被按下、向上按钮被按下
 		final boolean[] buttonStates = {false, false};
-		LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false,false);
+		LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
 		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
 		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -194,7 +193,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());
 			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = count == 1 ? 0.25F: 0.495F;
+			final float width = count == 1 ? 0.25F : 0.495F;
 
 			// 创建当前矩阵变换的副本以供后续修改
 			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
@@ -219,12 +218,13 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
+				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4 / count, 0.2F, 0.2F, 0.2F);
 
 			}
 		}
 	}
-	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
+
+	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world, Lift lift, float width, float width1, float height1, float height) {
 		// 获取电梯的详细信息，包括运行方向和楼层信息
 		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
 		final LiftDirection liftDirection = liftDetails.left();
@@ -246,16 +246,15 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 				storedMatrixTransformations.transform(graphicsHolder, offset);
 				// 根据电梯运行方向绘制箭头
-				IDrawing.drawTexture(graphicsHolder, -width/4+arrowSize , y-0.24F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+				IDrawing.drawTexture(graphicsHolder, -width / 4 + arrowSize, y - 0.24F, arrowSize, arrowSize, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
 				graphicsHolder.pop();
 			});
 		}
 		// 渲染楼层信息
 		if (!noFloorNumber || !noFloorDisplay) {
 			float offset1;
-			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
+			final String text = String.format("%s%s", floorNumber, noFloorNumber ? " " : "");
 			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).width;
-
 
 
 			if (text.length() > 2) {
@@ -268,7 +267,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 				MainRenderer.scheduleRender(TextureList.instance.getTestLiftButtonsDisplay(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
 					storedMatrixTransformations.transform(graphicsHolder, offset);
 
-					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset+ (float) 170 /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+					IDrawing.drawTexture(graphicsHolder, -width + 0.9F, y - 0.07F, width1, height1, finalOffset, 0, finalOffset + (float) 170 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
 					graphicsHolder.pop();
 				});
 			} else {

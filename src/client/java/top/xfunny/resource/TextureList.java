@@ -14,9 +14,6 @@ public class TextureList {
 		return TextureCache.instance.getResource(String.format("%s_%s", id,originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor, font, fontSize,0), TextureCache.DefaultRenderingColor.BLACK);
 	}
 
-
-
-
 	public TextureCache.DynamicResource getTestLiftButtonsDisplay(String originalText, int textColor) {
 		return TextureCache.instance.getResource(String.format("test_lift_buttons_display_%s", originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor,FontList.instance.testfont,4,0), TextureCache.DefaultRenderingColor.BLACK);
 	}

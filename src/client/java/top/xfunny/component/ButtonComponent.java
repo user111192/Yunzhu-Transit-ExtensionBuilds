@@ -1,41 +1,220 @@
 package top.xfunny.component;
 
-import org.mtr.mapping.holder.Direction;
-import org.mtr.mapping.holder.Identifier;
-import org.mtr.mapping.mapper.GraphicsHolder;
+import org.mtr.mapping.holder.*;
+import org.mtr.mod.Init;
+import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
+import org.mtr.mod.render.MainRenderer;
+import org.mtr.mod.render.QueuedRenderLayer;
+import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.block.TestLiftButtons;
+import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.layout.RenderComponent;
+
+import static org.mtr.mapping.mapper.DirectionHelper.FACING;
+import static org.mtr.mod.data.IGui.SMALL_OFFSET;
+
 
 public class ButtonComponent implements RenderComponent {
-    private final Identifier texture;
-    private final int defaultColor;
-    private final int hoverColor;
-    private boolean isHovered;
+    boolean[] buttonStates = {false, false};
+    private Identifier texture;
+    private int defaultColor;
+    private int hoverColor;
+    private int pressedColor;
+    private BlockPos blockPos;
+    private Direction facing;
+    private BlockState blockState;
+    private World world;
+    private StoredMatrixTransformations storedMatrixTransformations;
+    private StoredMatrixTransformations storedMatrixTransformations1;
+    private LiftButtonsBase.LiftButtonDescriptor buttonDescriptor;
+    private int light;
+    private float width, height;
+    private float x, y, z;
+    private float yUp, yDown;
+    private float marginLeft, marginTop, marginRight, marginBottom;
+    private float spacing;
 
-    public ButtonComponent(Identifier texture, int defaultColor, int hoverColor) {
-        this.texture = texture;
-        this.defaultColor = defaultColor;
-        this.hoverColor = hoverColor;
+    public void render() {
+        this.blockState = world.getBlockState(blockPos);
+        this.facing = IBlock.getStatePropertySafe(blockState, FACING);
+
+        this.storedMatrixTransformations1 = storedMatrixTransformations.copy();
+
+        storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+        });
+        dynamicRender();
+    }
+
+    private void dynamicRender() {
+        final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
+        final boolean lookingAtTopHalf;
+        final boolean lookingAtBottomHalf;
+        positionY(y, spacing);
+        if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtons.UNLOCKED)) {
+            lookingAtTopHalf = false;
+            lookingAtBottomHalf = false;
+        } else {
+            final Vector3d hitLocation = hitResult.getPos();
+            final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
+            final boolean inBlock = hitY < 0.5 && Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
+            lookingAtTopHalf = inBlock && (!buttonDescriptor.hasDownButton() || hitY > 0.25);
+            lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < 0.25);
+        }
+
+        if (buttonDescriptor.hasDownButton()) {
+            // 根据按钮的按下状态和鼠标位置选择不同的渲染层
+            MainRenderer.scheduleRender(
+                    texture,
+                    false,
+                    buttonStates[0] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+                    (graphicsHolder, offset) -> {
+                        // 应用存储的矩阵变换
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        // 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                x,
+                                yDown,
+                                width,
+                                height,
+                                0,
+                                0,
+                                1,
+                                1,
+                                facing,
+                                buttonStates[0] ? pressedColor : lookingAtBottomHalf ? hoverColor : defaultColor,
+                                light
+                        );
+                        // 弹出当前图形状态
+                        graphicsHolder.pop();
+                    }
+            );
+        }
+        if (buttonDescriptor.hasUpButton()) {
+            // 根据按钮的按下状态和鼠标位置选择不同的渲染层
+            MainRenderer.scheduleRender(
+                    texture,
+                    false,
+                    buttonStates[1] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                x,
+                                yUp,
+                                width,
+                                height,
+                                0,
+                                1,
+                                1,
+                                0,
+                                facing,
+                                buttonStates[1] ? pressedColor : lookingAtTopHalf ? hoverColor : defaultColor,
+                                light
+                        );
+                        // 弹出当前图形状态
+                        graphicsHolder.pop();
+                    }
+            );
+        }
+    }
+
+    private void positionY(float y, float spacing) {
+        yUp = buttonDescriptor.hasDownButton() ? y + spacing / 2 : y;
+        yDown = buttonDescriptor.hasUpButton() ? y - spacing / 2 : y;
+    }
+
+    //layout专用
+    @Override
+    public void setStoredMatrixTransformations(StoredMatrixTransformations storedMatrixTransformations) {
+        this.storedMatrixTransformations = storedMatrixTransformations;
     }
 
     @Override
-    public void render(GraphicsHolder graphicsHolder, int light, int overlay) {
-        int color = isHovered ? hoverColor : defaultColor;
-        IDrawing.drawTexture(
-            graphicsHolder,
-            -0.5F, -0.5F, 1F, 1F,
-            0, 0, 1, 1,
-            Direction.UP,
-            color,
-            light
-        );
+    public float[] getMargin() {
+        return new float[]{marginLeft, marginTop, marginRight, marginBottom};
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width / 16;
+    }
+//todo:bug:双按钮下高度不准确
+    @Override
+    public float getHeight() {
+        if (buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton()) {
+            return height * 2 + spacing / 16;
+        } else {
+            return height;
+        }
+    }
+
+    public void setHeight(float height) {
+        this.height = height / 16;
+    }
+
+    @Override
+    public void setMargin(float left, float top, float right, float bottom) {
+        this.marginLeft = left / 16;
+        this.marginTop = top / 16;
+        this.marginRight = right / 16;
+        this.marginBottom = bottom / 16;
     }
 
     @Override
     public void setPosition(float x, float y, float z) {
-        // 预留
+        this.x = x / 16;
+        this.y = y / 16;
+        this.z = z / 16;
     }
 
-    public void setHovered(boolean hovered) {
-        this.isHovered = hovered;
+    public void setBasicsAttributes(World world, BlockPos blockPos) {
+        this.world = world;
+        this.blockPos = blockPos;
     }
+
+    public void setLight(int light) {
+        this.light = light;
+    }
+
+    public void setDownButtonLight() {
+        buttonStates[0] = true;
+    }
+
+    public void setUpButtonLight() {
+        buttonStates[1] = true;
+    }
+
+    public void setDescriptor(LiftButtonsBase.LiftButtonDescriptor descriptor) {
+        buttonDescriptor = descriptor;
+    }
+
+    public void setDefaultColor(int defaultColor) {
+        this.defaultColor = defaultColor;
+    }
+
+    public void setHoverColor(int hoverColor) {
+        this.hoverColor = hoverColor;
+    }
+
+    public void setPressedColor(int pressedColor) {
+        this.pressedColor = pressedColor;
+    }
+
+    public void setTexture(Identifier texture) {
+        this.texture = texture;
+    }
+
+    public void setSpacing(float spacing) {
+        this.spacing = spacing / 16;
+    }
+
+
 }
