@@ -90,7 +90,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
 				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
 				// 这里使用lambda表达式来处理按钮状态的逻辑
-				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
+				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));//todo
 				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 				instructionDirections.forEach(liftDirection -> {
 					switch (liftDirection) {
@@ -105,7 +105,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			});
 		});
 
-		// Sort list and only render the two closest lifts
+		// Sort list and only render the two closest lifts//todo
 		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
 		// Check whether the player is looking at the top or bottom button
@@ -123,7 +123,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < 0.25);
 		}
 
-		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
+		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();//todo
 		storedMatrixTransformations2.add(graphicsHolder -> {
 			graphicsHolder.rotateYDegrees(-facing.asRotation());
 			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
@@ -188,7 +188,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 					}
 			);
 		}
-		// 检查排序后的电梯位置列表是否非空
+		// 检查排序后的电梯位置列表是否非空//todo
 		if (!sortedPositionsAndLifts.isEmpty()) {
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());
@@ -204,13 +204,13 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 			});
 
 			// 渲染黑色背景
-			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
+			MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/white.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
 				storedMatrixTransformations3.transform(graphicsHolder, offset);
 				IDrawing.drawTexture(graphicsHolder, 0, -0.9375F, width, 0.40625F, Direction.UP, light);
 				graphicsHolder.pop();
 			});
 
-			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
+			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序//todo:使用layout排序需要反转添加顺序（layout层面的操作）
 			final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 			// 遍历要渲染的每个电梯
 			for (int i = 0; i < count; i++) {
@@ -219,7 +219,6 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
 				// 渲染当前电梯的显示
 				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4 / count, 0.2F, 0.2F, 0.2F);
-
 			}
 		}
 	}

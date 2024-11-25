@@ -35,6 +35,8 @@ public class TestLiftButtonsWithoutScreen extends LiftButtonsBase {
 		properties.add(FACING);
 		// 添加块的解锁状态属性
 		properties.add(UNLOCKED);
+
+		properties.add(SINGLE);
 	}
 
 	public static class BlockEntity extends BlockEntityBase {

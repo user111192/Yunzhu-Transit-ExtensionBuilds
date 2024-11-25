@@ -15,7 +15,7 @@ import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 
-public class ButtonComponent implements RenderComponent {
+public class ButtonView implements RenderComponent {
     boolean[] buttonStates = {false, false};
     private Identifier texture;
     private int defaultColor;
@@ -34,6 +34,13 @@ public class ButtonComponent implements RenderComponent {
     private float yUp, yDown;
     private float marginLeft, marginTop, marginRight, marginBottom;
     private float spacing;
+    private String id = "button";
+    private float totalWidth, totalHeight;
+
+    @Override
+    public String getId() {
+        return id;
+    }
 
     public void render() {
         this.blockState = world.getBlockState(blockPos);
@@ -123,8 +130,8 @@ public class ButtonComponent implements RenderComponent {
     }
 
     private void positionY(float y, float spacing) {
-        yUp = buttonDescriptor.hasDownButton() ? y + spacing / 2 : y;
-        yDown = buttonDescriptor.hasUpButton() ? y - spacing / 2 : y;
+        yUp = buttonDescriptor.hasDownButton() ? y + height + spacing : y;
+        yDown = y;
     }
 
     //layout专用
@@ -144,35 +151,54 @@ public class ButtonComponent implements RenderComponent {
     }
 
     public void setWidth(float width) {
-        this.width = width / 16;
+        this.width = width;
     }
-//todo:bug:双按钮下高度不准确
+
+    //todo:bug:双按钮下高度不准确
     @Override
     public float getHeight() {
         if (buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton()) {
-            return height * 2 + spacing / 16;
+            return height * 2 + spacing;
         } else {
             return height;
         }
     }
 
     public void setHeight(float height) {
-        this.height = height / 16;
+        this.height = height;
+    }
+
+    public void setParentHeight(float parentHeight) {
+        this.totalHeight = parentHeight;
+    }
+
+    public void setParentWidth(float parentWidth) {
+        this.totalWidth = parentWidth;
     }
 
     @Override
     public void setMargin(float left, float top, float right, float bottom) {
-        this.marginLeft = left / 16;
-        this.marginTop = top / 16;
-        this.marginRight = right / 16;
-        this.marginBottom = bottom / 16;
+        this.marginLeft = left;
+        this.marginTop = top;
+        this.marginRight = right;
+        this.marginBottom = bottom;
     }
 
     @Override
     public void setPosition(float x, float y, float z) {
-        this.x = x / 16;
-        this.y = y / 16;
-        this.z = z / 16;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public void setParentDimensions(float parentWidth, float parentHeight) {
+
+    }
+
+    @Override
+    public void setParentCoordinateOrigin() {
+
     }
 
     public void setBasicsAttributes(World world, BlockPos blockPos) {
@@ -213,8 +239,6 @@ public class ButtonComponent implements RenderComponent {
     }
 
     public void setSpacing(float spacing) {
-        this.spacing = spacing / 16;
+        this.spacing = spacing;
     }
-
-
 }

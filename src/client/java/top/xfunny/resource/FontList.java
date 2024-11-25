@@ -97,4 +97,29 @@ public class FontList {
 			});
 		}
 	}
+	public Font getFont(String fontId) {
+		switch (fontId) {
+			case "font1":
+				return font1;
+			case "fontCjk1":
+				return fontCjk1;
+			case "otis_series1":
+				return otis_series1;
+			case "testfont":
+				return testfont;
+			case "acmeled":
+				return acmeled;
+			case "koneModernization":
+				return koneModernization;
+			case "schindler_m_series":
+				return schindler_m_series;
+			case "mitsubishi_modern":
+				return mitsubishi_modern;
+			default:
+				// 返回默认字体或抛出异常
+				return new Font("Arial", Font.PLAIN, 12); // 默认字体
+			// 或者抛出异常
+			// throw new IllegalArgumentException("Unknown fontId: " + fontId);
+		}
+	}
 }

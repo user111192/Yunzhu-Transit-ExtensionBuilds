@@ -29,6 +29,7 @@ public class SchindlerMSeriesButton extends LiftButtonsBase {
     public void addBlockProperties(List<HolderBase<?>> properties) {
         properties.add(FACING);
         properties.add(UNLOCKED);
+        properties.add(SINGLE);
     }
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {

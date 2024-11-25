@@ -28,8 +28,8 @@ import java.util.Comparator;
 
 
 //单位  1F为1贴图像素，左加右减，上加下减
-public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
-    public RenderTestLiftButtons2(Argument argument) {
+public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
+    public RenderTestLiftButtons3(Argument argument) {
         super(argument);
     }
 
@@ -56,10 +56,19 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //首先添加LinearLayout
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
-        layout.setGravity(LinearLayout.Gravity.CENTER);
-        layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
-        layout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
         layout.setParentDimensions((float) 8 / 16, (float) 16 / 16);
+        layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
+        layout.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
+        layout.setGravity(LinearLayout.Gravity.CENTER);
+        layout.setBackgroundColor(0xFF00FF00);
+
+
+        final LinearLayout buttonLayout = new LinearLayout(false);
+        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
+        buttonLayout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
+        buttonLayout.setGravity(LinearLayout.Gravity.END);
+        buttonLayout.setBackgroundColor(0xFFFF9999);
 
 
 
@@ -86,12 +95,7 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
 
 
 
-        //添加一个横向的LinearLayout用于放置楼层显示屏
-        final LinearLayout layout2 = new LinearLayout(false);
-        layout2.setBasicsAttributes(world, blockEntity.getPos2());
-        layout2.setGravity(LinearLayout.Gravity.CENTER);
-        layout2.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
-        layout2.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
+
 
 
 
@@ -142,19 +146,6 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
 //新建电梯显示屏控件
-
-                liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
-                        sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("testfont"),
-                        4,
-                        0xFFFF0000);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0.5F);
-                liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");
-                liftFloorDisplayView.setWidth((float) 4);
-                liftFloorDisplayView.setHeight((float) 4);
-
-
                 if(reverseRendering){
                     //layout2.addChild(liftFloorDisplayView);
                 }else{
@@ -167,10 +158,8 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //将按钮添加到线性布局中进行渲染
 
         //layout.addChild(layout2);
-        layout.addChild(button);
-
-
-
+        buttonLayout.addChild(button);
+        layout.addChild(buttonLayout);
 
         //渲染线性布局（只需渲染最底层的）
         layout.render();

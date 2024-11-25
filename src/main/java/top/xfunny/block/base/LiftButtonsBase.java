@@ -16,9 +16,7 @@ import top.xfunny.Items;
 import top.xfunny.LiftFloorRegistry;
 
 import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.*;;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
