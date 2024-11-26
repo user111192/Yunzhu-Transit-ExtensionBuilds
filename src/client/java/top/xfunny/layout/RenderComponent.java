@@ -9,9 +9,17 @@ public interface RenderComponent {
     float getWidth();
     float getHeight();
     float[] getMargin();
+
+    void setParentIsVertical(Boolean isVertical);
+
     void setMargin(float left, float top, float right, float bottom);
     void setPosition(float x, float y, float z);
     void setParentDimensions(float parentWidth,float parentHeight);
-    void setParentCoordinateOrigin();
+    void setGravity(LinearLayout.Gravity gravity);
+
+    void calculateLayoutWidth();
+    void calculateLayoutHeight();
+    void calculateGravityOffset();
+    void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ);
 
 }

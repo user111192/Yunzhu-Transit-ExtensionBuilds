@@ -56,19 +56,24 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         //首先添加LinearLayout
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
-        layout.setParentDimensions((float) 8 / 16, (float) 16 / 16);
+        layout.setParentDimensions((float) 16 / 16, (float) 16 / 16);
         layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
         layout.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
-        layout.setGravity(LinearLayout.Gravity.CENTER);
+        layout.setGravity(LinearLayout.Gravity.START);
         layout.setBackgroundColor(0xFF00FF00);
+        layout.setId("layout");
 
 
         final LinearLayout buttonLayout = new LinearLayout(false);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
+        buttonLayout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
         buttonLayout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
-        buttonLayout.setGravity(LinearLayout.Gravity.END);
+        buttonLayout.setGravity(LinearLayout.Gravity.HORIZONTAL_CENTER);
+        buttonLayout.addStoredMatrixTransformations(graphicsHolder -> {
+			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+		});
         buttonLayout.setBackgroundColor(0xFFFF9999);
+        buttonLayout.setId("buttonLayout");
 
 
 
@@ -86,12 +91,26 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         button.setSpacing(1F / 16);
         button.setLight(light);
 
+        final ButtonView button2 = new ButtonView();
+        button2.setDefaultColor(0xFFFFFFFF);
+        button2.setPressedColor(0xFFD70000);
+        button2.setHoverColor(0xFFEA7A7A);
+        button2.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_button.png"));
+        button2.setWidth(3F / 16);
+        button2.setHeight(3F / 16);
+        button2.setSpacing(1F / 16);
+        button2.setLight(light);
+
+
 
 
         //设置按钮动态属性
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false,false);
         button.setBasicsAttributes(world, blockEntity.getPos2());
         button.setDescriptor(buttonDescriptor);
+
+        button2.setBasicsAttributes(world, blockEntity.getPos2());
+        button2.setDescriptor(buttonDescriptor);
 
 
 
@@ -121,11 +140,13 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
                         case DOWN:
                             //添加向下的按钮
                             button.setDownButtonLight();
+                            button2.setDownButtonLight();
 
                             break;
                         case UP:
                             //添加向上的按钮
                             button.setUpButtonLight();
+                            button2.setUpButtonLight();
 
                             break;
                     }
@@ -159,7 +180,9 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
         //layout.addChild(layout2);
         buttonLayout.addChild(button);
+
         layout.addChild(buttonLayout);
+        layout.addChild(button2);
 
         //渲染线性布局（只需渲染最底层的）
         layout.render();

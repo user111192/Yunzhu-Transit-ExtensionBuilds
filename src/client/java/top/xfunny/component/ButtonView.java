@@ -9,6 +9,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.layout.LinearLayout;
 import top.xfunny.layout.RenderComponent;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
@@ -41,6 +42,7 @@ public class ButtonView implements RenderComponent {
     public String getId() {
         return id;
     }
+
 
     public void render() {
         this.blockState = world.getBlockState(blockPos);
@@ -146,6 +148,11 @@ public class ButtonView implements RenderComponent {
     }
 
     @Override
+    public void setParentIsVertical(Boolean isVertical) {
+
+    }
+
+    @Override
     public float getWidth() {
         return width;
     }
@@ -196,8 +203,30 @@ public class ButtonView implements RenderComponent {
 
     }
 
+
+
     @Override
-    public void setParentCoordinateOrigin() {
+    public void setGravity(LinearLayout.Gravity gravity) {
+
+    }
+
+    @Override
+    public void calculateLayoutWidth() {
+
+    }
+
+    @Override
+    public void calculateLayoutHeight() {
+
+    }
+
+    @Override
+    public void calculateGravityOffset() {
+
+    }
+
+    @Override
+    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {
 
     }
 

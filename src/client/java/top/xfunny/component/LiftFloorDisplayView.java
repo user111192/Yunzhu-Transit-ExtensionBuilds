@@ -17,6 +17,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.InitClient;
 import top.xfunny.TextureCache;
+import top.xfunny.layout.LinearLayout;
 import top.xfunny.layout.RenderComponent;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
@@ -54,7 +55,6 @@ public class LiftFloorDisplayView implements RenderComponent {
     private float marginLeft, marginTop, marginRight, marginBottom;
     private BlockState blockState;
     private Direction facing;
-    private float totalWidth, totalHeight;
 
 
     @Override
@@ -152,17 +152,41 @@ public class LiftFloorDisplayView implements RenderComponent {
 
   @Override
     public void setParentDimensions(float parentWidth,float parentHeight) {//用于设置子控件约束空间
+    }
+
+
+    @Override
+    public void setGravity(LinearLayout.Gravity gravity) {
+    }
+
+    @Override
+    public void calculateLayoutWidth() {
 
     }
 
     @Override
-    public void setParentCoordinateOrigin() {
+    public void calculateLayoutHeight() {
+
+    }
+
+    @Override
+    public void calculateGravityOffset() {
+
+    }
+
+    @Override
+    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {
 
     }
 
     @Override
     public float[] getMargin() {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
+    }
+
+    @Override
+    public void setParentIsVertical(Boolean isVertical) {
+
     }
 
     @Override
