@@ -156,7 +156,7 @@ public class LiftFloorDisplayView implements RenderComponent {
 
 
     @Override
-    public void setGravity(LinearLayout.Gravity gravity) {
+    public void setLayoutGravity(LinearLayout.LayoutGravity layoutGravity) {
     }
 
     @Override
@@ -170,7 +170,7 @@ public class LiftFloorDisplayView implements RenderComponent {
     }
 
     @Override
-    public void calculateGravityOffset() {
+    public void calculateLayoutGravityOffset() {
 
     }
 
@@ -182,6 +182,11 @@ public class LiftFloorDisplayView implements RenderComponent {
     @Override
     public float[] getMargin() {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
+    }
+
+    @Override
+    public float[] getNeighborMargin() {
+        return new float[0];
     }
 
     @Override

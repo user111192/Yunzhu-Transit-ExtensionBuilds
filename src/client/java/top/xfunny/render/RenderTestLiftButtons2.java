@@ -56,7 +56,7 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //首先添加LinearLayout
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
-        layout.setGravity(LinearLayout.Gravity.TOP);
+        layout.setLayoutGravity(LinearLayout.LayoutGravity.TOP);
         layout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         layout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
         layout.setParentDimensions((float) 8 / 16, (float) 16 / 16);
@@ -89,7 +89,7 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //添加一个横向的LinearLayout用于放置楼层显示屏
         final LinearLayout layout2 = new LinearLayout(false);
         layout2.setBasicsAttributes(world, blockEntity.getPos2());
-        layout2.setGravity(LinearLayout.Gravity.TOP);
+        layout2.setLayoutGravity(LinearLayout.LayoutGravity.TOP);
         layout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         layout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
 

@@ -21,7 +21,6 @@ import top.xfunny.component.LineComponent;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.layout.LinearLayout;
-import top.xfunny.resource.FontList;
 import top.xfunny.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -59,22 +58,33 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         layout.setParentDimensions((float) 16 / 16, (float) 16 / 16);
         layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
         layout.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
-        layout.setGravity(LinearLayout.Gravity.START);
+        layout.setLayoutGravity(LinearLayout.LayoutGravity.END);
         layout.setBackgroundColor(0xFF00FF00);
         layout.setId("layout");
 
 
         final LinearLayout buttonLayout = new LinearLayout(false);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
+        buttonLayout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         buttonLayout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
-        buttonLayout.setGravity(LinearLayout.Gravity.HORIZONTAL_CENTER);
+        buttonLayout.setMargin((float) 1 / 16, 0, (float)1/16, 0);
+        buttonLayout.setLayoutGravity(LinearLayout.LayoutGravity.START);
         buttonLayout.addStoredMatrixTransformations(graphicsHolder -> {
 			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
 		});
-        buttonLayout.setBackgroundColor(0xFFFF9999);
+        buttonLayout.setBackgroundColor(0xFFFF9966);
         buttonLayout.setId("buttonLayout");
 
+        final LinearLayout buttonLayout2 = new LinearLayout(false);
+        buttonLayout2.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
+        buttonLayout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
+        buttonLayout2.setLayoutGravity(LinearLayout.LayoutGravity.HORIZONTAL_CENTER);
+        buttonLayout2.addStoredMatrixTransformations(graphicsHolder -> {
+			graphicsHolder.translate(0, 0, 0.4475 - SMALL_OFFSET);
+		});
+        buttonLayout2.setBackgroundColor(0xFF33CCFF);
+        buttonLayout2.setId("buttonLayout2");
 
 
         //添加按钮控件
@@ -180,9 +190,10 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
         //layout.addChild(layout2);
         buttonLayout.addChild(button);
+        buttonLayout2.addChild(button2);
 
         layout.addChild(buttonLayout);
-        layout.addChild(button2);
+        layout.addChild(buttonLayout2);
 
         //渲染线性布局（只需渲染最底层的）
         layout.render();

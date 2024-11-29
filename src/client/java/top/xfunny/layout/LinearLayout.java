@@ -24,16 +24,16 @@ public class LinearLayout implements RenderComponent {
     private StoredMatrixTransformations storedMatrixTransformations;
     private float width, height;
     private float marginLeft, marginTop, marginRight, marginBottom;
+    private float neighborMarginRight, neighborMarginBottom;
     private float x, y, z;
     private float coordinateOriginX = 0, coordinateOriginY = 0, coordinateOriginZ = 0;
     private float parentWidth, parentHeight;
-    private float parentCoordinateOriginX = 0, parentCoordinateOriginY = 0, parentCoordinateOriginZ;
-    private Gravity gravity = Gravity.START;
+    private float parentCoordinateOriginX, parentCoordinateOriginY, parentCoordinateOriginZ;
+    private LayoutGravity layoutGravity = LayoutGravity.START;
     private layoutWidth widthType = layoutWidth.WRAP_CONTENT;
     private layoutHeight heightType = layoutHeight.WRAP_CONTENT;
     private String id;
     private int backgroundColor = 0x00000000;
-
 
     public LinearLayout(Boolean isVertical) {
         this.isVertical = isVertical;
@@ -43,7 +43,6 @@ public class LinearLayout implements RenderComponent {
     public String getId() {
         return id;
     }
-
 
     public void setId(String id) {
         this.id = id;
@@ -56,46 +55,52 @@ public class LinearLayout implements RenderComponent {
 
         calculateLayoutWidth();
         calculateLayoutHeight();
-        calculateGravityOffset();
+        calculateLayoutGravityOffset();
 
         StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations.copy();
         storedMatrixTransformations3.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
         });
 
-        MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/white.png"), false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-            storedMatrixTransformations3.transform(graphicsHolder, offset);
-            IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0, 0, 1, 1, Direction.UP, backgroundColor, 15);
-            graphicsHolder.pop();
-        });
+        MainRenderer.scheduleRender(
+                new Identifier(Init.MOD_ID, "textures/block/white.png"),
+                false,
+                QueuedRenderLayer.LIGHT_TRANSLUCENT,
+                (graphicsHolder, offset) -> {
+                    storedMatrixTransformations3.transform(graphicsHolder, offset);
+                    IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0, 0, 1, 1, Direction.UP, backgroundColor, 15);
+                    graphicsHolder.pop();
+                });
 
-        float offset = 0;
+        float offset = 0, index = 0, remainingWidth = width, remainingHeight = height;
         for (RenderComponent child : children) {
             float[] margin = child.getMargin();
-            float remainingWidth = width;
-            float remainingHeight = height;
+            float[] neighborMargin = child.getNeighborMargin();
 
             child.setParentCoordinateOrigin(coordinateOriginX, coordinateOriginY, coordinateOriginZ);
-            child.calculateLayoutWidth();
-            child.calculateLayoutHeight();
             child.setParentIsVertical(isVertical);
+            child.setStoredMatrixTransformations(storedMatrixTransformations);
 
             if (isVertical) {
-                child.setPosition(x, y + height - child.getHeight() - margin[1] - margin[3] - offset, z);
-                //System.out.println("id:"+child.getId()+",y"+y+",height:"+height+",childHeight:"+child.getHeight()+",offset:"+offset);
-                offset += child.getHeight() + margin[1] + margin[3];
-                remainingHeight -= child.getHeight() + offset + margin[1] + margin[3];
+                offset += (index == 0) ? margin[1] : 0;
                 child.setParentDimensions(width, remainingHeight);
+                child.calculateLayoutWidth();
+                child.calculateLayoutHeight();
+                remainingHeight -= child.getHeight() + margin[1] + margin[3];
+                child.setPosition(x, y + height - child.getHeight() - offset, z);
+                offset += child.getHeight() + neighborMargin[1];
             } else {
-                child.setPosition(x + width - child.getWidth() - margin[0] - margin[2] - offset, y, z);
-                offset += child.getWidth() + margin[0] + margin[2];
-                remainingWidth -= child.getWidth() + offset + margin[0] + margin[2];
+                offset += (index == 0) ? margin[0] : 0;
                 child.setParentDimensions(remainingWidth, height);
+                child.calculateLayoutWidth();
+                child.calculateLayoutHeight();
+                remainingWidth -= child.getWidth() + margin[0] + margin[2];
+                child.setPosition(x + width - child.getWidth() - offset, y, z);
+                offset += child.getWidth() + neighborMargin[0];
             }
-            child.setStoredMatrixTransformations(storedMatrixTransformations);
-            child.calculateGravityOffset();
             child.render();
+            index++;
         }
     }
 
@@ -104,9 +109,9 @@ public class LinearLayout implements RenderComponent {
     }
 
     public void setBasicsAttributes(World world, BlockPos blockPos) {
-        storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         this.world = world;
         this.blockPos = blockPos;
+        this.storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
     }
 
     @Override
@@ -115,7 +120,7 @@ public class LinearLayout implements RenderComponent {
     }
 
     @Override
-    public void setPosition(float x, float y, float z) {//用于设置子layout绝对坐标
+    public void setPosition(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -124,6 +129,11 @@ public class LinearLayout implements RenderComponent {
     @Override
     public float[] getMargin() {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
+    }
+
+    @Override
+    public float[] getNeighborMargin() {
+        return new float[]{neighborMarginRight, neighborMarginBottom};
     }
 
     @Override
@@ -155,137 +165,104 @@ public class LinearLayout implements RenderComponent {
         this.marginTop = top;
         this.marginRight = right;
         this.marginBottom = bottom;
+        this.neighborMarginRight = right;
+        this.neighborMarginBottom = bottom;
     }
 
     @Override
-    public void setParentDimensions(float parentWidth, float parentHeight) {//用于设置子控件约束空间
+    public void setParentDimensions(float parentWidth, float parentHeight) {
         this.parentWidth = parentWidth;
         this.parentHeight = parentHeight;
     }
 
-    public void setGravity(Gravity gravity) {
-        this.gravity = gravity;
+    public void setLayoutGravity(LayoutGravity layoutGravity) {
+        this.layoutGravity = layoutGravity;
     }
 
     @Override
-    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {//针对child
+    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {
         this.parentCoordinateOriginX = coordinateOriginX;
         this.parentCoordinateOriginY = coordinateOriginY;
         this.parentCoordinateOriginZ = coordinateOriginZ;
     }
 
-    public void calculateGravityOffset() {
-        float offsetX, offsetY, offsetZ;
-        switch (gravity) {
-            case START:
+    public void calculateLayoutGravityOffset() {
+        switch (layoutGravity) {
+            case START -> {
                 if (parentIsVertical) {
-                    offsetX = parentWidth / 2 - width;
-                    calculateLayoutPosition(offsetX, 0, 0);
+                    calculateLayoutPosition(parentWidth / 2 - width - marginLeft, 0, 0);
                 }
-                break;
-
-            case VERTICAL_CENTER:
+            }
+            case VERTICAL_CENTER -> {
                 if (!parentIsVertical) {
-                    offsetY = (parentHeight - height) / 2;
-                    calculateLayoutPosition(0, offsetY, 0);
+                    calculateLayoutPosition(-parentWidth / 2, (parentHeight - height) / 2, 0);
                 }
-                break;
-
-            case END:
+            }
+            case END -> {
                 if (parentIsVertical) {
-                    offsetX = -parentWidth / 2;
-                    calculateLayoutPosition(offsetX, 0, 0);
+                    calculateLayoutPosition(-parentWidth / 2 + marginRight, 0, 0);
                 }
-                break;
-
-            case TOP:
+            }
+            case TOP -> {
                 if (!parentIsVertical) {
-                    offsetY = parentHeight - height;
-                    calculateLayoutPosition(0, offsetY, 0);
+                    calculateLayoutPosition(-parentWidth / 2, parentHeight - height - marginTop, 0);
                 }
-                break;
-
-            case HORIZONTAL_CENTER:
+            }
+            case HORIZONTAL_CENTER -> {
                 if (parentIsVertical) {
-                    offsetX = -width / 2;
-                    calculateLayoutPosition(offsetX, 0, 0);
+                    calculateLayoutPosition(-width / 2, 0, 0);
                 }
-                break;
-
-            case BOTTOM:
+            }
+            case BOTTOM -> {
                 if (!parentIsVertical) {
-                    offsetY = 0;
-                    calculateLayoutPosition(0, offsetY, 0);
+                    calculateLayoutPosition(-parentWidth / 2, marginBottom, 0);
                 }
-                break;
+            }
         }
     }
 
     private void calculateLayoutPosition(float offsetX, float offsetY, float offsetZ) {
-        if (offsetX != 0) {
-            this.x = parentCoordinateOriginX + offsetX;
-        }
-        if (offsetY != 0) {
-            this.y = parentCoordinateOriginY + offsetY;
-        }
-        if (offsetZ != 0) {
-            this.z = parentCoordinateOriginZ + offsetZ;
-        }
+        if (offsetX != 0) x = parentCoordinateOriginX + offsetX;
+        if (offsetY != 0) y = parentCoordinateOriginY + offsetY;
+        if (offsetZ != 0) z = parentCoordinateOriginZ + offsetZ;
         calculateSelfCoordinateOrigin();
     }
 
     private void calculateSelfCoordinateOrigin() {
-        this.coordinateOriginX = x + width / 2;
-        this.coordinateOriginY = y;
-        this.coordinateOriginZ = z;
+        coordinateOriginX = x + width / 2;
+        coordinateOriginY = y;
+        coordinateOriginZ = z;
     }
 
     public void calculateLayoutWidth() {
         switch (widthType) {
-            case WRAP_CONTENT:
+            case WRAP_CONTENT -> {
                 float tempWidth = 0;
                 for (RenderComponent child : children) {
                     child.calculateLayoutWidth();
                     tempWidth += child.getWidth();
                 }
-                this.width = tempWidth;
-                break;
-
-            case MATCH_PARENT:
-                for (RenderComponent child : children) {
-                    child.calculateLayoutWidth();
-                }
-                this.width = parentWidth;
-                break;
-
-            default:
-                this.width = widthType.ordinal();
+                width = tempWidth;
+            }
+            case MATCH_PARENT -> width = parentWidth;
+            default -> width = widthType.ordinal();
         }
     }
 
     public void calculateLayoutHeight() {
         switch (heightType) {
-            case WRAP_CONTENT:
+            case WRAP_CONTENT -> {
                 float tempHeight = 0;
                 for (RenderComponent child : children) {
                     child.calculateLayoutHeight();
                     tempHeight += child.getHeight();
                 }
-                this.height = tempHeight;
-                break;
-
-            case MATCH_PARENT:
-                for (RenderComponent child : children) {
-                    child.calculateLayoutHeight();
-                }
-                this.height = parentHeight;
-                break;
-
-            default:
-                this.height = heightType.ordinal();
+                height = tempHeight;
+            }
+            case MATCH_PARENT -> height = parentHeight;
+            default -> height = heightType.ordinal();
         }
     }
-
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
         storedMatrixTransformations.add(transformation);
@@ -295,26 +272,17 @@ public class LinearLayout implements RenderComponent {
         this.backgroundColor = color;
     }
 
-    public enum Gravity {
-        START,
-        VERTICAL_CENTER,
-        END,
-        TOP,
-        HORIZONTAL_CENTER,
-        BOTTOM,
+    public enum LayoutGravity {
+        START, VERTICAL_CENTER, END,
+            TOP, HORIZONTAL_CENTER, BOTTOM
     }
 
     public enum layoutWidth {
-        WRAP_CONTENT,
-        MATCH_PARENT
+        WRAP_CONTENT, MATCH_PARENT
     }
 
     public enum layoutHeight {
-        WRAP_CONTENT,
-        MATCH_PARENT
+        WRAP_CONTENT, MATCH_PARENT
     }
-
 }
-
-
 

@@ -34,6 +34,7 @@ public class ButtonView implements RenderComponent {
     private float x, y, z;
     private float yUp, yDown;
     private float marginLeft, marginTop, marginRight, marginBottom;
+    private float neighborMarginRight, neighborMarginBottom;
     private float spacing;
     private String id = "button";
     private float totalWidth, totalHeight;
@@ -148,6 +149,11 @@ public class ButtonView implements RenderComponent {
     }
 
     @Override
+    public float[] getNeighborMargin() {
+        return new float[]{neighborMarginRight, neighborMarginBottom};
+    }
+
+    @Override
     public void setParentIsVertical(Boolean isVertical) {
 
     }
@@ -206,7 +212,7 @@ public class ButtonView implements RenderComponent {
 
 
     @Override
-    public void setGravity(LinearLayout.Gravity gravity) {
+    public void setLayoutGravity(LinearLayout.LayoutGravity layoutGravity) {
 
     }
 
@@ -221,7 +227,7 @@ public class ButtonView implements RenderComponent {
     }
 
     @Override
-    public void calculateGravityOffset() {
+    public void calculateLayoutGravityOffset() {
 
     }
 
