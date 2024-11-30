@@ -1,4 +1,4 @@
-package top.xfunny.component;
+package top.xfunny.view;
 
 import org.mtr.mapping.holder.*;
 import org.mtr.mod.block.BlockLiftTrackFloor;

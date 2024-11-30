@@ -1,4 +1,4 @@
-package top.xfunny.component;
+package top.xfunny.view;
 
 import org.mtr.mapping.holder.*;
 import org.mtr.mod.Init;
@@ -9,14 +9,13 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.layout.LinearLayout;
-import top.xfunny.layout.RenderComponent;
+import top.xfunny.view.view_group.LinearLayout;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 
-public class ButtonView implements RenderComponent {
+public class ButtonView implements RenderView {
     boolean[] buttonStates = {false, false};
     private Identifier texture;
     private int defaultColor;
@@ -148,15 +147,14 @@ public class ButtonView implements RenderComponent {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
     }
 
-    @Override
-    public float[] getNeighborMargin() {
-        return new float[]{neighborMarginRight, neighborMarginBottom};
-    }
+
 
     @Override
-    public void setParentIsVertical(Boolean isVertical) {
-
+    public Gravity getGravity() {
+        return null;
     }
+
+
 
     @Override
     public float getWidth() {
@@ -198,10 +196,9 @@ public class ButtonView implements RenderComponent {
     }
 
     @Override
-    public void setPosition(float x, float y, float z) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
-        this.z = z;
     }
 
     @Override
@@ -212,7 +209,7 @@ public class ButtonView implements RenderComponent {
 
 
     @Override
-    public void setLayoutGravity(LinearLayout.LayoutGravity layoutGravity) {
+    public void setGravity(Gravity gravity) {
 
     }
 
@@ -227,13 +224,19 @@ public class ButtonView implements RenderComponent {
     }
 
     @Override
-    public void calculateLayoutGravityOffset() {
+    public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
+        return new float[0];//todo
+    }
+
+
+    @Override
+    public void setParentType(Object thisObject) {
 
     }
 
     @Override
-    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {
-
+    public Object getParentType() {
+        return null;
     }
 
     public void setBasicsAttributes(World world, BlockPos blockPos) {

@@ -1,4 +1,4 @@
-package top.xfunny.component;
+package top.xfunny.view;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
@@ -17,8 +17,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.InitClient;
 import top.xfunny.TextureCache;
-import top.xfunny.layout.LinearLayout;
-import top.xfunny.layout.RenderComponent;
+import top.xfunny.view.view_group.LinearLayout;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 
@@ -28,7 +27,7 @@ import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.ARGB_WHITE;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
-public class LiftFloorDisplayView implements RenderComponent {
+public class LiftFloorDisplayView implements RenderView {
     private final String id = "lift_floor_display";
     private StoredMatrixTransformations storedMatrixTransformations;
     private Font font;
@@ -101,7 +100,8 @@ public class LiftFloorDisplayView implements RenderComponent {
                             storedMatrixTransformations1.transform(graphicsHolder, offset);
                             IDrawing.drawTexture(graphicsHolder, x, y, textWidth, textHeight, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
                             graphicsHolder.pop();
-                        });
+                        }
+                );
             }
         }
 
@@ -150,13 +150,13 @@ public class LiftFloorDisplayView implements RenderComponent {
         this.height = height / 16;
     }
 
-  @Override
+    @Override
     public void setParentDimensions(float parentWidth,float parentHeight) {//用于设置子控件约束空间
     }
 
 
     @Override
-    public void setLayoutGravity(LinearLayout.LayoutGravity layoutGravity) {
+    public void setGravity(Gravity layoutGravity) {
     }
 
     @Override
@@ -170,13 +170,19 @@ public class LiftFloorDisplayView implements RenderComponent {
     }
 
     @Override
-    public void calculateLayoutGravityOffset() {
+    public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
+        return new float[0];
+    }
+
+
+    @Override
+    public void setParentType(Object thisObject) {
 
     }
 
     @Override
-    public void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ) {
-
+    public Object getParentType() {
+        return null;
     }
 
     @Override
@@ -184,15 +190,14 @@ public class LiftFloorDisplayView implements RenderComponent {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
     }
 
-    @Override
-    public float[] getNeighborMargin() {
-        return new float[0];
-    }
+
 
     @Override
-    public void setParentIsVertical(Boolean isVertical) {
-
+    public Gravity getGravity() {
+        return null;
     }
+
+
 
     @Override
     public void setMargin(float left, float top, float right, float bottom) {
@@ -203,11 +208,11 @@ public class LiftFloorDisplayView implements RenderComponent {
     }
 
     @Override
-    public void setPosition(float x, float y, float z) {
-        this.x = x / 16;
-        this.y = y / 16;
-        this.z = z / 16;
+    public void setPosition(float x, float y) {
+
     }
+
+
 
     public void setTextScrolling(Boolean needScroll, int textSize, float scrollSpeed) {
         this.needScroll = needScroll;

@@ -15,12 +15,13 @@ import org.mtr.mod.data.IGui;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.component.ButtonView;
-import top.xfunny.component.LiftFloorDisplayView;
-import top.xfunny.component.LineComponent;
+import top.xfunny.view.ButtonView;
+import top.xfunny.view.Gravity;
+import top.xfunny.view.LiftFloorDisplayView;
+import top.xfunny.view.LineComponent;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.layout.LinearLayout;
+import top.xfunny.view.view_group.LinearLayout;
 import top.xfunny.resource.FontList;
 import top.xfunny.util.ReverseRendering;
 
@@ -28,7 +29,7 @@ import java.util.Comparator;
 
 
 //单位  1F为1贴图像素，左加右减，上加下减
-public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
     public RenderTestLiftButtons2(Argument argument) {
         super(argument);
     }
@@ -56,7 +57,7 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //首先添加LinearLayout
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
-        layout.setLayoutGravity(LinearLayout.LayoutGravity.TOP);
+        layout.setGravity(Gravity.TOP);
         layout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         layout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
         layout.setParentDimensions((float) 8 / 16, (float) 16 / 16);
@@ -89,7 +90,7 @@ public class RenderTestLiftButtons2  extends BlockEntityRenderer<TestLiftButtons
         //添加一个横向的LinearLayout用于放置楼层显示屏
         final LinearLayout layout2 = new LinearLayout(false);
         layout2.setBasicsAttributes(world, blockEntity.getPos2());
-        layout2.setLayoutGravity(LinearLayout.LayoutGravity.TOP);
+        layout2.setGravity(Gravity.TOP);
         layout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         layout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
 

@@ -1,27 +1,27 @@
-package top.xfunny.layout;
+package top.xfunny.view;
 
 import org.mtr.mod.render.StoredMatrixTransformations;
 
-public interface RenderComponent {
+public interface RenderView {
     String getId();
     void render();
     void setStoredMatrixTransformations(StoredMatrixTransformations storedMatrixTransformations);
     float getWidth();
     float getHeight();
     float[] getMargin();
-    float[] getNeighborMargin();
+    Gravity getGravity();
 
-    void setParentIsVertical(Boolean isVertical);
 
     void setMargin(float left, float top, float right, float bottom);
 
-    void setPosition(float x, float y, float z);
+    void setPosition(float x, float y);
     void setParentDimensions(float parentWidth,float parentHeight);
-    void setLayoutGravity(LinearLayout.LayoutGravity layoutGravity);
+    void setGravity(Gravity gravity);
 
     void calculateLayoutWidth();
     void calculateLayoutHeight();
-    void calculateLayoutGravityOffset();
-    void setParentCoordinateOrigin(float coordinateOriginX, float coordinateOriginY, float coordinateOriginZ);
+    float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity);
 
+    void setParentType(Object thisObject);
+    Object getParentType();
 }

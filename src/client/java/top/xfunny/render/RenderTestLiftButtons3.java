@@ -15,12 +15,13 @@ import org.mtr.mod.data.IGui;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.component.ButtonView;
-import top.xfunny.component.LiftFloorDisplayView;
-import top.xfunny.component.LineComponent;
+import top.xfunny.view.ButtonView;
+import top.xfunny.view.Gravity;
+import top.xfunny.view.LiftFloorDisplayView;
+import top.xfunny.view.LineComponent;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.layout.LinearLayout;
+import top.xfunny.view.view_group.LinearLayout;
 import top.xfunny.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -58,28 +59,28 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         layout.setParentDimensions((float) 16 / 16, (float) 16 / 16);
         layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
         layout.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
-        layout.setLayoutGravity(LinearLayout.LayoutGravity.END);
+        layout.setGravity(Gravity.END);
         layout.setBackgroundColor(0xFF00FF00);
         layout.setId("layout");
 
 
-        final LinearLayout buttonLayout = new LinearLayout(false);
+        final LinearLayout buttonLayout = new LinearLayout(true);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         buttonLayout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
         buttonLayout.setMargin((float) 1 / 16, 0, (float)1/16, 0);
-        buttonLayout.setLayoutGravity(LinearLayout.LayoutGravity.START);
+        buttonLayout.setGravity(Gravity.START);
         buttonLayout.addStoredMatrixTransformations(graphicsHolder -> {
 			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
 		});
         buttonLayout.setBackgroundColor(0xFFFF9966);
         buttonLayout.setId("buttonLayout");
 
-        final LinearLayout buttonLayout2 = new LinearLayout(false);
+        final LinearLayout buttonLayout2 = new LinearLayout(true);
         buttonLayout2.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
         buttonLayout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
-        buttonLayout2.setLayoutGravity(LinearLayout.LayoutGravity.HORIZONTAL_CENTER);
+        buttonLayout2.setGravity(Gravity.CENTER_HORIZONTAL);
         buttonLayout2.addStoredMatrixTransformations(graphicsHolder -> {
 			graphicsHolder.translate(0, 0, 0.4475 - SMALL_OFFSET);
 		});
