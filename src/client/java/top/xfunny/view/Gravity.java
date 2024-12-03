@@ -6,5 +6,6 @@ public enum Gravity {
     END,
     TOP,
     CENTER_HORIZONTAL,
+    CENTER,
     BOTTOM
 }

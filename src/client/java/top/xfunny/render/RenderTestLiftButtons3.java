@@ -15,12 +15,10 @@ import org.mtr.mod.data.IGui;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.view.ButtonView;
-import top.xfunny.view.Gravity;
-import top.xfunny.view.LiftFloorDisplayView;
-import top.xfunny.view.LineComponent;
+import top.xfunny.view.*;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
+import top.xfunny.view.view_group.FrameLayout;
 import top.xfunny.view.view_group.LinearLayout;
 import top.xfunny.util.ReverseRendering;
 
@@ -52,13 +50,25 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
+        final FrameLayout frameLayout = new FrameLayout();
+        frameLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        frameLayout.setParentDimensions((float) 16 / 16, (float) 16 / 16);
+        frameLayout.setPosition((float) -0.5, (float) 0);
+        frameLayout.setWidth(LayoutSize.MATCH_PARENT);
+        frameLayout.setHeight(LayoutSize.MATCH_PARENT);
+        frameLayout.setGravity(Gravity.END);
+        frameLayout.setBackgroundColor(0xFF669999);
+        frameLayout.setId("frameLayout");
+
+
 
         //首先添加LinearLayout
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
         layout.setParentDimensions((float) 16 / 16, (float) 16 / 16);
-        layout.setWidth(LinearLayout.layoutWidth.MATCH_PARENT);
-        layout.setHeight(LinearLayout.layoutHeight.MATCH_PARENT);
+        layout.setPosition((float) -0.5, (float) 0);
+        layout.setWidth(LayoutSize.MATCH_PARENT);
+        layout.setHeight(LayoutSize.MATCH_PARENT);
         layout.setGravity(Gravity.END);
         layout.setBackgroundColor(0xFF00FF00);
         layout.setId("layout");
@@ -66,8 +76,8 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
         final LinearLayout buttonLayout = new LinearLayout(true);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
-        buttonLayout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
+        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonLayout.setHeight(LayoutSize.WRAP_CONTENT);
         buttonLayout.setMargin((float) 1 / 16, 0, (float)1/16, 0);
         buttonLayout.setGravity(Gravity.START);
         buttonLayout.addStoredMatrixTransformations(graphicsHolder -> {
@@ -78,9 +88,9 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
         final LinearLayout buttonLayout2 = new LinearLayout(true);
         buttonLayout2.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
-        buttonLayout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
-        buttonLayout2.setGravity(Gravity.CENTER_HORIZONTAL);
+        buttonLayout2.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonLayout2.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonLayout2.setGravity(Gravity.CENTER);
         buttonLayout2.addStoredMatrixTransformations(graphicsHolder -> {
 			graphicsHolder.translate(0, 0, 0.4475 - SMALL_OFFSET);
 		});
@@ -193,10 +203,14 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         buttonLayout.addChild(button);
         buttonLayout2.addChild(button2);
 
-        layout.addChild(buttonLayout);
-        layout.addChild(buttonLayout2);
+        //layout.addChild(buttonLayout);
+        //layout.addChild(buttonLayout2);
+
+        frameLayout.addChild(buttonLayout);
+        frameLayout.addChild(buttonLayout2);
+        frameLayout.render();
 
         //渲染线性布局（只需渲染最底层的）
-        layout.render();
+        //layout.render();
     }
 }

@@ -22,6 +22,6 @@ public interface RenderView {
     void calculateLayoutHeight();
     float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity);
 
-    void setParentType(Object thisObject);
+    void setParentType(Object thisObject);//预留方法
     Object getParentType();
 }

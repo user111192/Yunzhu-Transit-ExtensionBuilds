@@ -10,13 +10,14 @@ import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.view.Gravity;
+import top.xfunny.view.LayoutSize;
 import top.xfunny.view.RenderView;
 
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
+
 
 public class LinearLayout implements RenderView {
     private final Boolean isVertical;
@@ -31,8 +32,8 @@ public class LinearLayout implements RenderView {
     private Object parentType;
     private float parentWidth, parentHeight;
     private Gravity gravity;
-    private layoutWidth widthType = layoutWidth.WRAP_CONTENT;
-    private layoutHeight heightType = layoutHeight.WRAP_CONTENT;
+    private LayoutSize widthType = LayoutSize.WRAP_CONTENT;
+    private LayoutSize heightType = LayoutSize.WRAP_CONTENT;
     private String id;
     private int backgroundColor = 0x00000000;
 
@@ -76,14 +77,11 @@ public class LinearLayout implements RenderView {
 
         float offset = 0, remainingWidth = width, remainingHeight = height;
 
-
-        //入口
         for (RenderView child : children) {
             float[] margin = child.getMargin();
             Gravity childGravity = child.getGravity();
             child.setParentType(this);
             child.setStoredMatrixTransformations(storedMatrixTransformations);
-
 
             if (isVertical) {
                 child.setParentDimensions(width, remainingHeight);
@@ -99,7 +97,7 @@ public class LinearLayout implements RenderView {
                 child.calculateLayoutHeight();
                 float[] childGravityPositionOffset = calculateChildGravityOffset(child.getWidth(), child.getHeight(), margin, childGravity);
                 remainingWidth -= child.getWidth() + margin[0] + margin[2];
-                child.setPosition(coordinateOriginX + width - margin[0] - child.getWidth() - offset, coordinateOriginY + childGravityPositionOffset[1]);
+                child.setPosition(coordinateOriginX + width / 2 - margin[0] - child.getWidth() - offset, coordinateOriginY + childGravityPositionOffset[1]);
                 offset += child.getWidth() + margin[0] + margin[2];
             }
             child.render();
@@ -147,7 +145,7 @@ public class LinearLayout implements RenderView {
         return width;
     }
 
-    public void setWidth(layoutWidth widthType) {
+    public void setWidth(LayoutSize widthType) {
         this.widthType = widthType;
     }
 
@@ -156,7 +154,7 @@ public class LinearLayout implements RenderView {
         return height;
     }
 
-    public void setHeight(layoutHeight heightType) {
+    public void setHeight(LayoutSize heightType) {
         this.heightType = heightType;
     }
 
@@ -188,9 +186,9 @@ public class LinearLayout implements RenderView {
     @Override
     public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
         float[] offset = new float[2];
-        if(childGravity == null){
-                offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[2]};
-        }else{
+        if (childGravity == null) {
+            offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[2]};//默认位于左上角
+        } else {
             switch (childGravity) {
                 case START -> {
                     if (isVertical) {
@@ -260,8 +258,8 @@ public class LinearLayout implements RenderView {
     }
 
     private void calculateSelfCoordinateOrigin() {
-        coordinateOriginX = x + width / 2;
-        coordinateOriginY = y;
+        this.coordinateOriginX = x + width / 2;
+        this.coordinateOriginY = y;
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
@@ -272,12 +270,5 @@ public class LinearLayout implements RenderView {
         this.backgroundColor = color;
     }
 
-    public enum layoutWidth {
-        WRAP_CONTENT, MATCH_PARENT
-    }
-
-    public enum layoutHeight {
-        WRAP_CONTENT, MATCH_PARENT
-    }
 }
 

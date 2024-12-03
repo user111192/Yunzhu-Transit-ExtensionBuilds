@@ -15,10 +15,7 @@ import org.mtr.mod.data.IGui;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.view.ButtonView;
-import top.xfunny.view.Gravity;
-import top.xfunny.view.LiftFloorDisplayView;
-import top.xfunny.view.LineComponent;
+import top.xfunny.view.*;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.view.view_group.LinearLayout;
@@ -58,8 +55,8 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
         final LinearLayout layout = new LinearLayout(true);
         layout.setBasicsAttributes(world, blockEntity.getPos2());
         layout.setGravity(Gravity.TOP);
-        layout.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
-        layout.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
+        layout.setWidth(LayoutSize.WRAP_CONTENT);
+        layout.setHeight(LayoutSize.WRAP_CONTENT);
         layout.setParentDimensions((float) 8 / 16, (float) 16 / 16);
 
 
@@ -91,8 +88,8 @@ public class RenderTestLiftButtons2 extends BlockEntityRenderer<TestLiftButtons.
         final LinearLayout layout2 = new LinearLayout(false);
         layout2.setBasicsAttributes(world, blockEntity.getPos2());
         layout2.setGravity(Gravity.TOP);
-        layout2.setWidth(LinearLayout.layoutWidth.WRAP_CONTENT);
-        layout2.setHeight(LinearLayout.layoutHeight.WRAP_CONTENT);
+        layout2.setWidth(LayoutSize.WRAP_CONTENT);
+        layout2.setHeight(LayoutSize.WRAP_CONTENT);
 
 
 
