@@ -4,13 +4,13 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.mapper.BlockWithEntity;
-import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.generated.lang.TranslationProvider;
 import org.mtr.mod.packet.PacketDeleteData;
-import org.mtr.mod.packet.PacketOpenBlockEntityScreen;
 import top.xfunny.BlockEntityTypes;
 import top.xfunny.Init;
+import top.xfunny.block.base.BlockLiftTrackBase;
+import top.xfunny.packet.PacketOpenBlockEntityScreen;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,12 +21,17 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
     }
 
     @Nonnull
-
-
     @Override
+    // Handling the use of brush, if yes, open the editing interface of floor name and description.
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        // Detecting if the player is clicking the "EmptyFloor" block using a brush.
         return IBlock.checkHoldingBrush(world, player, () -> {
             final org.mtr.mapping.holder.BlockEntity entity = world.getBlockEntity(pos);
+            /*if (entity != null && entity.data instanceof BlockEntity) {
+                ((BlockEntity) entity.data).markDirty2();
+                Init.REGISTRY.sendPacketToClient(ServerPlayerEntity.cast(player), new PacketOpenBlockEntityScreen(pos));
+            }*/
+            player.sendMessage(Text.of("Right Clicked the Empty Floor"), true);
             if (entity != null && entity.data instanceof BlockEntity) {
                 ((BlockEntity) entity.data).markDirty2();
                 Init.REGISTRY.sendPacketToClient(ServerPlayerEntity.cast(player), new PacketOpenBlockEntityScreen(pos));
@@ -37,7 +42,7 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BlockEntity(blockPos, blockState);
+        return new EmptyFloor.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -60,7 +65,9 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
 
     @Override
     public ObjectArrayList<Direction> getConnectingDirections(BlockState blockState) {
+        // Get the players' facing direction
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        // Get the players' facing direction, and return
         return ObjectArrayList.of(Direction.UP, Direction.DOWN, facing.rotateYClockwise(), facing.rotateYCounterclockwise());
     }
 
@@ -68,9 +75,11 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
 
         private String floorNumber = "EZ";
         private String floorDescription = "";
+        private boolean shouldDing;
 
         private static final String KEY_FLOOR_NUMBER = "floor_number";
         private static final String KEY_FLOOR_DESCRIPTION = "floor_description";
+        private static final String KEY_SHOULD_DING = "should_ding";
 
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.LIFT_TRACK_EMPTY_FLOOR.get(), pos, state);
@@ -80,12 +89,14 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
         public void readCompoundTag(CompoundTag compoundTag) {
             floorNumber = compoundTag.getString(KEY_FLOOR_NUMBER);
             floorDescription = compoundTag.getString(KEY_FLOOR_DESCRIPTION);
+            shouldDing = compoundTag.getBoolean(KEY_SHOULD_DING);
         }
 
         @Override
         public void writeCompoundTag(CompoundTag compoundTag) {
             compoundTag.putString(KEY_FLOOR_NUMBER, floorNumber);
             compoundTag.putString(KEY_FLOOR_DESCRIPTION, floorDescription);
+            compoundTag.putBoolean(KEY_SHOULD_DING, shouldDing);
         }
 
         public void setData(String floorNumber, String floorDescription) {
@@ -103,3 +114,4 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
         }
     }
 }
+
