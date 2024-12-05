@@ -15,6 +15,7 @@ import org.mtr.mod.data.IGui;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.resource.FontList;
 import top.xfunny.view.*;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -74,15 +75,15 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         layout.setId("layout");
 
 
-        final LinearLayout buttonLayout = new LinearLayout(true);
+        final LinearLayout buttonLayout = new LinearLayout(false);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        buttonLayout.setMargin((float) 1 / 16, 0, (float)1/16, 0);
+        buttonLayout.setMargin(0, 0,0, 0);
         buttonLayout.setGravity(Gravity.START);
         buttonLayout.addStoredMatrixTransformations(graphicsHolder -> {
-			graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
-		});
+            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+        });
         buttonLayout.setBackgroundColor(0xFFFF9966);
         buttonLayout.setId("buttonLayout");
 
@@ -92,14 +93,14 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         buttonLayout2.setHeight(LayoutSize.WRAP_CONTENT);
         buttonLayout2.setGravity(Gravity.CENTER);
         buttonLayout2.addStoredMatrixTransformations(graphicsHolder -> {
-			graphicsHolder.translate(0, 0, 0.4475 - SMALL_OFFSET);
-		});
+            graphicsHolder.translate(0, 0, 0.4475 - SMALL_OFFSET);
+        });
         buttonLayout2.setBackgroundColor(0xFF33CCFF);
         buttonLayout2.setId("buttonLayout2");
 
 
         //添加按钮控件
-        final ButtonView button = new ButtonView();
+        final LiftButtonView button = new LiftButtonView();
 
 
         //设置按钮基本属性
@@ -112,7 +113,7 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         button.setSpacing(1F / 16);
         button.setLight(light);
 
-        final ButtonView button2 = new ButtonView();
+        final LiftButtonView button2 = new LiftButtonView();
         button2.setDefaultColor(0xFFFFFFFF);
         button2.setPressedColor(0xFFD70000);
         button2.setHoverColor(0xFFEA7A7A);
@@ -122,20 +123,10 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
         button2.setSpacing(1F / 16);
         button2.setLight(light);
 
-
-
-
         //设置按钮动态属性
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false,false);
-        button.setBasicsAttributes(world, blockEntity.getPos2());
-        button.setDescriptor(buttonDescriptor);
-
-        button2.setBasicsAttributes(world, blockEntity.getPos2());
-        button2.setDescriptor(buttonDescriptor);
-
-
-
-
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        button2.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
 
 
 
@@ -187,11 +178,22 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
+                liftFloorDisplayView.setBasicsAttributes(world,
+                        blockEntity.getPos2(),
+                        sortedPositionsAndLifts.get(i).right(),
+                        FontList.instance.getFont("testfont"),//字体
+                        4,
+                        0xFFFF0000);
+                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);
+                liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");
+                liftFloorDisplayView.setWidth((float) 3/16);
+                liftFloorDisplayView.setHeight((float) 3/16);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
 //新建电梯显示屏控件
                 if(reverseRendering){
-                    //layout2.addChild(liftFloorDisplayView);
+                    buttonLayout.addChild(liftFloorDisplayView);
                 }else{
-                    //layout2.addChild(liftFloorDisplayView);
+                    buttonLayout.addChild(liftFloorDisplayView);
                 }
 
             }
@@ -201,13 +203,13 @@ public class RenderTestLiftButtons3 extends BlockEntityRenderer<TestLiftButtons.
 
         //layout.addChild(layout2);
         buttonLayout.addChild(button);
-        buttonLayout2.addChild(button2);
+        buttonLayout.addChild(button2);
 
         //layout.addChild(buttonLayout);
         //layout.addChild(buttonLayout2);
 
         frameLayout.addChild(buttonLayout);
-        frameLayout.addChild(buttonLayout2);
+        //frameLayout.addChild(buttonLayout2);
         frameLayout.render();
 
         //渲染线性布局（只需渲染最底层的）

@@ -9,15 +9,12 @@ import org.mtr.mapping.holder.Direction;
 import org.mtr.mapping.holder.World;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mod.Init;
-
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.InitClient;
 import top.xfunny.TextureCache;
-import top.xfunny.view.view_group.LinearLayout;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 
@@ -28,7 +25,7 @@ import static org.mtr.mod.data.IGui.ARGB_WHITE;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class LiftFloorDisplayView implements RenderView {
-    private final String id = "lift_floor_display";
+    private String id;
     private StoredMatrixTransformations storedMatrixTransformations;
     private Font font;
     private int color;
@@ -40,7 +37,8 @@ public class LiftFloorDisplayView implements RenderView {
     private Boolean needScroll;
     private int textSize;
     private float scrollSpeed;
-    private float x, y, z;
+    private float x, y;
+    private float textX;
     private String textureId;
     private int fontSize;
     private boolean noFloorNumber;
@@ -52,8 +50,9 @@ public class LiftFloorDisplayView implements RenderView {
     private float textWidth;
     private float textHeight;
     private float marginLeft, marginTop, marginRight, marginBottom;
-    private BlockState blockState;
     private Direction facing;
+    private TextAlign textAlign = TextAlign.RIGHT;//文本默认右对齐
+    private Gravity gravity;
 
 
     @Override
@@ -61,34 +60,33 @@ public class LiftFloorDisplayView implements RenderView {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public void render() {
         calculateSize();
-        this.blockState = world.getBlockState(blockPos);
+        calculateTextPositionX();
+        BlockState blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
-            graphicsHolder.rotateZDegrees(180);
         });
 
         if (!noFloorNumber || !noFloorDisplay) {
             float offset1;
             if (text.length() > textSize && needScroll) {
                 offset1 = (gameTick * scrollSpeed);
-                /*if (offset1 > parentWidth - width1) {
-                    offset1 = offset1 - parentWidth;
-                }
-                float finalOffset = offset1;*/
-                float finalOffset1 = offset1;
                 MainRenderer.scheduleRender(
                         texture.identifier,
                         false,
                         QueuedRenderLayer.LIGHT_TRANSLUCENT,
                         (graphicsHolder, offset) -> {
                             storedMatrixTransformations1.transform(graphicsHolder, offset);
-                            IDrawing.drawTexture(graphicsHolder, x, y, fixedWidth, textHeight, finalOffset1, 0, finalOffset1 + fixedWidth / width, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                            IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
                             graphicsHolder.pop();
                         });
             } else {
@@ -98,7 +96,7 @@ public class LiftFloorDisplayView implements RenderView {
                         QueuedRenderLayer.LIGHT_TRANSLUCENT,
                         (graphicsHolder, offset) -> {
                             storedMatrixTransformations1.transform(graphicsHolder, offset);
-                            IDrawing.drawTexture(graphicsHolder, x, y, textWidth, textHeight, 0, 0, 1, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                            IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
                             graphicsHolder.pop();
                         }
                 );
@@ -113,17 +111,16 @@ public class LiftFloorDisplayView implements RenderView {
         String floorDescription = liftDetails.right().right();
         this.noFloorNumber = floorNumber.isEmpty();
         this.noFloorDisplay = floorDescription.isEmpty();
-        this.gameTick = InitClient.getGameTick();
+        this.gameTick = org.mtr.mod.InitClient.getGameTick();
         if (!noFloorNumber || !noFloorDisplay) {
             this.text = String.format("%s%s", floorNumber, noFloorNumber ? " " : "");
             this.texture = TextureList.instance.renderFont(textureId, text, color, font, fontSize);
             int rawTextWidth = texture.width;
             int rawTextHeight = texture.height;
-            float scale = Math.max(rawTextWidth, rawTextHeight) / Math.min(width, height);
+            float scale = (float) rawTextHeight / height;
             this.textWidth = rawTextWidth / scale;//缩放处理后的文本宽度
             this.textHeight = rawTextHeight / scale;//缩放处理后的文本高度
-            this.fixedWidth = textWidth / textSize;
-            //System.out.println("Text dimensions: " + width + "x" + height);
+            this.fixedWidth = textWidth / text.length() * textSize;
         }
     }
 
@@ -138,7 +135,7 @@ public class LiftFloorDisplayView implements RenderView {
     }
 
     public void setWidth(float width) { //设置初始宽度
-        this.width = width / 16;
+        this.width = width;
     }
 
     @Override
@@ -147,16 +144,29 @@ public class LiftFloorDisplayView implements RenderView {
     }
 
     public void setHeight(float height) { //设置初始高度
-        this.height = height / 16;
+        this.height = height;
+    }
+
+    public void setTextAlign(TextAlign textAlign) {
+        this.textAlign = textAlign;
+    }
+
+    private void calculateTextPositionX() {
+        switch (textAlign) {
+            case LEFT:
+                textX = x + width - (text.length() > textSize ? fixedWidth : textWidth);
+                break;
+            case CENTER:
+                textX = x + width / 2 - (text.length() > textSize ? fixedWidth : textWidth) / 2;
+                break;
+            case RIGHT:
+                textX = x;
+                break;
+        }
     }
 
     @Override
-    public void setParentDimensions(float parentWidth,float parentHeight) {//用于设置子控件约束空间
-    }
-
-
-    @Override
-    public void setGravity(Gravity layoutGravity) {
+    public void setParentDimensions(float parentWidth, float parentHeight) {//用于设置子控件约束空间
     }
 
     @Override
@@ -174,6 +184,10 @@ public class LiftFloorDisplayView implements RenderView {
         return new float[0];
     }
 
+    @Override
+    public Object getParentType() {
+        return null;
+    }
 
     @Override
     public void setParentType(Object thisObject) {
@@ -181,37 +195,33 @@ public class LiftFloorDisplayView implements RenderView {
     }
 
     @Override
-    public Object getParentType() {
-        return null;
-    }
-
-    @Override
     public float[] getMargin() {
         return new float[]{marginLeft, marginTop, marginRight, marginBottom};
     }
 
-
-
     @Override
     public Gravity getGravity() {
-        return null;
+        return gravity;
     }
 
-
+    @Override
+    public void setGravity(Gravity gravity) {
+        this.gravity = gravity;
+    }
 
     @Override
     public void setMargin(float left, float top, float right, float bottom) {
-        this.marginLeft = left / 16;
-        this.marginTop = top / 16;
-        this.marginRight = right / 16;
-        this.marginBottom = bottom / 16;
+        this.marginLeft = left;
+        this.marginTop = top;
+        this.marginRight = right;
+        this.marginBottom = bottom;
     }
 
     @Override
     public void setPosition(float x, float y) {
-
+        this.x = x;
+        this.y = y;
     }
-
 
 
     public void setTextScrolling(Boolean needScroll, int textSize, float scrollSpeed) {
@@ -232,5 +242,11 @@ public class LiftFloorDisplayView implements RenderView {
 
     public void setTextureId(String textureId) {
         this.textureId = textureId;
+    }
+
+    public enum TextAlign {
+        LEFT,
+        CENTER,
+        RIGHT
     }
 }

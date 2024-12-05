@@ -232,8 +232,14 @@ public class LinearLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float tempWidth = 0;
                 for (RenderView child : children) {
-                    child.calculateLayoutWidth();
-                    tempWidth += child.getWidth();
+                    if(isVertical){
+                        child.calculateLayoutWidth();
+                        tempWidth += child.getWidth();
+                    }else{
+                        child.calculateLayoutWidth();
+                        tempWidth = Math.max(tempWidth, child.getWidth());
+                    }
+
                 }
                 width = tempWidth;
             }
@@ -247,8 +253,14 @@ public class LinearLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float tempHeight = 0;
                 for (RenderView child : children) {
-                    child.calculateLayoutHeight();
-                    tempHeight += child.getHeight();
+                    if(isVertical){
+                        child.calculateLayoutHeight();
+                        tempHeight += child.getHeight();
+                    }else{
+                        child.calculateLayoutHeight();
+                        tempHeight = Math.max(tempHeight, child.getHeight());
+                    }
+
                 }
                 height = tempHeight;
             }
@@ -263,7 +275,7 @@ public class LinearLayout implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        storedMatrixTransformations.add(transformation);
+        storedMatrixTransformations.add(transformation);//通常情况下用于调整z轴
     }
 
     public void setBackgroundColor(int color) {

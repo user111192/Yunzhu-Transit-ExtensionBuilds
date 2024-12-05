@@ -157,7 +157,7 @@ public class FrameLayout implements RenderView {
                 width = maxWidth;
             }
             case MATCH_PARENT -> width = parentWidth;
-            default -> width = widthType.ordinal();  // 使用枚举的值替代 ordinal()
+            default -> width = widthType.ordinal();
         }
     }
 
@@ -173,7 +173,7 @@ public class FrameLayout implements RenderView {
                 height = maxHeight;
             }
             case MATCH_PARENT -> height = parentHeight;
-            default -> height = heightType.ordinal();  // 使用枚举的值替代 ordinal()
+            default -> height = heightType.ordinal();
         }
     }
 
@@ -212,7 +212,7 @@ public class FrameLayout implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        storedMatrixTransformations.add(transformation);
+        storedMatrixTransformations.add(transformation);//通常情况下用于调整z轴
     }
 
     public void setBackgroundColor(int color) {
