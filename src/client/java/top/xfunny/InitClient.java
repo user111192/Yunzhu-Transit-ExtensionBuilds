@@ -15,8 +15,6 @@ public final class InitClient {
 
 
 	public static void init() {
-
-
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_BUTTONS, RenderTestLiftButtons3::new);
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_HALL_LANTERNS, dispatcher -> new RenderTestLiftHallLanterns(dispatcher, true));
 		REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN, RenderTestLiftButtonsWithoutScreen::new);
@@ -39,6 +37,7 @@ public final class InitClient {
 		REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
 		REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
 
+		REGISTRY_CLIENT.setupPackets(new Identifier(Init.MOD_ID, "packet"));
 
 		REGISTRY_CLIENT.eventRegistryClient.registerClientJoin(() -> {
 			MinecraftClientData.reset();
@@ -50,8 +49,6 @@ public final class InitClient {
 
 		});
 		REGISTRY_CLIENT.init();
-
-
 	}
 
 

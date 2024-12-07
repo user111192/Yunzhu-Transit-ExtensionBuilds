@@ -1,4 +1,4 @@
-package top.xfunny.packet;
+package top.xfunny.clientPacket;
 
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.ScreenExtension;
