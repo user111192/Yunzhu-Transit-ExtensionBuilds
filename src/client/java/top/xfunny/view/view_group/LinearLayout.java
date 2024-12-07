@@ -1,6 +1,7 @@
 package top.xfunny.view.view_group;
 
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mod.Init;
@@ -13,6 +14,8 @@ import top.xfunny.view.Gravity;
 import top.xfunny.view.LayoutSize;
 import top.xfunny.view.RenderView;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
@@ -54,6 +57,7 @@ public class LinearLayout implements RenderView {
     public void render() {
         BlockState blockState = world.getBlockState(blockPos);
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+
 
         calculateLayoutWidth();
         calculateLayoutHeight();
@@ -232,14 +236,14 @@ public class LinearLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float tempWidth = 0;
                 for (RenderView child : children) {
-                    if(isVertical){
+                    float[] margin = child.getMargin();
+                    if(!isVertical){
                         child.calculateLayoutWidth();
-                        tempWidth += child.getWidth();
+                        tempWidth += child.getWidth()+ margin[0] + margin[2];
                     }else{
                         child.calculateLayoutWidth();
-                        tempWidth = Math.max(tempWidth, child.getWidth());
+                        tempWidth = Math.max(tempWidth, child.getWidth()+ margin[0] + margin[2]);
                     }
-
                 }
                 width = tempWidth;
             }
@@ -253,12 +257,13 @@ public class LinearLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float tempHeight = 0;
                 for (RenderView child : children) {
+                    float[] margin = child.getMargin();
                     if(isVertical){
                         child.calculateLayoutHeight();
-                        tempHeight += child.getHeight();
+                        tempHeight += child.getHeight() + margin[1] + margin[3];
                     }else{
                         child.calculateLayoutHeight();
-                        tempHeight = Math.max(tempHeight, child.getHeight());
+                        tempHeight = Math.max(tempHeight, child.getHeight()+ margin[1] + margin[3]);
                     }
 
                 }
@@ -280,6 +285,13 @@ public class LinearLayout implements RenderView {
 
     public void setBackgroundColor(int color) {
         this.backgroundColor = color;
+    }
+
+     public void reverseChildren() {
+        // 将 ObjectArrayList 转换为 List
+        List<RenderView> list = children;
+        // 使用 Collections.reverse() 方法反转列表
+        Collections.reverse(list);
     }
 
 }

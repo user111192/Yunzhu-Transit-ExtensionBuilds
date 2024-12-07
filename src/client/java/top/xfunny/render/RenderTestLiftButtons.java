@@ -188,7 +188,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
 					}
 			);
 		}
-		// 检查排序后的电梯位置列表是否非空//todo
+		// 检查排序后的电梯位置列表是否非空
 		if (!sortedPositionsAndLifts.isEmpty()) {
 			// 确定要渲染的电梯数量，最多为2个
 			final int count = Math.min(2, sortedPositionsAndLifts.size());

@@ -1,6 +1,6 @@
 package top.xfunny.view.view_group;
 
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mod.Init;
@@ -151,8 +151,9 @@ public class FrameLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float maxWidth = 0;
                 for (RenderView child : children) {
+                    float[] margin = child.getMargin();
                     child.calculateLayoutWidth();
-                    maxWidth = Math.max(maxWidth, child.getWidth());
+                    maxWidth = Math.max(maxWidth, child.getWidth()+ margin[0] + margin[2]);
                 }
                 width = maxWidth;
             }
@@ -167,8 +168,9 @@ public class FrameLayout implements RenderView {
             case WRAP_CONTENT -> {
                 float maxHeight = 0;
                 for (RenderView child : children) {
+                    float[] margin = child.getMargin();
                     child.calculateLayoutHeight();
-                    maxHeight = Math.max(maxHeight, child.getHeight());
+                    maxHeight = Math.max(maxHeight, child.getHeight()+ margin[1] + margin[3]);
                 }
                 height = maxHeight;
             }

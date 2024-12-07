@@ -34,7 +34,7 @@ public class LiftFloorDisplayView implements RenderView {
     private Lift lift;
     private float height;
     private float width;
-    private Boolean needScroll;
+    private boolean needScroll;
     private int textSize;
     private float scrollSpeed;
     private float x, y;
@@ -79,7 +79,7 @@ public class LiftFloorDisplayView implements RenderView {
         if (!noFloorNumber || !noFloorDisplay) {
             float offset1;
             if (text.length() > textSize && needScroll) {
-                offset1 = (gameTick * scrollSpeed);
+                offset1 = (gameTick * scrollSpeed)%1;
                 MainRenderer.scheduleRender(
                         texture.identifier,
                         false,

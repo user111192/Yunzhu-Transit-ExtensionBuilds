@@ -17,7 +17,7 @@ public class LiftButtonView implements RenderView {
 
     // 按钮状态、颜色、位置等字段
     private boolean[] buttonStates = {false, false};  // 上下按钮状态
-    private Identifier texture;
+    private Identifier upButtonTexture, downButtonTexture;
     private int defaultUpColor, defaultDownColor, hoverUpColor, hoverDownColor, pressedUpColor, pressedDownColor;
     private BlockPos blockPos;
     private Direction facing;
@@ -30,7 +30,7 @@ public class LiftButtonView implements RenderView {
     private float marginLeft, marginTop, marginRight, marginBottom, spacing;
     private String id = "button";
     private Gravity gravity;
-    private boolean canHover = false, lookingAtTopHalf, lookingAtBottomHalf;
+    private boolean canHover, lookingAtTopHalf, lookingAtBottomHalf;
 
     @Override
     public String getId() {
@@ -68,7 +68,7 @@ public class LiftButtonView implements RenderView {
         // 如果有下按钮，进行渲染
         if (buttonDescriptor.hasDownButton()) {
             MainRenderer.scheduleRender(
-                texture, false, queuedRenderLayerRegulator(buttonStates[0]),
+                downButtonTexture, false, queuedRenderLayerRegulator(lookingAtBottomHalf,buttonStates[0]),
                 (graphicsHolder, offset) -> {
                     storedMatrixTransformations1.transform(graphicsHolder, offset);
                     IDrawing.drawTexture(
@@ -87,7 +87,7 @@ public class LiftButtonView implements RenderView {
         // 如果有上按钮，进行渲染
         if (buttonDescriptor.hasUpButton()) {
             MainRenderer.scheduleRender(
-                texture, false, queuedRenderLayerRegulator(buttonStates[1]),
+                upButtonTexture, false, queuedRenderLayerRegulator(lookingAtTopHalf,buttonStates[1]),
                 (graphicsHolder, offset) -> {
                     storedMatrixTransformations1.transform(graphicsHolder, offset);
                     IDrawing.drawTexture(
@@ -104,8 +104,8 @@ public class LiftButtonView implements RenderView {
         }
     }
 
-    private QueuedRenderLayer queuedRenderLayerRegulator(Boolean buttonState) {
-        return (lookingAtBottomHalf && canHover && buttonState) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
+    private QueuedRenderLayer queuedRenderLayerRegulator(Boolean looking,Boolean buttonState) {
+        return ((looking || buttonState) & canHover) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
     }
 
     private void positionY(float y, float spacing) {
@@ -231,7 +231,13 @@ public class LiftButtonView implements RenderView {
     }
 
     public void setTexture(Identifier texture) {
-        this.texture = texture;
+        this.upButtonTexture = texture;
+        this.downButtonTexture = texture;
+    }
+
+    public void setTexture(Identifier upButtonTexture, Identifier downButtonTexture) {
+        this.upButtonTexture = upButtonTexture;
+        this.downButtonTexture = downButtonTexture;
     }
 
     public void setSpacing(float spacing) {
@@ -248,5 +254,9 @@ public class LiftButtonView implements RenderView {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public void setHover(Boolean hover){
+        this.canHover = hover;
     }
 }
