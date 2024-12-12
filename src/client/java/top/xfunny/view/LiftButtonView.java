@@ -1,6 +1,7 @@
 package top.xfunny.view;
 
 import org.mtr.mapping.holder.*;
+import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -9,6 +10,8 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.base.LiftButtonsBase;
+
+import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
@@ -31,10 +34,16 @@ public class LiftButtonView implements RenderView {
     private String id = "button";
     private Gravity gravity;
     private boolean canHover, lookingAtTopHalf, lookingAtBottomHalf;
+    private boolean reverse;
+
 
     @Override
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     // 渲染逻辑
@@ -44,7 +53,6 @@ public class LiftButtonView implements RenderView {
         this.storedMatrixTransformations1 = storedMatrixTransformations.copy();
 
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
         dynamicRender();
@@ -68,43 +76,43 @@ public class LiftButtonView implements RenderView {
         // 如果有下按钮，进行渲染
         if (buttonDescriptor.hasDownButton()) {
             MainRenderer.scheduleRender(
-                downButtonTexture, false, queuedRenderLayerRegulator(lookingAtBottomHalf,buttonStates[0]),
-                (graphicsHolder, offset) -> {
-                    storedMatrixTransformations1.transform(graphicsHolder, offset);
-                    IDrawing.drawTexture(
-                        graphicsHolder,
-                        x, yDown, width, height,
-                        0, 0, 1, 1,
-                        facing,
-                        buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
-                        light
-                    );
-                    graphicsHolder.pop();
-                }
+                    downButtonTexture, false, queuedRenderLayerRegulator(lookingAtBottomHalf, buttonStates[0]),
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                x, yDown, width, height,
+                                0, reverse ? 0 : 1, 1, reverse ? 1 : 0,
+                                facing,
+                                buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
+                                light
+                        );
+                        graphicsHolder.pop();
+                    }
             );
         }
 
         // 如果有上按钮，进行渲染
         if (buttonDescriptor.hasUpButton()) {
             MainRenderer.scheduleRender(
-                upButtonTexture, false, queuedRenderLayerRegulator(lookingAtTopHalf,buttonStates[1]),
-                (graphicsHolder, offset) -> {
-                    storedMatrixTransformations1.transform(graphicsHolder, offset);
-                    IDrawing.drawTexture(
-                        graphicsHolder,
-                        x, yUp, width, height,
-                        0, 1, 1, 0,
-                        facing,
-                        buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
-                        light
-                    );
-                    graphicsHolder.pop();
-                }
+                    upButtonTexture, false, queuedRenderLayerRegulator(lookingAtTopHalf, buttonStates[1]),
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                x, yUp, width, height,
+                                0, 1, 1, 0,
+                                facing,
+                                buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
+                                light
+                        );
+                        graphicsHolder.pop();
+                    }
             );
         }
     }
 
-    private QueuedRenderLayer queuedRenderLayerRegulator(Boolean looking,Boolean buttonState) {
+    private QueuedRenderLayer queuedRenderLayerRegulator(Boolean looking, Boolean buttonState) {
         return ((looking || buttonState) & canHover) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
     }
 
@@ -139,9 +147,17 @@ public class LiftButtonView implements RenderView {
         return width;
     }
 
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
     @Override
     public float getHeight() {
         return buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton() ? height * 2 + spacing : height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     @Override
@@ -160,13 +176,16 @@ public class LiftButtonView implements RenderView {
 
     // 不适用的布局方法
     @Override
-    public void setParentDimensions(float parentWidth, float parentHeight) {}
+    public void setParentDimensions(float parentWidth, float parentHeight) {
+    }
 
     @Override
-    public void calculateLayoutWidth() {}
+    public void calculateLayoutWidth() {
+    }
 
     @Override
-    public void calculateLayoutHeight() {}
+    public void calculateLayoutHeight() {
+    }
 
     @Override
     public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
@@ -179,7 +198,8 @@ public class LiftButtonView implements RenderView {
     }
 
     @Override
-    public void setParentType(Object thisObject) {}
+    public void setParentType(Object thisObject) {
+    }
 
     // 设置基本属性的方法
     public void setBasicsAttributes(World world, BlockPos blockPos, LiftButtonsBase.LiftButtonDescriptor descriptor) {
@@ -230,33 +250,27 @@ public class LiftButtonView implements RenderView {
         this.pressedDownColor = pressedDownColor;
     }
 
-    public void setTexture(Identifier texture) {
+    public void setTexture(Identifier texture, boolean reverse) {
         this.upButtonTexture = texture;
         this.downButtonTexture = texture;
+        this.reverse = reverse;
     }
 
-    public void setTexture(Identifier upButtonTexture, Identifier downButtonTexture) {
+    public void setTexture(Identifier upButtonTexture, Identifier downButtonTexture, boolean reverse) {
         this.upButtonTexture = upButtonTexture;
         this.downButtonTexture = downButtonTexture;
+        this.reverse = reverse;
     }
 
     public void setSpacing(float spacing) {
         this.spacing = spacing;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public void setHover(Boolean hover){
+    public void setHover(Boolean hover) {
         this.canHover = hover;
+    }
+
+    public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
+        storedMatrixTransformations1.add(transformation);
     }
 }

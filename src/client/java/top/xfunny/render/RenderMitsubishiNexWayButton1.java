@@ -11,7 +11,6 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.Init;
 import org.mtr.mod.InitClient;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
@@ -20,13 +19,20 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.ButtonRegistry;
+import top.xfunny.Init;
 import top.xfunny.block.MitsubishiNexWayButton1;
+import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
+import top.xfunny.resource.FontList;
 import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 import top.xfunny.util.ReverseRendering;
+import top.xfunny.view.*;
+import top.xfunny.view.view_group.FrameLayout;
+import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
 
@@ -34,7 +40,6 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 
 	private static final int HOVER_COLOR = 0xFFFFCC66;
 	private static final int PRESSED_COLOR = 0xFFFF8800;
-	private static final float ARROW_SPEED = 0.0F;
 	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
 	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
 	private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
@@ -46,281 +51,169 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
 	@Override
 	public void render(MitsubishiNexWayButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
 		final World world = blockEntity.getWorld2();
-		if (world == null) {
-			return;
-		}
+        if (world == null) {
+            return;
+        }
 
-		final ClientPlayerEntity clientPlayerEntity = MinecraftClient.getInstance().getPlayerMapped();
-		if (clientPlayerEntity == null) {
-			return;
-		}
+        final ClientPlayerEntity clientPlayerEntity = MinecraftClient.getInstance().getPlayerMapped();
+        if (clientPlayerEntity == null) {
+            return;
+        }
 
-		final BlockPos blockPos = blockEntity.getPos2();
-		final BlockState blockState = world.getBlockState(blockPos);
-		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
-		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
-		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
-		// 参数为方块的中心位置坐标 (x, y, z)
-		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
+        final BlockPos blockPos = blockEntity.getPos2();
+        final BlockState blockState = world.getBlockState(blockPos);
+        final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
+
+        final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.rotateYDegrees(-facing.asRotation());
+			graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+        });
+
+        //创建一个纵向的linear layout作为最底层的父容器
+        final LinearLayout parentLayout = new LinearLayout(true);
+        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
+        parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
+        parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
+        parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
+
+        //创建一个横向的linear layout用于放置显示屏
+        final LinearLayout screenLayout = new LinearLayout(false);
+        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
+        screenLayout.setMargin(0, (float) 0.7 / 16, 0, 0);//设置外边距，可选
 
 
-		// 定义一个布尔数组，用于记录按钮的状态
-		// 数组顺序：向下按钮被按下、向上按钮被按下
-		final boolean[] buttonStates = {false, false};
-		LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false,false);
+        //创建一个FrameLayout用于在剩余的空间中放置按钮
+        final FrameLayout buttonLayout = new FrameLayout();
+        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
+        buttonLayout.setMargin(0, (float) 1.2 /16, 0, 0);
 
-		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
-		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
+        //添加按钮
+        final LiftButtonView button = new LiftButtonView();
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        button.setLight(light);
+        button.setHover(false);
+        button.setDefaultColor(0xFFFFFFFF);
+        button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
+        button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
+        button.setTexture(BUTTON_TEXTURE,true);//按钮贴图
+        button.setWidth(1F / 16);//按钮宽度
+        button.setHeight(1F / 16);//按钮高度
+        button.setSpacing(0.5F / 16);//两个按钮的间距
+        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
-		// 遍历每个轨道位置，进行后续处理
-		blockEntity.forEachTrackPosition(trackPosition -> {
-			// 手持连接器进行连线
-			if (world.getBlockState(trackPosition).getBlock().data instanceof BlockLiftTrackFloor) {
-				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
-				RenderLiftObjectLink.RenderLiftObjectLink(
-						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.5, facing.getOffsetZ() / 2F),
-						new Vector3d(trackPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, trackPosition.getY() - blockPos.getY() + 0.5, trackPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
-						holdingLinker
-				);
-			}
+        final LiftButtonView buttonLight = new LiftButtonView();
+        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        buttonLight.setLight(light);
+        buttonLight.setHover(true);
+        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setPressedColor(PRESSED_COLOR);
+        buttonLight.setHoverColor(HOVER_COLOR);
+        buttonLight.setTexture(LIGHT_TEXTURE,true);
+        buttonLight.setWidth(1F / 16);
+        buttonLight.setHeight(1F / 16);
+        buttonLight.setSpacing(0.5F / 16);
+        buttonLight.setGravity(Gravity.CENTER);
 
-			// Figure out whether the up and down buttons should be rendered
-			MitsubishiNexWayButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
-				// 确定是否渲染上下按钮，基于当前trackPosition和楼层信息
-				// 该方法通过floorIndex和lift来决定是否添加trackPosition和lift到已排序的列表中
-				// 同时，根据lift的方向（上或下），更新buttonStates数组以指示按钮的渲染状态
-				// 这里使用lambda表达式来处理按钮状态的逻辑
-				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-				final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
-				instructionDirections.forEach(liftDirection -> {
-					switch (liftDirection) {
-						case DOWN:
-							buttonStates[0] = true;
-							break;
-						case UP:
-							buttonStates[1] = true;
-							break;
-					}
-				});
-			});
-		});
+        //添加外呼与楼层轨道的连线
+        final LineComponent line = new LineComponent();
+        line.setBasicsAttributes(world, blockEntity.getPos2());
 
-		// Sort list and only render the two closest lifts
-		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        // 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
+        final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-		// Check whether the player is looking at the top or bottom button
-		final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-		final boolean lookingAtTopHalf;
-		final boolean lookingAtBottomHalf;
-		if (hitResult == null || !IBlock.getStatePropertySafe(blockState, MitsubishiNexWayButton1.UNLOCKED)) {
-			lookingAtTopHalf = false;
-			lookingAtBottomHalf = false;
-		} else {
-			final Vector3d hitLocation = hitResult.getPos();
-			final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
-			final boolean inBlock = hitY < 0.5 && Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
-			lookingAtTopHalf = inBlock && (!buttonDescriptor.hasDownButton() || hitY > 0.25);
-			lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < 0.25);
-		}
+        // 遍历每个轨道位置，进行后续处理
+        blockEntity.forEachTrackPosition(trackPosition -> {
+            //开始渲染外呼与轨道的连线
+            line.RenderLine(holdingLinker, trackPosition);
 
-		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
-		storedMatrixTransformations2.add(graphicsHolder -> {
-			graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.471 - SMALL_OFFSET);
-		});
+            //判断是否渲染上下按钮
+            MitsubishiNexWayButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
+                final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
+                instructionDirections.forEach(liftDirection -> {
+                    switch (liftDirection) {
+                        case DOWN:
+                            //向下的按钮亮灯
+                            buttonLight.setDownButtonLight();
+                            break;
+                        case UP:
+                            //向上的按钮亮灯
+                            buttonLight.setUpButtonLight();
+                            break;
+                    }
+                });
+            });
+        });
 
-		// 根据按钮状态渲染按钮
-		// 第一个按钮的渲染逻辑
-		if (buttonDescriptor.hasDownButton()) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-0.55F / 16,
-								(buttonDescriptor.hasUpButton() ? 2.3F : 3.2F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-			MainRenderer.scheduleRender(
-					LIGHT_TEXTURE,
-					false,
-					buttonStates[0] || lookingAtBottomHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-0.55F / 16,
-								(buttonDescriptor.hasUpButton() ? 2.3F : 3.2F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								buttonStates[0] ? PRESSED_COLOR : lookingAtBottomHalf ? HOVER_COLOR : ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
-		// 第二个按钮的渲染逻辑
-		if (buttonDescriptor.hasUpButton()) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-0.55F / 16,
-								(buttonDescriptor.hasDownButton() ? 4.2F : 3.2F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-			MainRenderer.scheduleRender(
-					LIGHT_TEXTURE,
-					false,
-					buttonStates[1] || lookingAtTopHalf ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-0.55F / 16,
-								(buttonDescriptor.hasDownButton() ? 4.2F : 3.2F) / 16,
-								1F / 16,
-								1F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								buttonStates[1] ? PRESSED_COLOR : lookingAtTopHalf ? HOVER_COLOR : ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
-		// 检查排序后的电梯位置列表是否非空
-		if (!sortedPositionsAndLifts.isEmpty()) {
-			// 确定要渲染的电梯数量，最多为2个
-			final int count = Math.min(2, sortedPositionsAndLifts.size());
-			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = 0.25F;
+        //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
-			// 创建当前矩阵变换的副本以供后续修改
-			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
-			// 添加旋转和平移变换
-			storedMatrixTransformations3.add(graphicsHolder -> {
-				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(count == 1 ? -width / 2 : -width * 2.485 , 0, 0.003F);
-			});
+        if (!sortedPositionsAndLifts.isEmpty()) {
+            // 确定要渲染的电梯数量，这里设置为2个
+            final int count = Math.min(2, sortedPositionsAndLifts.size());
+            final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
-			// 根据按钮朝向判断两个最近的电梯是否需要反转渲染顺序
-			final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
-			// 遍历要渲染的每个电梯
-			for (int i = 0; i < count; i++) {
-				final double x = ((reverseRendering ? count - i - 1 : i) + 0.5) * width / count;
-				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.875, -SMALL_OFFSET));
-				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.105F,0.190F,0.14F, count);
 
-			}
-		}
-	}
-	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height, int count) {
-		// 获取电梯的详细信息，包括运行方向和楼层信息
-		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-		final LiftDirection liftDirection = liftDetails.left();
-		final String floorNumber = liftDetails.right().left();
-		final String floorDescription = liftDetails.right().right();
+            for (int i = 0; i < count; i++) {
+                //添加外呼显示屏
+                final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
+                liftFloorDisplayView.setBasicsAttributes(world,
+                        blockEntity.getPos2(),
+                        sortedPositionsAndLifts.get(i).right(),
+                        FontList.instance.getFont("mitsubishi_modern"),//字体
+                        6,//字号
+                        0xFFFFAA00);//字体颜色
+                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 1.7 / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
+                liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
-		// 判断楼层编号和描述是否为空
-		final boolean noFloorNumber = floorNumber.isEmpty();
-		final boolean noFloorDisplay = floorDescription.isEmpty();
-		final float gameTick = InitClient.getGameTick(); // 获取当前游戏刻
-		final boolean goingUp = liftDirection == LiftDirection.UP; // 判断电梯是否向上运行
-		final float arrowSize = (float) 1 / 7; // 设置箭头大小
-		final float y = height; // 箭头的Y轴位置
+                //添加箭头
+                final LiftArrowView liftArrowView = new LiftArrowView();
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setTexture(ARROW_TEXTURE);
+                liftArrowView.setArrowScrolling(false, 0.05F);
+                liftArrowView.setWidth((float) 1 / 16);
+                liftArrowView.setHeight((float) 1 / 16);
+                liftArrowView.setMargin(0, (float) 0.5 / 16, 0, 0);
+                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setColor(0xFFFFAA00);
 
-		// 渲染电梯运行方向的箭头
-		if (liftDirection != LiftDirection.NONE) {
-			final float uv = (gameTick * ARROW_SPEED) % 1;
-			final int color = 0xFFFFAA00; // 根据运行方向设置箭头颜色
-			MainRenderer.scheduleRender(ARROW_TEXTURE, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
-				// 根据电梯运行方向绘制箭头
-				//IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/5.1F+arrowSize : -width/10.1F+arrowSize , y, arrowSize / 3, arrowSize / 3, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
-				IDrawing.drawTexture(graphicsHolder, count == 1 ? -width/4+arrowSize+0.083F : -width/4+arrowSize+0.456F, y-0.01F, arrowSize/2.85F, arrowSize/2.9F, 0, (goingUp ? 0 : 1) + uv, 1, (goingUp ? 1 : 0) + uv, Direction.UP, color, GraphicsHolder.getDefaultLight());
+                //创建一个linear layout用于组合数字和箭头
+                final LinearLayout numberLayout = new LinearLayout(true);
+                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
+                numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
+                numberLayout.addChild(liftArrowView);
+                numberLayout.addChild(liftFloorDisplayView);
+                //将外呼显示屏添加到刚才设定的screenLayout线性布局中
+                if (reverseRendering) {
+                    screenLayout.addChild(numberLayout);
+                    screenLayout.reverseChildren();
+                } else {
+                    screenLayout.addChild(numberLayout);
+                }
+            }
+        }
 
-				graphicsHolder.pop();
-			});
-		}
-		// 渲染楼层信息
-		if (!noFloorNumber || !noFloorDisplay) {
-			float offset1;
-			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
-			int totalWidth = TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).width;
+        buttonLayout.addChild(button);//将按钮添加到线性布局中进行渲染
+        buttonLayout.addChild(buttonLight);
+        parentLayout.addChild(screenLayout);//将screenLayout添加到父容器中
+        parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
 
-			if (text.length() > 2) {
-				float scrollSpeed = 0.008F;
-				offset1 = (gameTick * scrollSpeed);
-				if (offset1 > totalWidth - width1) {
-					offset1 = offset1 - totalWidth;
-				}
-				float finalOffset = offset1;
-				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-					storedMatrixTransformations.transform(graphicsHolder, offset);
-
-					IDrawing.drawTexture(graphicsHolder, -width + 0.955F, y + 0.03F, width1 / 1.2F, height1 / 1.4F, finalOffset, 0, finalOffset+ (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-					graphicsHolder.pop();
-				});
-			} else {
-				MainRenderer.scheduleRender(TextureList.instance.getMitsubishiNexWayButton1Display(text, 0xFFAA00).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-					storedMatrixTransformations.transform(graphicsHolder, offset);
-					IDrawing.drawTexture(graphicsHolder, -width + (text.length() == 1 ? 0.983F : 0.957F), y + 0.03F, text.length() == 1 ? width1 / 2.5F : width1 / 1.2F, height1 / 1.4F, 0, 0, text.length() == 1 ? (float) 60 / totalWidth : (float) 120 / totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-					graphicsHolder.pop();
-				});
-			}
-		}
+        parentLayout.render();//渲染父容器
 	}
 }

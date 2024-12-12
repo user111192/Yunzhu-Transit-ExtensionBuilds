@@ -30,7 +30,7 @@ public class LinearLayout implements RenderView {
     private StoredMatrixTransformations storedMatrixTransformations;
     private float width, height;
     private float marginLeft, marginTop, marginRight, marginBottom;
-    private float x, y;
+    private float x, y, z;
     private float coordinateOriginX = 0, coordinateOriginY = 0;
     private Object parentType;
     private float parentWidth, parentHeight;
@@ -65,7 +65,6 @@ public class LinearLayout implements RenderView {
 
         StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations.copy();
         storedMatrixTransformations3.add(graphicsHolder -> {
-            graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
         });
 
@@ -80,6 +79,7 @@ public class LinearLayout implements RenderView {
                 });
 
         float offset = 0, remainingWidth = width, remainingHeight = height;
+
 
         for (RenderView child : children) {
             float[] margin = child.getMargin();

@@ -48,7 +48,6 @@ public class LiftArrowView implements RenderView {
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
         ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails =

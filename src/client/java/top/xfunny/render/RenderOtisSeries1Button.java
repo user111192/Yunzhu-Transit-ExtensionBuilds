@@ -52,11 +52,19 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 
 		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
+		final BlockState blockState = world.getBlockState(blockPos);
+		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
+
+		final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.rotateYDegrees(-facing.asRotation());
+        });
 
 		FrameLayout parentLayout = new FrameLayout();
 		parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        parentLayout.setStoredMatrixTransformations(new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5));
+        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 4.8 / 16, (float) 6.5 / 16);
         parentLayout.setPosition((float) -2.4 / 16, (float) 0.75 / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
@@ -83,7 +91,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		button.setDefaultColor(0xFFFFFFFF);
 		button.setPressedColor(0xFFFFCB3B);
 		button.setHoverColor(0xFFFFFFFF);
-		button.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_button.png"));
+		button.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_button.png"), true);
 		button.setWidth(1F / 16);
 		button.setHeight(1F / 16);
 		button.setSpacing(0.5F / 16);
@@ -96,7 +104,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		buttonArrow.setDefaultColor(0xFFFFFFFF);
 		buttonArrow.setPressedColor(0xFFFFFFFF);
 		buttonArrow.setHoverColor(0xFFFFFFFF);
-		buttonArrow.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_arrow.png"));
+		buttonArrow.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/otis_s1_arrow.png"), true);
 		buttonArrow.setWidth(1F / 16);
 		buttonArrow.setHeight(1F / 16);
 		buttonArrow.setSpacing(0.5F / 16);
@@ -111,7 +119,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 		blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
 
-            TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            OtisSeries1Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {

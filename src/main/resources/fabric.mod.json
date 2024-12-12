@@ -3,12 +3,12 @@
 	"id": "yte",
 	"version": "${version}",
 	"name": "Yunzhu Transit Extension",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "云竹交通\n云珠工坊交通拓展",
 	"authors": [
-		"Me!"
+		"XFunny\nMrNTkey\nQBYQ"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
+		"homepage": "https://space.bilibili.com/3546779284932989",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",

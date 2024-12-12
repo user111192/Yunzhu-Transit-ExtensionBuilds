@@ -34,6 +34,7 @@ public class FrameLayout implements RenderView {
     private int backgroundColor;
     private World world;
     private BlockPos blockPos;
+    private Consumer<GraphicsHolder> add;
 
     @Override
     public String getId() {
@@ -55,9 +56,12 @@ public class FrameLayout implements RenderView {
 
         StoredMatrixTransformations matrixTransformations = storedMatrixTransformations.copy();
         matrixTransformations.add(graphicsHolder -> {
-            graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
         });
+
+        if(add != null){
+            matrixTransformations.add(add);
+        }
 
         MainRenderer.scheduleRender(
                 new Identifier(Init.MOD_ID, "textures/block/white.png"),
@@ -190,7 +194,7 @@ public class FrameLayout implements RenderView {
                 case CENTER_VERTICAL -> offset = new float[]{0, -(height - childHeight) / 2};
                 case CENTER_HORIZONTAL -> offset = new float[]{-childWidth / 2, 0};
                 case CENTER -> offset = new float[]{-childWidth / 2, -(height - childHeight) / 2};
-                case END -> offset = new float[]{-width / 2 + childMargin[3], 0};
+                case END -> offset = new float[]{-width / 2 + childMargin[2], 0};
                 case TOP -> offset = new float[]{0, -height / 2 + childMargin[1]};
                 case BOTTOM -> offset = new float[]{0, height};
             }
@@ -214,7 +218,7 @@ public class FrameLayout implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        storedMatrixTransformations.add(transformation);//通常情况下用于调整z轴
+        this.add = transformation;
     }
 
     public void setBackgroundColor(int color) {

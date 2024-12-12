@@ -19,6 +19,7 @@ import top.xfunny.resource.TextureList;
 import top.xfunny.util.ClientGetLiftDetails;
 
 import java.awt.*;
+import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.ARGB_WHITE;
@@ -26,7 +27,7 @@ import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class LiftFloorDisplayView implements RenderView {
     private String id;
-    private StoredMatrixTransformations storedMatrixTransformations;
+    private StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
     private Font font;
     private int color;
     private World world;
@@ -70,9 +71,8 @@ public class LiftFloorDisplayView implements RenderView {
         calculateTextPositionX();
         BlockState blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
-        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
 
@@ -242,6 +242,10 @@ public class LiftFloorDisplayView implements RenderView {
 
     public void setTextureId(String textureId) {
         this.textureId = textureId;
+    }
+
+    public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
+        storedMatrixTransformations1.add(transformation);
     }
 
     public enum TextAlign {

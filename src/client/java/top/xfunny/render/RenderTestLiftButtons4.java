@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.Init;
 import top.xfunny.block.TestLiftButtons;
 import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
@@ -49,10 +50,16 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
+        final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.rotateYDegrees(-facing.asRotation());
+        });
+
         //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
-        parentLayout.setStoredMatrixTransformations(new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5));
+        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 8 / 16, (float) 16 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
         parentLayout.setPosition((float) -0.25, (float) 0);//通过设置坐标的方式设置底层layout的位置
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
@@ -82,7 +89,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFD70000);//按钮按下时颜色
         button.setHoverColor(0xFFEA7A7A);//准星瞄准时的颜色
-        button.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_d_series_line_d2button.png"));//按钮贴图
+        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_line_d2button.png"),true);//按钮贴图
         button.setWidth(3F / 16);//按钮宽度
         button.setHeight(3F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距
@@ -137,7 +144,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                         FontList.instance.getFont("acmeled"),//字体
                         6,//字号
                         0xFFFF0000);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件，滚动速度
+                liftFloorDisplayView.setTextScrolling(true, 3, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 3 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 3 / 16);//显示屏高度
