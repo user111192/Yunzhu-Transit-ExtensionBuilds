@@ -58,7 +58,6 @@ public class LinearLayout implements RenderView {
         BlockState blockState = world.getBlockState(blockPos);
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
-
         calculateLayoutWidth();
         calculateLayoutHeight();
         calculateSelfCoordinateOrigin();

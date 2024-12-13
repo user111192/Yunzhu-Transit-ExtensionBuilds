@@ -54,6 +54,7 @@ public class LiftFloorDisplayView implements RenderView {
     private Direction facing;
     private TextAlign textAlign = TextAlign.RIGHT;//文本默认右对齐
     private Gravity gravity;
+    private Consumer<GraphicsHolder> transformation;
 
 
     @Override
@@ -75,6 +76,10 @@ public class LiftFloorDisplayView implements RenderView {
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
+
+        if(transformation != null){
+            storedMatrixTransformations1.add(transformation);
+        }
 
         if (!noFloorNumber || !noFloorDisplay) {
             float offset1;
@@ -245,7 +250,7 @@ public class LiftFloorDisplayView implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        storedMatrixTransformations1.add(transformation);
+        this.transformation = transformation;
     }
 
     public enum TextAlign {

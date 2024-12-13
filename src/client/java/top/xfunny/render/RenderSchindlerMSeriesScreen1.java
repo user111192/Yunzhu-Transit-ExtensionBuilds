@@ -41,6 +41,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
         if (clientPlayerEntity == null) {
             return;
         }
+
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
@@ -105,6 +106,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
+                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 screenLayout.addChild(liftFloorDisplayView);
                 parentLayout.addChild(screenLayout);
