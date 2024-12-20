@@ -96,6 +96,15 @@ public class FontList {
 				}
 			});
 		}
+		while (otis_series1 == null) {
+			ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/series1.otf"), inputStream -> {
+				try {
+					otis_series1 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+				} catch (Exception e) {
+					Init.LOGGER.error("", e);
+				}
+			});
+		}
 	}
 	public Font getFont(String fontId) {
 		switch (fontId) {
