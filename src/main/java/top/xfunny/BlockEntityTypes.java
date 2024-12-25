@@ -2,6 +2,7 @@ package top.xfunny;
 
 import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.registry.BlockEntityTypeRegistryObject;
+import org.mtr.mod.block.BlockLiftDoor;
 import top.xfunny.block.*;
 
 public class BlockEntityTypes {
@@ -21,6 +22,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen1.BlockEntity> SCHINDLER_M_SERIES_SCREEN_1;
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen2Odd.BlockEntity> SCHINDLER_M_SERIES_SCREEN_2_ODD;
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesScreen2Even.BlockEntity> SCHINDLER_M_SERIES_SCREEN_2_EVEN;
+    public static final BlockEntityTypeRegistryObject<BlockLiftDoor.BlockEntity> SCHINDLER_QKS9_DOOR_1;
     public static final BlockEntityTypeRegistryObject<EmptyFloor.BlockEntity> LIFT_TRACK_EMPTY_FLOOR;
 
 
@@ -40,7 +42,9 @@ public class BlockEntityTypes {
         SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), SchindlerMSeriesScreen1.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_1::get);
         SCHINDLER_M_SERIES_SCREEN_2_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_odd"), SchindlerMSeriesScreen2Odd.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_2_ODD::get);
         SCHINDLER_M_SERIES_SCREEN_2_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_even"), SchindlerMSeriesScreen2Even.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_2_EVEN::get);
+        SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), BlockLiftDoor.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_2_EVEN::get);
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), EmptyFloor.BlockEntity::new, Blocks.LIFT_TRACK_EMPTY_FLOOR::get);
+
     }
 
     public static void init() {
