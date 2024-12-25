@@ -81,7 +81,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
-            OtisSeries1Screen.LiftCheck(trackPosition, (floorIndex, lift) -> {
+            SchindlerMSeriesScreen1.LiftCheck(trackPosition, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
             });
         });

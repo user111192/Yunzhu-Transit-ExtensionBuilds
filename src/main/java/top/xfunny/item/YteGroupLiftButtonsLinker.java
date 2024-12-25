@@ -6,11 +6,9 @@ import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.item.ItemBlockClickingBase;
-import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.block.base.LiftHallLanternsBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +27,30 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         this.isConnector = isConnector;
     }
 
+    private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
+        final BlockEntity blockEntity1 = world.getBlockEntity(blockPos1);
+        final BlockEntity blockEntity2 = world.getBlockEntity(blockPos2);
+
+        // 合并日志输出，减少信息泄露风险
+        if (blockEntity1 != null && blockEntity2 != null) {
+            Init.LOGGER.info("正在尝试连接 {} 和 {}", blockPos1, blockPos2);
+
+            // 简化类型检查
+            if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
+                if (blockEntity1.data instanceof LiftFloorRegistry) {
+                    ((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos1, world, blockPos2, isAdd);
+                    Init.LOGGER.info("已成功连接 {} 和 {}", blockPos1, blockPos2);
+                } else {
+                    Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
+                }
+            } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase) {
+                Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
+            }
+        } else {
+            Init.LOGGER.warn("BlockEntity 为空，无法连接 {} 和 {}", blockPos1, blockPos2);
+        }
+    }
+
     @Override
     protected void onStartClick(ItemUsageContext context, CompoundTag compoundTag) {
         Init.LOGGER.info("Clicked lift buttons linker");
@@ -41,7 +63,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         array = new Object[3];
         array[1] = null; // 下一个轨道pos1坐标
         array[2] = null; // 下一个轨道pos2坐标
-        mark =new ArrayList<>();
+        mark = new ArrayList<>();
         number = 0;
 
 
@@ -63,14 +85,13 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
                 Init.LOGGER.info("没有找到有效轨道，退出循环。");
                 break; // 退出循环
             }
-            if (number == mark.size()){
+            if (number == mark.size()) {
                 Init.LOGGER.info("mark.size() == number");
                 break;
             }
             number++;
         }
     }
-
 
     private Object[] check(ItemUsageContext context, BlockPos pos1, BlockPos pos2) {
         final World world = context.getWorld();
@@ -79,10 +100,10 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         Init.LOGGER.info("checkpos0" + array[0]);
 
 
-        if(world.getBlockState(pos1).getBlock().data instanceof BlockLiftTrackBase){
-            checkPosition(world, pos1,pos2, facingHelper(context,pos1, pos2));
-        }else{
-            checkPosition(world, pos2,pos1, facingHelper(context,pos1, pos2));
+        if (world.getBlockState(pos1).getBlock().data instanceof BlockLiftTrackBase) {
+            checkPosition(world, pos1, pos2, facingHelper(context, pos1, pos2));
+        } else {
+            checkPosition(world, pos2, pos1, facingHelper(context, pos1, pos2));
         }
 
 
@@ -90,7 +111,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         return array;
     }
 
-    private void checkPosition(World world, BlockPos pos,BlockPos otherPos, boolean facing) {
+    private void checkPosition(World world, BlockPos pos, BlockPos otherPos, boolean facing) {
         Init.LOGGER.info("checkPosition");
 
 
@@ -101,8 +122,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
                 array[1] = pos.up(1);
                 array[2] = otherPos.up(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
         }
@@ -113,56 +133,54 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
                 array[1] = pos.down(1);
                 array[2] = otherPos.down(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        }if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
+        }
+        if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
             Init.LOGGER.info("南");
             if (!findMark(pos.south(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-南");
                 array[1] = pos.south(1);
                 array[2] = otherPos.south(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
+        }
+        if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
             Init.LOGGER.info("北");
             if (!findMark(pos.north(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-北");
                 array[1] = pos.north(1);
                 array[2] = otherPos.north(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        }  if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
+        }
+        if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
             Init.LOGGER.info("东");
             if (!findMark(pos.east(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
                 array[1] = pos.east(1);
                 array[2] = otherPos.east(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
+        }
+        if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
             Init.LOGGER.info("西");
             if (!findMark(pos.west(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
                 array[1] = pos.west(1);
                 array[2] = otherPos.west(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        }
-        else {
+        } else {
             Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断失败");
         }
         Init.LOGGER.info("checkposition结束");
@@ -179,8 +197,6 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         return false;
     }
 
-
-
     private boolean isValidType(Object data) {
         return VALID_TYPES.contains(data.getClass());
     }
@@ -191,54 +207,22 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         return isValidType(block.data);
     }
 
-    private boolean facingHelper(ItemUsageContext context,BlockPos pos1, BlockPos pos2){
+    private boolean facingHelper(ItemUsageContext context, BlockPos pos1, BlockPos pos2) {
         final World world = context.getWorld();
-        if(world.getBlockState(pos1).getBlock().data instanceof BlockLiftTrackBase){
-            if(IBlock.getStatePropertySafe(world.getBlockState(pos1), FACING)==Direction.EAST||IBlock.getStatePropertySafe(world.getBlockState(pos1), FACING)==Direction.WEST){
+        if (world.getBlockState(pos1).getBlock().data instanceof BlockLiftTrackBase) {
+            if (IBlock.getStatePropertySafe(world.getBlockState(pos1), FACING) == Direction.EAST || IBlock.getStatePropertySafe(world.getBlockState(pos1), FACING) == Direction.WEST) {
                 return true;//东西
-            }else{
+            } else {
                 return false;//南北
             }
 
-        } else if(world.getBlockState(pos2).getBlock().data instanceof BlockLiftTrackBase) {
-            if(IBlock.getStatePropertySafe(world.getBlockState(pos2), FACING)==Direction.EAST||IBlock.getStatePropertySafe(world.getBlockState(pos2), FACING)==Direction.WEST){
+        } else if (world.getBlockState(pos2).getBlock().data instanceof BlockLiftTrackBase) {
+            if (IBlock.getStatePropertySafe(world.getBlockState(pos2), FACING) == Direction.EAST || IBlock.getStatePropertySafe(world.getBlockState(pos2), FACING) == Direction.WEST) {
                 return true;//东西
-            }else{
+            } else {
                 return false;//南北
             }
         }
         return false;
     }
-
-   	private static void connect(World world, BlockPos blockPos1, BlockPos blockPos2, boolean isAdd) {
-		final BlockEntity blockEntity1 = world.getBlockEntity(blockPos1);
-		final BlockEntity blockEntity2 = world.getBlockEntity(blockPos2);
-
-		// 合并日志输出，减少信息泄露风险
-		if (blockEntity1 != null && blockEntity2 != null) {
-			Init.LOGGER.info("正在尝试连接 {} 和 {}", blockPos1, blockPos2);
-
-			// 简化类型检查
-			if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
-				if (blockEntity1.data instanceof LiftFloorRegistry) {
-					((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos1, world, blockPos2, isAdd);
-					Init.LOGGER.info("已成功连接 {} 和 {}", blockPos1, blockPos2);
-				} else {
-					Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
-				}
-			} else if(blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase){
-				if (blockEntity1.data instanceof LiftHallLanternsBase.BlockEntityBase) {
-					((ButtonRegistry) blockEntity2.data).registerButton(world, blockPos1, isAdd);
-					((ButtonRegistry) blockEntity1.data).registerButton(world, blockPos2, isAdd);
-					Init.LOGGER.info("到站灯已成功连接 {} 和 {}", blockPos1.toShortString(), blockPos2.toShortString());
-				} else {
-					Init.LOGGER.info("到站灯未能连接 {} 和 {}", blockPos1, blockPos2);
-				}
-			}else{
-				Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
-			}
-		} else {
-			Init.LOGGER.warn("BlockEntity 为空，无法连接 {} 和 {}", blockPos1, blockPos2);
-		}
-	}
 }

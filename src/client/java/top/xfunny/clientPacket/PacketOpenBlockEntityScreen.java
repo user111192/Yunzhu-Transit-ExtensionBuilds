@@ -7,23 +7,23 @@ import org.mtr.mapping.tool.PacketBufferSender;
 
 public final class PacketOpenBlockEntityScreen extends PacketHandler {
 
-	private final BlockPos blockPos;
+    private final BlockPos blockPos;
 
-	public PacketOpenBlockEntityScreen(PacketBufferReceiver packetBufferReceiver) {
-		blockPos = BlockPos.fromLong(packetBufferReceiver.readLong());
-	}
+    public PacketOpenBlockEntityScreen(PacketBufferReceiver packetBufferReceiver) {
+        blockPos = BlockPos.fromLong(packetBufferReceiver.readLong());
+    }
 
-	public PacketOpenBlockEntityScreen(BlockPos blockPos) {
-		this.blockPos = blockPos;
-	}
+    public PacketOpenBlockEntityScreen(BlockPos blockPos) {
+        this.blockPos = blockPos;
+    }
 
-	@Override
-	public void write(PacketBufferSender packetBufferSender) {
-		packetBufferSender.writeLong(blockPos.asLong());
-	}
+    @Override
+    public void write(PacketBufferSender packetBufferSender) {
+        packetBufferSender.writeLong(blockPos.asLong());
+    }
 
-	@Override
-	public void runClient() {
-		ClientPacketHelper.openBlockEntityScreen(blockPos);
-	}
+    @Override
+    public void runClient() {
+        ClientPacketHelper.openBlockEntityScreen(blockPos);
+    }
 }

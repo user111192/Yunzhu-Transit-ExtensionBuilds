@@ -77,14 +77,14 @@ public class LiftFloorDisplayView implements RenderView {
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
 
-        if(transformation != null){
+        if (transformation != null) {
             storedMatrixTransformations1.add(transformation);
         }
 
         if (!noFloorNumber || !noFloorDisplay) {
             float offset1;
             if (text.length() > textSize && needScroll) {
-                offset1 = (gameTick * scrollSpeed)%1;
+                offset1 = (gameTick * scrollSpeed) % 1;
                 MainRenderer.scheduleRender(
                         texture.identifier,
                         false,

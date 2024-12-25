@@ -16,42 +16,43 @@ import java.util.function.Consumer;
 
 public abstract class LiftPanelBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
     private final boolean isOdd;
+
     public LiftPanelBase(Boolean isOdd) {
         super(BlockHelper.createBlockSettings(true));
         this.isOdd = isOdd;
     }
 
-    	public static void LiftCheck(BlockPos trackPosition, LiftButtonsBase.FloorLiftCallback callback) {
-		// 获取实例中的所有电梯数据
-		MinecraftClientData.getInstance().lifts.forEach(lift -> {
-			// 获取电梯轨道位置对应的楼层索引
-			final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
-			// 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
-			if (floorIndex >= 0) {
-				callback.accept(floorIndex, lift);
-			}
-		});
-	}
+    public static void LiftCheck(BlockPos trackPosition, LiftButtonsBase.FloorLiftCallback callback) {
+        // 获取实例中的所有电梯数据
+        MinecraftClientData.getInstance().lifts.forEach(lift -> {
+            // 获取电梯轨道位置对应的楼层索引
+            final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
+            // 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
+            if (floorIndex >= 0) {
+                callback.accept(floorIndex, lift);
+            }
+        });
+    }
 
     public static void hasButtonsClient(BlockPos trackPosition, boolean[] buttonStates, LiftButtonsBase.FloorLiftCallback callback) {
-		// 获取实例中的所有电梯数据
-		MinecraftClientData.getInstance().lifts.forEach(lift -> {
-			// 获取电梯轨道位置对应的楼层索引
-			final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
-			// 如果楼层索引大于0，则表示存在向下按钮
-			if (floorIndex > 0) {
-				buttonStates[0] = true;
-			}
-			// 如果楼层索引在有效范围内（不是顶层也不是底层），则表示存在向上按钮
-			if (floorIndex >= 0 && floorIndex < lift.getFloorCount() - 1) {
-				buttonStates[1] = true;
-			}
-			// 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
-			if (floorIndex >= 0) {
-				callback.accept(floorIndex, lift);
-			}
-		});
-	}
+        // 获取实例中的所有电梯数据
+        MinecraftClientData.getInstance().lifts.forEach(lift -> {
+            // 获取电梯轨道位置对应的楼层索引
+            final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
+            // 如果楼层索引大于0，则表示存在向下按钮
+            if (floorIndex > 0) {
+                buttonStates[0] = true;
+            }
+            // 如果楼层索引在有效范围内（不是顶层也不是底层），则表示存在向上按钮
+            if (floorIndex >= 0 && floorIndex < lift.getFloorCount() - 1) {
+                buttonStates[1] = true;
+            }
+            // 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
+            if (floorIndex >= 0) {
+                callback.accept(floorIndex, lift);
+            }
+        });
+    }
 
     @Nonnull
     @Override
@@ -73,13 +74,17 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
         return getDefaultState2().with(new Property<>(FACING.data), facing.data);
     }
 
+    @FunctionalInterface
+    public interface FloorLiftCallback {
+        void accept(int floor, Lift lift);
+    }
+
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry {
 
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
         // 存储需要追踪的位置的集合
         private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
-
 
 
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
@@ -145,6 +150,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
             markDirty2();
         }
+
         /**
          * 对每个轨道位置执行给定的操作
          * <p>
@@ -157,17 +163,11 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
             trackPositions.forEach(consumer);
         }
 
-		@Nullable
-		public ObjectOpenHashSet<BlockPos> getTrackPosition() {
-			return trackPositions;
-		}
+        @Nullable
+        public ObjectOpenHashSet<BlockPos> getTrackPosition() {
+            return trackPositions;
+        }
     }
-
-    @FunctionalInterface
-    public interface FloorLiftCallback {
-        void accept(int floor, Lift lift);
-    }
-
 
 
 }

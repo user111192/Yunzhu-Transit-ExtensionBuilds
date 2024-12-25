@@ -8,7 +8,6 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.base.LiftButtonsBase;
 
-
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 
 public class LineComponent {

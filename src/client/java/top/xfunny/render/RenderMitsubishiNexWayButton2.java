@@ -11,14 +11,8 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.Init;
-import org.mtr.mod.InitClient;
-import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
-import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.data.IGui;
-import org.mtr.mod.render.MainRenderer;
-import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.MitsubishiNexWayButton1;
 import top.xfunny.block.MitsubishiNexWayButton2;
@@ -26,8 +20,6 @@ import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
-import top.xfunny.resource.TextureList;
-import top.xfunny.util.ClientGetLiftDetails;
 import top.xfunny.util.ReverseRendering;
 import top.xfunny.view.*;
 import top.xfunny.view.view_group.FrameLayout;
@@ -37,19 +29,19 @@ import java.util.Comparator;
 
 public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<MitsubishiNexWayButton2.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-	private static final int HOVER_COLOR = 0xFFFFCC66;
-	private static final int PRESSED_COLOR = 0xFFFF8800;
-	private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
-	private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
-	private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+    private static final int HOVER_COLOR = 0xFFFFCC66;
+    private static final int PRESSED_COLOR = 0xFFFF8800;
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
+    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
-	public RenderMitsubishiNexWayButton2(Argument dispatcher) {
-		super(dispatcher);
-	}
+    public RenderMitsubishiNexWayButton2(Argument dispatcher) {
+        super(dispatcher);
+    }
 
-	@Override
-	public void render(MitsubishiNexWayButton2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay){
-		final World world = blockEntity.getWorld2();
+    @Override
+    public void render(MitsubishiNexWayButton2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+        final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
         }
@@ -69,7 +61,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -95,30 +87,30 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.2 /16, 0, 0);
+        buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE,true);//按钮贴图
+        button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
         button.setWidth(1F / 16);//按钮宽度
         button.setHeight(1F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_TEXTURE,true);
+        buttonLight.setTexture(LIGHT_TEXTURE, true);
         buttonLight.setWidth(1F / 16);
         buttonLight.setHeight(1F / 16);
         buttonLight.setSpacing(0.5F / 16);
@@ -214,5 +206,5 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
 
         parentLayout.render();//渲染父容器
-	}
+    }
 }

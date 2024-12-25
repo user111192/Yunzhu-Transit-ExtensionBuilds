@@ -236,12 +236,12 @@ public class LinearLayout implements RenderView {
                 float tempWidth = 0;
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
-                    if(!isVertical){
+                    if (!isVertical) {
                         child.calculateLayoutWidth();
-                        tempWidth += child.getWidth()+ margin[0] + margin[2];
-                    }else{
+                        tempWidth += child.getWidth() + margin[0] + margin[2];
+                    } else {
                         child.calculateLayoutWidth();
-                        tempWidth = Math.max(tempWidth, child.getWidth()+ margin[0] + margin[2]);
+                        tempWidth = Math.max(tempWidth, child.getWidth() + margin[0] + margin[2]);
                     }
                 }
                 width = tempWidth;
@@ -257,12 +257,12 @@ public class LinearLayout implements RenderView {
                 float tempHeight = 0;
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
-                    if(isVertical){
+                    if (isVertical) {
                         child.calculateLayoutHeight();
                         tempHeight += child.getHeight() + margin[1] + margin[3];
-                    }else{
+                    } else {
                         child.calculateLayoutHeight();
-                        tempHeight = Math.max(tempHeight, child.getHeight()+ margin[1] + margin[3]);
+                        tempHeight = Math.max(tempHeight, child.getHeight() + margin[1] + margin[3]);
                     }
 
                 }
@@ -286,7 +286,7 @@ public class LinearLayout implements RenderView {
         this.backgroundColor = color;
     }
 
-     public void reverseChildren() {
+    public void reverseChildren() {
         // 将 ObjectArrayList 转换为 List
         List<RenderView> list = children;
         // 使用 Collections.reverse() 方法反转列表

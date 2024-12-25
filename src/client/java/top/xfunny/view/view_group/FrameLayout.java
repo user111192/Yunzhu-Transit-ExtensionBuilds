@@ -59,7 +59,7 @@ public class FrameLayout implements RenderView {
             graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
         });
 
-        if(add != null){
+        if (add != null) {
             matrixTransformations.add(add);
         }
 
@@ -157,7 +157,7 @@ public class FrameLayout implements RenderView {
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
                     child.calculateLayoutWidth();
-                    maxWidth = Math.max(maxWidth, child.getWidth()+ margin[0] + margin[2]);
+                    maxWidth = Math.max(maxWidth, child.getWidth() + margin[0] + margin[2]);
                 }
                 width = maxWidth;
             }
@@ -174,7 +174,7 @@ public class FrameLayout implements RenderView {
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
                     child.calculateLayoutHeight();
-                    maxHeight = Math.max(maxHeight, child.getHeight()+ margin[1] + margin[3]);
+                    maxHeight = Math.max(maxHeight, child.getHeight() + margin[1] + margin[3]);
                 }
                 height = maxHeight;
             }

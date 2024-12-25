@@ -3,317 +3,192 @@ package top.xfunny.render;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.InitClient;
-import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.block.IBlock;
-import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.data.IGui;
-import org.mtr.mod.render.MainRenderer;
-import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
-import top.xfunny.block.SchindlerMSeriesScreen2Odd;
-import top.xfunny.block.TestLiftHallLanterns;
+import top.xfunny.block.SchindlerMSeriesScreen2Even;
+import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.block.base.LiftHallLanternsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.resource.TextureList;
+import top.xfunny.resource.FontList;
 import top.xfunny.util.ClientGetLiftDetails;
+import top.xfunny.util.ReverseRendering;
+import top.xfunny.view.*;
+import top.xfunny.view.view_group.FrameLayout;
+import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
-import java.util.Objects;
 
-public class RenderSchindlerMSeriesScreen2<T extends LiftHallLanternsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
-	private static final int PRESSED_COLOR = 0xFFFFCC00;
-	private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
-	private final boolean isOdd;
-	public RenderSchindlerMSeriesScreen2(Argument dispatcher, Boolean isOdd) {
-		super(dispatcher);
-		this.isOdd = isOdd;
-	}
-	@Override
-	public void render(T blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
-		final World world = blockEntity.getWorld2();
-		if (world == null) {
-			return;
-		}
+import static org.mtr.core.data.LiftDirection.NONE;
 
-		final ClientPlayerEntity clientPlayerEntity = MinecraftClient.getInstance().getPlayerMapped();
-		if (clientPlayerEntity == null) {
-			return;
-		}
+public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+    private static final int PRESSED_COLOR = 0xFFFFCC00;
+    private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
+    private final boolean isOdd;
 
-		final BlockPos blockPos = blockEntity.getPos2();
-		final BlockState blockState = world.getBlockState(blockPos);
-		final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
-		final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
-		// 创建一个存储矩阵转换的实例，用于后续的渲染操作
-		// 参数为方块的中心位置坐标 (x, y, z)
-		//z轴区分连接体和非连接体
-		final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+    public RenderSchindlerMSeriesScreen2(Argument dispatcher, Boolean isOdd) {
+        super(dispatcher);
+        this.isOdd = isOdd;
+    }
 
+    @Override
+    public void render(T blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+        final World world = blockEntity.getWorld2();
+        if (world == null) {
+            return;
+        }
 
-		// 定义一个布尔数组，用于记录按钮的状态
-		// 数组顺序：0向下按钮存在、1向上按钮存在、2向下按钮被按下、3向上按钮被按下
-		final boolean[] buttonStates = {false, false, false, false};
+        final ClientPlayerEntity clientPlayerEntity = MinecraftClient.getInstance().getPlayerMapped();
+        if (clientPlayerEntity == null) {
+            return;
+        }
 
-		// 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
-		final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
+        final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
+        final BlockPos blockPos = blockEntity.getPos2();
+        final BlockState blockState = world.getBlockState(blockPos);
+        final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
-		blockEntity.forEachButtonPosition(buttonPosition -> {
-			// 手持连接器进行连线
-			if (world.getBlockState(buttonPosition).getBlock().data instanceof LiftButtonsBase) {
-				final Direction trackFacing = IBlock.getStatePropertySafe(world, buttonPosition, FACING);
-				RenderLiftObjectLink.RenderButtonObjectLink(
-						storedMatrixTransformations1,
-						new Vector3d(!isOdd ? (facing.getOffsetX() / 2F) + 0.5 : facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
-						new Vector3d(buttonPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, buttonPosition.getY() - blockPos.getY() + 0.5, buttonPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
-						holdingLinker
-				);
-			}
-		});
+        final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 0.0597 - SMALL_OFFSET);
+        });
 
-		blockEntity.forEachTrackPosition(trackPosition -> {
-			if (world.getBlockState(trackPosition).getBlock().data instanceof BlockLiftTrackFloor) {
-				final Direction trackFacing = IBlock.getStatePropertySafe(world, trackPosition, FACING);
-				RenderLiftObjectLink.RenderLiftObjectLink(
-						storedMatrixTransformations1,
-						new Vector3d(facing.getOffsetX() / 2F, 0.6, facing.getOffsetZ() / 2F),
-						new Vector3d(trackPosition.getX() - blockPos.getX() + trackFacing.getOffsetX() / 2F, trackPosition.getY() - blockPos.getY() + 0.5, trackPosition.getZ() - blockPos.getZ() + trackFacing.getOffsetZ() / 2F),
-						holdingLinker
-				);
-			}
+        final FrameLayout parentLayout = new FrameLayout();
+        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
+        parentLayout.setPosition(isOdd? (float) -0.5625 : (float) -1.0625, (float) 0.5625);
+        parentLayout.setWidth(LayoutSize.MATCH_PARENT);
+        parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
+        final FrameLayout screenLayout = new FrameLayout();
+        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        screenLayout.setGravity(Gravity.CENTER);
+        screenLayout.setBackgroundColor(0xFF000000);
 
-			TestLiftHallLanterns.hasButtonsClient(trackPosition, buttonStates, (floorIndex, lift) -> {
-				sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-				String CurrentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
-				final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, top.xfunny.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-				String floorNumber = liftDetails.right().left();
-				LiftDirection buttonDirection = blockEntity.getButtonDirection();
+        LiftButtonView button = new LiftButtonView();
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true,true);
+        button.setLight(light);
+        button.setHover(false);
+        button.setDefaultColor(0xFFFFFFFF);
+        button.setPressedColor(PRESSED_COLOR);
+        button.setHoverColor(0xFFFFFFFF);
+        button.setTexture(BUTTON_TEXTURE, true);
+        button.setWidth(2F / 16);
+        button.setHeight(2F / 16);
+        button.setSpacing(6F / 16);
+        button.setGravity(Gravity.CENTER);
 
+        final LineComponent line = new LineComponent();
+        line.setBasicsAttributes(world, blockEntity.getPos2());
 
-				if(lift.getDoorValue()!=0) {
-					switch (buttonDirection) {
-						case DOWN:
-							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
-								buttonStates[2] = true;
-							}
-							break;
-						case UP:
-							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
-								buttonStates[3] = true;
-							}
-							break;
-						case NONE:
-							if (Objects.equals(CurrentFloorNumber, floorNumber)) {
-								buttonStates[2] = true;
-								buttonStates[3] = true;
-							}
-							break;
-					}
-				}else{
-					if (blockEntity.getLanternMark()){
-					}
-				}
-			});
-		});
-		sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        final LineComponent buttonLine = new LineComponent();
+        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
 
-		final StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations1.copy();
-		storedMatrixTransformations2.add(graphicsHolder -> {
-			graphicsHolder.rotateYDegrees(-facing.asRotation());
-			graphicsHolder.translate(0, 0, 0.4968 - SMALL_OFFSET);
-			graphicsHolder.translate(!isOdd? -0.5 : 0 , 0, 0);
-		});
+        final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-		// 根据按钮状态渲染按钮
-		// 第一个按钮的渲染逻辑
-		if (buttonStates[0]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[2] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								3.5F / 16,
-								9.5F / 16,
-								1.8F / 16,
-								2.2F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								buttonStates[2] ? PRESSED_COLOR :ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
+        blockEntity.forEachTrackPosition(trackPosition -> {
+            line.RenderLine(holdingLinker, trackPosition);
 
-		if (buttonStates[0] && !buttonStates[1]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[2] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						// 应用存储的矩阵变换
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						// 绘制按钮纹理，位置和颜色根据按钮状态和鼠标位置决定
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-5.3F / 16,
-								9.5F / 16,
-								1.8F / 16,
-								2.2F / 16,
-								0,
-								0,
-								1,
-								1,
-								facing,
-								buttonStates[2] ? PRESSED_COLOR :ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
+            SchindlerMSeriesScreen2Even.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
 
-		// 第二个按钮的渲染逻辑
-		if (buttonStates[1]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[3] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						IDrawing.drawTexture(
-								graphicsHolder,
-								-5.3F / 16,
-								9.5F / 16,
-								1.8F / 16,
-								2.2F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								buttonStates[3] ? PRESSED_COLOR : ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
+                LiftDirection pressedButtonDirection = blockEntity.getPressedButtonDirection();
 
-		if (buttonStates[1] && !buttonStates[0]) {
-			// 根据按钮的按下状态和鼠标位置选择不同的渲染层
-			MainRenderer.scheduleRender(
-					BUTTON_TEXTURE,
-					false,
-					buttonStates[3] ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
-					(graphicsHolder, offset) -> {
-						storedMatrixTransformations2.transform(graphicsHolder, offset);
-						IDrawing.drawTexture(
-								graphicsHolder,
-								3.5F / 16,
-								9.5F / 16,
-								1.8F / 16,
-								2.2F / 16,
-								0,
-								1,
-								1,
-								0,
-								facing,
-								buttonStates[3] ? PRESSED_COLOR : ARGB_WHITE,
-								light
-						);
-						// 弹出当前图形状态
-						graphicsHolder.pop();
-					}
-			);
-		}
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                String floorNumber = liftDetails.right().left();
+                String currentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
 
-		if (!sortedPositionsAndLifts.isEmpty()) {
-			// 确定要渲染的电梯数量，最多为2个
-			final int count = 1;
-			// 设置每个电梯显示的宽度，根据数量不同而变化
-			final float width = 0.25F;
+                final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 
-			// 创建当前矩阵变换的副本以供后续修改
-			final StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations2.copy();
-			// 添加旋转和平移变换
-			storedMatrixTransformations3.add(graphicsHolder -> {
-				graphicsHolder.rotateZDegrees(180);
-				graphicsHolder.translate(-width / 2, 0, 0);
-			});
+                if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
+                    switch (pressedButtonDirection) {
+                        case DOWN:
+                            button.setDownButtonLight();
+                            break;
+                        case UP:
+                            button.setUpButtonLight();
+                            break;
+                    }
+                }
 
-			// 渲染黑色背景
-			MainRenderer.scheduleRender(new Identifier(org.mtr.mod.Init.MOD_ID, "textures/block/black.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolder, offset) -> {
-				storedMatrixTransformations3.transform(graphicsHolder, offset);
-				IDrawing.drawTexture(graphicsHolder, 0.01F, -0.717F, 0.23F, 0.12F, Direction.UP, light);
-				graphicsHolder.pop();
-			});
+                instructionDirections.forEach(liftDirection -> {
+                    if (lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
+                        if (liftDirection == NONE) {
+                            if (pressedButtonDirection != null) {
+                                switch (pressedButtonDirection) {
+                                    case DOWN:
+                                        button.setDownButtonLight();
+                                        break;
+                                    case UP:
+                                        button.setUpButtonLight();
+                                        break;
+                                }
+                            }
+                        } else {
+                            switch (liftDirection) {
+                                case DOWN:
+                                    button.setDownButtonLight();
+                                    break;
+                                case UP:
+                                    button.setUpButtonLight();
+                                    break;
+                            }
+                        }
+                    }
 
-			// 遍历要渲染的每个电梯
-			for (int i = 0; i < count; i++) {
-				final double x = (i + 0.5) * width / count;
-				final StoredMatrixTransformations storedMatrixTransformations4 = storedMatrixTransformations3.copy();
-				storedMatrixTransformations4.add(graphicsHolder -> graphicsHolder.translate(x, -0.5, -SMALL_OFFSET));
-				// 渲染当前电梯的显示
-				renderLiftDisplay(storedMatrixTransformations4, world, sortedPositionsAndLifts.get(i).right(), width * 4  / count, 0.2F,0.2F,0.2F);
+                });
+            });
+        });
 
-			}
-		}
-	}
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
-	private void renderLiftDisplay(StoredMatrixTransformations storedMatrixTransformations, World world , Lift lift ,float width,float width1,float height1,float height) {
-		// 获取电梯的详细信息，包括运行方向和楼层信息
-		final ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+        if (!sortedPositionsAndLifts.isEmpty()) {
+            // 确定要渲染的电梯数量，这里设置为2个
+            final int count = 1;
 
-		final String floorNumber = liftDetails.right().left();
-		final String floorDescription = liftDetails.right().right();
+            for (int i = 0; i < count; i++) {
+                final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
+                liftFloorDisplayView.setBasicsAttributes(world,
+                        blockEntity.getPos2(),
+                        sortedPositionsAndLifts.get(i).right(),
+                        FontList.instance.getFont("acmeled"),//字体
+                        11,//字号
+                        0xFFFF0000);//字体颜色
+                liftFloorDisplayView.setTextScrolling(true, 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
+                liftFloorDisplayView.setGravity(Gravity.CENTER);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setMargin((float) 0.6 /16, 0, (float) 0.6 /16, 0);
 
-		// 判断楼层编号和描述是否为空
-		final boolean noFloorNumber = floorNumber.isEmpty();
-		final boolean noFloorDisplay = floorDescription.isEmpty();
+                screenLayout.addChild(liftFloorDisplayView);
+            }
+        }
 
+        blockEntity.forEachLiftButtonPosition(buttonPosition -> {
+            buttonLine.RenderLine(holdingLinker, buttonPosition, true);
+        });
 
+        parentLayout.addChild(screenLayout);
+        parentLayout.addChild(button);
 
-		// 渲染楼层信息
-		if (!noFloorNumber || !noFloorDisplay) {
-
-			final String text = String.format("%s%s", floorNumber, noFloorNumber? " " : "");
-			int totalWidth = TextureList.instance.getTestLiftButtonsDisplay(text, 0xFF0000).width;
-			int maxWidth = text.length()>=2? 172:86;
-			float textureWidth = text.length()>=2? 0.16F:0.16F/2;
-			float x =text.length()>=2?-width+0.92F:-width+0.999F;
-			MainRenderer.scheduleRender(TextureList.instance.getSchindlerMSeriesScreen2OddDisplay(text, 0xFF0000).identifier, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
-				storedMatrixTransformations.transform(graphicsHolder, offset);
-
-				IDrawing.drawTexture(graphicsHolder, x, -0.237F, textureWidth, 0.16F, 0, 0, (float) maxWidth /totalWidth, 1, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-				graphicsHolder.pop();
-			});
-		}
-	}
+        parentLayout.render();
+    }
 }

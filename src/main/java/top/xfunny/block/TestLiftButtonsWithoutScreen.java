@@ -13,38 +13,38 @@ import java.util.List;
 
 public class TestLiftButtonsWithoutScreen extends LiftButtonsBase {
 
-	public TestLiftButtonsWithoutScreen() {
-		super();
-	}
+    public TestLiftButtonsWithoutScreen() {
+        super(true, true);
+    }
 
-	@Nonnull
-	@Override
-	public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return IBlock.getVoxelShapeByDirection(4, 0, 0, 12, 8, 1, IBlock.getStatePropertySafe(state, FACING));
-	}
+    @Nonnull
+    @Override
+    public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return IBlock.getVoxelShapeByDirection(4, 0, 0, 12, 8, 1, IBlock.getStatePropertySafe(state, FACING));
+    }
 
-	@Nonnull
-	@Override
-	public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new TestLiftButtonsWithoutScreen.BlockEntity(blockPos, blockState);
-	}
+    @Nonnull
+    @Override
+    public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new TestLiftButtonsWithoutScreen.BlockEntity(blockPos, blockState);
+    }
 
-	@Override
-	public void addBlockProperties(List<HolderBase<?>> properties) {
-		// 添加块的方向属性
-		properties.add(FACING);
-		// 添加块的解锁状态属性
-		properties.add(UNLOCKED);
+    @Override
+    public void addBlockProperties(List<HolderBase<?>> properties) {
+        // 添加块的方向属性
+        properties.add(FACING);
+        // 添加块的解锁状态属性
+        properties.add(UNLOCKED);
 
-		properties.add(SINGLE);
-	}
+        properties.add(SINGLE);
+    }
 
-	public static class BlockEntity extends BlockEntityBase {
+    public static class BlockEntity extends BlockEntityBase {
 
-		public BlockEntity(BlockPos pos, BlockState state) {
-			super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state, false);
-		}
-	}
+        public BlockEntity(BlockPos pos, BlockState state) {
+            super(BlockEntityTypes.TEST_LIFT_BUTTONS_WITHOUT_SCREEN.get(), pos, state);
+        }
+    }
 
 }
 

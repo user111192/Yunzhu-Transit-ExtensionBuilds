@@ -5,23 +5,20 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
-import top.xfunny.Init;
-import top.xfunny.block.base.LiftHallLanternsBase;
+import top.xfunny.block.base.LiftButtonsBase;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-import static top.xfunny.block.behavior.HorizontalDoubleBlockBehavior.IS_LEFT;
-
-public class SchindlerMSeriesScreen2Even extends LiftHallLanternsBase {
+public class SchindlerMSeriesScreen2Even extends LiftButtonsBase {
     public SchindlerMSeriesScreen2Even() {
-        super(false);
+        super(false, false);
     }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (IBlock.getStatePropertySafe(state,SIDE)){
+        switch (IBlock.getStatePropertySafe(state, SIDE)) {
             case LEFT -> {
                 return IBlock.getVoxelShapeByDirection(7, 9, 0, 16, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
             }

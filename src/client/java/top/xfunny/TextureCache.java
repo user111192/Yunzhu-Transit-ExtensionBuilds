@@ -22,33 +22,30 @@ import java.util.function.Supplier;
 
 
 public class TextureCache {
-	public static TextureCache instance = new TextureCache();
-	public int totalWidth;
-	private final Object2ObjectLinkedOpenHashMap<String, DynamicResource> dynamicResources = new Object2ObjectLinkedOpenHashMap<>();
-	private final ObjectOpenHashSet<String> generatingResources = new ObjectOpenHashSet<>();
-	private final ObjectArrayList<Runnable> resourceRegistryQueue = new ObjectArrayList<>();
-	private static final int COOL_DOWN_TIME = 10000;
-	private static final Identifier DEFAULT_BLACK_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/black.png");
-	private static final Identifier DEFAULT_WHITE_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/white.png");
-	private static final Identifier DEFAULT_TRANSPARENT_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/transparent.png");
+    private static final int COOL_DOWN_TIME = 10000;
+    private static final Identifier DEFAULT_BLACK_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/black.png");
+    private static final Identifier DEFAULT_WHITE_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/white.png");
+    private static final Identifier DEFAULT_TRANSPARENT_RESOURCE = new Identifier(Init.MOD_ID, "textures/block/transparent.png");
+    public static TextureCache instance = new TextureCache();
+    private final Object2ObjectLinkedOpenHashMap<String, DynamicResource> dynamicResources = new Object2ObjectLinkedOpenHashMap<>();
+    private final ObjectOpenHashSet<String> generatingResources = new ObjectOpenHashSet<>();
+    private final ObjectArrayList<Runnable> resourceRegistryQueue = new ObjectArrayList<>();
+    public int totalWidth;
 
+    public void reload() {
+        FontList.instance.FontReload();
+        Init.LOGGER.debug("Refreshing dynamic resources");
+        dynamicResources.values().forEach(dynamicResource -> dynamicResource.needsRefresh = true);
+        generatingResources.clear();
+    }
 
-
-
-	public void reload() {
-		FontList.instance.FontReload();
-		Init.LOGGER.debug("Refreshing dynamic resources");
-		dynamicResources.values().forEach(dynamicResource -> dynamicResource.needsRefresh = true);
-		generatingResources.clear();
-	}
-
-	public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int fontSize, int padding, Font font) {
+    public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int fontSize, int padding, Font font) {
         if (maxWidth <= 0) {
             dimensions[0] = 0;
             dimensions[1] = 0;
             return new byte[0];
         }
-		totalWidth = 0;
+        totalWidth = 0;
 
         // 初始化字体渲染上下文
         final FontRenderContext context = new FontRenderContext(new AffineTransform(), false, false);
@@ -60,8 +57,8 @@ public class TextureCache {
         Rectangle2D textBounds = selectedFont.getStringBounds(text, context);
         int textWidth = (int) textBounds.getWidth() + 2 * padding;
         int textHeight = (int) textBounds.getHeight() + 2 * padding;
-		totalWidth = textWidth;
-		Init.LOGGER.info("Text dimensions: " + textWidth + "x" + textHeight);
+        totalWidth = textWidth;
+        Init.LOGGER.info("Text dimensions: " + textWidth + "x" + textHeight);
 
         // 创建灰度图像
         BufferedImage textImage = new BufferedImage(textWidth, textHeight, BufferedImage.TYPE_BYTE_GRAY);
@@ -93,108 +90,104 @@ public class TextureCache {
         return pixels;
     }
 
-	public DynamicResource getResource(String key, Supplier<NativeImage> supplier, DefaultRenderingColor defaultRenderingColor) {
-		if (!resourceRegistryQueue.isEmpty()) {
-			final Runnable runnable = resourceRegistryQueue.remove(0);
-			if (runnable != null) {
-				runnable.run();
-			}
-		}
+    public DynamicResource getResource(String key, Supplier<NativeImage> supplier, DefaultRenderingColor defaultRenderingColor) {
+        if (!resourceRegistryQueue.isEmpty()) {
+            final Runnable runnable = resourceRegistryQueue.remove(0);
+            if (runnable != null) {
+                runnable.run();
+            }
+        }
 
-		final DynamicResource dynamicResource = dynamicResources.get(key);
+        final DynamicResource dynamicResource = dynamicResources.get(key);
 
-		if (dynamicResource != null && !dynamicResource.needsRefresh) {
-			dynamicResource.expiryTime = System.currentTimeMillis() + COOL_DOWN_TIME;
-			return dynamicResource;
-		}
+        if (dynamicResource != null && !dynamicResource.needsRefresh) {
+            dynamicResource.expiryTime = System.currentTimeMillis() + COOL_DOWN_TIME;
+            return dynamicResource;
+        }
 
-		if (generatingResources.contains(key)) {
-			return defaultRenderingColor.dynamicResource;
-		}
+        if (generatingResources.contains(key)) {
+            return defaultRenderingColor.dynamicResource;
+        }
 
-		MainRenderer.WORKER_THREAD.scheduleDynamicTextures(() -> {
-			FontList.instance.FlonList();
-			final NativeImage nativeImage = supplier.get();
-			resourceRegistryQueue.add(() -> {
-				final DynamicResource staticTextureProviderOld = dynamicResources.get(key);
-				if (staticTextureProviderOld != null) {
-					staticTextureProviderOld.remove();
-				}
+        MainRenderer.WORKER_THREAD.scheduleDynamicTextures(() -> {
+            FontList.instance.FlonList();
+            final NativeImage nativeImage = supplier.get();
+            resourceRegistryQueue.add(() -> {
+                final DynamicResource staticTextureProviderOld = dynamicResources.get(key);
+                if (staticTextureProviderOld != null) {
+                    staticTextureProviderOld.remove();
+                }
 
-				final DynamicResource dynamicResourceNew;
-				if (nativeImage != null) {
-					final NativeImageBackedTexture nativeImageBackedTexture = new NativeImageBackedTexture(nativeImage);
-					final Identifier identifier = new Identifier(Init.MOD_ID, "id_" + Utilities.numberToPaddedHexString(new Random().nextLong()).toLowerCase(Locale.ENGLISH));
-					MinecraftClient.getInstance().getTextureManager().registerTexture(identifier, new AbstractTexture(nativeImageBackedTexture.data));
-					dynamicResourceNew = new DynamicResource(identifier, nativeImageBackedTexture);
-					dynamicResources.put(key, dynamicResourceNew);
-				}
-				generatingResources.remove(key);
-			});
-		});
-		YteRouteMapGenerator.setConstants();
-		generatingResources.add(key);
+                final DynamicResource dynamicResourceNew;
+                if (nativeImage != null) {
+                    final NativeImageBackedTexture nativeImageBackedTexture = new NativeImageBackedTexture(nativeImage);
+                    final Identifier identifier = new Identifier(Init.MOD_ID, "id_" + Utilities.numberToPaddedHexString(new Random().nextLong()).toLowerCase(Locale.ENGLISH));
+                    MinecraftClient.getInstance().getTextureManager().registerTexture(identifier, new AbstractTexture(nativeImageBackedTexture.data));
+                    dynamicResourceNew = new DynamicResource(identifier, nativeImageBackedTexture);
+                    dynamicResources.put(key, dynamicResourceNew);
+                }
+                generatingResources.remove(key);
+            });
+        });
+        YteRouteMapGenerator.setConstants();
+        generatingResources.add(key);
 
-		if (dynamicResource == null) {
-			return defaultRenderingColor.dynamicResource;
-		} else {
-			dynamicResource.expiryTime = System.currentTimeMillis() + COOL_DOWN_TIME;
-			dynamicResource.needsRefresh = false;
-			return dynamicResource;
-		}
-	}
+        if (dynamicResource == null) {
+            return defaultRenderingColor.dynamicResource;
+        } else {
+            dynamicResource.expiryTime = System.currentTimeMillis() + COOL_DOWN_TIME;
+            dynamicResource.needsRefresh = false;
+            return dynamicResource;
+        }
+    }
 
-	public enum DefaultRenderingColor {
-		BLACK(DEFAULT_BLACK_RESOURCE),
-		WHITE(DEFAULT_WHITE_RESOURCE),
-
-
-		TRANSPARENT(DEFAULT_TRANSPARENT_RESOURCE);
-
-		private final DynamicResource dynamicResource;
-
-		DefaultRenderingColor(Identifier identifier) {
-			dynamicResource = new DynamicResource(identifier, null);
-		}
-	}
-
-	public static class DynamicResource {
-
-		private long expiryTime;
-		private boolean needsRefresh;
-		public final int width;
-		public final int height;
-		public final Identifier identifier;
-
-		private DynamicResource(Identifier identifier, @Nullable NativeImageBackedTexture nativeImageBackedTexture) {
-			this.identifier = identifier;
-			if (nativeImageBackedTexture != null) {
-				final NativeImage nativeImage = nativeImageBackedTexture.getImage();
-				if (nativeImage != null) {
-					width = nativeImage.getWidth();
-					height = nativeImage.getHeight();
-				} else {
-					width = 16;
-					height = 16;
-
-				}
-			} else {
-				width = 16;
-				height = 16 ;
-
-			}
-		}
+    public enum DefaultRenderingColor {
+        BLACK(DEFAULT_BLACK_RESOURCE),
+        WHITE(DEFAULT_WHITE_RESOURCE),
 
 
-		private void remove() {
-			MinecraftClient.getInstance().getTextureManager().destroyTexture(identifier);
-			MainRenderer.cancelRender(identifier);
-		}
-	}
+        TRANSPARENT(DEFAULT_TRANSPARENT_RESOURCE);
+
+        private final DynamicResource dynamicResource;
+
+        DefaultRenderingColor(Identifier identifier) {
+            dynamicResource = new DynamicResource(identifier, null);
+        }
+    }
+
+    public static class DynamicResource {
+
+        public final int width;
+        public final int height;
+        public final Identifier identifier;
+        private long expiryTime;
+        private boolean needsRefresh;
+
+        private DynamicResource(Identifier identifier, @Nullable NativeImageBackedTexture nativeImageBackedTexture) {
+            this.identifier = identifier;
+            if (nativeImageBackedTexture != null) {
+                final NativeImage nativeImage = nativeImageBackedTexture.getImage();
+                if (nativeImage != null) {
+                    width = nativeImage.getWidth();
+                    height = nativeImage.getHeight();
+                } else {
+                    width = 16;
+                    height = 16;
+
+                }
+            } else {
+                width = 16;
+                height = 16;
+
+            }
+        }
 
 
-
-
+        private void remove() {
+            MinecraftClient.getInstance().getTextureManager().destroyTexture(identifier);
+            MainRenderer.cancelRender(identifier);
+        }
+    }
 
 
 }

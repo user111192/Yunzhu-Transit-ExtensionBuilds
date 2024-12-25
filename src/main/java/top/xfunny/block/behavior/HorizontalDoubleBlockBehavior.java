@@ -12,6 +12,7 @@ import static top.xfunny.block.base.DirectionalBlock.FACING;
 
 public interface HorizontalDoubleBlockBehavior {
     BooleanProperty IS_LEFT = BlockProperties.HORIZONTAL_IS_LEFT;
+
     static boolean canBePlaced(ItemPlacementContext ctx) {
         return BlockUtil.isReplacable(ctx.getWorld(), ctx.getBlockPos(), ctx.getPlayerFacing().rotateYClockwise(), ctx, 2);
     }

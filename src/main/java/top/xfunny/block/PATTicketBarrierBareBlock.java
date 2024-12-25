@@ -24,8 +24,8 @@ public class PATTicketBarrierBareBlock extends DirectionalBlock {
         VoxelShape mainBarrierShape = IBlock.getVoxelShapeByDirection(12, 0, 0, 16, 16, 16, IBlock.getStatePropertySafe(state, FACING));
 
         VoxelShape vx1;
-        if(hasFence) {
-            if(flipped) {
+        if (hasFence) {
+            if (flipped) {
                 vx1 = IBlock.getVoxelShapeByDirection(0, 0, 13, 12, 19, 16, IBlock.getStatePropertySafe(state, FACING));
             } else {
                 vx1 = IBlock.getVoxelShapeByDirection(0, 0, 0, 12, 19, 3, IBlock.getStatePropertySafe(state, FACING));
@@ -44,8 +44,8 @@ public class PATTicketBarrierBareBlock extends DirectionalBlock {
         VoxelShape mainBarrierShape = IBlock.getVoxelShapeByDirection(12, 0, 0, 16, 24, 16, IBlock.getStatePropertySafe(state, FACING));
 
         VoxelShape vx1;
-        if(hasFence) {
-            if(flipped) {
+        if (hasFence) {
+            if (flipped) {
                 vx1 = IBlock.getVoxelShapeByDirection(0, 0, 13, 12, 24, 16, IBlock.getStatePropertySafe(state, FACING));
             } else {
                 vx1 = IBlock.getVoxelShapeByDirection(0, 0, 0, 12, 24, 3, IBlock.getStatePropertySafe(state, FACING));
@@ -62,33 +62,33 @@ public class PATTicketBarrierBareBlock extends DirectionalBlock {
     }
 
     private BlockState getFenceState(BlockState stateNear, Direction direction, BlockState state, World world, BlockPos pos) {
-        if(stateNear.getBlock().data instanceof PATTicketBarrier || stateNear.getBlock().data instanceof PATTicketBarrierBareBlock) {
+        if (stateNear.getBlock().data instanceof PATTicketBarrier || stateNear.getBlock().data instanceof PATTicketBarrierBareBlock) {
             return state;
         }
 
         Direction thisDirection = IBlock.getStatePropertySafe(state, FACING);
-        if(stateNear.getBlock().data instanceof BlockGlassFence) {
+        if (stateNear.getBlock().data instanceof BlockGlassFence) {
             Direction nearbyFacing = IBlock.getStatePropertySafe(stateNear, FACING);
             boolean valid = (nearbyFacing == thisDirection) || (nearbyFacing == thisDirection.getOpposite());
             boolean flipped = nearbyFacing != thisDirection;
 
             /* Don't connect fence that are placed 90deg to the barrier */
-            if(direction != thisDirection.rotateYClockwise() && direction != thisDirection.rotateYCounterclockwise()) {
+            if (direction != thisDirection.rotateYClockwise() && direction != thisDirection.rotateYCounterclockwise()) {
                 valid = false;
             }
 
-            if(valid) {
+            if (valid) {
                 int fenceType = 0;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_CIO.get())) fenceType = 1;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_CKT.get())) fenceType = 2;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_HEO.get())) fenceType = 3;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_MOS.get())) fenceType = 4;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_PLAIN.get())) fenceType = 5;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_SHM.get())) fenceType = 6;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_STAINED.get())) fenceType = 7;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_STW.get())) fenceType = 8;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_TSH.get())) fenceType = 9;
-                if(stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_WKS.get())) fenceType = 10;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_CIO.get())) fenceType = 1;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_CKT.get())) fenceType = 2;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_HEO.get())) fenceType = 3;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_MOS.get())) fenceType = 4;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_PLAIN.get())) fenceType = 5;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_SHM.get())) fenceType = 6;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_STAINED.get())) fenceType = 7;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_STW.get())) fenceType = 8;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_TSH.get())) fenceType = 9;
+                if (stateNear.isOf(org.mtr.mod.Blocks.GLASS_FENCE_WKS.get())) fenceType = 10;
                 return state.with(new Property<>(FENCE_TYPE.data), fenceType).with(new Property<>(FLIPPED.data), flipped);
             }
         }
@@ -97,7 +97,7 @@ public class PATTicketBarrierBareBlock extends DirectionalBlock {
         // In this case we don't touch the state and just leave it as is
         BlockPos nextToPos = pos.offset(thisDirection.rotateYCounterclockwise());
         boolean hasBlockNextToFence = !world.getBlockState(nextToPos).isAir();
-        if(hasBlockNextToFence) {
+        if (hasBlockNextToFence) {
             return state;
         }
 

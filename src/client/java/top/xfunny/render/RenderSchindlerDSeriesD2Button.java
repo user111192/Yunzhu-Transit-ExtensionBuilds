@@ -15,7 +15,6 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
 import top.xfunny.block.SchindlerDSeriesD2Button;
-import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -70,26 +69,26 @@ public class RenderSchindlerDSeriesD2Button extends BlockEntityRenderer<Schindle
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false,false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
         button.setPressedColor(PRESSED_COLOR);
         button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE,true);
+        button.setTexture(BUTTON_TEXTURE, true);
         button.setWidth(2F / 16);
         button.setHeight(2F / 16);
         button.setSpacing(0.5F / 16);
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false,false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setHover(true);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE,true);
+        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, true);
         buttonLight.setWidth(2F / 16);
         buttonLight.setHeight(2F / 16);
         buttonLight.setSpacing(0.5F / 16);

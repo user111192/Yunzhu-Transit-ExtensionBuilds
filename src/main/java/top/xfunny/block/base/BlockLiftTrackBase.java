@@ -14,38 +14,38 @@ import java.util.List;
 
 public abstract class BlockLiftTrackBase extends BlockExtension implements DirectionHelper {
 
-	public BlockLiftTrackBase() {
-		super(BlockHelper.createBlockSettings(true));
-	}
+    public BlockLiftTrackBase() {
+        super(BlockHelper.createBlockSettings(true));
+    }
 
-	@Nonnull
-	@Override
-	public BlockState getPlacementState2(ItemPlacementContext context) {
-		return getDefaultState2().with(new Property<>(FACING.data), getFacing(context).data);
-	}
+    protected static Direction getFacing(ItemPlacementContext context) {
+        final Direction oppositeFace = context.getSide().getOpposite();
+        if (oppositeFace.getOffsetY() == 0) {
+            return oppositeFace;
+        } else {
+            final BlockState state = context.getWorld().getBlockState(context.getBlockPos().offset(oppositeFace));
+            if (state.getBlock().data instanceof BlockLiftTrackBase) {
+                return IBlock.getStatePropertySafe(state, FACING);
+            } else {
+                return context.getPlayerFacing();
+            }
+        }
+    }
 
-	@Override
-	public void addBlockProperties(List<HolderBase<?>> properties) {
-		properties.add(FACING);
-	}
+    @Nonnull
+    @Override
+    public BlockState getPlacementState2(ItemPlacementContext context) {
+        return getDefaultState2().with(new Property<>(FACING.data), getFacing(context).data);
+    }
 
-	public abstract ObjectArrayList<Direction> getConnectingDirections(BlockState blockState);
+    @Override
+    public void addBlockProperties(List<HolderBase<?>> properties) {
+        properties.add(FACING);
+    }
 
-	public Vector getCenterPoint(BlockPos blockPos, BlockState blockState) {
-		return new Vector(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-	}
+    public abstract ObjectArrayList<Direction> getConnectingDirections(BlockState blockState);
 
-	protected static Direction getFacing(ItemPlacementContext context) {
-		final Direction oppositeFace = context.getSide().getOpposite();
-		if (oppositeFace.getOffsetY() == 0) {
-			return oppositeFace;
-		} else {
-			final BlockState state = context.getWorld().getBlockState(context.getBlockPos().offset(oppositeFace));
-			if (state.getBlock().data instanceof BlockLiftTrackBase) {
-				return IBlock.getStatePropertySafe(state, FACING);
-			} else {
-				return context.getPlayerFacing();
-			}
-		}
-	}
+    public Vector getCenterPoint(BlockPos blockPos, BlockState blockState) {
+        return new Vector(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+    }
 }

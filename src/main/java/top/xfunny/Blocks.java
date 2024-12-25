@@ -1,4 +1,3 @@
-
 package top.xfunny;
 
 import org.mtr.mapping.holder.Block;
@@ -38,10 +37,6 @@ public class Blocks {
     public static final BlockRegistryObject LIFT_TRACK_EMPTY_FLOOR;
 
 
-
-
-
-
     static {
 
         TEST_LIFT_BUTTONS = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_buttons"), () -> new Block(new TestLiftButtons()), CreativeModeTabs.ESCALATORS_LIFTS);
@@ -65,11 +60,10 @@ public class Blocks {
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), () -> new Block(new EmptyFloor()), CreativeModeTabs.ESCALATORS_LIFTS);
 
 
-
     }
 
 
     public static void init() {
-		Init.LOGGER.info("正在注册方块");
-	}
+        Init.LOGGER.info("正在注册方块");
+    }
 }

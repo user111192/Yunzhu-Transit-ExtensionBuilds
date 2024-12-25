@@ -44,10 +44,6 @@ public class ImageView implements RenderView {
         calculateDimensions();
     }
 
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
     public void setLight(int light) {
         this.light = light;
     }
@@ -68,29 +64,29 @@ public class ImageView implements RenderView {
 
         // 调度渲染
         MainRenderer.scheduleRender(
-            texture,
-            false,
-            QueuedRenderLayer.EXTERIOR,
-            (graphicsHolder, offset) -> {
-                // 应用矩阵变换
-                storedMatrixTransformations1.transform(graphicsHolder, offset);
-                // 绘制纹理
-                IDrawing.drawTexture(
-                    graphicsHolder,
-                    x,
-                    y,
-                    width,
-                    height,
-                    1,
-                    1,
-                    0,
-                    0,
-                    facing,
-                    ARGB_WHITE,
-                    light
-                );
-                graphicsHolder.pop();
-            }
+                texture,
+                false,
+                QueuedRenderLayer.EXTERIOR,
+                (graphicsHolder, offset) -> {
+                    // 应用矩阵变换
+                    storedMatrixTransformations1.transform(graphicsHolder, offset);
+                    // 绘制纹理
+                    IDrawing.drawTexture(
+                            graphicsHolder,
+                            x,
+                            y,
+                            width,
+                            height,
+                            1,
+                            1,
+                            0,
+                            0,
+                            facing,
+                            ARGB_WHITE,
+                            light
+                    );
+                    graphicsHolder.pop();
+                }
         );
     }
 
@@ -109,6 +105,10 @@ public class ImageView implements RenderView {
         return width;
     }
 
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
     @Override
     public float getHeight() {
         return height;
@@ -125,6 +125,11 @@ public class ImageView implements RenderView {
     }
 
     @Override
+    public void setGravity(Gravity gravity) {
+        this.gravity = gravity;
+    }
+
+    @Override
     public void setMargin(float left, float top, float right, float bottom) {
         this.marginLeft = left;
         this.marginTop = top;
@@ -136,11 +141,6 @@ public class ImageView implements RenderView {
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
-    }
-
-    @Override
-    public void setGravity(Gravity gravity) {
-        this.gravity = gravity;
     }
 
     // 不适用的方法移到最后
@@ -165,12 +165,12 @@ public class ImageView implements RenderView {
     }
 
     @Override
-    public void setParentType(Object thisObject) {
-        // 不适用
+    public Object getParentType() {
+        return null; // 不适用
     }
 
     @Override
-    public Object getParentType() {
-        return null; // 不适用
+    public void setParentType(Object thisObject) {
+        // 不适用
     }
 }

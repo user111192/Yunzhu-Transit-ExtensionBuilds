@@ -1,44 +1,44 @@
 {
-	"schemaVersion": 1,
-	"id": "yte",
-	"version": "${version}",
-	"name": "Yunzhu Transit Extension",
-	"description": "云竹交通\n云珠工坊交通拓展",
-	"authors": [
-		"XFunny\nMrNTkey\nQBYQ"
-	],
-	"contact": {
-		"homepage": "https://space.bilibili.com/3546779284932989",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/yte/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"top.xfunny.YunzhuTransitExtension"
-		],
-		"client": [
-			"top.xfunny.YunzhuTransitExtensionClient"
-		],
-		"fabric-datagen": [
-			"top.xfunny.YunzhuTransitExtensionDataGenerator"
-		]
-	},
-	"mixins": [
-		"yte.mixins.json",
-		{
-			"config": "yte.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.3",
-		"minecraft": "~1.19.2",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "yte",
+  "version": "${version}",
+  "name": "Yunzhu Transit Extension",
+  "description": "云竹交通\n云筑工坊交通拓展",
+  "authors": [
+    "XFunny\nMrNTkey\nQBYQ"
+  ],
+  "contact": {
+    "homepage": "https://space.bilibili.com/3546779284932989",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/yte/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "top.xfunny.YunzhuTransitExtension"
+    ],
+    "client": [
+      "top.xfunny.YunzhuTransitExtensionClient"
+    ],
+    "fabric-datagen": [
+      "top.xfunny.YunzhuTransitExtensionDataGenerator"
+    ]
+  },
+  "mixins": [
+    "yte.mixins.json",
+    {
+      "config": "yte.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.3",
+    "minecraft": "~1.19.2",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }

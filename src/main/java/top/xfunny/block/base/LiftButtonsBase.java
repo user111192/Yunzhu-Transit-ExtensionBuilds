@@ -10,51 +10,33 @@ import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
-import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.Items;
 import top.xfunny.LiftFloorRegistry;
+import top.xfunny.util.ButtonRegistry;
 
 import javax.annotation.Nonnull;
-import java.util.*;;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
-public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
+;
+
+public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity, IBlock {
     public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public static final BooleanProperty SINGLE = BooleanProperty.of("single");
+    public static boolean allowPress;
+    private final boolean isOdd;
 
 
-    public LiftButtonsBase() {
+    public LiftButtonsBase(boolean allowPress, boolean isOdd) {
         super(BlockHelper.createBlockSettings(true));
+        this.isOdd = isOdd;
+        this.allowPress = allowPress;
         Init.LOGGER.info("LiftButtonsBase init");
-    }
-
-    public static class LiftButtonDescriptor {
-        private boolean hasUpButton;
-        private boolean hasDownButton;
-
-        public LiftButtonDescriptor(boolean hasUpButton,boolean hasDownButton) {
-            this.hasDownButton = hasDownButton;
-            this.hasUpButton = hasUpButton;
-        }
-
-        public boolean hasUpButton() {
-            return hasUpButton;
-        }
-
-        public boolean hasDownButton() {
-            return hasDownButton;
-        }
-
-        public void setHasUpButton(boolean hasUpButton) {
-            this.hasUpButton = hasUpButton;
-        }
-
-        public void setHasDownButton(boolean hasDownButton) {
-            this.hasDownButton = hasDownButton;
-        }
     }
 
     /**
@@ -65,11 +47,9 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
      * @param callback      a callback for the lift and floor index, only run if the lift floor track exists in the lift
      *                      关于电梯和楼层索引的回调函数，只有当电梯地板轨道存在于电梯中时才运行
      */
-    public static void hasButtonsClient(BlockPos trackPosition, LiftButtonDescriptor descriptor,FloorLiftCallback callback) {
-
+    public static void hasButtonsClient(BlockPos trackPosition, LiftButtonDescriptor descriptor, FloorLiftCallback callback) {
         // 获取实例中的所有电梯数据
         MinecraftClientData.getInstance().lifts.forEach(lift -> {
-
             // 获取电梯轨道位置对应的楼层索引
             final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
             // 如果楼层索引大于0，则表示存在向下按钮
@@ -87,20 +67,14 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         });
     }
 
-
     @Nonnull
     @Override
     // 处理按钮的使用交互
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
 
-
-
         // 检查玩家是否拿着刷子，并尝试更新按钮状态
         final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            //todo:测试使用刷子清空到站灯队列是否有效
-            ((BlockEntityBase) entity.data).lanternPositions.forEach(lanternPos1 -> ((LiftHallLanternsBase.BlockEntityBase) Objects.requireNonNull(world.getBlockEntity(lanternPos1)).data).clearQueue());
             final boolean unlocked = !IBlock.getStatePropertySafe(state, UNLOCKED);
             world.setBlockState(pos, state.with(new Property<>(UNLOCKED.data), unlocked));
             player.sendMessage(Text.of((unlocked ? "已解锁" : "已锁定")), true);
@@ -127,87 +101,45 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                         final BlockEntity blockEntity = world.getBlockEntity(pos);
                         final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
 
-                        ObjectOpenHashSet<BlockPos> lp = data.getLanternPositions();
-
-                        if (lp.isEmpty())
-                        {
-                            System.out.println("到站灯坐标为空");
-                        } else {
-                            lp.forEach(lpos -> {
-                                System.out.println("到站灯坐标为：" + lpos.toShortString());
-                            });
-                        }
+                        ObjectOpenHashSet<BlockPos> connectedLanternPositions = data.getLiftButtonPositions();
 
                         // 检查并记录上下按钮状态
-                        LiftButtonDescriptor descriptor = new LiftButtonDescriptor(false,false);
-                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {}));
-
+                        LiftButtonDescriptor descriptor = new LiftButtonDescriptor(false, false);
+                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {
+                        }));
 
                         // 同时具有上下方向的按钮
                         if (descriptor.hasDownButton() && descriptor.hasUpButton()) {
+                            connectedLanternPositions.forEach(lanternPos -> {
+                                BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
+                                if (lanternBlockEntity != null) {
+                                    LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
+
+                                    if (hitY < 0.25) {
+                                        lanternData.setPressedButtonDirection(LiftDirection.DOWN);
+                                    } else {
+                                        lanternData.setPressedButtonDirection(LiftDirection.UP);
+                                    }
+                                }
+
+                            });
+
                             data.liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
-
-
-                            // 判断外呼按钮是否有内建到站灯
-                            if (data.buttonHasBuiltInLantern) {
-                                Init.LOGGER.info("该外呼有内建到站灯");
-                                if (hitY < 0.25) {
-                                    data.setLiftDirection(LiftDirection.DOWN);
-                                } else {
-                                    data.setLiftDirection(LiftDirection.UP);
-                                }
-                            } else if (!lp.isEmpty()) {
-                                Init.LOGGER.info("该外呼已连接到站灯");
-
-                                lp.forEach(lanternPos1 -> {
-                                    BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                    if (blockEntityLantern != null) {
-                                        LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-
-                                        if (hitY < 0.25) {
-                                            lanternData.setLiftDirection(LiftDirection.DOWN);
-                                            Init.LOGGER.info("玩家按下:" + LiftDirection.DOWN);
-                                        }
-                                        else {
-                                            lanternData.setLiftDirection(LiftDirection.UP);
-                                            Init.LOGGER.info("玩家按下:" + LiftDirection.UP);
-                                        }
-                                        lanternData.selfPos = lanternPos1;
-                                    }
-                                });
-
-                            } else {
-                                Init.LOGGER.info("该外呼未连接到站灯");
-                            }
-
-
                         } else {  // 只有单个方向的按钮
-                            data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
+                            connectedLanternPositions.forEach(lanternPos -> {
+                                BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
+                                if (lanternBlockEntity != null) {
+                                    LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
 
-                            // 判断外呼按钮是否有内建到站灯
-                            if (data.buttonHasBuiltInLantern) {
-                                if (descriptor.hasDownButton) {
-                                    ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.DOWN);
-                                } else {
-                                    ((BlockEntityBase) blockEntity.data).setLiftDirection(LiftDirection.UP);
-                                }
-                            } else if (!lp.isEmpty()) {
-                                Init.LOGGER.info("该外呼已连接到站灯");
-
-
-                                data.lanternPositions.forEach(lanternPos1 -> {
-                                    BlockEntity blockEntityLantern = world.getBlockEntity(lanternPos1);
-                                    if (blockEntityLantern != null) {
-                                        LiftHallLanternsBase.BlockEntityBase lanternData = (LiftHallLanternsBase.BlockEntityBase) blockEntityLantern.data;
-                                        lanternData.setLiftDirection(descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP);
-                                        lanternData.selfPos = lanternPos1;
+                                    if (descriptor.hasDownButton()) {
+                                        lanternData.setPressedButtonDirection(LiftDirection.DOWN);
+                                    } else {
+                                        lanternData.setPressedButtonDirection(LiftDirection.UP);
                                     }
-                                });
+                                }
 
-                            } else {
-                                Init.LOGGER.info("该外呼未连接到站灯");
-                            }
-
+                            });
+                            data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
                         }
 
                         // 创建并发送按电梯按钮事件
@@ -220,6 +152,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
                     return ActionResult.SUCCESS;
                 } else {
+                    System.out.println(allowPress);
                     return ActionResult.FAIL;
                 }
             }
@@ -231,7 +164,33 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         // 获取玩家面对的方向
         final Direction facing = ctx.getPlayerFacing();
         // 根据默认状态和玩家面对的方向来设置方块状态，并返回
-        return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+        if (!isOdd) {
+            return IBlock.isReplaceable(ctx, facing.rotateYClockwise(), 2) ? getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), EnumSide.LEFT) : null;
+        } else {
+            return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+        }
+    }
+
+    @Override
+    public void onPlaced2(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (!world.isClient()) {
+            final Direction facing = IBlock.getStatePropertySafe(state, FACING);
+            if (!isOdd) {
+                world.setBlockState(pos.offset(facing.rotateYClockwise()), getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), EnumSide.RIGHT), 3);
+            }
+            world.updateNeighbors(pos, Blocks.getAirMapped());
+            state.updateNeighbors(new WorldAccess(world.data), pos, 3);
+        }
+    }
+
+    @Override
+    public void onBreak2(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!isOdd) {
+            if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
+                IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
+            }
+        }
+        super.onBreak2(world, pos, state, player);
     }
 
     @FunctionalInterface
@@ -239,79 +198,48 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         void accept(int floor, Lift lift);
     }
 
+    public static class LiftButtonDescriptor {
+        private boolean hasUpButton;
+        private boolean hasDownButton;
+
+        public LiftButtonDescriptor(boolean hasUpButton, boolean hasDownButton) {
+            this.hasDownButton = hasDownButton;
+            this.hasUpButton = hasUpButton;
+        }
+
+        public boolean hasUpButton() {
+            return hasUpButton;
+        }
+
+        public boolean hasDownButton() {
+            return hasDownButton;
+        }
+
+        public void setHasUpButton(boolean hasUpButton) {
+            this.hasUpButton = hasUpButton;
+        }
+
+        public void setHasDownButton(boolean hasDownButton) {
+            this.hasDownButton = hasDownButton;
+        }
+    }
+
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
-        private static final String KEY_LANTERN_FLOOR_POS = "lantern_floor_pos";
+
+        private static final String KEY_LIFT_BUTTON_POSITIONS = "lift_button_position";
+        public final ObjectOpenHashSet<BlockPos> liftButtonPositions = new ObjectOpenHashSet<>();
         // 存储需要追踪的位置的集合
         private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
-        private final ObjectOpenHashSet<BlockPos> lanternPositions = new ObjectOpenHashSet<>();
-        private final Queue<LiftDirection> directionQueue = new LinkedList<>();
+        public LiftDirection liftDirection = NONE;
 
-        private boolean buttonHasBuiltInLantern;
-        private boolean connectedLantern;
-        private LiftDirection buttonDirection = NONE;
-        private LiftDirection liftDirection = NONE;
-        private boolean lanternMark = false;
+        public BlockPos selfPos;
 
+        private LiftDirection pressedButtonDirection;
 
-        public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState, Boolean isLantern1) {
+        public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);
-            buttonHasBuiltInLantern = isLantern1;
-        }
-
-        public ObjectOpenHashSet<BlockPos> getLanternPositions() {
-            return lanternPositions;
-        }
-
-        public boolean getIsLantern() {
-            return buttonHasBuiltInLantern;
-        }
-
-        public boolean getConnectedLantern() {
-            return connectedLantern;
-        }
-
-        public boolean getLanternMark() {
-            return lanternMark;
-        }
-
-        public void setLanternMark(boolean mark) {
-            lanternMark = mark;
-        }
-
-        public LiftDirection setLiftDirection(LiftDirection direction) {
-            directionQueue.add(direction);
-            Init.LOGGER.info("setLiftDirection()");
-            updateLiftDirection();
-            return direction;
-        }
-
-        public void updateQueue() {
-            Init.LOGGER.info("updateQueue()");
-            if (!directionQueue.isEmpty()) {
-                directionQueue.poll();
-                updateLiftDirection();
-                Init.LOGGER.info("updateQueue()时不为空");
-            } else {
-                //buttonDirection = LiftDirection.NONE;
-                Init.LOGGER.info("updateQueue()时为空");
-                Init.LOGGER.info("directionQueue" + directionQueue);
-            }
-        }
-
-
-        private void updateLiftDirection() {
-            if (!directionQueue.isEmpty()) {
-                Init.LOGGER.info("更新方向时direction不为空");
-                buttonDirection = directionQueue.peek();
-            } else {
-                Init.LOGGER.info("更新方向时为空");
-            }
-        }
-
-        public LiftDirection getButtonDirection() {
-            return buttonDirection;
         }
 
         /**
@@ -321,23 +249,25 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void readCompoundTag(CompoundTag compoundTag) {
+            Init.LOGGER.info("readCompoundTag");
 
             // 清空当前位置集合，准备加载新的数据
             trackPositions.clear();
-            lanternPositions.clear();
-
+            liftButtonPositions.clear();
 
             // 从CompoundTag中读取名为KEY_TRACK_FLOOR_POS的长整型数组
             // 每个长整型代表一个BlockPos位置，将其转换并添加到trackPositions集合中
             for (final long position : compoundTag.getLongArray(KEY_TRACK_FLOOR_POS)) {
                 trackPositions.add(BlockPos.fromLong(position));
             }
-            for (final long position : compoundTag.getLongArray(KEY_LANTERN_FLOOR_POS)) {
-                lanternPositions.add(BlockPos.fromLong(position));
+
+            for (final long position : compoundTag.getLongArray(KEY_LIFT_BUTTON_POSITIONS)) {
+                liftButtonPositions.add(BlockPos.fromLong(position));
             }
         }
 
         /**
+         * 重写writeCompoundTag方法，将当前类中的数据保存到CompoundTag中
          * 重写writeCompoundTag方法，将当前类中的数据保存到CompoundTag中
          * 主要用于序列化TrackFloor对象的数据，以便存储或传输
          *
@@ -345,20 +275,24 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void writeCompoundTag(CompoundTag compoundTag) {
-
             // 创建一个临时的List，用于存储trackPositions的长整型表示
             final List<Long> trackPositionsList = new ArrayList<>();
-            final List<Long> lanternPositionsList = new ArrayList<>();
 
             // 遍历trackPositions集合，将每个位置转换为长整型并添加到trackPositionsList中
             // 这里的转换是为了以长整型数组的形式存储这些位置信息
-            trackPositions.forEach(position -> trackPositionsList.add(position.asLong()));
-            lanternPositions.forEach(position -> lanternPositionsList.add(position.asLong()));
-
+            trackPositions.forEach(position -> {
+                trackPositionsList.add(position.asLong());
+            });
             // 将收集到的trackPositions长整型列表以数组的形式存储到compoundTag中
             // 使用的键是KEY_TRACK_FLOOR_POS，值是trackPositionsList数组
             compoundTag.putLongArray(KEY_TRACK_FLOOR_POS, trackPositionsList);
-            compoundTag.putLongArray(KEY_LANTERN_FLOOR_POS, lanternPositionsList);
+
+            final List<Long> liftButtonPositionsList = new ArrayList<>();
+            liftButtonPositions.forEach(position -> {
+                liftButtonPositionsList.add(position.asLong());
+            });
+            compoundTag.putLongArray(KEY_LIFT_BUTTON_POSITIONS, liftButtonPositionsList);
+
         }
 
         /**
@@ -369,46 +303,60 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
          */
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
-
             Init.LOGGER.info("正在操作");
+            this.selfPos = selfPos;
             final boolean single = IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
-            if (isAdd) {
-
-                // 如果是添加操作，则将位置添加到跟踪列表中
-                trackPositions.add(pos);
-                if(trackPositions.size() != 1 && single){
-                    final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
-                    world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+            if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+                final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
+                if (blockEntity != null && blockEntity.data instanceof BlockEntityBase) {
+                    ((BlockEntityBase) blockEntity.data).registerFloor(selfPos, world, pos, isAdd);
                 }
-
-                Init.LOGGER.info("已添加");
             } else {
-                // 如果是非添加操作，则从跟踪列表中移除该位置
-                trackPositions.remove(pos);
-                if(trackPositions.size() == 1 && !single){
-                    final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
-                    world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+                if (isAdd) {
+                    // 如果是添加操作，则将位置添加到跟踪列表中
+                    trackPositions.add(pos);
+                    if (trackPositions.size() != 1 && single) {
+                        final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
+                        world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+                    }
+                    Init.LOGGER.info("已添加");
+                } else {
+                    // 如果是非添加操作，则从跟踪列表中移除该位置
+                    trackPositions.remove(pos);
+                    if (trackPositions.size() == 1 && !single) {
+                        final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
+                        world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
+                    }
+                    Init.LOGGER.info("已移除");
                 }
-                Init.LOGGER.info("已移除");
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
             markDirty2();
         }
 
-
+        @Override
         public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
-            if (isAdd) {
+            Init.LOGGER.info("正在进行外呼关联");
+
+             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+                final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
+                if (blockEntity != null && blockEntity.data instanceof BlockEntityBase) {
+                    ((BlockEntityBase) blockEntity.data).registerButton(world, blockPos, isAdd);
+                }
+            }else{
+                 if (isAdd) {
                 // 如果是添加操作，则将位置添加到跟踪列表中
-                lanternPositions.add(blockPos);
-                connectedLantern = true;
+                liftButtonPositions.add(blockPos);
                 Init.LOGGER.info("已添加到站灯" + blockPos.toShortString());
-                Init.LOGGER.info("lanternPositions" + lanternPositions);
+                Init.LOGGER.info("lanternPositions" + liftButtonPositions);
             } else {
                 // 如果是非添加操作，则从跟踪列表中移除该位置
-                lanternPositions.remove(blockPos);
-                connectedLantern = false;
+                liftButtonPositions.remove(blockPos);
                 Init.LOGGER.info("已移除到站灯");
             }
+             }
+
+
             markDirty2();
         }
 
@@ -424,18 +372,20 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
             trackPositions.forEach(consumer);
         }
 
+        public void forEachLiftButtonPosition(Consumer<BlockPos> consumer) {
+            liftButtonPositions.forEach(consumer);
+        }
 
+        public ObjectOpenHashSet<BlockPos> getLiftButtonPositions() {
+            return liftButtonPositions;
+        }
+
+        public LiftDirection getPressedButtonDirection() {
+            return pressedButtonDirection;
+        }
+
+        public void setPressedButtonDirection(LiftDirection direction) {
+            this.pressedButtonDirection = direction;
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -16,10 +16,10 @@ public abstract class YTEBlock extends BlockExtension {
      * The callback can be called multiple times on, for example a multi-block, and that multiple block entity should be updated to create a consistent state.<br>
      */
     public void loopStructure(BlockState state, World world, BlockPos sourcePos, BiConsumer<BlockState, BlockEntity> callback) {
-        for(BlockPos bPos : getAllPos(state, world, sourcePos)) {
+        for (BlockPos bPos : getAllPos(state, world, sourcePos)) {
             BlockState bs = world.getBlockState(sourcePos);
             BlockEntity be = BlockUtil.getBlockEntityOrNull(world, bPos);
-            if(be != null) callback.accept(bs, be);
+            if (be != null) callback.accept(bs, be);
         }
     }
 

@@ -29,12 +29,15 @@ public class LiftButtonView implements RenderView {
     private StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
     private LiftButtonsBase.LiftButtonDescriptor buttonDescriptor;
     private int light;
-    private float width, height, x, y, yUp, yDown;
+    private float width, height, x, xLeft, xRight, y, yUp, yDown;
     private float marginLeft, marginTop, marginRight, marginBottom, spacing;
     private String id = "button";
     private Gravity gravity;
     private boolean canHover, lookingAtTopHalf, lookingAtBottomHalf;
     private boolean reverse;
+    private boolean repeatButton;
+    private boolean verticalAlignment;
+    private boolean isLantern;
 
 
     @Override
@@ -60,7 +63,7 @@ public class LiftButtonView implements RenderView {
 
     private void dynamicRender() {
         final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-        positionY(y, spacing);
+        positionOffset(x, y, spacing);
 
         // 判断鼠标是否悬停在按钮上
         if (hitResult == null || !IBlock.getStatePropertySafe(blockState, TestLiftButtons.UNLOCKED)) {
@@ -81,7 +84,25 @@ public class LiftButtonView implements RenderView {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
                         IDrawing.drawTexture(
                                 graphicsHolder,
-                                x, yDown, width, height,
+                                xLeft, yDown, width, height,
+                                0, reverse ? 0 : 1, 1, reverse ? 1 : 0,
+                                facing,
+                                buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
+                                light
+                        );
+                        graphicsHolder.pop();
+                    }
+            );
+        }
+
+        if (buttonDescriptor.hasDownButton() && !buttonDescriptor.hasUpButton() && repeatButton) {
+            MainRenderer.scheduleRender(
+                    downButtonTexture, false, queuedRenderLayerRegulator(lookingAtBottomHalf, buttonStates[0]),
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                xRight, yUp, width, height,
                                 0, reverse ? 0 : 1, 1, reverse ? 1 : 0,
                                 facing,
                                 buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
@@ -100,7 +121,25 @@ public class LiftButtonView implements RenderView {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
                         IDrawing.drawTexture(
                                 graphicsHolder,
-                                x, yUp, width, height,
+                                xRight, yUp, width, height,
+                                0, 1, 1, 0,
+                                facing,
+                                buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
+                                light
+                        );
+                        graphicsHolder.pop();
+                    }
+            );
+        }
+
+        if (buttonDescriptor.hasUpButton() && !buttonDescriptor.hasDownButton() && repeatButton) {
+            MainRenderer.scheduleRender(
+                    upButtonTexture, false, queuedRenderLayerRegulator(lookingAtTopHalf, buttonStates[1]),
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                xLeft, yDown, width, height,
                                 0, 1, 1, 0,
                                 facing,
                                 buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
@@ -113,12 +152,21 @@ public class LiftButtonView implements RenderView {
     }
 
     private QueuedRenderLayer queuedRenderLayerRegulator(Boolean looking, Boolean buttonState) {
-        return ((looking || buttonState) & canHover) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
+        return ((looking || buttonState) & canHover) || (isLantern && buttonState) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
     }
 
-    private void positionY(float y, float spacing) {
-        yUp = buttonDescriptor.hasDownButton() ? y + height + spacing : y;
-        yDown = y;
+    private void positionOffset(float x, float y, float spacing) {
+        if (verticalAlignment) {
+            this.yUp = buttonDescriptor.hasDownButton() || repeatButton ? y + height + spacing : y;
+            this.yDown = y;
+            this.xLeft = x;
+            this.xRight = x;
+        } else {
+            this.xLeft = buttonDescriptor.hasDownButton() || repeatButton ? x + spacing + width : x;
+            this.xRight = x;
+            this.yUp = y;
+            this.yDown = y;
+        }
     }
 
     // 布局方法
@@ -144,7 +192,7 @@ public class LiftButtonView implements RenderView {
 
     @Override
     public float getWidth() {
-        return width;
+        return !verticalAlignment && ((buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton()) || repeatButton) ? width * 2 + spacing : width;
     }
 
     public void setWidth(float width) {
@@ -153,7 +201,7 @@ public class LiftButtonView implements RenderView {
 
     @Override
     public float getHeight() {
-        return buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton() ? height * 2 + spacing : height;
+        return verticalAlignment && (buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton() || repeatButton) ? height * 2 + spacing : height;
     }
 
     public void setHeight(float height) {
@@ -202,10 +250,13 @@ public class LiftButtonView implements RenderView {
     }
 
     // 设置基本属性的方法
-    public void setBasicsAttributes(World world, BlockPos blockPos, LiftButtonsBase.LiftButtonDescriptor descriptor) {
+    public void setBasicsAttributes(World world, BlockPos blockPos, LiftButtonsBase.LiftButtonDescriptor descriptor, boolean verticalAlignment, boolean repeatButton, boolean isLantern) {
         this.world = world;
         this.blockPos = blockPos;
         this.buttonDescriptor = descriptor;
+        this.verticalAlignment = verticalAlignment;
+        this.repeatButton = repeatButton;
+        this.isLantern = isLantern;
     }
 
     public void setLight(int light) {

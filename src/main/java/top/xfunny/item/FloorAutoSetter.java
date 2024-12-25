@@ -23,29 +23,30 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
     public FloorAutoSetter(ItemSettings itemSettings) {
         super(itemSettings.maxCount(1));
     }
+
     @Nonnull
     public ActionResult useOnBlock2(ItemUsageContext context) {
-        if (!context.getWorld().isClient()){
+        if (!context.getWorld().isClient()) {
             if (this.clickCondition(context)) {
                 CompoundTag compoundTag = context.getStack().getOrCreateTag();
                 compoundTag.putLong("pos", context.getBlockPos().asLong());
                 this.onClick(context, compoundTag);
                 return ActionResult.SUCCESS;
-            }else{
+            } else {
                 return ActionResult.FAIL;
             }
-        }else {
+        } else {
             return super.useOnBlock2(context);
         }
     }
 
 
-    protected void onClick(ItemUsageContext context,CompoundTag compoundTag) {
+    protected void onClick(ItemUsageContext context, CompoundTag compoundTag) {
         final World world = context.getWorld();
         pos = context.getBlockPos();
         array = new Object[2];
         array[1] = null; // 下一个轨道pos坐标
-        mark =new ArrayList<>();
+        mark = new ArrayList<>();
         Boolean ding = false;
         number = 0;
         int floorNumber = 0;
@@ -53,9 +54,9 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
         final BlockEntity floorEntity = world.getBlockEntity(pos);
         if (floorEntity != null && floorEntity.data instanceof BlockLiftTrackFloor.BlockEntity) {
             String checkfloorNumber = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getFloorNumber();
-            if (checkfloorNumber != null){
+            if (checkfloorNumber != null) {
                 floorNumber2 = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getFloorNumber();
-            }else{
+            } else {
                 floorNumber2 = "1";
             }
             ding = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getShouldDing();
@@ -68,7 +69,6 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
         } else {
             Init.LOGGER.info("楼层必须是整数");
         }
-
 
 
         while (floorNumber2.matches("\\d+")) {
@@ -91,22 +91,23 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
                 Init.LOGGER.info("没有找到有效轨道，退出循环。");
                 break; // 退出循环
             }
-            if (number == mark.size()){
+            if (number == mark.size()) {
                 Init.LOGGER.info("mark.size() == number");
                 break;
             }
             number++;
-            if(world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackFloor){
+            if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackFloor) {
                 floorNumber++;
             }
 
         }
     }
+
     private Object[] check(ItemUsageContext context, BlockPos pos) {
         final World world = context.getWorld();
         Init.LOGGER.info("checkpos1" + pos.toShortString());
         Init.LOGGER.info("checkpos0" + array[0]);
-        checkPosition(world, pos, facingHelper(context,pos));
+        checkPosition(world, pos, facingHelper(context, pos));
         Init.LOGGER.info("checkpos3" + Arrays.toString(array));
         return array;
     }
@@ -120,8 +121,7 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
                 array[1] = pos.down(1);
 
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
         }
@@ -131,56 +131,54 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-上");
                 array[1] = pos.up(1);
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
+        }
+        if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
             Init.LOGGER.info("南");
             if (!findMark(pos.south(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-南");
                 array[1] = pos.south(1);
 
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase&& facing) {
+        }
+        if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
             Init.LOGGER.info("北");
             if (!findMark(pos.north(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-北");
                 array[1] = pos.north(1);
 
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        }  if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
+        }
+        if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
             Init.LOGGER.info("东");
             if (!findMark(pos.east(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
                 array[1] = pos.east(1);
 
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        } if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase&&!facing) {
+        }
+        if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
             Init.LOGGER.info("西");
             if (!findMark(pos.west(1))) {
                 Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
                 array[1] = pos.west(1);
 
                 mark.add(pos);
-            }
-            else {
+            } else {
                 Init.LOGGER.info("重复位置，跳过");
             }
-        }
-        else {
+        } else {
             Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断失败");
         }
         Init.LOGGER.info("checkposition结束");
@@ -202,12 +200,12 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
         return block.data instanceof BlockLiftTrackFloor;
     }
 
-    private boolean facingHelper(ItemUsageContext context,BlockPos pos){
+    private boolean facingHelper(ItemUsageContext context, BlockPos pos) {
         final World world = context.getWorld();
-        if(world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackBase){
-            if(IBlock.getStatePropertySafe(world.getBlockState(pos), FACING)==Direction.EAST||IBlock.getStatePropertySafe(world.getBlockState(pos), FACING)==Direction.WEST){
+        if (world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackBase) {
+            if (IBlock.getStatePropertySafe(world.getBlockState(pos), FACING) == Direction.EAST || IBlock.getStatePropertySafe(world.getBlockState(pos), FACING) == Direction.WEST) {
                 return true;//东西
-            }else{
+            } else {
                 return false;//南北
             }
         }

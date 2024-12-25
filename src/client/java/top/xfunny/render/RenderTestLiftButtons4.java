@@ -46,6 +46,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
+
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
@@ -84,12 +85,12 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false,false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFD70000);//按钮按下时颜色
         button.setHoverColor(0xFFEA7A7A);//准星瞄准时的颜色
-        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_line_d2button.png"),true);//按钮贴图
+        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_line_d2button.png"), true);//按钮贴图
         button.setWidth(3F / 16);//按钮宽度
         button.setHeight(3F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距

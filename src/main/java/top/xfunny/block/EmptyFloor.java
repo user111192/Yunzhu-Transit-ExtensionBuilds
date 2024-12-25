@@ -15,6 +15,7 @@ import top.xfunny.packet.PacketOpenBlockEntityScreen;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
 public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
     public EmptyFloor() {
         super();
@@ -73,13 +74,12 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
 
     public static class BlockEntity extends BlockEntityExtension {
 
-        private String floorNumber = "EZ";
-        private String floorDescription = "";
-        private boolean shouldDing;
-
         private static final String KEY_FLOOR_NUMBER = "floor_number";
         private static final String KEY_FLOOR_DESCRIPTION = "floor_description";
         private static final String KEY_SHOULD_DING = "should_ding";
+        private String floorNumber = "EZ";
+        private String floorDescription = "";
+        private boolean shouldDing;
 
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.LIFT_TRACK_EMPTY_FLOOR.get(), pos, state);
