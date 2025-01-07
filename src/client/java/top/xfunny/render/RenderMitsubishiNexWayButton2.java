@@ -177,8 +177,8 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 1 / 24);
-                liftArrowView.setHeight((float) 1 / 24);
+                liftArrowView.setWidth((float) (2/3) / 16);
+                liftArrowView.setHeight((float) (2/3) / 16);
                 liftArrowView.setMargin(0, (float) 1/ 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFAA00);
