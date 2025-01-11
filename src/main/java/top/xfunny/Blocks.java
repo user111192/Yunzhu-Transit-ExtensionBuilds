@@ -62,9 +62,9 @@ public class Blocks {
         PAT_P01_TICKET_BARRIER_EXIT = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_exit"), () -> new Block(new PATTicketBarrier(false)), CreativeModeTabs.RAILWAY_FACILITIES);
         PAT_P01_TICKET_BARRIER_BARE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_bare"), () -> new Block(new PATTicketBarrierBareBlock(BlockHelper.createBlockSettings(false).strength(4.0f).nonOpaque())), CreativeModeTabs.RAILWAY_FACILITIES);
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), () -> new Block(new EmptyFloor()), CreativeModeTabs.ESCALATORS_LIFTS);
-        SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), () -> new Block(new SchindlerQKS9Door1()), CreativeModeTabs.ESCALATORS_LIFTS);
 
 
+        SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlock(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), () -> new Block(new SchindlerQKS9Door1()));
     }
 
 

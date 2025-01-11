@@ -11,10 +11,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.LiftDoorBase;
 
-public class RenderLiftDoor<T extends LiftDoorBase.BlockEntityBase> extends BlockEntityRenderer<T> implements IGui, IBlock {
-
+public class RenderLiftDoor<T extends BlockAPGDoor.BlockEntityBase> extends BlockEntityRenderer<T> implements IGui, IBlock {
+//使用mtr的BlockAPGDoor
     private final int type;
     private static final ModelSingleCube MODEL_PSD = new ModelSingleCube(36, 18, 0, 0, 0, 16, 16, 2);
     private static final ModelSingleCube MODEL_PSD_END_LEFT_1 = new ModelSingleCube(20, 18, 0, 0, 0, 8, 16, 2);
