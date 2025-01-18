@@ -14,10 +14,10 @@ public final class Init {
 
 
     public static void init() {
-
         Blocks.init();
         BlockEntityTypes.init();
         Items.init();
+        CreativeModeTabs.init();
         REGISTRY.init();
     }
 
