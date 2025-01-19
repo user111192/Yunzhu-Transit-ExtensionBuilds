@@ -38,7 +38,7 @@ public class LiftButtonView implements RenderView {
     private boolean repeatButton;
     private boolean verticalAlignment;
     private boolean isLantern;
-    private double clientMedian;
+    private double clientMedian = 0.25;
 
 
 

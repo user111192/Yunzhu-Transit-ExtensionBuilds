@@ -31,8 +31,12 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_D2BUTTON, RenderSchindlerDSeriesD2Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_ODD, dispatcher -> new RenderSchindlerDSeriesScreen1(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_EVEN, dispatcher -> new RenderSchindlerDSeriesScreen1(dispatcher, false));
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, true, RenderSchindlerDSeriesScreen2.schindlerDSeriesScreen2Color.GREEN));
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, false, RenderSchindlerDSeriesScreen2.schindlerDSeriesScreen2Color.GREEN));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, true, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.GREEN));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, false, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.GREEN));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_BLUE_ODD, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, true, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.BLUE));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, false, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.BLUE));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_RED_ODD, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, true, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.RED));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN, dispatcher -> new RenderSchindlerDSeriesScreen2<>(dispatcher, false, RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.RED));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_BUTTON, RenderSchindlerMSeriesButton::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_TOUCH_BUTTON, RenderSchindlerMSeriesTouchButton::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_1, dispatcher -> new RenderSchindlerMSeriesScreen1(dispatcher, true));

@@ -21,7 +21,11 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_1_ODD;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_1_EVEN;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN;
+    public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN;
+    public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD;
+    public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_BLUE_ODD;
+    public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_2_RED_ODD;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_BUTTON;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_TOUCH_BUTTON;
     public static final BlockRegistryObject SCHINDLER_S_SERIES_GREY_BUTTON;
@@ -58,6 +62,10 @@ public class Blocks {
         SCHINDLER_D_SERIES_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_1_even"), () -> new Block(new SchindlerDSeriesScreen1Even()),CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_green_even"), () -> new Block(new SchindlerDSeriesScreen2GreenEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_green_odd"), () -> new Block(new SchindlerDSeriesScreen2GreenOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_blue_even"), () -> new Block(new SchindlerDSeriesScreen2BlueEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_D_SERIES_SCREEN_2_BLUE_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_blue_odd"), () -> new Block(new SchindlerDSeriesScreen2BlueOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_red_even"), () -> new Block(new SchindlerDSeriesScreen2RedEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_D_SERIES_SCREEN_2_RED_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_red_odd"), () -> new Block(new SchindlerDSeriesScreen2RedOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_button"), () -> new Block(new SchindlerMSeriesButton()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_TOUCH_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_touch_button"), () -> new Block(new SchindlerMSeriesTouchButton()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), () -> new Block(new SchindlerMSeriesScreen1()), CreativeModeTabs.YTE_LIFT_FIXTURES);

@@ -23,7 +23,7 @@ public class SchindlerDSeriesScreen2GreenEven extends LiftPanelBase {
                 return IBlock.getVoxelShapeByDirection(12.25, 9, 0, 16, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
             }
             case RIGHT -> {
-                return IBlock.getVoxelShapeByDirection(0, 9, 0, 3.75, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(0, 9, 0, 3.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
             }
         }
         return VoxelShapes.empty();
@@ -48,5 +48,4 @@ public class SchindlerDSeriesScreen2GreenEven extends LiftPanelBase {
             super(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN.get(), pos, state);
         }
     }
-
 }

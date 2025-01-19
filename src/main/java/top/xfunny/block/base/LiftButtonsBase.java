@@ -30,7 +30,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     public static final BooleanProperty SINGLE = BooleanProperty.of("single");
     public static boolean allowPress;
     private final boolean isOdd;
-    private double median = 0.5;//判定按下上、下按钮的分界线
+    private double median = 0.25;//判定按下上、下按钮的分界线
 
 
     public LiftButtonsBase(boolean allowPress, boolean isOdd) {

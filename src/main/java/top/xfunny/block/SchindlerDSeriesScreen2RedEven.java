@@ -10,10 +10,8 @@ import top.xfunny.block.base.LiftPanelBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-import static org.mtr.mod.block.IBlock.SIDE;
-
-public class SchindlerDSeriesScreen1Even extends LiftPanelBase {
-    public SchindlerDSeriesScreen1Even() {
+public class SchindlerDSeriesScreen2RedEven extends LiftPanelBase {
+    public SchindlerDSeriesScreen2RedEven() {
         super(false);
     }
 
@@ -34,7 +32,7 @@ public class SchindlerDSeriesScreen1Even extends LiftPanelBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SchindlerDSeriesScreen1Even.BlockEntity(blockPos, blockState);
+        return new SchindlerDSeriesScreen2RedEven.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -47,8 +45,7 @@ public class SchindlerDSeriesScreen1Even extends LiftPanelBase {
     public static class BlockEntity extends BlockEntityBase {
 
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_EVEN.get(), pos, state);
+            super(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN.get(), pos, state);
         }
     }
-
 }

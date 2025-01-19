@@ -109,10 +109,10 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 screenLayout.addChild(liftFloorDisplayView);
-                parentLayout.addChild(screenLayout);
             }
         }
         parentLayout.addChild(background);
+        parentLayout.addChild(screenLayout);
         parentLayout.render();
     }
 }
