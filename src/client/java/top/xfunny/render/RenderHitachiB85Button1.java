@@ -165,15 +165,15 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("acmeled"),//字体
+                        FontList.instance.getFont("hitachi_b85"),//字体
                         10,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("hitachi_b85_screen_1_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
-                liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setMargin(0, (float) 0.2 / 16, 0, 0);
+
+                liftFloorDisplayView.setMargin((float) 0.2 / 16, (float) 0.2 / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
