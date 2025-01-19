@@ -16,7 +16,7 @@ public class YteRouteMapGenerator implements IGui {
     private static int fontSizeBig;
     private static int fontSizeSmall;
 
-    public static NativeImage generateImage(String text, int textColor, Font font, int fontSize, int padding) {
+    public static NativeImage generateImage(String text, int textColor, Font font, int fontSize, int padding, int letterSpacing) {
         setConstants();
         try {
             Init.LOGGER.info("贴图生成中");
@@ -28,7 +28,8 @@ public class YteRouteMapGenerator implements IGui {
                     90,
                     fontSizeSmall * fontSize,
                     padding,
-                    font);
+                    font,
+                    letterSpacing);
 
             totalWidth = TextureCache.instance.totalWidth;
 
@@ -38,7 +39,8 @@ public class YteRouteMapGenerator implements IGui {
             final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
             nativeImage.fillRect(0, 0, totalWidth, height, 0);
             YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
-            YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK));
+            YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);
+
             Init.LOGGER.info("nativeImageWidth" + nativeImage.getWidth());
             //top.xfunny.util.ImageGenerator.saveNativeImageAsPng(nativeImage, "output_image.png");
             return nativeImage;
@@ -56,15 +58,96 @@ public class YteRouteMapGenerator implements IGui {
         fontSizeSmall = fontSizeBig / 2;
     }
 
-    public static void clearColor(NativeImage nativeImage, int color) {
-        for (int x = 0; x < nativeImage.getWidth(); x++) {
-            for (int y = 0; y < nativeImage.getHeight(); y++) {
-                if (nativeImage.getColor(x, y) == color) {
-                    nativeImage.setPixelColor(x, y, 0);
-                }
+ public static void clearColor(NativeImage nativeImage, int targetColor, int tolerance) {
+    int width = nativeImage.getWidth();
+    int height = nativeImage.getHeight();
+
+    int targetR = (targetColor >> 16) & 0xFF;
+    int targetG = (targetColor >> 8) & 0xFF;
+    int targetB = targetColor & 0xFF;
+    int targetA = (targetColor >> 24) & 0xFF;
+
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            int currentColor = nativeImage.getColor(x, y);
+
+            int currentR = (currentColor >> 16) & 0xFF;
+            int currentG = (currentColor >> 8) & 0xFF;
+            int currentB = currentColor & 0xFF;
+            int currentA = (currentColor >> 24) & 0xFF;
+
+            int deltaR = Math.abs(currentR - targetR);
+            int deltaG = Math.abs(currentG - targetG);
+            int deltaB = Math.abs(currentB - targetB);
+            int deltaA = Math.abs(currentA - targetA);
+
+            if (deltaR <= tolerance && deltaG <= tolerance && deltaB <= tolerance && deltaA <= tolerance) {
+                // 将目标像素直接设置为完全透明
+                nativeImage.setPixelColor(x, y, 0);
+            } else {
+                // 对非匹配区域应用 FXAA 抗锯齿处理
+                int blurredColor = applyFXAA(nativeImage, x, y);
+                nativeImage.setPixelColor(x, y, blurredColor);
             }
         }
     }
+}
+
+private static int applyFXAA(NativeImage image, int x, int y) {
+    int width = image.getWidth();
+    int height = image.getHeight();
+
+    // 当前像素及其四周像素的颜色值
+    int colorCenter = image.getColor(x, y);
+    int colorLeft = x > 0 ? image.getColor(x - 1, y) : colorCenter;
+    int colorRight = x < width - 1 ? image.getColor(x + 1, y) : colorCenter;
+    int colorUp = y > 0 ? image.getColor(x, y - 1) : colorCenter;
+    int colorDown = y < height - 1 ? image.getColor(x, y + 1) : colorCenter;
+
+    // 检查透明度是否为 0（完全透明）
+    if (((colorCenter >> 24) & 0xFF) == 0) {
+        return 0; // 保持完全透明
+    }
+
+    // 计算加权平均颜色
+    int blendedR = (
+        ((colorLeft >> 16) & 0xFF) +
+        ((colorRight >> 16) & 0xFF) +
+        ((colorUp >> 16) & 0xFF) +
+        ((colorDown >> 16) & 0xFF) +
+        ((colorCenter >> 16) & 0xFF)
+    ) / 5;
+
+    int blendedG = (
+        ((colorLeft >> 8) & 0xFF) +
+        ((colorRight >> 8) & 0xFF) +
+        ((colorUp >> 8) & 0xFF) +
+        ((colorDown >> 8) & 0xFF) +
+        ((colorCenter >> 8) & 0xFF)
+    ) / 5;
+
+    int blendedB = (
+        (colorLeft & 0xFF) +
+        (colorRight & 0xFF) +
+        (colorUp & 0xFF) +
+        (colorDown & 0xFF) +
+        (colorCenter & 0xFF)
+    ) / 5;
+
+    int blendedA = (
+        ((colorLeft >> 24) & 0xFF) +
+        ((colorRight >> 24) & 0xFF) +
+        ((colorUp >> 24) & 0xFF) +
+        ((colorDown >> 24) & 0xFF) +
+        ((colorCenter >> 24) & 0xFF)
+    ) / 5;
+
+    // 返回模糊后的颜色
+    return (blendedA << 24) | (blendedR << 16) | (blendedG << 8) | blendedB;
+}
+
+
+
 
     public static void drawString(NativeImage nativeImage, byte[] pixels, int x, int y, int[] textDimensions, IGui.HorizontalAlignment horizontalAlignment, IGui.VerticalAlignment verticalAlignment, int backgroundColor, int textColor, boolean rotate90) {
         if (((backgroundColor >> 24) & 0xFF) > 0) {

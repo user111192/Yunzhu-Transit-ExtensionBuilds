@@ -3,78 +3,78 @@
     {
       "when": {
         "facing": "north",
-        "side": "left"
+        "single": "true"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left"
+        "model": "yte:block/hitachi_b85_button_1_single"
       }
     },
     {
       "when": {
         "facing": "east",
-        "side": "left"
+        "single": "true"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/hitachi_b85_button_1_single",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "south",
-        "side": "left"
+        "single": "true"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/hitachi_b85_button_1_single",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "west",
-        "side": "left"
+        "single": "true"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/hitachi_b85_button_1_single",
         "y": 270
       }
     },
     {
       "when": {
         "facing": "north",
-        "side": "right"
+        "single": "false"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right"
+        "model": "yte:block/hitachi_b85_button_1"
       }
     },
     {
       "when": {
         "facing": "east",
-        "side": "right"
+        "single": "false"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/hitachi_b85_button_1",
         "y": 90
       }
     },
     {
       "when": {
         "facing": "south",
-        "side": "right"
+        "single": "false"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/hitachi_b85_button_1",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "west",
-        "side": "right"
+        "single": "false"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/hitachi_b85_button_1",
         "y": 270
       }
     }

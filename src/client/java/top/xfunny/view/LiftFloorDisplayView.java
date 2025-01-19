@@ -30,6 +30,7 @@ public class LiftFloorDisplayView implements RenderView {
     private StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
     private Font font;
     private int color;
+    private int letterSpacing = 0;
     private World world;
     private BlockPos blockPos;
     private Lift lift;
@@ -119,7 +120,7 @@ public class LiftFloorDisplayView implements RenderView {
         this.gameTick = org.mtr.mod.InitClient.getGameTick();
         if (!noFloorNumber || !noFloorDisplay) {
             this.text = String.format("%s%s", floorNumber, noFloorNumber ? " " : "");
-            this.texture = TextureList.instance.renderFont(textureId, text, color, font, fontSize);
+            this.texture = TextureList.instance.renderFont(textureId, text, color, font, fontSize, letterSpacing);
             int rawTextWidth = texture.width;
             int rawTextHeight = texture.height;
             float scale = (float) rawTextHeight / height;
@@ -154,6 +155,10 @@ public class LiftFloorDisplayView implements RenderView {
 
     public void setTextAlign(TextAlign textAlign) {
         this.textAlign = textAlign;
+    }
+
+     public void setLetterSpacing(int letterSpacing) {
+        this.letterSpacing = letterSpacing;
     }
 
     private void calculateTextPositionX() {

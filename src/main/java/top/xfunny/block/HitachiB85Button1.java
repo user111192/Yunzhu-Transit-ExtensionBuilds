@@ -10,21 +10,22 @@ import top.xfunny.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class SchindlerSSeriesGreyButton extends LiftButtonsBase {
-    public SchindlerSSeriesGreyButton() {
-        super(true, true);
-    }
+public class HitachiB85Button1 extends LiftButtonsBase {
 
+    public HitachiB85Button1() {
+        super(true, true, 0.125);
+    }
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(6.25, 0, 0, 9.75, 9, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
+        return IBlock.getVoxelShapeByDirection(single? 6 : 7, 0, 0, single? 10 : 9, 8.875, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SchindlerSSeriesGreyButton.BlockEntity(blockPos, blockState);
+        return new BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -36,8 +37,7 @@ public class SchindlerSSeriesGreyButton extends LiftButtonsBase {
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.SCHINDLER_S_SERIES_GREY_BUTTON.get(), pos, state);
+            super(BlockEntityTypes.HITACHI_B85_BUTTON_1.get(), pos, state);
         }
     }
 }
-

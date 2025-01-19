@@ -34,7 +34,7 @@ public class FrameLayout implements RenderView {
     private int backgroundColor;
     private World world;
     private BlockPos blockPos;
-    private Consumer<GraphicsHolder> add;
+    private Consumer<GraphicsHolder> transformation;
 
     @Override
     public String getId() {
@@ -55,12 +55,13 @@ public class FrameLayout implements RenderView {
         calculateSelfCoordinateOrigin();
 
         StoredMatrixTransformations matrixTransformations = storedMatrixTransformations.copy();
+        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         matrixTransformations.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.43 - SMALL_OFFSET);
         });
 
-        if (add != null) {
-            matrixTransformations.add(add);
+        if (transformation != null) {
+            storedMatrixTransformations1.add(transformation);
         }
 
         MainRenderer.scheduleRender(
@@ -77,14 +78,19 @@ public class FrameLayout implements RenderView {
             float[] margin = child.getMargin();
             Gravity childGravity = child.getGravity();
             child.setParentType(this);
-            child.setStoredMatrixTransformations(storedMatrixTransformations);
+            child.setStoredMatrixTransformations(storedMatrixTransformations1);
             child.setParentDimensions(width, height);
             child.calculateLayoutWidth();
             child.calculateLayoutHeight();
             float[] childGravityPositionOffset = calculateChildGravityOffset(child.getWidth(), child.getHeight(), margin, childGravity);
             child.setPosition(coordinateOriginX + childGravityPositionOffset[0], coordinateOriginY + height - margin[1] - child.getHeight() + childGravityPositionOffset[1]);
             child.render();
+
+            storedMatrixTransformations1.add(graphicsHolder -> {
+            graphicsHolder.translate(0, 0, -SMALL_OFFSET);
+        });
         }
+
     }
 
     public void addChild(RenderView child) {
@@ -218,7 +224,7 @@ public class FrameLayout implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        this.add = transformation;
+        this.transformation = transformation;
     }
 
     public void setBackgroundColor(int color) {

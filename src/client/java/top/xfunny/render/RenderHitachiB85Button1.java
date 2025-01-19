@@ -14,8 +14,8 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.block.HitachiB85Button1;
 import top.xfunny.block.MitsubishiNexWayButton1;
-import top.xfunny.block.MitsubishiNexWayButton2;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -27,20 +27,21 @@ import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
 
-public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<MitsubishiNexWayButton2.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xFFFFCC66;
-    private static final int PRESSED_COLOR = 0xFFFF8800;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+    private static final int HOVER_COLOR = 0xFFCCFFDD;
+    private static final int PRESSED_COLOR = 0xFFFFCC66;
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/hitachi_b85_arrow_1.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/hitachi_b85_button.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/hitachi_b85_button_light.png");
+    private static final Identifier SCREEN_BACKGROUND_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/hitachi_b85_screen_1.png");
 
-    public RenderMitsubishiNexWayButton2(Argument dispatcher) {
+    public RenderHitachiB85Button1(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiNexWayButton2.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiB85Button1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -61,15 +62,15 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
+        parentLayout.setParentDimensions((float) 4 / 16, (float) 8.875 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
+        parentLayout.setPosition((float) -0.125, (float) 0);//通过设置坐标的方式设置底层layout的位置
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
@@ -79,15 +80,16 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 0.7 / 16, 0, 0);//设置外边距，可选
-
+        screenLayout.setMargin(0, (float) 1.4 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setBackgroundColor(0xFF000000);
+        screenLayout.setId("screen");
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
+        buttonLayout.setMargin(0, (float) 0.5 / 16, 0, 0);
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
@@ -100,7 +102,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
         button.setWidth(1F / 16);//按钮宽度
         button.setHeight(1F / 16);//按钮高度
-        button.setSpacing(0.5F / 16);//两个按钮的间距
+        button.setSpacing(0.2F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
@@ -110,10 +112,11 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_TEXTURE, true);
+        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
         buttonLight.setWidth(1F / 16);
         buttonLight.setHeight(1F / 16);
-        buttonLight.setSpacing(0.5F / 16);
+        buttonLight.setClientMedian(0.125);
+        buttonLight.setSpacing(0.2F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         //添加外呼与楼层轨道的连线
@@ -129,7 +132,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            MitsubishiNexWayButton2.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiB85Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -162,26 +165,41 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("mitsubishi_modern"),//字体
-                        6,//字号
-                        0xFFFFAA00);//字体颜色
+                        FontList.instance.getFont("acmeled"),//字体
+                        10,//字号
+                        0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.7 / 16);//显示屏宽度
-                liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
+                liftFloorDisplayView.setTextureId("hitachi_b85_screen_1_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setMargin(0, (float) 0.2 / 16, 0, 0);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 1 / 24);
-                liftArrowView.setHeight((float) 1 / 24);
-                liftArrowView.setMargin(0, (float) 1/ 16, 0, 0);
+                liftArrowView.setWidth((float) 0.4 / 16);
+                liftArrowView.setHeight((float) 0.4/ 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setColor(0xFFFFAA00);
+                liftArrowView.setMargin(0, 0, 0, (float) 0.2 / 16);
+                liftArrowView.setColor(0xFFFF0000);
+
+                final FrameLayout backgroundLayout = new FrameLayout();
+                backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
+                backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
+                backgroundLayout.setMargin((float) 0.42 / 16, 0, (float) 0.42 / 16, 0);
+                backgroundLayout.setId("background_"+i);
+
+                final ImageView screenBackground = new ImageView();
+                screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
+                screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
+                screenBackground.setWidth((float) 1 / 16);
+                screenBackground.setScale((float) 211 / 113);
+                screenBackground.setGravity(Gravity.CENTER);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
@@ -190,12 +208,18 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
+                numberLayout.setGravity(Gravity.CENTER);
+
                 //将外呼显示屏添加到刚才设定的screenLayout线性布局中
                 if (reverseRendering) {
-                    screenLayout.addChild(numberLayout);
+                    backgroundLayout.addChild(screenBackground);
+                    backgroundLayout.addChild(numberLayout);
+                    screenLayout.addChild(backgroundLayout);
                     screenLayout.reverseChildren();
                 } else {
-                    screenLayout.addChild(numberLayout);
+                    backgroundLayout.addChild(screenBackground);
+                    backgroundLayout.addChild(numberLayout);
+                    screenLayout.addChild(backgroundLayout);
                 }
             }
         }

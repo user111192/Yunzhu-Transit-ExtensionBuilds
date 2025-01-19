@@ -19,10 +19,17 @@ public class LinkerValidTypes {
             MitsubishiNexWayButton1.class,
             MitsubishiNexWayButton2.class,
             SchindlerDSeriesD2Button.class,
+            SchindlerDSeriesScreen1Even.class,
+            SchindlerDSeriesScreen1Odd.class,
+            SchindlerDSeriesScreen2GreenEven.class,
+            SchindlerDSeriesScreen2GreenOdd.class,
             SchindlerMSeriesButton.class,
             SchindlerMSeriesTouchButton.class,
             SchindlerMSeriesScreen1.class,
             SchindlerMSeriesScreen2Odd.class,
-            SchindlerMSeriesScreen2Even.class
+            SchindlerMSeriesScreen2Even.class,
+            SchindlerSSeriesGreyButton.class,
+            HitachiB85Button1.class
+
     ));
 }

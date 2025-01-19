@@ -4,6 +4,7 @@ import org.mtr.core.data.Lift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
+import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class LiftPanelBase extends BlockExtension implements DirectionHelper, BlockWithEntity {
+public abstract class LiftPanelBase extends BlockExtension implements DirectionHelper, BlockWithEntity, IBlock {
     private final boolean isOdd;
 
     public LiftPanelBase(Boolean isOdd) {
@@ -71,12 +72,35 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
         // 获取玩家面对的方向
         final Direction facing = ctx.getPlayerFacing();
         // 根据默认状态和玩家面对的方向来设置方块状态，并返回
-        return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+        if (!isOdd) {
+            return IBlock.isReplaceable(ctx, facing.rotateYClockwise(), 2) ? getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), IBlock.EnumSide.LEFT) : null;
+        } else {
+            return getDefaultState2().with(new Property<>(FACING.data), facing.data);
+        }
     }
 
-    @FunctionalInterface
-    public interface FloorLiftCallback {
-        void accept(int floor, Lift lift);
+    @Override
+    public void onPlaced2(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (!world.isClient()) {
+            final Direction facing = IBlock.getStatePropertySafe(state, FACING);
+            if (!isOdd) {
+                world.setBlockState(pos.offset(facing.rotateYClockwise()), getDefaultState2().with(new Property<>(FACING.data), facing.data).with(new Property<>(SIDE.data), EnumSide.RIGHT), 3);
+            }
+            world.updateNeighbors(pos, Blocks.getAirMapped());
+            state.updateNeighbors(new WorldAccess(world.data), pos, 3);
+        }
+    }
+
+    @Override
+    public void onBreak2(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!isOdd) {
+            if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
+                IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
+            }else if(IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT){
+                IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
+            }
+        }
+        super.onBreak2(world, pos, state, player);
     }
 
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry {
@@ -138,14 +162,22 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
          */
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
             Init.LOGGER.info("正在操作");
-            if (isAdd) {
-                // 如果是添加操作，则将位置添加到跟踪列表中
-                trackPositions.add(pos);
-                Init.LOGGER.info("已添加");
-            } else {
-                // 如果是非添加操作，则从跟踪列表中移除该位置
-                trackPositions.remove(pos);
-                Init.LOGGER.info("已移除");
+
+            if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+                final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
+                if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
+                    ((LiftButtonsBase.BlockEntityBase) blockEntity.data).registerFloor(selfPos, world, pos, isAdd);
+                }
+            }else{
+                if (isAdd) {
+                    // 如果是添加操作，则将位置添加到跟踪列表中
+                    trackPositions.add(pos);
+                    Init.LOGGER.info("已添加");
+                } else {
+                    // 如果是非添加操作，则从跟踪列表中移除该位置
+                    trackPositions.remove(pos);
+                    Init.LOGGER.info("已移除");
+                }
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
             markDirty2();

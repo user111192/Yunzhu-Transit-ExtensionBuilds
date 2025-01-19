@@ -6,7 +6,7 @@
         "side": "left"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left"
+        "model": "yte:block/schindler_d_series_screen_2_green_even_left"
       }
     },
     {
@@ -15,7 +15,7 @@
         "side": "left"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_left",
         "y": 90
       }
     },
@@ -25,7 +25,7 @@
         "side": "left"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_left",
         "y": 180
       }
     },
@@ -35,7 +35,7 @@
         "side": "left"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_left",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_left",
         "y": 270
       }
     },
@@ -45,7 +45,7 @@
         "side": "right"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right"
+        "model": "yte:block/schindler_d_series_screen_2_green_even_right"
       }
     },
     {
@@ -54,7 +54,7 @@
         "side": "right"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_right",
         "y": 90
       }
     },
@@ -64,7 +64,7 @@
         "side": "right"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_right",
         "y": 180
       }
     },
@@ -74,7 +74,7 @@
         "side": "right"
       },
       "apply": {
-        "model": "yte:block/schindler_m_series_screen_2_even_right",
+        "model": "yte:block/schindler_d_series_screen_2_green_even_right",
         "y": 270
       }
     }

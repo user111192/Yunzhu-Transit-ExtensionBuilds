@@ -39,6 +39,7 @@ public class LinearLayout implements RenderView {
     private LayoutSize heightType = LayoutSize.WRAP_CONTENT;
     private String id;
     private int backgroundColor = 0x00000000;
+    private Consumer<GraphicsHolder> transformation;
 
     public LinearLayout(Boolean isVertical) {
         this.isVertical = isVertical;
@@ -57,6 +58,9 @@ public class LinearLayout implements RenderView {
     public void render() {
         BlockState blockState = world.getBlockState(blockPos);
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        if (transformation != null) {
+            storedMatrixTransformations.add(transformation);
+        }
 
         calculateLayoutWidth();
         calculateLayoutHeight();
@@ -190,7 +194,7 @@ public class LinearLayout implements RenderView {
     public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
         float[] offset = new float[2];
         if (childGravity == null) {
-            offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[2]};//默认位于左上角
+            offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[1]};//默认位于左上角
         } else {
             switch (childGravity) {
                 case START -> {
@@ -279,7 +283,7 @@ public class LinearLayout implements RenderView {
     }
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
-        storedMatrixTransformations.add(transformation);//通常情况下用于调整z轴
+        this.transformation = transformation;//通常情况下用于调整z轴
     }
 
     public void setBackgroundColor(int color) {

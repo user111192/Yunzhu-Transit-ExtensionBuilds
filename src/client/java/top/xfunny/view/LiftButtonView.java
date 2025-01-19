@@ -38,6 +38,9 @@ public class LiftButtonView implements RenderView {
     private boolean repeatButton;
     private boolean verticalAlignment;
     private boolean isLantern;
+    private double clientMedian;
+
+
 
 
     @Override
@@ -72,8 +75,8 @@ public class LiftButtonView implements RenderView {
             final Vector3d hitLocation = hitResult.getPos();
             final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
             final boolean inBlock = hitY < 0.5 && Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
-            lookingAtTopHalf = inBlock && (!buttonDescriptor.hasDownButton() || hitY > 0.25);
-            lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < 0.25);
+            lookingAtTopHalf = inBlock && (!buttonDescriptor.hasDownButton() || hitY > clientMedian);
+            lookingAtBottomHalf = inBlock && (!buttonDescriptor.hasUpButton() || hitY < clientMedian);
         }
 
         // 如果有下按钮，进行渲染
@@ -85,7 +88,7 @@ public class LiftButtonView implements RenderView {
                         IDrawing.drawTexture(
                                 graphicsHolder,
                                 xLeft, yDown, width, height,
-                                0, reverse ? 0 : 1, 1, reverse ? 1 : 0,
+                                1, reverse ? 0 : 1, 0, reverse ? 1 : 0,
                                 facing,
                                 buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
                                 light
@@ -103,7 +106,7 @@ public class LiftButtonView implements RenderView {
                         IDrawing.drawTexture(
                                 graphicsHolder,
                                 xRight, yUp, width, height,
-                                0, reverse ? 0 : 1, 1, reverse ? 1 : 0,
+                                1, reverse ? 0 : 1, 0, reverse ? 1 : 0,
                                 facing,
                                 buttonStates[0] ? pressedDownColor : (lookingAtBottomHalf ? hoverDownColor : defaultDownColor),
                                 light
@@ -122,7 +125,7 @@ public class LiftButtonView implements RenderView {
                         IDrawing.drawTexture(
                                 graphicsHolder,
                                 xRight, yUp, width, height,
-                                0, 1, 1, 0,
+                                1, 1, 0, 0,
                                 facing,
                                 buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
                                 light
@@ -140,7 +143,7 @@ public class LiftButtonView implements RenderView {
                         IDrawing.drawTexture(
                                 graphicsHolder,
                                 xLeft, yDown, width, height,
-                                0, 1, 1, 0,
+                                1, 1, 0, 0,
                                 facing,
                                 buttonStates[1] ? pressedUpColor : (lookingAtTopHalf ? hoverUpColor : defaultUpColor),
                                 light
@@ -311,6 +314,10 @@ public class LiftButtonView implements RenderView {
         this.upButtonTexture = upButtonTexture;
         this.downButtonTexture = downButtonTexture;
         this.reverse = reverse;
+    }
+
+    public void setClientMedian(double clientMedian) {
+        this.clientMedian = clientMedian;
     }
 
     public void setSpacing(float spacing) {

@@ -17,13 +17,20 @@ public class FontList {
     Font koneModernization;
     Font schindler_m_series;
     Font mitsubishi_modern;
+    Font schindler_lcd;
+    Font schindler_led;
 
     public void FontReload() {
         font1 = null;
         fontCjk1 = null;
+        otis_series1 = null;
         testfont = null;
+        acmeled = null;
         koneModernization = null;
+        schindler_m_series = null;
         mitsubishi_modern = null;
+        schindler_lcd = null;
+        schindler_led = null;
     }
 
     public void FlonList() {
@@ -105,6 +112,24 @@ public class FontList {
                 }
             });
         }
+        while (schindler_lcd == null) {
+            ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler_lcd.ttf"), inputStream -> {
+                try {
+                    schindler_lcd = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+                } catch (Exception e) {
+                    Init.LOGGER.error("", e);
+                }
+            });
+        }
+        while (schindler_led == null) {
+            ResourceManagerHelper.readResource(new Identifier(Init.MOD_ID, "font/schindler-led.ttf"), inputStream -> {
+                try {
+                    schindler_led = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+                } catch (Exception e) {
+                    Init.LOGGER.error("", e);
+                }
+            });
+        }
     }
 
     public Font getFont(String fontId) {
@@ -125,6 +150,10 @@ public class FontList {
                 return schindler_m_series;
             case "mitsubishi_modern":
                 return mitsubishi_modern;
+            case "schindler_lcd":
+                return schindler_lcd;
+            case "schindler_led":
+                return schindler_led;
             default:
                 // 返回默认字体或抛出异常
                 return new Font("Arial", Font.PLAIN, 12); // 默认字体

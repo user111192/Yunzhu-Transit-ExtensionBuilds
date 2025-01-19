@@ -30,12 +30,21 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     public static final BooleanProperty SINGLE = BooleanProperty.of("single");
     public static boolean allowPress;
     private final boolean isOdd;
+    private double median = 0.5;//判定按下上、下按钮的分界线
 
 
     public LiftButtonsBase(boolean allowPress, boolean isOdd) {
         super(BlockHelper.createBlockSettings(true));
         this.isOdd = isOdd;
         this.allowPress = allowPress;
+        Init.LOGGER.info("LiftButtonsBase init");
+    }
+
+    public LiftButtonsBase(boolean allowPress, boolean isOdd, double median) {
+        super(BlockHelper.createBlockSettings(true));
+        this.isOdd = isOdd;
+        this.allowPress = allowPress;
+        this.median = median;
         Init.LOGGER.info("LiftButtonsBase init");
     }
 
@@ -115,7 +124,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                                 if (lanternBlockEntity != null) {
                                     LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
 
-                                    if (hitY < 0.25) {
+                                    if (hitY < median) {
                                         lanternData.setPressedButtonDirection(LiftDirection.DOWN);
                                     } else {
                                         lanternData.setPressedButtonDirection(LiftDirection.UP);
@@ -124,7 +133,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
                             });
 
-                            data.liftDirection = hitY < 0.25 ? LiftDirection.DOWN : LiftDirection.UP;
+                            data.liftDirection = hitY < median ? LiftDirection.DOWN : LiftDirection.UP;
                         } else {  // 只有单个方向的按钮
                             connectedLanternPositions.forEach(lanternPos -> {
                                 BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
@@ -187,6 +196,8 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     public void onBreak2(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!isOdd) {
             if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
+                IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
+            }else if(IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT){
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
             }
         }
@@ -338,23 +349,23 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
             Init.LOGGER.info("正在进行外呼关联");
 
-             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
+            if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
                 final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
                 if (blockEntity != null && blockEntity.data instanceof BlockEntityBase) {
                     ((BlockEntityBase) blockEntity.data).registerButton(world, blockPos, isAdd);
                 }
             }else{
-                 if (isAdd) {
-                // 如果是添加操作，则将位置添加到跟踪列表中
-                liftButtonPositions.add(blockPos);
-                Init.LOGGER.info("已添加到站灯" + blockPos.toShortString());
-                Init.LOGGER.info("lanternPositions" + liftButtonPositions);
-            } else {
-                // 如果是非添加操作，则从跟踪列表中移除该位置
-                liftButtonPositions.remove(blockPos);
-                Init.LOGGER.info("已移除到站灯");
+                if (isAdd) {
+                    // 如果是添加操作，则将位置添加到跟踪列表中
+                    liftButtonPositions.add(blockPos);
+                    Init.LOGGER.info("已添加到站灯" + blockPos.toShortString());
+                    Init.LOGGER.info("lanternPositions" + liftButtonPositions);
+                } else {
+                    // 如果是非添加操作，则从跟踪列表中移除该位置
+                    liftButtonPositions.remove(blockPos);
+                    Init.LOGGER.info("已移除到站灯");
+                }
             }
-             }
 
 
             markDirty2();
