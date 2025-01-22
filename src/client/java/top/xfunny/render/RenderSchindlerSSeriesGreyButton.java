@@ -78,7 +78,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
         button.setTexture(BUTTON_TEXTURE, true);
         button.setWidth(2F / 16);
         button.setHeight(2F / 16);
-        button.setSpacing(1.5F / 16);
+        button.setSpacing(1F / 16);
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
@@ -91,7 +91,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
         buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, true);
         buttonLight.setWidth(2F / 16);
         buttonLight.setHeight(2F / 16);
-        buttonLight.setSpacing(1.5F / 16);
+        buttonLight.setSpacing(1F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();
