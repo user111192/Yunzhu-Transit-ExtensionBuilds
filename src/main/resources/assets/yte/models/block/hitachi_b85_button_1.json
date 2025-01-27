@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"texture_size": [16, 80],
 	"textures": {
-		"5": "yte:block/hitachi_b85_panel_2",
+		"5": "yte:block/hitachi_b85_panel_1",
 		"particle": "yte:block/hitachi_b85_arrow_1"
 	},
 	"elements": [
