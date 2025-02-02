@@ -18,6 +18,7 @@ public class LinkerValidTypes {
             TestLiftPanel.class,
             MitsubishiNexWayButton1.class,
             MitsubishiNexWayButton2.class,
+            MitsubishiNexWayButton3.class,
             SchindlerDSeriesD2Button.class,
             SchindlerDSeriesScreen1Even.class,
             SchindlerDSeriesScreen1Odd.class,
