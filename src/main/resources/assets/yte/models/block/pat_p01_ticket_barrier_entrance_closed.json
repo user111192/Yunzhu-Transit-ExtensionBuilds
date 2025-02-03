@@ -1,13 +1,12 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "yte:block/screen_enterance_1",
+		"1": "yte:block/screen_entrance_1",
 		"2": "yte:block/metal",
 		"3": "yte:block/steel",
 		"5": "yte:block/ticket_barrier_1",
 		"6": "yte:block/screen_no_entry",
 		"7": "yte:block/black",
-		"8": "yte:block/arrow_down_left",
 		"particle": "yte:block/metal"
 	},
 	"elements": [
@@ -90,7 +89,7 @@
 				"east": {"uv": [0, 0, 2.5, 0], "texture": "#missing"},
 				"south": {"uv": [0, 0, 2.8, 0], "texture": "#missing"},
 				"west": {"uv": [0, 0, 2.5, 0], "texture": "#missing"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#1"}
+				"up": {"uv": [0, 0, 16, 8], "texture": "#1"}
 			}
 		},
 		{
@@ -255,24 +254,12 @@
 			}
 		},
 		{
-			"from": [13, 1.51, 14.145],
-			"to": [15, 3.51, 14.145],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [14, -5.5, 25.15]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#7"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#8"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#7"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#7"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#7"}
-			}
-		},
-		{
 			"from": [13, 1.51, 14.09],
 			"to": [15, 3.51, 14.09],
 			"rotation": {"angle": 22.5, "axis": "x", "origin": [14, -5.5, 25.1]},
 			"faces": {
 				"east": {"uv": [0, 0, 16, 16], "texture": "#7"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#7"},
+				"south": {"uv": [8.00625, 0, 9.5, 1.52031], "texture": "#5"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#7"},
 				"up": {"uv": [0, 0, 16, 16], "texture": "#7"},
 				"down": {"uv": [0, 0, 16, 16], "texture": "#7"}
@@ -961,18 +948,17 @@
 				28,
 				29,
 				30,
-				31,
 				{
 					"name": "ticket_exit",
 					"origin": [15.2, 3.05, 27.725],
 					"color": 0,
-					"children": [32, 33, 34, 35]
+					"children": [31, 32, 33, 34]
 				},
 				{
 					"name": "ticket_exit",
 					"origin": [15.2, 3.05, 27.725],
 					"color": 0,
-					"children": [36, 37, 38, 39]
+					"children": [35, 36, 37, 38]
 				}
 			]
 		},
@@ -980,13 +966,13 @@
 			"name": "side_part",
 			"origin": [14, 10, 14],
 			"color": 0,
-			"children": [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]
+			"children": [39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
 		},
 		{
 			"name": "flapper",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]
+			"children": [61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77]
 		}
 	]
 }
