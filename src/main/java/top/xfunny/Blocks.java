@@ -12,6 +12,8 @@ public class Blocks {
 
     public static final BlockRegistryObject TEST_LIFT_BUTTONS;
     public static final BlockRegistryObject TEST_LIFT_BUTTONS_WITHOUT_SCREEN;
+    public static final BlockRegistryObject TEST_LIFT_HALL_LANTERNS;
+    public static final BlockRegistryObject TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_1;
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
@@ -33,7 +35,6 @@ public class Blocks {
     public static final BlockRegistryObject TEST_LIFT_PANEL;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_1;
     public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
-    public static final BlockRegistryObject TEST_LIFT_HALL_LANTERNS;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_ODD;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_EVEN;
     public static final BlockRegistryObject HITACHI_B85_BUTTON_1;
@@ -56,6 +57,8 @@ public class Blocks {
         TEST_LIFT_HALL_LANTERNS = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_hall_lanterns"), () -> new Block(new TestLiftHallLanterns()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TEST_LIFT_PANEL = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_panel"), () -> new Block(new TestLiftPanel()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TEST_LIFT_BUTTONS_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_buttons_without_screen"), () -> new Block(new TestLiftButtonsWithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TEST_LIFT_DESTINATION_DISPATCH_TERMINAL = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_destination_dispatch_terminal"), () -> new Block(new TestLiftDestinationDispatchTerminal()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), () -> new Block(new OtisSeries1Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), () -> new Block(new OtisSeries1Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), () -> new Block(new OtisSeries1Screen()), CreativeModeTabs.YTE_LIFT_FIXTURES);

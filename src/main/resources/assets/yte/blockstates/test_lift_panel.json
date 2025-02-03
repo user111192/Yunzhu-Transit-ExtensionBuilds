@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north": {
-      "model": "mtr:block/lift_buttons_1"
+      "model": "yte:block/test_destination_dispatch_terminal"
     },
     "facing=east": {
-      "model": "mtr:block/lift_buttons_1",
+      "model": "yte:block/test_destination_dispatch_terminal",
       "y": 90
     },
     "facing=south": {
-      "model": "mtr:block/lift_buttons_1",
+      "model": "yte:block/test_destination_dispatch_terminal",
       "y": 180
     },
     "facing=west": {
-      "model": "mtr:block/lift_buttons_1",
+      "model": "yte:block/test_destination_dispatch_terminal",
       "y": 270
     }
   }

@@ -121,7 +121,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                         if (descriptor.hasDownButton() && descriptor.hasUpButton()) {
                             connectedLanternPositions.forEach(lanternPos -> {
                                 BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
-                                if (lanternBlockEntity != null) {
+                                if (lanternBlockEntity != null && lanternBlockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
                                     LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
 
                                     if (hitY < median) {
@@ -137,7 +137,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                         } else {  // 只有单个方向的按钮
                             connectedLanternPositions.forEach(lanternPos -> {
                                 BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
-                                if (lanternBlockEntity != null) {
+                                if (lanternBlockEntity != null && lanternBlockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
                                     LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
 
                                     if (descriptor.hasDownButton()) {
@@ -260,7 +260,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void readCompoundTag(CompoundTag compoundTag) {
-            Init.LOGGER.info("readCompoundTag");
 
             // 清空当前位置集合，准备加载新的数据
             trackPositions.clear();

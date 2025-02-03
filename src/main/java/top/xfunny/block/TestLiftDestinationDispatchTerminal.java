@@ -1,5 +1,7 @@
 package top.xfunny.block;
 
+
+
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
@@ -10,19 +12,16 @@ import top.xfunny.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-
-public class MitsubishiNexWayButton3 extends LiftButtonsBase {
-
-    public MitsubishiNexWayButton3() {
-        super(true, true);
+public class TestLiftDestinationDispatchTerminal extends LiftButtonsBase {
+    public TestLiftDestinationDispatchTerminal() {
+        super(false, false);
     }
 
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(!single? 7.05 : 6.55, 0.625, 0, !single? 8.95 : 9.45, 8.125, 0.5, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(4, 0, 0, 12, 16, 1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     /**
@@ -36,7 +35,7 @@ public class MitsubishiNexWayButton3 extends LiftButtonsBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BlockEntity(blockPos, blockState);
+        return new TestLiftButtons.BlockEntity(blockPos, blockState);
     }
 
     /**
@@ -51,6 +50,7 @@ public class MitsubishiNexWayButton3 extends LiftButtonsBase {
         properties.add(FACING);
         // 添加块的解锁状态属性
         properties.add(UNLOCKED);
+
         properties.add(SINGLE);
     }
 
@@ -58,17 +58,9 @@ public class MitsubishiNexWayButton3 extends LiftButtonsBase {
      * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension
      * 主要功能是通过CompoundTag来读取和写入特定位置集合
      */
-    public static class BlockEntity extends BlockEntityBase {
+    public static class BlockEntity extends LiftButtonsBase.BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_3.get(), pos, state);
+            super(BlockEntityTypes.TEST_LIFT_DESTINATION_DISPATCH_TERMINAL.get(), pos, state);
         }
     }
-
 }
-
-
-
-
-
-
-
