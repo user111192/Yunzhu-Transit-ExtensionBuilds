@@ -14,6 +14,7 @@ public class BlockEntityTypes {
 
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_2;
@@ -52,6 +53,7 @@ public class BlockEntityTypes {
 
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), MitsubishiNexWayButton1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1::get);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), MitsubishiNexWayButton2.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2::get);
+        MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_without_screen"), MitsubishiNexWayButton2WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_3 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3"), MitsubishiNexWayButton3.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3::get);
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_1::get);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_2::get);

@@ -19,6 +19,7 @@ public class Blocks {
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2;
+    public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_3;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_D2BUTTON;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_1_ODD;
@@ -53,6 +54,7 @@ public class Blocks {
         TEST_LIFT_BUTTONS = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_buttons"), () -> new Block(new TestLiftButtons()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), () -> new Block(new MitsubishiNexWayButton1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), () -> new Block(new MitsubishiNexWayButton2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_without_screen"), () -> new Block(new MitsubishiNexWayButton2WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_3 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3"), () -> new Block(new MitsubishiNexWayButton3()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TEST_LIFT_HALL_LANTERNS = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_hall_lanterns"), () -> new Block(new TestLiftHallLanterns()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TEST_LIFT_PANEL = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_panel"), () -> new Block(new TestLiftPanel()), CreativeModeTabs.YTE_LIFT_FIXTURES);
