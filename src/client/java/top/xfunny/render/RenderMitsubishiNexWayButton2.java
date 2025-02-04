@@ -16,6 +16,7 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.MitsubishiNexWayButton1;
 import top.xfunny.block.MitsubishiNexWayButton2;
+import top.xfunny.block.MitsubishiNexWayButton3;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -98,8 +99,8 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(1F / 16);//按钮宽度
-        button.setHeight(1F / 16);//按钮高度
+        button.setWidth(0.9F / 16);//按钮宽度
+        button.setHeight(0.9F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
@@ -111,8 +112,8 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(1F / 16);
-        buttonLight.setHeight(1F / 16);
+        buttonLight.setWidth(0.9F / 16);
+        buttonLight.setHeight(0.9F / 16);
         buttonLight.setSpacing(0.5F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
@@ -163,13 +164,14 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("mitsubishi_modern"),//字体
-                        6,//字号
+                        5,//字号
                         0xFFFFAA00);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.7 / 16);//显示屏宽度
+                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_2_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 1.2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftFloorDisplayView.setMargin((float) 0.1 / 16, 0, 0, 0);
+                //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
@@ -177,9 +179,9 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 1 / 24);
-                liftArrowView.setHeight((float) 1 / 24);
-                liftArrowView.setMargin(0, (float) 1/ 16, 0, 0);
+                liftArrowView.setWidth((float) 0.6 / 16);
+                liftArrowView.setHeight((float) 0.6 / 16);
+                liftArrowView.setMargin(0, (float) 1.07 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFAA00);
 

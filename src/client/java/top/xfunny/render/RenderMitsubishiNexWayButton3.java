@@ -97,8 +97,8 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(1F / 16);//按钮宽度
-        button.setHeight(1F / 16);//按钮高度
+        button.setWidth(0.9F / 16);//按钮宽度
+        button.setHeight(0.9F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
@@ -110,8 +110,8 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(1F / 16);
-        buttonLight.setHeight(1F / 16);
+        buttonLight.setWidth(0.9F / 16);
+        buttonLight.setHeight(0.9F / 16);
         buttonLight.setSpacing(0.5F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
@@ -166,7 +166,7 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
                         0xFFFFAA00);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_3_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.4 / 16);//显示屏宽度
+                liftFloorDisplayView.setWidth((float) 1.3 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
                 liftFloorDisplayView.setMargin((float) 0.1 / 16, 0, 0, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);

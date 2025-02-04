@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"1": "yte:block/mitsubishi_lantern_arrow",
-		"2": "yte:block/mitsubishi_ryoden_hall_screen_1",
+		"2": "yte:block/steel",
 		"3": "yte:block/black",
 		"particle": "yte:block/mitsubishi_lantern_arrow"
 	},

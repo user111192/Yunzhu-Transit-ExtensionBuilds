@@ -15,6 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.MitsubishiNexWayButton2WithoutScreen;
+import top.xfunny.block.MitsubishiNexWayButton3WithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -25,7 +26,7 @@ import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
 
-public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRenderer<MitsubishiNexWayButton2WithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRenderer<MitsubishiNexWayButton3WithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
@@ -33,12 +34,12 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
     private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
-    public RenderMitsubishiNexWayButton2WithoutScreen(Argument dispatcher) {
+    public RenderMitsubishiNexWayButton3WithoutScreen(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiNexWayButton2WithoutScreen.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(MitsubishiNexWayButton3WithoutScreen.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -59,7 +60,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -127,7 +128,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            MitsubishiNexWayButton2WithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            MitsubishiNexWayButton3WithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
