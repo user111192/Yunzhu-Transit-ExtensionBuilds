@@ -188,7 +188,6 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
-                numberLayout.setBackgroundColor(0xFF000000);
                 //将外呼显示屏添加到刚才设定的screenLayout线性布局中
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
