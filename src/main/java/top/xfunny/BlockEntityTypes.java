@@ -13,6 +13,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<TestLiftDestinationDispatchTerminal.BlockEntity> TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3;
@@ -39,6 +40,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerSSeriesGreyButton.BlockEntity> SCHINDLER_S_SERIES_GREY_BUTTON;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1.BlockEntity> HITACHI_B85_BUTTON_1;
 
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayDoor1.BlockEntity> MITSUBISHI_NEXWAY_DOOR_1;
     public static final BlockEntityTypeRegistryObject<SchindlerQKS9Door1.BlockEntity> SCHINDLER_QKS9_DOOR_1;
 
     public static final BlockEntityTypeRegistryObject<EmptyFloor.BlockEntity> LIFT_TRACK_EMPTY_FLOOR;
@@ -53,6 +55,7 @@ public class BlockEntityTypes {
 
 
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), MitsubishiNexWayButton1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1::get);
+        MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), MitsubishiNexWayButton1WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), MitsubishiNexWayButton2.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2::get);
         MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_without_screen"), MitsubishiNexWayButton2WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_3 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3"), MitsubishiNexWayButton3.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3::get);
@@ -78,6 +81,7 @@ public class BlockEntityTypes {
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), SchindlerSSeriesGreyButton.BlockEntity::new, Blocks.SCHINDLER_S_SERIES_GREY_BUTTON::get);
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
 
+        MITSUBISHI_NEXWAY_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_door_1"), MitsubishiNexWayDoor1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_DOOR_1::get);
         SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), SchindlerQKS9Door1.BlockEntity::new, Blocks.SCHINDLER_QKS9_DOOR_1::get);
 
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), EmptyFloor.BlockEntity::new, Blocks.LIFT_TRACK_EMPTY_FLOOR::get);

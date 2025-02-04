@@ -70,6 +70,8 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 		switch (type) {
 			case SCHINDLER_QKS9_DOOR_1:
 				return top.xfunny.Blocks.SCHINDLER_QKS9_DOOR_1.get().getDefaultState();
+            case MITSUBISHI_NEXWAY_DOOR_1:
+				return top.xfunny.Blocks.MITSUBISHI_NEXWAY_DOOR_1.get().getDefaultState();
 			default:
 				return org.mtr.mapping.holder.Blocks.getAirMapped().getDefaultState();
 		}
@@ -103,7 +105,7 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 
 	public enum EnumPSDAPGType {
 
-		SCHINDLER_QKS9_DOOR_1(false, false, true);
+		SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true);
 
 
 		private final boolean isPSD;

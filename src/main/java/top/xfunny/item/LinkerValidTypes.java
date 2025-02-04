@@ -17,6 +17,7 @@ public class LinkerValidTypes {
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             MitsubishiNexWayButton1.class,
+            MitsubishiNexWayButton1WithoutScreen.class,
             MitsubishiNexWayButton2.class,
             MitsubishiNexWayButton2WithoutScreen.class,
             MitsubishiNexWayButton3.class,

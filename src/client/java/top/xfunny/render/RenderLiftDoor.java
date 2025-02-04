@@ -157,6 +157,21 @@ public class RenderLiftDoor<T extends BlockAPGDoor.BlockEntityBase> extends Bloc
                     });
                 }
                 break;
+            case 5:
+                MainRenderer.scheduleRender(new Identifier(String.format("yte:textures/block/mitsubishi_nexway_door_%s_%s_1.png", half ? "top" : "bottom", side ? "right" : "left")), false, QueuedRenderLayer.EXTERIOR, (graphicsHolderNew, offset) -> {
+                    storedMatrixTransformations.transform(graphicsHolderNew, offset);
+                    (side ? MODEL_LIFT_RIGHT : MODEL_LIFT_LEFT).render(graphicsHolderNew, light, overlay, 1, 1, 1, 1);
+                    graphicsHolderNew.pop();
+                });
+                if (half && !unlocked) {
+                    MainRenderer.scheduleRender(new Identifier(Init.MOD_ID, "textures/block/sign/door_not_in_use.png"), false, QueuedRenderLayer.EXTERIOR, (graphicsHolderNew, offset) -> {
+                        storedMatrixTransformations.transform(graphicsHolderNew, offset);
+                        graphicsHolderNew.translate(side ? 0.125 : -0.125, 0, 0);
+                        MODEL_PSD_DOOR_LOCKED.render(graphicsHolderNew, light, overlay, 1, 1, 1, 1);
+                        graphicsHolderNew.pop();
+                    });
+                }
+                break;
         }
     }
 
