@@ -20,6 +20,7 @@ import top.xfunny.view.view_group.LinearLayout;
 
 public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRenderer<TestLiftDestinationDispatchTerminal.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
+    private static final int HOVER_COLOR = 0xFFFFCC66;
 
     public RenderTestLiftDestinationDispatchTerminal(Argument dispatcher, boolean isOdd) {
         super(dispatcher);
@@ -29,6 +30,8 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
     @Override
     public void render(TestLiftDestinationDispatchTerminal.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
+        final String screenId = blockEntity.getScreenId();
+
         if (world == null) {
             return;
         }
@@ -59,7 +62,8 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
-        final LinearLayout group1 = new LinearLayout(false);
+        if (screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){
+             final LinearLayout group1 = new LinearLayout(false);
         group1.setBasicsAttributes(world, blockEntity.getPos2());
         group1.setWidth(LayoutSize.MATCH_PARENT);
         group1.setHeight(LayoutSize.WRAP_CONTENT);
@@ -86,7 +90,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number1.setMargin(1F/16, 0, 0, 0);
         number1.setLight(light);
         number1.setDefaultColor(0xFFFFFFFF);
-        number1.setHoverColor(0xFF000000);
+        number1.setHoverColor(HOVER_COLOR);
         number1.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number1.png"));
 
         final ButtonView number2 = new ButtonView();
@@ -97,7 +101,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number2.setMargin(1F/16, 0, 0, 0);
         number2.setLight(light);
         number2.setDefaultColor(0xFFFFFFFF);
-        number2.setHoverColor(0xFF000000);
+        number2.setHoverColor(HOVER_COLOR);
         number2.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number2.png"));
 
         final ButtonView number3 = new ButtonView();
@@ -108,7 +112,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number3.setMargin(1F/16, 0, 0, 0);
         number3.setLight(light);
         number3.setDefaultColor(0xFFFFFFFF);
-        number3.setHoverColor(0xFF000000);
+        number3.setHoverColor(HOVER_COLOR);
         number3.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number3.png"));
 
         final ButtonView number4 = new ButtonView();
@@ -119,7 +123,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number4.setMargin(1F/16, 0, 0, 0);
         number4.setLight(light);
         number4.setDefaultColor(0xFFFFFFFF);
-        number4.setHoverColor(0xFF000000);
+        number4.setHoverColor(HOVER_COLOR);
         number4.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number4.png"));
 
         final ButtonView number5 = new ButtonView();
@@ -130,7 +134,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number5.setMargin(1F/16, 0, 0, 0);
         number5.setLight(light);
         number5.setDefaultColor(0xFFFFFFFF);
-        number5.setHoverColor(0xFF000000);
+        number5.setHoverColor(HOVER_COLOR);
         number5.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number5.png"));
 
         final ButtonView number6 = new ButtonView();
@@ -141,7 +145,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number6.setMargin(1F/16, 0, 0, 0);
         number6.setLight(light);
         number6.setDefaultColor(0xFFFFFFFF);
-        number6.setHoverColor(0xFF000000);
+        number6.setHoverColor(HOVER_COLOR);
         number6.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number6.png"));
 
         final ButtonView number7 = new ButtonView();
@@ -152,7 +156,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number7.setMargin(1F/16, 0, 0, 0);
         number7.setLight(light);
         number7.setDefaultColor(0xFFFFFFFF);
-        number7.setHoverColor(0xFF000000);
+        number7.setHoverColor(HOVER_COLOR);
         number7.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number7.png"));
 
         final ButtonView number8 = new ButtonView();
@@ -163,7 +167,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number8.setMargin(1F/16, 0, 0, 0);
         number8.setLight(light);
         number8.setDefaultColor(0xFFFFFFFF);
-        number8.setHoverColor(0xFF000000);
+        number8.setHoverColor(HOVER_COLOR);
         number8.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number8.png"));
 
         final ButtonView number9 = new ButtonView();
@@ -174,7 +178,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         number9.setMargin(1F/16, 0, 0, 0);
         number9.setLight(light);
         number9.setDefaultColor(0xFFFFFFFF);
-        number9.setHoverColor(0xFF000000);
+        number9.setHoverColor(HOVER_COLOR);
         number9.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/number9.png"));
 
         group1.addChild(number1);
@@ -192,6 +196,8 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         parentLayout.addChild(group1);
         parentLayout.addChild(group2);
         parentLayout.addChild(group3);
+        }
+
 
         parentLayout.render();
 

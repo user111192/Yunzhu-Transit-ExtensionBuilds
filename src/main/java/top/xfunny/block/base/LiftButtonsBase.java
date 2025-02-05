@@ -13,7 +13,7 @@ import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.Init;
 import top.xfunny.Items;
 import top.xfunny.LiftFloorRegistry;
-import top.xfunny.util.ButtonRegistry;
+import top.xfunny.ButtonRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

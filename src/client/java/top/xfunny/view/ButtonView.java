@@ -10,6 +10,7 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
+import top.xfunny.util.TransformPositionX;
 
 import java.util.function.Consumer;
 
@@ -51,10 +52,15 @@ public class ButtonView implements RenderView{
 
         final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
         final Vector3d hitLocation = hitResult.getPos();
+
         final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
         final double hitX = MathHelper.fractionalPart(hitLocation.getXMapped());
+        final double hitZ = MathHelper.fractionalPart(hitLocation.getZMapped());
+
         TestLiftDestinationDispatchTerminalKeyMapping mapping = new TestLiftDestinationDispatchTerminalKeyMapping();
-        String hitButton = mapping.mapping("test_lift_destination_dispatch_terminal_key_mapping_home", hitX, hitY);
+        double transformedX = TransformPositionX.transform(hitX, hitZ, facing);
+
+        String hitButton = mapping.mapping("test_lift_destination_dispatch_terminal_key_mapping_home", transformedX, hitY);
 
 
         MainRenderer.scheduleRender(

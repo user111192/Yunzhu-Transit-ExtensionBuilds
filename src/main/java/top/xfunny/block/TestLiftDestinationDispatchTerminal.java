@@ -5,9 +5,10 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
-import top.xfunny.Init;
+import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.block.base.LiftDestinationDispatchTerminalBase;
 import top.xfunny.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
+import top.xfunny.util.TransformPositionX;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -58,12 +59,23 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
     @Nonnull
     @Override
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
         final double hitX = MathHelper.fractionalPart(hit.getPos().getXMapped());
+        final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
+        final double hitZ = MathHelper.fractionalPart(hit.getPos().getZMapped());
+
+
+        final Direction facing = IBlock.getStatePropertySafe(state, FACING);
+        double transformedX = TransformPositionX.transform(hitX, hitZ, facing);
+        final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
+        final LiftDestinationDispatchTerminalBase.BlockEntityBase data = (LiftDestinationDispatchTerminalBase.BlockEntityBase) blockEntity.data;
 
         TestLiftDestinationDispatchTerminalKeyMapping mapping = new TestLiftDestinationDispatchTerminalKeyMapping();
-        String testOutput = mapping.mapping(screenId, hitX, hitY);
-        Init.LOGGER.info("hitx:"+hitX+",hity:"+hitY+",您点击了" + testOutput);
+
+        //todo:以后区分不同id下的点击事件
+        String testOutput = mapping.mapping(screenId, transformedX, hitY);
+
+
+        player.sendMessage(Text.of(("transformedX:"+transformedX+",hity:"+hitY+",您点击了" + testOutput)), true);
 
         return ActionResult.SUCCESS;
     }
@@ -75,6 +87,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
     public static class BlockEntity extends LiftDestinationDispatchTerminalBase.BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.TEST_LIFT_DESTINATION_DISPATCH_TERMINAL.get(), pos, state);
+            super.registerScreenId("test_lift_destination_dispatch_terminal_key_mapping_home");//初始化显示屏
         }
     }
 }

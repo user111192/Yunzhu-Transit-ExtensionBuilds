@@ -9,7 +9,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
-import top.xfunny.util.ButtonRegistry;
+import top.xfunny.ButtonRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,7 +50,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
     public abstract ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit);
 
 
-     @Override
+    @Override
     public BlockState getPlacementState2(ItemPlacementContext ctx) {
         // 获取玩家面对的方向
         final Direction facing = ctx.getPlayerFacing();
@@ -90,12 +90,13 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
-
         private static final String KEY_LIFT_BUTTON_POSITIONS = "lift_button_position";
+        private static final String KEY_SCREEN_ID = "screen_id";
+
 
         public final ObjectOpenHashSet<BlockPos> liftButtonPositions = new ObjectOpenHashSet<>();
-        // 存储需要追踪的位置的集合
         private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
+        private String screenId;
 
         public LiftDirection liftDirection = NONE;
 
@@ -139,11 +140,14 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             // 使用的键是KEY_TRACK_FLOOR_POS，值是trackPositionsList数组
             compoundTag.putLongArray(KEY_TRACK_FLOOR_POS, trackPositionsList);
 
+
             final List<Long> liftButtonPositionsList = new ArrayList<>();
             liftButtonPositions.forEach(position -> {
                 liftButtonPositionsList.add(position.asLong());
             });
             compoundTag.putLongArray(KEY_LIFT_BUTTON_POSITIONS, liftButtonPositionsList);
+
+            compoundTag.putString(KEY_SCREEN_ID,screenId);
         }
 
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
@@ -193,6 +197,14 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
 
             markDirty2();
+        }
+
+        public void registerScreenId(String screenId){
+            this.screenId = screenId;
+        }
+
+        public String getScreenId() {
+            return screenId;
         }
 
         public void forEachTrackPosition(Consumer<BlockPos> consumer) {

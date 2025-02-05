@@ -6,7 +6,7 @@ import org.mtr.mod.item.ItemBlockClickingBase;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.util.ButtonRegistry;
+import top.xfunny.ButtonRegistry;
 
 import static top.xfunny.item.LinkerValidTypes.VALID_TYPES;
 
