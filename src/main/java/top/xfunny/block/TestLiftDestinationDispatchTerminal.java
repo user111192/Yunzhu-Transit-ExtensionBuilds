@@ -5,12 +5,13 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
-import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.block.base.LiftDestinationDispatchTerminalBase;
 import top.xfunny.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
+import top.xfunny.util.ArrayListToString;
 import top.xfunny.util.TransformPositionX;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatchTerminalBase {
@@ -25,6 +26,11 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return IBlock.getVoxelShapeByDirection(0, 0, 0, 16, 11, 1, IBlock.getStatePropertySafe(state, FACING));
+    }
+
+
+    public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
+        LiftDestinationDispatchTerminalBase.hasButtonsClient(trackPosition, callback);//todo：需要注意
     }
 
     /**
@@ -68,11 +74,49 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
         double transformedX = TransformPositionX.transform(hitX, hitZ, facing);
         final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
         final LiftDestinationDispatchTerminalBase.BlockEntityBase data = (LiftDestinationDispatchTerminalBase.BlockEntityBase) blockEntity.data;
+        final TestLiftDestinationDispatchTerminal.BlockEntity data1 = (TestLiftDestinationDispatchTerminal.BlockEntity) blockEntity.data;
 
         TestLiftDestinationDispatchTerminalKeyMapping mapping = new TestLiftDestinationDispatchTerminalKeyMapping();
 
         //todo:以后区分不同id下的点击事件
         String testOutput = mapping.mapping(screenId, transformedX, hitY);
+        if(screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){//todo:可能没有必要进行判断
+            switch (testOutput){
+                case "number1":
+                    data1.addInputNumber(1);
+                    break;
+                case "number2":
+                    data1.addInputNumber(2);
+                    break;
+                case "number3":
+                    data1.addInputNumber(3);
+                    break;
+                case "number4":
+                    data1.addInputNumber(4);
+                    break;
+                case "number5":
+                    data1.addInputNumber(5);
+                    break;
+                case "number6":
+                    data1.addInputNumber(6);
+                    break;
+                case "number7":
+                    data1.addInputNumber(7);
+                    break;
+                case "number8":
+                    data1.addInputNumber(8);
+                    break;
+                case "number9":
+                    data1.addInputNumber(9);
+                    break;
+                case "number0":
+                    data1.addInputNumber(0);
+                    break;
+                case "clearNumber":
+                    data1.clearInputNumber();
+            }
+
+        }
 
 
         player.sendMessage(Text.of(("transformedX:"+transformedX+",hity:"+hitY+",您点击了" + testOutput)), true);
@@ -85,9 +129,28 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
      * 主要功能是通过CompoundTag来读取和写入特定位置集合
      */
     public static class BlockEntity extends LiftDestinationDispatchTerminalBase.BlockEntityBase {
+        public ArrayList<Object> inputNumber = new ArrayList<>();
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.TEST_LIFT_DESTINATION_DISPATCH_TERMINAL.get(), pos, state);
-            super.registerScreenId("test_lift_destination_dispatch_terminal_key_mapping_home");//初始化显示屏
+            super.registerScreenId("test_lift_destination_dispatch_terminal_key_mapping_home");//初始化screen
+            inputNumber.add("Please input floor number!");
+        }
+        public void addInputNumber(int number) {
+            if (ArrayListToString.arrayListToString(inputNumber).equals("Please input floor number!")){
+                clearInputNumber();
+            }
+            inputNumber.add(number);
+        }
+
+        public void clearInputNumber() {
+            inputNumber.clear();
+        }
+
+        public ArrayList<Object> getInputNumber() {
+            if (inputNumber.isEmpty()){
+                inputNumber.add("Please input floor number!");
+            }
+            return inputNumber;
         }
     }
 }

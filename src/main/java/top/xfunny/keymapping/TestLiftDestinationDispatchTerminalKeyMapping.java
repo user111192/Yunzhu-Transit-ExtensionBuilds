@@ -1,8 +1,5 @@
 package top.xfunny.keymapping;
 
-
-import org.mtr.mapping.holder.Direction;
-
 public class TestLiftDestinationDispatchTerminalKeyMapping {
     public String mapping(String screenId, double x, double hitY) {
         switch (screenId) {
@@ -34,6 +31,14 @@ public class TestLiftDestinationDispatchTerminalKeyMapping {
                 if (x > 0.0625 * 5 && x < 0.0625 * 6 && hitY > 0.125 && hitY < 0.1875) {
                     return "number9";
                 }
+                if (x > 0.0625 * 7 && x < 0.0625 * 8 && hitY > 0.25 && hitY < 0.3125) {
+                    return "number0";
+                }
+
+                if (x > 0.0625 * 7 && x < 0.0625 * 8 && hitY > 0.375 && hitY < 0.4375) {
+                    return "clearNumber";
+                }
+
         }
         return "null";
     }
