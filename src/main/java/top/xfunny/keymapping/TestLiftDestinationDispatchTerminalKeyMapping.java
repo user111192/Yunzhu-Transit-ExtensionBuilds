@@ -38,6 +38,9 @@ public class TestLiftDestinationDispatchTerminalKeyMapping {
                 if (x > 0.0625 * 7 && x < 0.0625 * 8 && hitY > 0.375 && hitY < 0.4375) {
                     return "clearNumber";
                 }
+                if (x > 0.0625 * 7 && x < 0.0625 * 8 && hitY > 0.125 && hitY < 0.1875) {
+                    return "callLift";
+                }
 
         }
         return "null";

@@ -12,6 +12,7 @@ public class LinkerValidTypes {
             BlockLiftTrackFloor.class,
             TestLiftButtons.class,
             TestLiftButtonsWithoutScreen.class,
+            TestLiftDestinationDispatchTerminal.class,
             OtisSeries1Button.class,
             OtisSeries1Screen.class,
             TestLiftHallLanterns.class,

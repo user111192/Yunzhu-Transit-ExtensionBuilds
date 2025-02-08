@@ -5,6 +5,8 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.BlockEntityTypes;
+import top.xfunny.Init;
+import top.xfunny.Items;
 import top.xfunny.block.base.LiftDestinationDispatchTerminalBase;
 import top.xfunny.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
 import top.xfunny.util.ArrayListToString;
@@ -13,6 +15,9 @@ import top.xfunny.util.TransformPositionX;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatchTerminalBase {
     public String screenId = "test_lift_destination_dispatch_terminal_key_mapping_home";
@@ -78,48 +83,66 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
 
         TestLiftDestinationDispatchTerminalKeyMapping mapping = new TestLiftDestinationDispatchTerminalKeyMapping();
 
-        //todo:以后区分不同id下的点击事件
-        String testOutput = mapping.mapping(screenId, transformedX, hitY);
-        if(screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){//todo:可能没有必要进行判断
-            switch (testOutput){
-                case "number1":
-                    data1.addInputNumber(1);
-                    break;
-                case "number2":
-                    data1.addInputNumber(2);
-                    break;
-                case "number3":
-                    data1.addInputNumber(3);
-                    break;
-                case "number4":
-                    data1.addInputNumber(4);
-                    break;
-                case "number5":
-                    data1.addInputNumber(5);
-                    break;
-                case "number6":
-                    data1.addInputNumber(6);
-                    break;
-                case "number7":
-                    data1.addInputNumber(7);
-                    break;
-                case "number8":
-                    data1.addInputNumber(8);
-                    break;
-                case "number9":
-                    data1.addInputNumber(9);
-                    break;
-                case "number0":
-                    data1.addInputNumber(0);
-                    break;
-                case "clearNumber":
-                    data1.clearInputNumber();
-            }
 
+        if (player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
+            Init.LOGGER.info("onUse2");
+            return ActionResult.PASS;
+        } else{
+
+            //todo:以后区分不同id下的点击事件
+            String testOutput = mapping.mapping(screenId, transformedX, hitY);
+            if(screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){//todo:可能没有必要进行判断
+                switch (testOutput){
+                    case "number1":
+                        data1.addInputNumber(1);
+                        break;
+                    case "number2":
+                        data1.addInputNumber(2);
+                        break;
+                    case "number3":
+                        data1.addInputNumber(3);
+                        break;
+                    case "number4":
+                        data1.addInputNumber(4);
+                        break;
+                    case "number5":
+                        data1.addInputNumber(5);
+                        break;
+                    case "number6":
+                        data1.addInputNumber(6);
+                        break;
+                    case "number7":
+                        data1.addInputNumber(7);
+                        break;
+                    case "number8":
+                        data1.addInputNumber(8);
+                        break;
+                    case "number9":
+                        data1.addInputNumber(9);
+                        break;
+                    case "number0":
+                        data1.addInputNumber(0);
+                        break;
+                    case "clearNumber":
+                        data1.clearInputNumber();
+                        break;
+                    case "callLift":
+                        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+                        Init.LOGGER.info("已呼梯");
+                        data.callLift(world, pos, data1.processInputNumber());
+                        data1.clearInputNumber();
+                        data1.addInputNumber("To Lift:"+data.getLiftIdentifier());
+                        scheduler.schedule(() -> {
+                            data1.clearInputNumber();
+                            data1.addInputNumber("Please input floor number!");
+                        }, 1, TimeUnit.SECONDS);
+                        scheduler.shutdown();
+                }
+                player.sendMessage(Text.of(("transformedX:"+transformedX+",hity:"+hitY+",您点击了" + testOutput)), true);
+            }
         }
 
 
-        player.sendMessage(Text.of(("transformedX:"+transformedX+",hity:"+hitY+",您点击了" + testOutput)), true);
 
         return ActionResult.SUCCESS;
     }
@@ -135,7 +158,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
             super.registerScreenId("test_lift_destination_dispatch_terminal_key_mapping_home");//初始化screen
             inputNumber.add("Please input floor number!");
         }
-        public void addInputNumber(int number) {
+        public void addInputNumber(Object number) {
             if (ArrayListToString.arrayListToString(inputNumber).equals("Please input floor number!")){
                 clearInputNumber();
             }
@@ -150,7 +173,38 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
             if (inputNumber.isEmpty()){
                 inputNumber.add("Please input floor number!");
             }
-            return inputNumber;
+                return inputNumber;
+        }
+
+        public int processInputNumber() {
+            // 检查是否所有元素都是数字
+            boolean allNumbers = true;
+            for (Object obj : inputNumber) {
+                if (!(obj instanceof Integer)) {
+                    allNumbers = false;
+                    break;
+                }
+            }
+
+            if (allNumbers) {
+                // 组合数字
+                StringBuilder numberBuilder = new StringBuilder();
+                for (Object obj : inputNumber) {
+                    numberBuilder.append(obj.toString());
+                }
+
+                // 将组合后的字符串转换为整数
+                try {
+                    int combinedNumber = Integer.parseInt(numberBuilder.toString());
+                    System.out.println("组合后的数字: " + combinedNumber);
+                    return combinedNumber;
+                } catch (NumberFormatException e) {
+                    System.out.println("组合后的数字超出整数范围");
+                }
+            } else {
+                System.out.println("输入包含非数字元素");
+            }
+            return 0;//todo
         }
     }
 }
