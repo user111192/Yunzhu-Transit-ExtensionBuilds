@@ -2,19 +2,28 @@ package top.xfunny.block.base;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
+import org.mtr.core.data.Position;
+import org.mtr.core.operation.PressLift;
+import org.mtr.core.tool.Vector;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
+import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
+import org.mtr.mod.item.ItemLiftRefresher;
+import org.mtr.mod.packet.PacketPressLiftButton;
+import org.mtr.mod.render.RenderLifts;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import top.xfunny.ButtonRegistry;
+import top.xfunny.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
@@ -87,6 +96,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
     }
 
 
+
+
     public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
@@ -103,6 +114,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         public BlockPos selfPos;
 
         private LiftDirection pressedButtonDirection;
+
+        private char liftIdentifier;
 
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);
@@ -194,8 +207,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     Init.LOGGER.info("已移除到站灯");
                 }
             }
-
-
             markDirty2();
         }
 
@@ -209,6 +220,95 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         public void forEachTrackPosition(Consumer<BlockPos> consumer) {
             trackPositions.forEach(consumer);
+        }
+
+        public void callLift(World world, BlockPos pos, int destination) {
+            final BlockEntity blockEntity = world.getBlockEntity(pos);
+            final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
+            ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
+            ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars1 = new ObjectArrayList<>();
+            final ObjectArrayList<BlockPos> floorLevels = new ObjectArrayList<>();
+
+            final int[] minDistance = {Integer.MAX_VALUE};
+            final char[] minChar = {'?'}; // 用于记录最小距离对应的字母
+            final int[] counter = {0}; // 字母分配计数器
+            final BlockPos[] confirmTrackPosition = new BlockPos[1];
+            final Position[] destinationPosition = new Position[1];
+
+            ObjectArrayList<BlockPos> tempTrackPositions = new ObjectArrayList<>(trackPositions);
+            Collections.reverse(tempTrackPositions);
+
+//step1:将电梯进行编号
+            tempTrackPositions.forEach(trackPosition -> {
+                char currentChar = (char) ('A' + counter[0]);
+                trackPositionsAndChars.add(new ObjectObjectImmutablePair<>(trackPosition, currentChar));
+                counter[0]++;
+            });
+//step2:筛选能到达目的楼层的电梯
+            trackPositionsAndChars.forEach(trackPositionAndChar -> {
+                BlockPos currentTrackPosition = trackPositionAndChar.left();
+                char currentChar = trackPositionAndChar.right();
+                hasButtonsClient(currentTrackPosition, (floor, lift) -> {
+                    //todo:查询楼层是否存在
+                    if(locateFloor(world, lift, destination) != null){
+                        //BlockPos floorPosition = Init.positionToBlockPos(locateFloor(world, lift, destination));
+                        trackPositionsAndChars1.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                        destinationPosition[0] = locateFloor(world, lift, destination);
+                    }
+
+                });
+            });
+//step3：确定最短距离的电梯
+            trackPositionsAndChars.forEach(trackPositionAndChar1 -> {
+                BlockPos currentTrackPosition = trackPositionAndChar1.left();
+                char currentChar = trackPositionAndChar1.right();
+                hasButtonsClient(currentTrackPosition, (floor, lift) -> {
+                    final Vector position = lift.getPosition((floorPosition1, floorPosition2) -> ItemLiftRefresher.findPath(new World(world.data), floorPosition1, floorPosition2));
+                    BlockPos liftPos = new BlockPos((int) position.x, (int) position.y, (int) position.z);
+                    int distance = currentTrackPosition.getManhattanDistance(Vector3i.cast(liftPos));
+                    System.out.println("TrackPosition " + currentChar + " 的 distance 是: " + distance);
+
+                    if (distance < minDistance[0]) {
+                        minDistance[0] = distance;
+                        minChar[0] = currentChar;
+                        liftIdentifier = currentChar;
+                        confirmTrackPosition[0] = currentTrackPosition;
+                    }
+                });
+            });
+//step4:呼叫电梯
+            System.out.println("最小的 distance 是: " + (minDistance[0] == Integer.MAX_VALUE ? "无数据" : minDistance[0]) + ", 对应的字母是: " + minChar[0]);
+            final PressLift pressLift = new PressLift();
+            pressLift.add(Init.blockPosToPosition(confirmTrackPosition[0]), data.liftDirection);
+            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
+
+            System.out.println("目的楼层: " + (Init.positionToBlockPos(destinationPosition[0]).toShortString()));
+            final PressLift pressLift1 = new PressLift();
+            pressLift1.add(Init.blockPosToPosition(Init.positionToBlockPos(destinationPosition[0])), data.liftDirection);
+            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
+        }
+
+        public Position locateFloor(World world, Lift lift, int destination) {
+            final Position[] foundPosition = new Position[1];
+
+            lift.iterateFloors(liftFloor -> {
+                String floorNumber = GetLiftDetails.getLiftDetails(
+                        world,
+                        lift,
+                        Init.positionToBlockPos(liftFloor.getPosition())
+                ).right().left();
+
+                // 比较目标楼层和当前楼层号
+                if (String.valueOf(destination).equals(floorNumber)) {
+                    foundPosition[0] = liftFloor.getPosition();
+                }
+            });
+
+            return foundPosition[0];
+        }
+
+        public char getLiftIdentifier() {
+            return liftIdentifier;
         }
 
         public void forEachLiftButtonPosition(Consumer<BlockPos> consumer) {
@@ -226,11 +326,5 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         public void setPressedButtonDirection(LiftDirection direction) {
             this.pressedButtonDirection = direction;
         }
-
-
     }
-
-
-
-
 }

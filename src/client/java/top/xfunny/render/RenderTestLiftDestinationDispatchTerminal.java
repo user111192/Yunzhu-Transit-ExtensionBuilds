@@ -217,6 +217,17 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
             clearNumber.setHoverColor(HOVER_COLOR);
             clearNumber.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/cross.png"));
 
+            final ButtonView callLift = new ButtonView();
+            callLift.setId("callLift");
+            callLift.setBasicsAttributes(world, blockEntity.getPos2());
+            callLift.setWidth(1F / 16);
+            callLift.setHeight(1F / 16);
+            callLift.setMargin(1F/16, 0, 0, 0);
+            callLift.setLight(light);
+            callLift.setDefaultColor(0xFFFFFFFF);
+            callLift.setHoverColor(HOVER_COLOR);
+            callLift.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/call_lift.png"));
+
             group1.addChild(number1);
             group1.addChild(number2);
             group1.addChild(number3);
@@ -230,6 +241,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
             group3.addChild(number7);
             group3.addChild(number8);
             group3.addChild(number9);
+            group3.addChild(callLift);
 
             parentLayout.addChild(textView);
             parentLayout.addChild(group1);
