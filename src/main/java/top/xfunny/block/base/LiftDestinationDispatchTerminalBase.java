@@ -24,6 +24,9 @@ import top.xfunny.util.GetLiftDetails;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static org.mtr.core.data.LiftDirection.NONE;
@@ -228,6 +231,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars1 = new ObjectArrayList<>();
             final ObjectArrayList<BlockPos> floorLevels = new ObjectArrayList<>();
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
             final int[] minDistance = {Integer.MAX_VALUE};
             final char[] minChar = {'?'}; // 用于记录最小距离对应的字母
@@ -253,39 +257,43 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     if(locateFloor(world, lift, destination) != null){
                         //BlockPos floorPosition = Init.positionToBlockPos(locateFloor(world, lift, destination));
                         trackPositionsAndChars1.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                        destinationPosition[0] = locateFloor(world, lift, destination);
-                    }
 
+                    }
                 });
             });
 //step3：确定最短距离的电梯
-            trackPositionsAndChars.forEach(trackPositionAndChar1 -> {
+            trackPositionsAndChars1.forEach(trackPositionAndChar1 -> {
                 BlockPos currentTrackPosition = trackPositionAndChar1.left();
                 char currentChar = trackPositionAndChar1.right();
                 hasButtonsClient(currentTrackPosition, (floor, lift) -> {
                     final Vector position = lift.getPosition((floorPosition1, floorPosition2) -> ItemLiftRefresher.findPath(new World(world.data), floorPosition1, floorPosition2));
                     BlockPos liftPos = new BlockPos((int) position.x, (int) position.y, (int) position.z);
                     int distance = currentTrackPosition.getManhattanDistance(Vector3i.cast(liftPos));
-                    System.out.println("TrackPosition " + currentChar + " 的 distance 是: " + distance);
 
                     if (distance < minDistance[0]) {
                         minDistance[0] = distance;
                         minChar[0] = currentChar;
                         liftIdentifier = currentChar;
                         confirmTrackPosition[0] = currentTrackPosition;
+                        destinationPosition[0] = locateFloor(world, lift, destination);
                     }
                 });
             });
 //step4:呼叫电梯
-            System.out.println("最小的 distance 是: " + (minDistance[0] == Integer.MAX_VALUE ? "无数据" : minDistance[0]) + ", 对应的字母是: " + minChar[0]);
-            final PressLift pressLift = new PressLift();
-            pressLift.add(Init.blockPosToPosition(confirmTrackPosition[0]), data.liftDirection);
-            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
+            if(confirmTrackPosition[0] != null){
+                final PressLift pressLift = new PressLift();
+                pressLift.add(Init.blockPosToPosition(confirmTrackPosition[0]), data.liftDirection);
+                InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
 
-            System.out.println("目的楼层: " + (Init.positionToBlockPos(destinationPosition[0]).toShortString()));
-            final PressLift pressLift1 = new PressLift();
-            pressLift1.add(Init.blockPosToPosition(Init.positionToBlockPos(destinationPosition[0])), data.liftDirection);
-            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
+                scheduler.schedule(() -> {
+                    final PressLift pressLift1 = new PressLift();
+                    pressLift1.add(Init.blockPosToPosition(Init.positionToBlockPos(destinationPosition[0])), data.liftDirection);
+                    InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
+                }, 2, TimeUnit.SECONDS);
+            }else{
+                Init.LOGGER.info("没有找到合适的电梯");
+                liftIdentifier = '?';
+            }
         }
 
         public Position locateFloor(World world, Lift lift, int destination) {
@@ -303,12 +311,16 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     foundPosition[0] = liftFloor.getPosition();
                 }
             });
-
+            System.out.println("Found Position: " + foundPosition[0]);
             return foundPosition[0];
         }
 
-        public char getLiftIdentifier() {
-            return liftIdentifier;
+        public String getLiftIdentifier() {
+            if (liftIdentifier == '?') {
+                return "???";
+            }
+            String temp = String.valueOf(liftIdentifier);
+            return temp;
         }
 
         public void forEachLiftButtonPosition(Consumer<BlockPos> consumer) {

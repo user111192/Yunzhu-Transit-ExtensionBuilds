@@ -33,7 +33,6 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
         return IBlock.getVoxelShapeByDirection(0, 0, 0, 16, 11, 1, IBlock.getStatePropertySafe(state, FACING));
     }
 
-
     public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
         LiftDestinationDispatchTerminalBase.hasButtonsClient(trackPosition, callback);//todo：需要注意
     }
@@ -88,7 +87,6 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
             Init.LOGGER.info("onUse2");
             return ActionResult.PASS;
         } else{
-
             //todo:以后区分不同id下的点击事件
             String testOutput = mapping.mapping(screenId, transformedX, hitY);
             if(screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){//todo:可能没有必要进行判断
