@@ -29,8 +29,9 @@ import java.util.Comparator;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
-    private static final int PRESSED_COLOR = 0xFFFFCC00;
+    private static final int PRESSED_COLOR = 0xFFFEE1A9;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1_arrow.png");
     private final boolean isOdd;
 
     public RenderMitsubishiNexWayScreen1(Argument dispatcher, Boolean isOdd) {
@@ -67,7 +68,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd? (float) -0.5625 : (float) -1.0625, (float) 0.5625);
+        parentLayout.setPosition(isOdd? (float) -0.5575 : (float) -1.0625, (float) 0.61);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -86,10 +87,24 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         button.setPressedColor(PRESSED_COLOR);
         button.setHoverColor(0xFFFFFFFF);
         button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(2F / 16);
-        button.setHeight(2F / 16);
-        button.setSpacing(6F / 16);
+        button.setWidth(2.75F / 16);
+        button.setHeight(2.75F / 16);
+        button.setSpacing(7.55F / 16);
         button.setGravity(Gravity.CENTER);
+
+        LiftButtonView button1 = new LiftButtonView();
+        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true,true);
+        button1.setLight(light);
+        button1.setHover(false);
+        button1.setDefaultColor(0xFFFFFFFF);
+        button1.setPressedColor(0xFFFFFFFF);
+        button1.setHoverColor(0xFFFFFFFF);
+        button1.setTexture(ARROW_TEXTURE, true);
+        button1.setWidth(2.75F / 16);
+        button1.setHeight(2.75F / 16);
+        button1.setSpacing(7.55F / 16);
+        button1.setGravity(Gravity.CENTER);
+
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -185,6 +200,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
 
         parentLayout.addChild(screenLayout);
         parentLayout.addChild(button);
+        parentLayout.addChild(button1);
 
         parentLayout.render();
     }
