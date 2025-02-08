@@ -11,6 +11,8 @@
     "block.yte.mitsubishi_nexway_button_2_without_screen": "三菱NexWay呼叫面板(樣式2,沒有樓層指示器)",
     "block.yte.mitsubishi_nexway_button_3": "三菱NexWay呼叫面板(樣式3)",
     "block.yte.mitsubishi_nexway_button_3_without_screen": "三菱NexWay呼叫面板(樣式3,沒有樓層指示器)",
+    "block.yte.mitsubishi_nexway_screen_1_even": "三菱NexWay樓層指示器(樣式1，占兩格)",
+    "block.yte.mitsubishi_nexway_screen_1_odd": "三菱NexWay樓層指示器(樣式1，占一格)",
     "block.yte.otis_series_1_button_1": "奥的斯Series 1呼叫面板(樣式1)",
     "block.yte.otis_series_1_button_2": "奥的斯Series 1呼叫面板(樣式2)",
     "block.yte.otis_series_1_screen_1": "奥的斯Series 1樓層指示器(樣式1)",
@@ -36,6 +38,7 @@
     "block.yte.pat_p01_ticket_barrier_entrance": "PAT P01檢票閘機(入口)",
     "block.yte.pat_p01_ticket_barrier_exit": "PAT P01检票閘機(出口)",
     "block.yte.pat_p01_ticket_barrier_bare": "PAT P01检票閘機(側殼)",
+    "block.yte.pat_tm01_ticket_machine": "PAT TM01售票機",
     
     "block.yte.schindler_qks9_door_1": "迅達QKS9升降機門(樣式1)",
     "item.yte.schindler_qks9_door_1": "迅達QKS9升降機門(樣式1)",
