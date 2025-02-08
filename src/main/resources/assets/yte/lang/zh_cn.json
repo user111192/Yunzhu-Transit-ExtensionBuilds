@@ -11,6 +11,8 @@
     "block.yte.mitsubishi_nexway_button_2_without_screen": "三菱NexWay呼梯面板（类型2,无屏幕）",
     "block.yte.mitsubishi_nexway_button_3": "三菱NexWay呼梯面板（类型3）",
     "block.yte.mitsubishi_nexway_button_3_without_screen": "三菱NexWay呼梯面板（类型3,无屏幕）",
+    "block.yte.mitsubishi_nexway_screen_1_even": "三菱NexWay候梯楼层显示器（类型1，占两格）",
+    "block.yte.mitsubishi_nexway_screen_1_odd": "三菱NexWay候梯楼层显示器（类型1，占一格）",
     "block.yte.otis_series_1_button_1": "奥的斯Series 1呼梯面板（类型1）",
     "block.yte.otis_series_1_button_2": "奥的斯Series 1呼梯面板（类型2）",
     "block.yte.otis_series_1_screen_1": "奥的斯Series 1候梯楼层显示器（类型1）",
@@ -36,6 +38,7 @@
     "block.yte.pat_p01_ticket_barrier_entrance": "PAT P01检票闸机（入口）",
     "block.yte.pat_p01_ticket_barrier_exit": "PAT P01检票闸机（出口）",
     "block.yte.pat_p01_ticket_barrier_bare": "PAT P01检票闸机（侧壳）",
+    "block.yte.pat_tm01_ticket_machine": "PAT TM01售票机",
     
     "block.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
     "item.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
