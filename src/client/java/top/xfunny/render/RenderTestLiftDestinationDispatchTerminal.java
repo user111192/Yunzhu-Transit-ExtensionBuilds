@@ -88,7 +88,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final TextView textView = new TextView();
             textView.setId("textView");
-            textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("mitsubishi_modern"),6, 0xFFFFFFFF);
+            textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("mitsubishi_modern"),6, HOVER_COLOR);
             textView.setTextScrolling(true, 19, 0.005F);
             textView.setTextureId("test_lift_destination_dispatch_terminal_display");
             textView.setText(ArrayListToString.arrayListToString(inputNumber));

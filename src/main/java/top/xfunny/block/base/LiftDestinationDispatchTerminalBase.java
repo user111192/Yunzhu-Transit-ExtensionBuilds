@@ -6,6 +6,7 @@ import org.mtr.core.data.Position;
 import org.mtr.core.operation.PressLift;
 import org.mtr.core.tool.Vector;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
@@ -232,6 +233,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars1 = new ObjectArrayList<>();
+            ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars2 = new ObjectArrayList<>();
+
             ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
             final int[] minDistance = {Integer.MAX_VALUE};
@@ -240,14 +243,15 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             final BlockPos[] confirmTrackPosition = new BlockPos[1];
             final Position[] destinationPosition = new Position[1];
 
-//step1:将电梯进行编号
+            //step1:将电梯进行编号
             trackPositions.forEach(trackPosition -> {
                 // 使用倒序编号，'A' + (size - counter[0] - 1) 得到从'A'开始倒序的字符
                 char currentChar = (char) ('A' + counter[0]);
                 trackPositionsAndChars.add(new ObjectObjectImmutablePair<>(trackPosition, currentChar));
                 counter[0]++;
             });
-//step2:筛选能到达目的楼层的电梯
+
+            //step2:筛选能到达目的楼层的电梯
             trackPositionsAndChars.forEach(trackPositionAndChar -> {
                 BlockPos currentTrackPosition = trackPositionAndChar.left();
                 char currentChar = trackPositionAndChar.right();
@@ -260,15 +264,55 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     }
                 });
             });
-//step3：确定最短距离的电梯
+
+            //step3：确定符合方向的电梯
             trackPositionsAndChars1.forEach(trackPositionAndChar1 -> {
                 BlockPos currentTrackPosition = trackPositionAndChar1.left();
                 char currentChar = trackPositionAndChar1.right();
                 hasButtonsClient(currentTrackPosition, (floor, lift) -> {
+                    destinationPosition[0] = locateFloor(world, lift, destination);
                     final Vector position = lift.getPosition((floorPosition1, floorPosition2) -> ItemLiftRefresher.findPath(new World(world.data), floorPosition1, floorPosition2));
                     BlockPos liftPos = new BlockPos((int) position.x, (int) position.y, (int) position.z);
-                    int distance = currentTrackPosition.getManhattanDistance(Vector3i.cast(liftPos));
 
+                    //判断每一个电梯的方向
+                    ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails =
+                            GetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                    final LiftDirection liftDirection = liftDetails.left();
+
+                    //判断前往目的楼层需要的方向
+                    int currentFloorNumber = lift.getFloorIndex(Init.blockPosToPosition(currentTrackPosition));
+                    int destinationFloorNumber = lift.getFloorIndex(destinationPosition[0]);
+
+                    int currentLiftFloor = Integer.parseInt(liftDetails.right().left());
+                    Position currentLiftFloorPosition = locateFloor(world, lift, currentLiftFloor);
+                    int currentLiftFloorNumber = lift.getFloorIndex(currentLiftFloorPosition);
+                    LiftDirection confirmLiftDirection = determineDirection(currentFloorNumber, destinationFloorNumber);
+                    this.liftDirection = confirmLiftDirection;
+
+                    if(liftDirection == NONE){
+                        trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                    }else if(liftDirection == confirmLiftDirection){
+                        if(confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber){
+                            trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                            Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
+                        }if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber){
+                            trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                            Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
+                        }
+                    }
+                });
+            });
+
+            //step4:确定最接近电梯的电梯
+            trackPositionsAndChars2.forEach(trackPositionAndChar2 -> {
+                BlockPos currentTrackPosition = trackPositionAndChar2.left();
+                char currentChar = trackPositionAndChar2.right();
+
+                hasButtonsClient(currentTrackPosition, (floor, lift) -> {
+                    final Vector position = lift.getPosition((floorPosition1, floorPosition2) -> ItemLiftRefresher.findPath(new World(world.data), floorPosition1, floorPosition2));
+                    BlockPos liftPos = new BlockPos((int) position.x, (int) position.y, (int) position.z);
+
+                    int distance = currentTrackPosition.getManhattanDistance(Vector3i.cast(liftPos));
                     if (distance < minDistance[0]) {
                         minDistance[0] = distance;
                         minChar[0] = currentChar;
@@ -278,7 +322,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     }
                 });
             });
-//step4:呼叫电梯
+
+            //step5:呼叫电梯
             if(confirmTrackPosition[0] != null){
                 final PressLift pressLift = new PressLift();
                 pressLift.add(Init.blockPosToPosition(confirmTrackPosition[0]), data.liftDirection);
@@ -286,7 +331,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
                 scheduler.schedule(() -> {
                     final PressLift pressLift1 = new PressLift();
-                    pressLift1.add(Init.blockPosToPosition(Init.positionToBlockPos(destinationPosition[0])), data.liftDirection);
+                    pressLift1.add(destinationPosition[0], data.liftDirection);
                     InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
                 }, 2, TimeUnit.SECONDS);
             }else{
@@ -310,7 +355,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     foundPosition[0] = liftFloor.getPosition();
                 }
             });
-            System.out.println("Found Position: " + foundPosition[0]);
             return foundPosition[0];
         }
 
@@ -322,6 +366,16 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             return temp;
         }
 
+        public LiftDirection determineDirection(int currentFloorNumber, int destinationFloorNumber) {
+            if (currentFloorNumber < destinationFloorNumber) {
+                return LiftDirection.UP;
+            } else if (currentFloorNumber > destinationFloorNumber) {
+                return LiftDirection.DOWN;
+            } else {
+                return NONE;
+            }
+        }
+
         public void forEachLiftButtonPosition(Consumer<BlockPos> consumer) {
             liftButtonPositions.forEach(consumer);
         }
@@ -331,7 +385,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         }
 
         public LiftDirection getPressedButtonDirection() {
-            return pressedButtonDirection;
+            return this.liftDirection;
         }
 
         public void setPressedButtonDirection(LiftDirection direction) {

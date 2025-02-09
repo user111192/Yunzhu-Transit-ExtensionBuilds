@@ -65,11 +65,11 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
             if (floorIndex > 0) {
                 descriptor.setHasDownButton(true);
             }
-            // 如果楼层索引在有效范围内（不是顶层也不是底层），则表示存在向上按钮
+
             if (floorIndex >= 0 && floorIndex < lift.getFloorCount() - 1) {
                 descriptor.setHasUpButton(true);
             }
-            // 如果楼层索引非负，表示电梯中存在该楼层，执行回调函数
+
             if (floorIndex >= 0) {
                 callback.accept(floorIndex, lift);
             }
