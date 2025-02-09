@@ -109,7 +109,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
 
         public final ObjectOpenHashSet<BlockPos> liftButtonPositions = new ObjectOpenHashSet<>();
-        private final ObjectOpenHashSet<BlockPos> trackPositions = new ObjectOpenHashSet<>();
+        private final LinkedHashSet<BlockPos> trackPositions = new LinkedHashSet<>();
         private String screenId;
 
         public LiftDirection liftDirection = NONE;
@@ -126,7 +126,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         @Override
         public void readCompoundTag(CompoundTag compoundTag) {
-
             // 清空当前位置集合，准备加载新的数据
             trackPositions.clear();
             liftButtonPositions.clear();
@@ -178,6 +177,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     trackPositions.add(pos);
+                    trackPositions.forEach(position -> {
+                        Init.LOGGER.info(position.toShortString());
+                    });
                     Init.LOGGER.info("已添加");
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
@@ -230,7 +232,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars1 = new ObjectArrayList<>();
-            final ObjectArrayList<BlockPos> floorLevels = new ObjectArrayList<>();
             ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
             final int[] minDistance = {Integer.MAX_VALUE};
@@ -239,11 +240,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             final BlockPos[] confirmTrackPosition = new BlockPos[1];
             final Position[] destinationPosition = new Position[1];
 
-            ObjectArrayList<BlockPos> tempTrackPositions = new ObjectArrayList<>(trackPositions);
-            Collections.reverse(tempTrackPositions);
-
 //step1:将电梯进行编号
-            tempTrackPositions.forEach(trackPosition -> {
+            trackPositions.forEach(trackPosition -> {
+                // 使用倒序编号，'A' + (size - counter[0] - 1) 得到从'A'开始倒序的字符
                 char currentChar = (char) ('A' + counter[0]);
                 trackPositionsAndChars.add(new ObjectObjectImmutablePair<>(trackPosition, currentChar));
                 counter[0]++;

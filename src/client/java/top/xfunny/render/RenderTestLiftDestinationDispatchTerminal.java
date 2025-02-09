@@ -14,10 +14,7 @@ import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
 import top.xfunny.util.ArrayListToString;
-import top.xfunny.view.ButtonView;
-import top.xfunny.view.LayoutSize;
-import top.xfunny.view.LiftFloorDisplayView;
-import top.xfunny.view.TextView;
+import top.xfunny.view.*;
 import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.ArrayList;
@@ -57,6 +54,10 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
             graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(-0.5, 0, 0.060 - SMALL_OFFSET);
         });
+
+        final LineComponent line = new LineComponent();
+        line.setBasicsAttributes(world, blockEntity.getPos2());
+         blockEntity.forEachTrackPosition(trackPosition -> { line.RenderLine(holdingLinker, trackPosition);});
 
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
