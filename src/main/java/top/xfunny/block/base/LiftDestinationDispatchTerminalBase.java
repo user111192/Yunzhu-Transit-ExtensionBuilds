@@ -48,6 +48,11 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
     public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
         MinecraftClientData.getInstance().lifts.forEach(lift -> {
+            if (trackPosition == null) {
+                Init.LOGGER.error("trackPosition is null");
+                return;
+            }
+
             // 获取电梯轨道位置对应的楼层索引
             final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
 
@@ -228,7 +233,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             trackPositions.forEach(consumer);
         }
 
-        public void callLift(World world, BlockPos pos, int destination) {
+        public void callLift(World world, BlockPos pos, String destination) {
             final BlockEntity blockEntity = world.getBlockEntity(pos);
             final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
@@ -283,23 +288,27 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     int currentFloorNumber = lift.getFloorIndex(Init.blockPosToPosition(currentTrackPosition));
                     int destinationFloorNumber = lift.getFloorIndex(destinationPosition[0]);
 
-                    int currentLiftFloor = Integer.parseInt(liftDetails.right().left());
-                    Position currentLiftFloorPosition = locateFloor(world, lift, currentLiftFloor);
-                    int currentLiftFloorNumber = lift.getFloorIndex(currentLiftFloorPosition);
-                    LiftDirection confirmLiftDirection = determineDirection(currentFloorNumber, destinationFloorNumber);
-                    this.liftDirection = confirmLiftDirection;
+                    String currentLiftFloor = liftDetails.right().left();
 
-                    if(liftDirection == NONE){
-                        trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                    }else if(liftDirection == confirmLiftDirection){
-                        if(confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber){
+                    if(!currentLiftFloor.isEmpty()){//当电梯轨道只有一层时，currentLiftFloor为空
+                        Position currentLiftFloorPosition = locateFloor(world, lift, currentLiftFloor);
+                        int currentLiftFloorNumber = lift.getFloorIndex(currentLiftFloorPosition);
+                        LiftDirection confirmLiftDirection = determineDirection(currentFloorNumber, destinationFloorNumber);
+                        this.liftDirection = confirmLiftDirection;
+
+                        if(liftDirection == NONE){
                             trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                            Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
-                        }if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber){
-                            trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                            Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
+                        }else if(liftDirection == confirmLiftDirection){
+                            if(confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber){
+                                trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                                Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
+                            }else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber){
+                                trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
+                                Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
+                            }
                         }
                     }
+
                 });
             });
 
@@ -340,7 +349,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             }
         }
 
-        public Position locateFloor(World world, Lift lift, int destination) {
+        public Position locateFloor(World world, Lift lift, String destination) {
             final Position[] foundPosition = new Position[1];
 
             lift.iterateFloors(liftFloor -> {
@@ -351,7 +360,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 ).right().left();
 
                 // 比较目标楼层和当前楼层号
-                if (String.valueOf(destination).equals(floorNumber)) {
+                if (destination.equals(floorNumber)) {
                     foundPosition[0] = liftFloor.getPosition();
                 }
             });

@@ -30,7 +30,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(0, 0, 0, 16, 11, 1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(0, 0, 0, 16, 11, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
@@ -126,8 +126,9 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
                         break;
                     case "callLift":
                         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-                        Init.LOGGER.info("已呼梯");
-                        data.callLift(world, pos, data1.processInputNumber());
+                        Init.LOGGER.info("已呼梯,已登记楼层："+ArrayListToString.arrayListToString(data1.getInputNumber()));
+
+                        data.callLift(world, pos, ArrayListToString.arrayListToString(data1.getInputNumber()));
                         data1.clearInputNumber();
                         data1.addInputNumber("To Lift:"+data.getLiftIdentifier());
                         scheduler.schedule(() -> {
@@ -136,7 +137,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
                         }, 1, TimeUnit.SECONDS);
                         scheduler.shutdown();
                 }
-                player.sendMessage(Text.of(("transformedX:"+transformedX+",hity:"+hitY+",您点击了" + testOutput)), true);
+                player.sendMessage(Text.of(("transformedX:"+transformedX+",Y:"+hitY+",您点击了" + testOutput)), true);
             }
         }
 
@@ -171,38 +172,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
             if (inputNumber.isEmpty()){
                 inputNumber.add("Please input floor number!");
             }
-                return inputNumber;
-        }
-
-        public int processInputNumber() {
-            // 检查是否所有元素都是数字
-            boolean allNumbers = true;
-            for (Object obj : inputNumber) {
-                if (!(obj instanceof Integer)) {
-                    allNumbers = false;
-                    break;
-                }
-            }
-
-            if (allNumbers) {
-                // 组合数字
-                StringBuilder numberBuilder = new StringBuilder();
-                for (Object obj : inputNumber) {
-                    numberBuilder.append(obj.toString());
-                }
-
-                // 将组合后的字符串转换为整数
-                try {
-                    int combinedNumber = Integer.parseInt(numberBuilder.toString());
-                    System.out.println("组合后的数字: " + combinedNumber);
-                    return combinedNumber;
-                } catch (NumberFormatException e) {
-                    System.out.println("组合后的数字超出整数范围");
-                }
-            } else {
-                System.out.println("输入包含非数字元素");
-            }
-            return 0;//todo
+            return inputNumber;
         }
     }
 }
