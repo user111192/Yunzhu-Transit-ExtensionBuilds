@@ -157,7 +157,7 @@ public class LiftFloorDisplayView implements RenderView {
         this.textAlign = textAlign;
     }
 
-     public void setLetterSpacing(int letterSpacing) {
+    public void setLetterSpacing(int letterSpacing) {
         this.letterSpacing = letterSpacing;
     }
 

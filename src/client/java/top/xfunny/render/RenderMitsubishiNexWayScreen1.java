@@ -68,7 +68,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd? (float) -0.5575 : (float) -1.0625, (float) 0.61);
+        parentLayout.setPosition(isOdd ? (float) -0.5575 : (float) -1.0625, (float) 0.61);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -80,7 +80,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         screenLayout.setBackgroundColor(0xFF000000);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true,true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -93,7 +93,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView button1 = new LiftButtonView();
-        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true,true);
+        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
         button1.setLight(light);
         button1.setHover(false);
         button1.setDefaultColor(0xFFFFFFFF);
@@ -188,7 +188,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin((float) 0.6 /16, 0, (float) 0.6 /16, 0);
+                liftFloorDisplayView.setMargin((float) 0.6 / 16, 0, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
             }

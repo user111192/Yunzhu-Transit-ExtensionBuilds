@@ -15,11 +15,12 @@ public class HitachiB85Button1 extends LiftButtonsBase {
     public HitachiB85Button1() {
         super(true, true, 0.125);
     }
+
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(single? 6 : 7, 0, 0, single? 10 : 9, 8.875, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(single ? 6 : 7, 0, 0, single ? 10 : 9, 8.875, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

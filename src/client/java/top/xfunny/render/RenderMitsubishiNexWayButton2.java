@@ -14,9 +14,7 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.MitsubishiNexWayButton1;
 import top.xfunny.block.MitsubishiNexWayButton2;
-import top.xfunny.block.MitsubishiNexWayButton3;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -92,7 +90,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -105,7 +103,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);

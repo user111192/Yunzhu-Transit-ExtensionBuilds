@@ -18,7 +18,10 @@ import top.xfunny.block.SchindlerSSeriesGreyButton;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
-import top.xfunny.view.*;
+import top.xfunny.view.Gravity;
+import top.xfunny.view.LayoutSize;
+import top.xfunny.view.LiftButtonView;
+import top.xfunny.view.LineComponent;
 import top.xfunny.view.view_group.FrameLayout;
 
 public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<SchindlerSSeriesGreyButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
@@ -69,7 +72,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
 
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false,false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -82,7 +85,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false,false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFF000000);
         buttonLight.setHover(true);

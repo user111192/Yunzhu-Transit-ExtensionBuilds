@@ -9,7 +9,6 @@ import org.mtr.mod.block.BlockPSDAPGDoorBase;
 import top.xfunny.BlockEntityTypes;
 import top.xfunny.Items;
 
-
 import javax.annotation.Nonnull;
 
 public class SchindlerQKS9Door1 extends BlockPSDAPGDoorBase {

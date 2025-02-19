@@ -14,10 +14,13 @@ public class Blocks {
     public static final BlockRegistryObject TEST_LIFT_BUTTONS;
     public static final BlockRegistryObject TEST_LIFT_BUTTONS_WITHOUT_SCREEN;
     public static final BlockRegistryObject TEST_LIFT_HALL_LANTERNS;
+    public static final BlockRegistryObject TEST_LIFT_PANEL;
     public static final BlockRegistryObject TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_1;
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
+    public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
+
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2;
@@ -26,6 +29,7 @@ public class Blocks {
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_SCREEN_1_EVEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_SCREEN_1_ODD;
+
     public static final BlockRegistryObject SCHINDLER_D_SERIES_D2BUTTON;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_1_ODD;
     public static final BlockRegistryObject SCHINDLER_D_SERIES_SCREEN_1_EVEN;
@@ -38,11 +42,11 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_M_SERIES_BUTTON;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_TOUCH_BUTTON;
     public static final BlockRegistryObject SCHINDLER_S_SERIES_GREY_BUTTON;
-    public static final BlockRegistryObject TEST_LIFT_PANEL;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_1;
-    public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_ODD;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_EVEN;
+    public static final BlockRegistryObject SCHINDLER_Z_LINE_3_KEYPAD_1;
+
     public static final BlockRegistryObject HITACHI_B85_BUTTON_1;
 
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_ENTRANCE;
@@ -77,7 +81,7 @@ public class Blocks {
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), () -> new Block(new OtisSeries1Screen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_D2BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_d2button"), () -> new Block(new SchindlerDSeriesD2Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_1_odd"), () -> new Block(new SchindlerDSeriesScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
-        SCHINDLER_D_SERIES_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_1_even"), () -> new Block(new SchindlerDSeriesScreen1Even()),CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_D_SERIES_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_1_even"), () -> new Block(new SchindlerDSeriesScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_green_even"), () -> new Block(new SchindlerDSeriesScreen2GreenEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_green_odd"), () -> new Block(new SchindlerDSeriesScreen2GreenOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_blue_even"), () -> new Block(new SchindlerDSeriesScreen2BlueEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
@@ -90,6 +94,8 @@ public class Blocks {
         SCHINDLER_M_SERIES_SCREEN_2_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_odd"), () -> new Block(new SchindlerMSeriesScreen2Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_SCREEN_2_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_even"), () -> new Block(new SchindlerMSeriesScreen2Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), () -> new Block(new SchindlerSSeriesGreyButton()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), () -> new Block(new SchindlerZLine3Keypad1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), () -> new Block(new HitachiB85Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         PAT_P01_TICKET_BARRIER_ENTRANCE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_entrance"), () -> new Block(new PATTicketBarrier(true)), CreativeModeTabs.YTE_RAILWAY_FACILITIES);

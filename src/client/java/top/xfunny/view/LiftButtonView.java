@@ -41,8 +41,6 @@ public class LiftButtonView implements RenderView {
     private double clientMedian = 0.25;
 
 
-
-
     @Override
     public String getId() {
         return id;

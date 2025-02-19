@@ -13,7 +13,6 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.Locale;
@@ -41,62 +40,62 @@ public class TextureCache {
 
 
     public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int fontSize, int padding, Font font, int letterSpacing) {
-    if (maxWidth <= 0) {
-        dimensions[0] = 0;
-        dimensions[1] = 0;
-        return new byte[0];
+        if (maxWidth <= 0) {
+            dimensions[0] = 0;
+            dimensions[1] = 0;
+            return new byte[0];
+        }
+        totalWidth = 0;
+
+        // 初始化字体渲染上下文
+        final FontRenderContext context = new FontRenderContext(new AffineTransform(), false, false);
+
+        // 选择合适的字体
+        Font selectedFont = font.deriveFont(Font.PLAIN, fontSize);
+
+        // 计算每个字符的宽度和总宽度（包括间距）
+        FontMetrics fontMetrics = new Canvas().getFontMetrics(selectedFont);
+        int totalTextWidth = 0;
+        for (char c : text.toCharArray()) {
+            totalTextWidth += fontMetrics.charWidth(c) + letterSpacing;
+        }
+        totalTextWidth -= letterSpacing; // 去掉最后一个字符后多加的间距
+        totalTextWidth += 2 * padding;
+
+        // 计算文本高度
+        int textHeight = fontMetrics.getHeight() + 2 * padding;
+        totalWidth = totalTextWidth;
+        Init.LOGGER.info("Text dimensions: " + totalTextWidth + "x" + textHeight);
+
+        // 创建灰度图像
+        BufferedImage textImage = new BufferedImage(totalTextWidth, textHeight, BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D graphics2D = textImage.createGraphics();
+        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // 设置字体和颜色
+        graphics2D.setFont(selectedFont);
+        graphics2D.setColor(Color.WHITE);
+
+        // 绘制文本，手动控制字符位置
+        int x = padding; // 初始水平位置
+        int y = padding + fontMetrics.getAscent(); // 垂直位置
+        for (char c : text.toCharArray()) {
+            graphics2D.drawString(String.valueOf(c), x, y);
+            x += fontMetrics.charWidth(c) + letterSpacing;
+        }
+
+        // 释放资源
+        graphics2D.dispose();
+
+        // 设置输出尺寸
+        dimensions[0] = totalTextWidth;
+        dimensions[1] = textHeight;
+
+        // 返回图像字节数组
+        byte[] pixels = ((DataBufferByte) textImage.getRaster().getDataBuffer()).getData();
+        textImage.flush();
+        return pixels;
     }
-    totalWidth = 0;
-
-    // 初始化字体渲染上下文
-    final FontRenderContext context = new FontRenderContext(new AffineTransform(), false, false);
-
-    // 选择合适的字体
-    Font selectedFont = font.deriveFont(Font.PLAIN, fontSize);
-
-    // 计算每个字符的宽度和总宽度（包括间距）
-    FontMetrics fontMetrics = new Canvas().getFontMetrics(selectedFont);
-    int totalTextWidth = 0;
-    for (char c : text.toCharArray()) {
-        totalTextWidth += fontMetrics.charWidth(c) + letterSpacing;
-    }
-    totalTextWidth -= letterSpacing; // 去掉最后一个字符后多加的间距
-    totalTextWidth += 2 * padding;
-
-    // 计算文本高度
-    int textHeight = fontMetrics.getHeight() + 2 * padding;
-    totalWidth = totalTextWidth;
-    Init.LOGGER.info("Text dimensions: " + totalTextWidth + "x" + textHeight);
-
-    // 创建灰度图像
-    BufferedImage textImage = new BufferedImage(totalTextWidth, textHeight, BufferedImage.TYPE_BYTE_GRAY);
-    Graphics2D graphics2D = textImage.createGraphics();
-    graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-    // 设置字体和颜色
-    graphics2D.setFont(selectedFont);
-    graphics2D.setColor(Color.WHITE);
-
-    // 绘制文本，手动控制字符位置
-    int x = padding; // 初始水平位置
-    int y = padding + fontMetrics.getAscent(); // 垂直位置
-    for (char c : text.toCharArray()) {
-        graphics2D.drawString(String.valueOf(c), x, y);
-        x += fontMetrics.charWidth(c) + letterSpacing;
-    }
-
-    // 释放资源
-    graphics2D.dispose();
-
-    // 设置输出尺寸
-    dimensions[0] = totalTextWidth;
-    dimensions[1] = textHeight;
-
-    // 返回图像字节数组
-    byte[] pixels = ((DataBufferByte) textImage.getRaster().getDataBuffer()).getData();
-    textImage.flush();
-    return pixels;
-}
 
 
     public DynamicResource getResource(String key, Supplier<NativeImage> supplier, DefaultRenderingColor defaultRenderingColor) {

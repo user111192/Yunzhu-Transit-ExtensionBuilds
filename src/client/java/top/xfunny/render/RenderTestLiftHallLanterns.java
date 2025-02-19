@@ -15,7 +15,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.Init;
 import top.xfunny.block.TestLiftHallLanterns;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
@@ -31,7 +30,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-     private final boolean isOdd;
+    private final boolean isOdd;
 
     public RenderTestLiftHallLanterns(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -72,7 +71,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
         parentLayout.setId("parentLayout");//命名，可选
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false,true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);

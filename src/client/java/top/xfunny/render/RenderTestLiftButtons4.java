@@ -85,7 +85,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFD70000);//按钮按下时颜色

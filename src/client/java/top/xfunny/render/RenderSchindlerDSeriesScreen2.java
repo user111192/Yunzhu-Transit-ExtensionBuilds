@@ -54,7 +54,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
             return;
         }
 
-        switch(color) {
+        switch (color) {
             case GREEN:
                 this.textureId = "schindler_d_series_screen_2_green_display";
                 this.fontColor = 0xFF00FF00;
@@ -90,7 +90,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd? -0.234375F : -0.734375F, 0.5625F);
+        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.5625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -103,7 +103,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
 
-            switch(color){
+            switch (color) {
                 case GREEN:
                     SchindlerDSeriesScreen2GreenEven.LiftCheck(trackPosition, (floorIndex, lift) -> {
                         sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
@@ -122,8 +122,6 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                     });
                     break;
             }
-
-
 
 
         });
@@ -155,7 +153,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setLetterSpacing(-30);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(10);
-                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float)0.5 / 16 : (float)2.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.5 / 16 : (float) 2.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
 
@@ -163,9 +161,9 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(arrowTexture);
                 liftArrowView.setArrowScrolling(true, 0.05F);
-                liftArrowView.setWidth(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) :0);
-                liftArrowView.setHeight(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) :0);
-                liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8/16 : 0, (float)3/16, 0, 0);
+                liftArrowView.setWidth(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
+                liftArrowView.setHeight(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
+                liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8 / 16 : 0, (float) 3 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(fontColor);
 

@@ -7,6 +7,7 @@ import top.xfunny.Init;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FontList {
     public static FontList instance = new FontList();
@@ -55,14 +56,18 @@ public class FontList {
         if (font != null) {
             return font;
         } else {
-            Init.LOGGER.warn("Font with ID " + fontId + " not found. Retrying to load fonts.");
-            FlonList(); // 重新加载所有字体
-            font = fonts.get(fontId); // 再次尝试获取字体
-            if (font != null) {
-                return font;
+            if (Objects.equals(fontId, "Arial")) {
+                return new Font("Arial", Font.PLAIN, 12);//单独加载Arial字体，用户自行安装。
             } else {
-                Init.LOGGER.warn("Font with ID " + fontId + " still not found after retry. Returning default font.");
-                return new Font("Arial", Font.PLAIN, 12); // 默认字体
+                Init.LOGGER.warn("Font with ID " + fontId + " not found. Retrying to load fonts.");
+                FlonList(); // 重新加载所有字体
+                font = fonts.get(fontId); // 再次尝试获取字体
+                if (font != null) {
+                    return font;
+                } else {
+                    Init.LOGGER.warn("Font with ID " + fontId + " still not found after retry. Returning default font.");
+                    return new Font("Arial", Font.PLAIN, 12); // 默认字体
+                }
             }
         }
     }

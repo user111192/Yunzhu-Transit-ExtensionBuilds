@@ -1,6 +1,5 @@
 package top.xfunny.block.base;
 
-import org.mtr.core.data.Lift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
@@ -96,7 +95,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
         if (!isOdd) {
             if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
-            }else if(IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT){
+            } else if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
             }
         }
@@ -168,7 +167,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
                 if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
                     ((LiftButtonsBase.BlockEntityBase) blockEntity.data).registerFloor(selfPos, world, pos, isAdd);
                 }
-            }else{
+            } else {
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     trackPositions.add(pos);

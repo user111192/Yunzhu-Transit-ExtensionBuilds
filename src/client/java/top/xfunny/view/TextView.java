@@ -1,14 +1,10 @@
 package top.xfunny.view;
 
-import org.mtr.core.data.Lift;
-import org.mtr.core.data.LiftDirection;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.BlockState;
 import org.mtr.mapping.holder.Direction;
 import org.mtr.mapping.holder.World;
 import org.mtr.mapping.mapper.GraphicsHolder;
-import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
@@ -63,7 +59,7 @@ public class TextView implements RenderView {
     }
 
     public void render() {
-         calculateSize();
+        calculateSize();
         calculateTextPositionX();
         BlockState blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
@@ -76,30 +72,30 @@ public class TextView implements RenderView {
             storedMatrixTransformations1.add(transformation);
         }
 
-            float offset1;
-            if (text.length() > textSize && needScroll) {
-                offset1 = (gameTick * scrollSpeed) % 1;
-                MainRenderer.scheduleRender(
-                        texture.identifier,
-                        false,
-                        QueuedRenderLayer.LIGHT_TRANSLUCENT,
-                        (graphicsHolder, offset) -> {
-                            storedMatrixTransformations1.transform(graphicsHolder, offset);
-                            IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-                            graphicsHolder.pop();
-                        });
-            } else {
-                MainRenderer.scheduleRender(
-                        texture.identifier,
-                        false,
-                        QueuedRenderLayer.LIGHT_TRANSLUCENT,
-                        (graphicsHolder, offset) -> {
-                            storedMatrixTransformations1.transform(graphicsHolder, offset);
-                            IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
-                            graphicsHolder.pop();
-                        }
-                );
-            }
+        float offset1;
+        if (text.length() > textSize && needScroll) {
+            offset1 = (gameTick * scrollSpeed) % 1;
+            MainRenderer.scheduleRender(
+                    texture.identifier,
+                    false,
+                    QueuedRenderLayer.LIGHT_TRANSLUCENT,
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                        graphicsHolder.pop();
+                    });
+        } else {
+            MainRenderer.scheduleRender(
+                    texture.identifier,
+                    false,
+                    QueuedRenderLayer.LIGHT_TRANSLUCENT,
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                        graphicsHolder.pop();
+                    }
+            );
+        }
 
     }
 
@@ -141,7 +137,7 @@ public class TextView implements RenderView {
         this.textAlign = textAlign;
     }
 
-     public void setLetterSpacing(int letterSpacing) {
+    public void setLetterSpacing(int letterSpacing) {
         this.letterSpacing = letterSpacing;
     }
 

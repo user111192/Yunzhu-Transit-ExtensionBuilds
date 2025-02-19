@@ -14,15 +14,11 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
 import top.xfunny.block.SchindlerDSeriesScreen1Even;
-import top.xfunny.block.SchindlerDSeriesScreen1Odd;
-import top.xfunny.block.SchindlerMSeriesScreen1;
-import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.block.base.LiftPanelBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
 import top.xfunny.view.*;
-import top.xfunny.view.view_group.FrameLayout;
 import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
@@ -63,7 +59,7 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd? -0.234375F : -0.734375F, 0.5625F);
+        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.5625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -100,7 +96,7 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(-30);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
-                liftFloorDisplayView.setMargin((float)1.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
@@ -109,7 +105,7 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 1.3 / 16);
                 liftArrowView.setHeight((float) 2.3 / 16);
-                liftArrowView.setMargin((float)1.2/16, (float)3/16, 0, 0);
+                liftArrowView.setMargin((float) 1.2 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFFF0000);
 

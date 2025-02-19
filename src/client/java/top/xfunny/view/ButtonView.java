@@ -8,16 +8,14 @@ import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
-import top.xfunny.util.TransformPositionX;
 
 import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
-public class ButtonView implements RenderView{
+public class ButtonView implements RenderView {
+    String hitButton;
     private String id;
     private StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
     private float marginLeft, marginTop, marginRight, marginBottom;
@@ -37,7 +35,7 @@ public class ButtonView implements RenderView{
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,34 +43,29 @@ public class ButtonView implements RenderView{
         this.blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
         this.storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
+        boolean inBlock;
+        if (hitResult != null) {
+            final Vector3d hitLocation = hitResult.getPos();
+            inBlock = Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
+        } else {
+            inBlock = false;
+        }
 
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
         });
 
-        final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-        final Vector3d hitLocation = hitResult.getPos();
-
-        final double hitY = MathHelper.fractionalPart(hitLocation.getYMapped());
-        final double hitX = MathHelper.fractionalPart(hitLocation.getXMapped());
-        final double hitZ = MathHelper.fractionalPart(hitLocation.getZMapped());
-
-        TestLiftDestinationDispatchTerminalKeyMapping mapping = new TestLiftDestinationDispatchTerminalKeyMapping();
-        double transformedX = TransformPositionX.transform(hitX, hitZ, facing);
-
-        String hitButton = mapping.mapping("test_lift_destination_dispatch_terminal_key_mapping_home", transformedX, hitY);
-
-
         MainRenderer.scheduleRender(
-                texture, false, id.equals(hitButton) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+                texture, false, id.equals(hitButton) && inBlock ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
                 (graphicsHolder, offset) -> {
                     storedMatrixTransformations1.transform(graphicsHolder, offset);
                     IDrawing.drawTexture(
                             graphicsHolder,
                             x, y, width, height,
-                            1,1,0,0,
+                            1, 1, 0, 0,
                             facing,
-                            id.equals(hitButton) ? hoverColor : defaultColor,
+                            id.equals(hitButton) && inBlock ? hoverColor : defaultColor,
                             light
                     );
                     graphicsHolder.pop();
@@ -165,9 +158,10 @@ public class ButtonView implements RenderView{
     }
 
     // 设置基本属性的方法
-    public void setBasicsAttributes(World world, BlockPos blockPos) {
+    public void setBasicsAttributes(World world, BlockPos blockPos, String hitButton) {
         this.world = world;
         this.blockPos = blockPos;
+        this.hitButton = hitButton;
     }
 
     public void setDefaultColor(int defaultColor) {
@@ -185,9 +179,6 @@ public class ButtonView implements RenderView{
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
         storedMatrixTransformations1.add(transformation);
     }
-
-
-
 
 
 }

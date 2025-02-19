@@ -4,16 +4,15 @@ import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.core.operation.PressLift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import org.mtr.mapping.holder.Blocks;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
-import top.xfunny.Init;
 import top.xfunny.Items;
-import top.xfunny.LiftFloorRegistry;
-import top.xfunny.ButtonRegistry;
+import top.xfunny.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -197,7 +196,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         if (!isOdd) {
             if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
-            }else if(IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT){
+            } else if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
             }
         }
@@ -235,7 +234,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         }
     }
 
-    public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
+    public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry, LiftLanternController {
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
 
@@ -353,7 +352,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                 if (blockEntity != null && blockEntity.data instanceof BlockEntityBase) {
                     ((BlockEntityBase) blockEntity.data).registerButton(world, blockPos, isAdd);
                 }
-            }else{
+            } else {
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     liftButtonPositions.add(blockPos);

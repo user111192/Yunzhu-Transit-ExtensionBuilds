@@ -89,7 +89,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -102,7 +102,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);
@@ -161,7 +161,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 1 / 24);
                 liftArrowView.setHeight((float) 1 / 24);
-                liftArrowView.setMargin(0, (float) 1/ 16, 0, 0);
+                liftArrowView.setMargin(0, (float) 1 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFAA00);
 

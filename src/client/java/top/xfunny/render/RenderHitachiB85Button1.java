@@ -15,7 +15,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.block.HitachiB85Button1;
-import top.xfunny.block.MitsubishiNexWayButton1;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
@@ -93,7 +92,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -106,7 +105,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);
@@ -182,7 +181,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 0.4 / 16);
-                liftArrowView.setHeight((float) 0.4/ 16);
+                liftArrowView.setHeight((float) 0.4 / 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setMargin(0, 0, 0, (float) 0.2 / 16);
                 liftArrowView.setColor(0xFFFF0000);
@@ -192,7 +191,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setMargin((float) 0.42 / 16, 0, (float) 0.42 / 16, 0);
-                backgroundLayout.setId("background_"+i);
+                backgroundLayout.setId("background_" + i);
 
                 final ImageView screenBackground = new ImageView();
                 screenBackground.setBasicsAttributes(world, blockEntity.getPos2());

@@ -26,15 +26,14 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
         super(true);
     }
 
+    public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback) {
+        LiftDestinationDispatchTerminalBase.hasButtonsClient(trackPosition, callback);//todo：需要注意
+    }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return IBlock.getVoxelShapeByDirection(0, 0, 0, 16, 11, 0.1, IBlock.getStatePropertySafe(state, FACING));
-    }
-
-    public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
-        LiftDestinationDispatchTerminalBase.hasButtonsClient(trackPosition, callback);//todo：需要注意
     }
 
     /**
@@ -86,11 +85,11 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
         if (player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
             Init.LOGGER.info("onUse2");
             return ActionResult.PASS;
-        } else{
+        } else {
             //todo:以后区分不同id下的点击事件
             String testOutput = mapping.mapping(screenId, transformedX, hitY);
-            if(screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")){//todo:可能没有必要进行判断
-                switch (testOutput){
+            if (screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")) {//todo:可能没有必要进行判断
+                switch (testOutput) {
                     case "number1":
                         data1.addInputNumber(1);
                         break;
@@ -126,21 +125,20 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
                         break;
                     case "callLift":
                         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-                        Init.LOGGER.info("已呼梯,已登记楼层："+ArrayListToString.arrayListToString(data1.getInputNumber()));
+                        Init.LOGGER.info("已呼梯,已登记楼层：" + ArrayListToString.arrayListToString(data1.getInputNumber()));
 
                         data.callLift(world, pos, ArrayListToString.arrayListToString(data1.getInputNumber()));
                         data1.clearInputNumber();
-                        data1.addInputNumber("To Lift:"+data.getLiftIdentifier());
+                        data1.addInputNumber("To Lift:" + data.getLiftIdentifier());
                         scheduler.schedule(() -> {
                             data1.clearInputNumber();
                             data1.addInputNumber("Please input floor number!");
                         }, 1, TimeUnit.SECONDS);
                         scheduler.shutdown();
                 }
-                player.sendMessage(Text.of(("transformedX:"+transformedX+",Y:"+hitY+",您点击了" + testOutput)), true);
+                player.sendMessage(Text.of(("transformedX:" + transformedX + ",Y:" + hitY + ",您点击了" + testOutput)), true);
             }
         }
-
 
 
         return ActionResult.SUCCESS;
@@ -152,13 +150,15 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
      */
     public static class BlockEntity extends LiftDestinationDispatchTerminalBase.BlockEntityBase {
         public ArrayList<Object> inputNumber = new ArrayList<>();
+
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.TEST_LIFT_DESTINATION_DISPATCH_TERMINAL.get(), pos, state);
             super.registerScreenId("test_lift_destination_dispatch_terminal_key_mapping_home");//初始化screen
             inputNumber.add("Please input floor number!");
         }
+
         public void addInputNumber(Object number) {
-            if (ArrayListToString.arrayListToString(inputNumber).equals("Please input floor number!")){
+            if (ArrayListToString.arrayListToString(inputNumber).equals("Please input floor number!")) {
                 clearInputNumber();
             }
             inputNumber.add(number);
@@ -169,7 +169,7 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
         }
 
         public ArrayList<Object> getInputNumber() {
-            if (inputNumber.isEmpty()){
+            if (inputNumber.isEmpty()) {
                 inputNumber.add("Please input floor number!");
             }
             return inputNumber;

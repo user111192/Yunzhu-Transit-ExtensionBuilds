@@ -32,6 +32,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerDSeriesScreen2BlueEven.BlockEntity> SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN;
     public static final BlockEntityTypeRegistryObject<SchindlerDSeriesScreen2RedOdd.BlockEntity> SCHINDLER_D_SERIES_SCREEN_2_RED_ODD;
     public static final BlockEntityTypeRegistryObject<SchindlerDSeriesScreen2RedEven.BlockEntity> SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN;
+    public static final BlockEntityTypeRegistryObject<SchindlerZLine3Keypad1.BlockEntity> SCHINDLER_Z_LINE_3_KEYPAD_1;
 
 
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesButton.BlockEntity> SCHINDLER_M_SERIES_BUTTON;
@@ -76,13 +77,15 @@ public class BlockEntityTypes {
         SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_blue_even"), SchindlerDSeriesScreen2BlueEven.BlockEntity::new, Blocks.SCHINDLER_D_SERIES_SCREEN_2_BLUE_EVEN::get);
         SCHINDLER_D_SERIES_SCREEN_2_RED_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_red_odd"), SchindlerDSeriesScreen2RedOdd.BlockEntity::new, Blocks.SCHINDLER_D_SERIES_SCREEN_2_RED_ODD::get);
         SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_d_series_screen_2_red_even"), SchindlerDSeriesScreen2RedEven.BlockEntity::new, Blocks.SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN::get);
-
         SCHINDLER_M_SERIES_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_button.json"), SchindlerMSeriesButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_BUTTON::get);
         SCHINDLER_M_SERIES_TOUCH_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_touch_button.json"), SchindlerMSeriesTouchButton.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_TOUCH_BUTTON::get);
         SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), SchindlerMSeriesScreen1.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_1::get);
         SCHINDLER_M_SERIES_SCREEN_2_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_odd"), SchindlerMSeriesScreen2Odd.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_2_ODD::get);
         SCHINDLER_M_SERIES_SCREEN_2_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_even"), SchindlerMSeriesScreen2Even.BlockEntity::new, Blocks.SCHINDLER_M_SERIES_SCREEN_2_EVEN::get);
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), SchindlerSSeriesGreyButton.BlockEntity::new, Blocks.SCHINDLER_S_SERIES_GREY_BUTTON::get);
+        SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), SchindlerZLine3Keypad1.BlockEntity::new, Blocks.SCHINDLER_Z_LINE_3_KEYPAD_1::get);
+
+
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
 
         MITSUBISHI_NEXWAY_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_door_1"), MitsubishiNexWayDoor1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_DOOR_1::get);

@@ -3,10 +3,11 @@ package top.xfunny.item;
 import org.mtr.mapping.holder.*;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.item.ItemBlockClickingBase;
+import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.ButtonRegistry;
+import top.xfunny.block.base.LiftDestinationDispatchTerminalBase;
 
 import static top.xfunny.item.LinkerValidTypes.VALID_TYPES;
 
@@ -34,7 +35,7 @@ public class YteLiftButtonsLinker extends ItemBlockClickingBase {
                 } else {
                     Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
                 }
-            } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase) {
+            } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase || blockEntity2.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase) {
                 if (blockEntity1.data instanceof ButtonRegistry) {
                     ((ButtonRegistry) blockEntity2.data).registerButton(world, blockPos1, isAdd);
                     ((ButtonRegistry) blockEntity1.data).registerButton(world, blockPos2, isAdd);

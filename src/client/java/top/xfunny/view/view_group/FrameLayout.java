@@ -87,8 +87,8 @@ public class FrameLayout implements RenderView {
             child.render();
 
             storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, -SMALL_OFFSET);
-        });
+                graphicsHolder.translate(0, 0, -SMALL_OFFSET);
+            });
         }
 
     }

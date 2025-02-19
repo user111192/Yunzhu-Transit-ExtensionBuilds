@@ -22,7 +22,7 @@ public class MitsubishiNexWayButton2 extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(single? 4 : 6.925, 0.6, 0, single? 12 : 9.025, 12.9, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(single ? 4 : 6.925, 0.6, 0, single ? 12 : 9.025, 12.9, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     /**

@@ -9,6 +9,7 @@ import org.mtr.mod.item.ItemBlockClickingBase;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
 import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.block.base.LiftDestinationDispatchTerminalBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
                 } else {
                     Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
                 }
-            } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase) {
+            } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase || blockEntity2.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase) {
                 Init.LOGGER.info("未能连接 {} 和 {}", blockPos1, blockPos2);
             }
         } else {

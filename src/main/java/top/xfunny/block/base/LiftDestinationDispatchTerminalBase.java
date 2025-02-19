@@ -6,7 +6,6 @@ import org.mtr.core.data.Position;
 import org.mtr.core.operation.PressLift;
 import org.mtr.core.tool.Vector;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.mtr.mapping.holder.*;
@@ -16,15 +15,17 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.item.ItemLiftRefresher;
 import org.mtr.mod.packet.PacketPressLiftButton;
-import org.mtr.mod.render.RenderLifts;
+import top.xfunny.ButtonRegistry;
 import top.xfunny.Init;
 import top.xfunny.LiftFloorRegistry;
-import top.xfunny.ButtonRegistry;
+import top.xfunny.LiftLanternController;
 import top.xfunny.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -41,18 +42,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         this.isOdd = isOdd;
     }
 
-    @FunctionalInterface
-    public interface FloorLiftCallback {
-        void accept(int floor, Lift lift);
-    }
-
-    public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback){
+    public static void hasButtonsClient(BlockPos trackPosition, FloorLiftCallback callback) {
         MinecraftClientData.getInstance().lifts.forEach(lift -> {
-            if (trackPosition == null) {
-                Init.LOGGER.error("trackPosition is null");
-                return;
-            }
-
             // 获取电梯轨道位置对应的楼层索引
             final int floorIndex = lift.getFloorIndex(Init.blockPosToPosition(trackPosition));
 
@@ -66,7 +57,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
     @Nonnull
     @Override
     public abstract ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit);
-
 
     @Override
     public BlockState getPlacementState2(ItemPlacementContext ctx) {
@@ -97,17 +87,19 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         if (!isOdd) {
             if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.RIGHT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
-            }else if(IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT){
+            } else if (IBlock.getStatePropertySafe(state, SIDE) == EnumSide.LEFT) {
                 IBlock.onBreakCreative(world, player, pos.offset(IBlock.getSideDirection(state)));
             }
         }
         super.onBreak2(world, pos, state, player);
     }
 
+    @FunctionalInterface
+    public interface FloorLiftCallback {
+        void accept(int floor, Lift lift);
+    }
 
-
-
-    public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry {
+    public static class BlockEntityBase extends BlockEntityExtension implements LiftFloorRegistry, ButtonRegistry, LiftLanternController {
         // 用于在CompoundTag中标识地板位置数组的键
         private static final String KEY_TRACK_FLOOR_POS = "track_floor_pos";
         private static final String KEY_LIFT_BUTTON_POSITIONS = "lift_button_position";
@@ -116,12 +108,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         public final ObjectOpenHashSet<BlockPos> liftButtonPositions = new ObjectOpenHashSet<>();
         private final LinkedHashSet<BlockPos> trackPositions = new LinkedHashSet<>();
-        private String screenId;
-
         public LiftDirection liftDirection = NONE;
-
         public BlockPos selfPos;
-
+        private String screenId;
         private LiftDirection pressedButtonDirection;
 
         private char liftIdentifier;
@@ -168,7 +157,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             });
             compoundTag.putLongArray(KEY_LIFT_BUTTON_POSITIONS, liftButtonPositionsList);
 
-            compoundTag.putString(KEY_SCREEN_ID,screenId);
+            compoundTag.putString(KEY_SCREEN_ID, screenId);
         }
 
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
@@ -206,7 +195,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 if (blockEntity != null && blockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
                     ((LiftButtonsBase.BlockEntityBase) blockEntity.data).registerButton(world, blockPos, isAdd);
                 }
-            }else{
+            } else {
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     liftButtonPositions.add(blockPos);
@@ -221,7 +210,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             markDirty2();
         }
 
-        public void registerScreenId(String screenId){
+        public void registerScreenId(String screenId) {
             this.screenId = screenId;
         }
 
@@ -233,7 +222,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             trackPositions.forEach(consumer);
         }
 
-        public void callLift(World world, BlockPos pos, String destination) {
+        public String callLift(World world, BlockPos pos, String destination) {
             final BlockEntity blockEntity = world.getBlockEntity(pos);
             final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
             ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Character>> trackPositionsAndChars = new ObjectArrayList<>();
@@ -262,10 +251,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 char currentChar = trackPositionAndChar.right();
                 hasButtonsClient(currentTrackPosition, (floor, lift) -> {
                     //todo:查询楼层是否存在
-                    if(locateFloor(world, lift, destination) != null){
-                        //BlockPos floorPosition = Init.positionToBlockPos(locateFloor(world, lift, destination));
+                    if (locateFloor(world, lift, destination) != null) {
                         trackPositionsAndChars1.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-
                     }
                 });
             });
@@ -290,19 +277,19 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
                     String currentLiftFloor = liftDetails.right().left();
 
-                    if(!currentLiftFloor.isEmpty()){//当电梯轨道只有一层时，currentLiftFloor为空
+                    if (!currentLiftFloor.isEmpty()) {//当电梯轨道只有一层时，currentLiftFloor为空
                         Position currentLiftFloorPosition = locateFloor(world, lift, currentLiftFloor);
                         int currentLiftFloorNumber = lift.getFloorIndex(currentLiftFloorPosition);
                         LiftDirection confirmLiftDirection = determineDirection(currentFloorNumber, destinationFloorNumber);
                         this.liftDirection = confirmLiftDirection;
 
-                        if(liftDirection == NONE){
+                        if (liftDirection == NONE) {
                             trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                        }else if(liftDirection == confirmLiftDirection){
-                            if(confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber){
+                        } else if (liftDirection == confirmLiftDirection) {
+                            if (confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
                                 Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
-                            }else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber){
+                            } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
                                 Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
                             }
@@ -333,7 +320,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
             });
 
             //step5:呼叫电梯
-            if(confirmTrackPosition[0] != null){
+            if (confirmTrackPosition[0] != null) {
                 final PressLift pressLift = new PressLift();
                 pressLift.add(Init.blockPosToPosition(confirmTrackPosition[0]), data.liftDirection);
                 InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
@@ -343,9 +330,12 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                     pressLift1.add(destinationPosition[0], data.liftDirection);
                     InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
                 }, 2, TimeUnit.SECONDS);
-            }else{
+                return String.valueOf(liftIdentifier);
+
+            } else {
                 Init.LOGGER.info("没有找到合适的电梯");
                 liftIdentifier = '?';
+                return String.valueOf(liftIdentifier);
             }
         }
 
@@ -368,11 +358,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         }
 
         public String getLiftIdentifier() {
-            if (liftIdentifier == '?') {
-                return "???";
-            }
-            String temp = String.valueOf(liftIdentifier);
-            return temp;
+            return String.valueOf(liftIdentifier);
+
         }
 
         public LiftDirection determineDirection(int currentFloorNumber, int destinationFloorNumber) {
@@ -395,10 +382,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         public LiftDirection getPressedButtonDirection() {
             return this.liftDirection;
-        }
-
-        public void setPressedButtonDirection(LiftDirection direction) {
-            this.pressedButtonDirection = direction;
         }
     }
 }

@@ -40,7 +40,8 @@ public class LinkerValidTypes {
             SchindlerMSeriesScreen2Odd.class,
             SchindlerMSeriesScreen2Even.class,
             SchindlerSSeriesGreyButton.class,
-            HitachiB85Button1.class
+            HitachiB85Button1.class,
+            SchindlerZLine3Keypad1.class
 
     ));
 }

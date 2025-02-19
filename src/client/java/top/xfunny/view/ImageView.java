@@ -24,6 +24,7 @@ public class ImageView implements RenderView {
     private Identifier texture;
     private float scale;
     private int light;
+    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
 
     // Getters and Setters
     @Override
@@ -48,6 +49,11 @@ public class ImageView implements RenderView {
         this.light = light;
     }
 
+    public void setLight(int light, QueuedRenderLayer queuedRenderLayer) {
+        this.light = light;
+        this.queuedRenderLayer = queuedRenderLayer;
+    }
+
     public void setBasicsAttributes(World world, BlockPos blockPos) {
         this.world = world;
         this.blockPos = blockPos;
@@ -66,7 +72,7 @@ public class ImageView implements RenderView {
         MainRenderer.scheduleRender(
                 texture,
                 false,
-                QueuedRenderLayer.EXTERIOR,
+                queuedRenderLayer,
                 (graphicsHolder, offset) -> {
                     // 应用矩阵变换
                     storedMatrixTransformations1.transform(graphicsHolder, offset);
@@ -112,6 +118,10 @@ public class ImageView implements RenderView {
     @Override
     public float getHeight() {
         return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     @Override

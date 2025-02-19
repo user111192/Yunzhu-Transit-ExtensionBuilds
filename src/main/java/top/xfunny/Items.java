@@ -3,8 +3,6 @@ package top.xfunny;
 import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.Item;
 import org.mtr.mapping.registry.ItemRegistryObject;
-
-
 import top.xfunny.item.FloorAutoSetter;
 import top.xfunny.item.ItemPSDAPGBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
@@ -19,7 +17,6 @@ public class Items {
 
     public static final ItemRegistryObject MITSUBISHI_NEXWAY_DOOR_1;
     public static final ItemRegistryObject SCHINDLER_QKS9_DOOR_1;
-
 
 
     static {

@@ -16,16 +16,13 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
 import top.xfunny.block.SchindlerMSeriesScreen2Even;
-import top.xfunny.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.block.base.LiftButtonsBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
 import top.xfunny.util.ClientGetLiftDetails;
-import top.xfunny.util.ReverseRendering;
 import top.xfunny.view.*;
 import top.xfunny.view.view_group.FrameLayout;
-import top.xfunny.view.view_group.LinearLayout;
 
 import java.util.Comparator;
 
@@ -70,7 +67,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd? (float) -0.5625 : (float) -1.0625, (float) 0.5625);
+        parentLayout.setPosition(isOdd ? (float) -0.5625 : (float) -1.0625, (float) 0.5625);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -82,7 +79,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         screenLayout.setBackgroundColor(0xFF000000);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true,true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -176,7 +173,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin((float) 0.6 /16, 0, (float) 0.6 /16, 0);
+                liftFloorDisplayView.setMargin((float) 0.6 / 16, 0, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
             }

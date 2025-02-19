@@ -77,7 +77,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         buttonLayout.setMargin(0, 0, (float) 0.4 / 16, (float) 0.4 / 16);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         button.setLight(light);
         button.setHover(true);
         button.setDefaultColor(0xFFFFFFFF);
@@ -90,7 +90,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         button.setGravity(Gravity.START);
 
         LiftButtonView buttonArrow = new LiftButtonView();
-        buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true,false,false);
+        buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false);
         buttonArrow.setLight(light);
         buttonArrow.setHover(false);
         buttonArrow.setDefaultColor(0xFFFFFFFF);
