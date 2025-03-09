@@ -45,6 +45,8 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_1;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_ODD;
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_2_EVEN;
+    public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_3_ODD;
+    public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_3_EVEN;
     public static final BlockRegistryObject SCHINDLER_Z_LINE_3_KEYPAD_1;
 
     public static final BlockRegistryObject HITACHI_B85_BUTTON_1;
@@ -93,6 +95,8 @@ public class Blocks {
         SCHINDLER_M_SERIES_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_1"), () -> new Block(new SchindlerMSeriesScreen1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_SCREEN_2_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_odd"), () -> new Block(new SchindlerMSeriesScreen2Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_M_SERIES_SCREEN_2_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_2_even"), () -> new Block(new SchindlerMSeriesScreen2Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_M_SERIES_SCREEN_3_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_3_odd"), () -> new Block(new SchindlerMSeriesScreen3Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_M_SERIES_SCREEN_3_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_m_series_screen_3_even"), () -> new Block(new SchindlerMSeriesScreen3Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), () -> new Block(new SchindlerSSeriesGreyButton()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), () -> new Block(new SchindlerZLine3Keypad1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
