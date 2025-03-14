@@ -33,6 +33,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
     private static final int PRESSED_COLOR = 0xFFFFCC00;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_2.png");
     private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_lantern_3.png");
+    private static final Identifier SCREEN_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png");
     private final boolean isOdd;
 
     public RenderSchindlerMSeriesScreen3(Argument dispatcher, Boolean isOdd) {
@@ -68,8 +69,8 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd ? (float) -0.5575 : (float) -1.0625, (float) 0.61);
+        parentLayout.setParentDimensions((float) 18 / 16, (float) 4.5 / 16);
+        parentLayout.setPosition(isOdd ? (float) -0.5575 : (float) -1.055, (float) 0.61);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -84,12 +85,12 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(PRESSED_COLOR);
+        button.setPressedColor(0xFFFFFFFF);
         button.setHoverColor(0xFFFFFFFF);
         button.setTexture(BUTTON_TEXTURE, true);
         button.setWidth(3.25F / 16);
         button.setHeight(3.25F / 16);
-        button.setSpacing(6.45F / 16);
+        button.setSpacing(6.4F / 16);
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView button1 = new LiftButtonView();
@@ -97,13 +98,21 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         button1.setLight(light);
         button1.setHover(false);
         button1.setDefaultColor(0xFFFFFFFF);
-        button1.setPressedColor(0xFFFFFFFF);
+        button.setPressedColor(PRESSED_COLOR);
         button1.setHoverColor(0xFFFFFFFF);
         button1.setTexture(ARROW_TEXTURE, true);
         button1.setWidth(3.25F / 16);
         button1.setHeight(3.25F / 16);
-        button1.setSpacing(6.45F / 16);
+        button1.setSpacing(6.4F / 16);
         button1.setGravity(Gravity.CENTER);
+
+        final ImageView background = new ImageView();
+        background.setBasicsAttributes(world, blockEntity.getPos2());
+        background.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
+        background.setWidth((float) 3.25 / 16);
+        background.setLight(255);
+        background.setScale(1);
+        background.setGravity(Gravity.CENTER);
 
 
         final LineComponent line = new LineComponent();
@@ -180,15 +189,15 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("acmeled"),//字体
-                        6,//字号
+                        5,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("schindler_m_series_screen_3_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
-                liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin((float) 0.6 / 16, 0, (float) 0.6 / 16, 0);
+                liftFloorDisplayView.setMargin((float) -0.225 / 16, (float) 1.2 / 16, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
             }
@@ -198,9 +207,10 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
 
+        parentLayout.addChild(background);
         parentLayout.addChild(screenLayout);
-        parentLayout.addChild(button);
         parentLayout.addChild(button1);
+        parentLayout.addChild(button);
 
         parentLayout.render();
     }
