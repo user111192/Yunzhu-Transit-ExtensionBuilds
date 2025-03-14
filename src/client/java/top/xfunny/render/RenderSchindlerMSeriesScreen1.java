@@ -69,7 +69,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
         final ImageView background = new ImageView();
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1.png"));
-        background.setWidth((float) 3.6 / 16);
+        background.setWidth((float) 3.25 / 16);
         background.setScale(1);
         background.setGravity(Gravity.CENTER);
 
