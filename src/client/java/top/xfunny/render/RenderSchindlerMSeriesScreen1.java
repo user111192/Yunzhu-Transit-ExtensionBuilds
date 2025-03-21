@@ -9,6 +9,7 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
@@ -23,6 +24,7 @@ import java.util.Comparator;
 
 public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<SchindlerMSeriesScreen1.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
+    private static final float ARROW_SPEED = 0.04F;
 
     public RenderSchindlerMSeriesScreen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -87,6 +89,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
 
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
+
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
 
@@ -105,6 +108,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
+                liftFloorDisplayView.setNumberScrolling(true, 0.05F);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 screenLayout.addChild(liftFloorDisplayView);

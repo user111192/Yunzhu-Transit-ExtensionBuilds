@@ -208,11 +208,10 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         });
 
 
-        parentLayout.addChild(screenLayout);
         parentLayout.addChild(background);
+        parentLayout.addChild(screenLayout);
         parentLayout.addChild(button1);
         parentLayout.addChild(button);
-
         parentLayout.render();
     }
 }

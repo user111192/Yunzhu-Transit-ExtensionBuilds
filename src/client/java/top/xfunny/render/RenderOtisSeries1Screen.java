@@ -96,10 +96,9 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
                         4,
                         0xFF1D953F);
                 liftFloorDisplayView.setTextureId("otis_series1_screen");
-                liftFloorDisplayView.setWidth((float) 3.3 / 16);
+                liftFloorDisplayView.setWidth((float) 2.8 / 16);
                 liftFloorDisplayView.setHeight((float) 4 / 16);
-                liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setMargin(0, 0, (float) 1 / 16, 0);
+                liftFloorDisplayView.setMargin(0, 0, (float) 0.8 / 16, 0);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
 

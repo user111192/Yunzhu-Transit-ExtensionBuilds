@@ -84,9 +84,9 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         button.setPressedColor(0xFFFFFFFF);
         button.setHoverColor(0xFFFFFFFF);
         button.setTexture(BUTTON_TEXTURE_UP, BUTTON_TEXTURE_DOWN, false);
-        button.setWidth(2F / 16);
-        button.setHeight(2F / 16);
-        button.setSpacing(0.5F / 16);
+        button.setWidth(1.75F / 16);
+        button.setHeight(1.75F / 16);
+        button.setSpacing(0.75F / 16);
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
@@ -97,9 +97,9 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
-        buttonLight.setWidth(2F / 16);
-        buttonLight.setHeight(2F / 16);
-        buttonLight.setSpacing(0.5F / 16);
+        buttonLight.setWidth(1.75F / 16);
+        buttonLight.setHeight(1.75F / 16);
+        buttonLight.setSpacing(0.75F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();
