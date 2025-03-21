@@ -108,7 +108,6 @@ public class LiftFloorDisplayView implements RenderView {
                 );
             }
         }
-
     }
 
     private void calculateSize() {
@@ -256,6 +255,11 @@ public class LiftFloorDisplayView implements RenderView {
 
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
         this.transformation = transformation;
+    }
+
+    public void setNumberScrolling(Boolean needScroll, float scrollSpeed) {
+        this.needScroll = needScroll;
+        this.scrollSpeed = scrollSpeed;
     }
 
     public enum TextAlign {

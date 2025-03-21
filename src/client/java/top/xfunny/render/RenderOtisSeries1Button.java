@@ -126,13 +126,10 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
                 });
             });
         });
-
+        backgroundLayout.addChild(buttonLayout);
+        parentLayout.addChild(backgroundLayout);
         buttonLayout.addChild(buttonArrow);
         buttonLayout.addChild(button);
-
-        backgroundLayout.addChild(buttonLayout);
-
-        parentLayout.addChild(backgroundLayout);
         parentLayout.render();
     }
 }

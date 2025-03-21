@@ -17,7 +17,6 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
 import top.xfunny.block.SchindlerMSeriesScreen3Even;
 import top.xfunny.block.base.LiftButtonsBase;
-import top.xfunny.block.base.LiftPanelBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
@@ -107,7 +106,6 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         button1.setGravity(Gravity.CENTER);
 
         final ImageView background = new ImageView();
-        background.setId("background image");
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
         background.setWidth((float) 3.25 / 16);
@@ -181,6 +179,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
+            // 确定要渲染的电梯数量，这里设置为2个
             final int count = 1;
 
             for (int i = 0; i < count; i++) {
