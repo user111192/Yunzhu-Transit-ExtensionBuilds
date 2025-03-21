@@ -123,6 +123,7 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     data1.switchScreen("schindler_z_line_3_keypad_1_key_mapping_accessibility");
                 } else if ("lobby".equals(output)) {
                     String callResult = data.callLift(world, pos, "1");
+                    callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
             }
@@ -135,6 +136,7 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     data1.addInputString(world, pos, "1", true, data1, data);
                 } else if ("lobby".equals(output)) {
                     String callResult = data.callLift(world, pos, "1");
+                    callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
             }
@@ -150,6 +152,7 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     data1.switchScreen("schindler_z_line_3_keypad_1_key_mapping_accessibility");
                 } else if ("lobby".equals(output)) {
                     String callResult = data.callLift(world, pos, "1");
+                    callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
             }

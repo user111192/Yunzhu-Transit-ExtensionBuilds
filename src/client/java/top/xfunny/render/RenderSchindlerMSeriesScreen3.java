@@ -207,8 +207,9 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
 
-        parentLayout.addChild(background);
+
         parentLayout.addChild(screenLayout);
+        parentLayout.addChild(background);
         parentLayout.addChild(button1);
         parentLayout.addChild(button);
 
