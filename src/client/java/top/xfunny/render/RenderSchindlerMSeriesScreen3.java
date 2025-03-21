@@ -15,9 +15,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.Init;
-import top.xfunny.block.MitsubishiNexWayScreen1Even;
 import top.xfunny.block.SchindlerMSeriesScreen3Even;
 import top.xfunny.block.base.LiftButtonsBase;
+import top.xfunny.block.base.LiftPanelBase;
 import top.xfunny.item.YteGroupLiftButtonsLinker;
 import top.xfunny.item.YteLiftButtonsLinker;
 import top.xfunny.resource.FontList;
@@ -107,6 +107,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         button1.setGravity(Gravity.CENTER);
 
         final ImageView background = new ImageView();
+        background.setId("background image");
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
         background.setWidth((float) 3.25 / 16);
@@ -180,7 +181,6 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            // 确定要渲染的电梯数量，这里设置为2个
             final int count = 1;
 
             for (int i = 0; i < count; i++) {
@@ -200,6 +200,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setMargin((float) -0.225 / 16, (float) 1.2 / 16, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
+                parentLayout.addChild(background);
             }
         }
 
@@ -209,7 +210,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
 
 
         parentLayout.addChild(screenLayout);
-        parentLayout.addChild(background);
+
         parentLayout.addChild(button1);
         parentLayout.addChild(button);
 
