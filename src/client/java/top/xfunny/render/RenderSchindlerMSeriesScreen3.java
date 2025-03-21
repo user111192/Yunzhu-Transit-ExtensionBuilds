@@ -110,7 +110,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
         background.setWidth((float) 3.25 / 16);
-        background.setLight(255);
+        background.setLight(light);
         background.setScale(1);
         background.setGravity(Gravity.CENTER);
 
@@ -207,8 +207,9 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
 
-        parentLayout.addChild(background);
+
         parentLayout.addChild(screenLayout);
+        parentLayout.addChild(background);
         parentLayout.addChild(button1);
         parentLayout.addChild(button);
 
