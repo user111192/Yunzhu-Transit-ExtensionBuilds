@@ -1,5 +1,7 @@
 package top.xfunny.block;
 
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
@@ -179,7 +181,7 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     switchScreen("schindler_z_line_3_keypad_1_key_mapping_identifier");
                     callLift(world, pos, ArrayListToString.arrayListToString(data1.getInputString()));
                     String liftIdentifier = data.getLiftIdentifier();
-                    data1.addInputString(world, pos, liftIdentifier.equals("?") ? "??" : ">" + liftIdentifier, false, data1, data);
+                    data1.addInputString(world, pos, liftIdentifier.equals("?") ? "??" : "<" + liftIdentifier, false, data1, data);
 
                     ScheduledExecutorService scheduler1 = Executors.newSingleThreadScheduledExecutor();
                     scheduler1.schedule(() -> {
