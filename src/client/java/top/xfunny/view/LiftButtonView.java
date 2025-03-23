@@ -38,6 +38,7 @@ public class LiftButtonView implements RenderView {
     private boolean repeatButton;
     private boolean verticalAlignment;
     private boolean isLantern;
+    private boolean lockPosition;
     private double clientMedian = 0.25;
 
 
@@ -158,12 +159,12 @@ public class LiftButtonView implements RenderView {
 
     private void positionOffset(float x, float y, float spacing) {
         if (verticalAlignment) {
-            this.yUp = buttonDescriptor.hasDownButton() || repeatButton ? y + height + spacing : y;
+            this.yUp = buttonDescriptor.hasDownButton() || repeatButton || lockPosition ? y + height + spacing : y;
             this.yDown = y;
             this.xLeft = x;
             this.xRight = x;
         } else {
-            this.xLeft = buttonDescriptor.hasDownButton() || repeatButton ? x + spacing + width : x;
+            this.xLeft = buttonDescriptor.hasDownButton() || repeatButton || lockPosition ? x + spacing + width : x;
             this.xRight = x;
             this.yUp = y;
             this.yDown = y;
@@ -193,7 +194,7 @@ public class LiftButtonView implements RenderView {
 
     @Override
     public float getWidth() {
-        return !verticalAlignment && ((buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton()) || repeatButton) ? width * 2 + spacing : width;
+        return !verticalAlignment && ((buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton()) || repeatButton || lockPosition) ? width * 2 + spacing : width;
     }
 
     public void setWidth(float width) {
@@ -202,7 +203,7 @@ public class LiftButtonView implements RenderView {
 
     @Override
     public float getHeight() {
-        return verticalAlignment && (buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton() || repeatButton) ? height * 2 + spacing : height;
+        return verticalAlignment && (buttonDescriptor.hasUpButton() && buttonDescriptor.hasDownButton() || repeatButton || lockPosition) ? height * 2 + spacing : height;
     }
 
     public void setHeight(float height) {
@@ -251,13 +252,14 @@ public class LiftButtonView implements RenderView {
     }
 
     // 设置基本属性的方法
-    public void setBasicsAttributes(World world, BlockPos blockPos, LiftButtonsBase.LiftButtonDescriptor descriptor, boolean verticalAlignment, boolean repeatButton, boolean isLantern) {
+    public void setBasicsAttributes(World world, BlockPos blockPos, LiftButtonsBase.LiftButtonDescriptor descriptor, boolean verticalAlignment, boolean repeatButton, boolean isLantern, boolean lockPosition) {
         this.world = world;
         this.blockPos = blockPos;
         this.buttonDescriptor = descriptor;
         this.verticalAlignment = verticalAlignment;
         this.repeatButton = repeatButton;
         this.isLantern = isLantern;
+        this.lockPosition = lockPosition;
     }
 
     public void setLight(int light) {

@@ -61,35 +61,28 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.0397 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.01 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd ? (float) -0.5625 : (float) -1.0625, (float) 0.4625);
+        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 7.5 / 16);
+        parentLayout.setPosition(isOdd ? (float) -3.75/16 : (float) -11.75 / 16, (float) 4.25/16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        final FrameLayout screenLayout = new FrameLayout();
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
-        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER);
-        screenLayout.setBackgroundColor(0xFF000000);
-
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, true, true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true,true);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(PRESSED_COLOR);
         button.setHoverColor(0xFFFFFFFF);
         button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(6.5F / 16);
-        button.setHeight(3.25F / 16);
-        button.setSpacing(1F / 16);
+        button.setWidth(7.5F / 16);
+        button.setHeight(3.475F / 16);
+        button.setSpacing(0.55F / 16);
         button.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();

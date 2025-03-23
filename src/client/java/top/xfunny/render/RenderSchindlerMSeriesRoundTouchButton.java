@@ -69,7 +69,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -82,7 +82,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setHover(true);

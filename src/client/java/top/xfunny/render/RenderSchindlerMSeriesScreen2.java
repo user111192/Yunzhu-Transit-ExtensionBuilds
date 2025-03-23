@@ -79,7 +79,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         screenLayout.setBackgroundColor(0xFF000000);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);

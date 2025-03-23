@@ -71,7 +71,7 @@ public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHall
         parentLayout.setId("parentLayout");//命名，可选
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true,false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);

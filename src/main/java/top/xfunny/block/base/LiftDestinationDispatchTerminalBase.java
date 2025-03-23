@@ -239,7 +239,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
             //step1:将电梯进行编号
             trackPositions.forEach(trackPosition -> {
-                // 使用倒序编号，'A' + (size - counter[0] - 1) 得到从'A'开始倒序的字符
                 char currentChar = (char) ('A' + counter[0]);
                 trackPositionsAndChars.add(new ObjectObjectImmutablePair<>(trackPosition, currentChar));
                 counter[0]++;

@@ -80,7 +80,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         screenLayout.setGravity(Gravity.CENTER);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -93,7 +93,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView button1 = new LiftButtonView();
-        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true);
+        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
         button1.setLight(light);
         button1.setHover(false);
         button1.setDefaultColor(0xFFFFFFFF);

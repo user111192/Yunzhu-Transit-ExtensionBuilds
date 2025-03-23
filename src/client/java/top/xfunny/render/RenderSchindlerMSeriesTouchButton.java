@@ -77,7 +77,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         schindlerLogo.setGravity(Gravity.END);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -90,7 +90,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setHover(true);
