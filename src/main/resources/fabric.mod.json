@@ -5,13 +5,13 @@
   "name": "Yunzhu Transit Extension",
   "description": "云竹交通\n云筑工坊交通拓展",
   "authors": [
-    "XFunny\nMrNTkey\nQBYQ"
+    "\nXFunny\nMrNTkey\nQBYQ"
   ],
   "contact": {
     "homepage": "https://space.bilibili.com/3546779284932989",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/X-Funny/Yunzhu-Transit-Extension"
   },
-  "license": "CC0-1.0",
+  "license": "MIT License",
   "icon": "assets/yte/icon.png",
   "environment": "*",
   "entrypoints": {
