@@ -24,7 +24,7 @@ java {
 		languageVersion.set(JavaLanguageVersion.of(buildTools.javaLanguageVersion))
 	}
 	withSourcesJar()
-	withJavadocJar()
+	//withJavadocJar()
 }
 
 tasks.register("setupFiles") {
@@ -38,11 +38,17 @@ tasks.register("setupFiles") {
 
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 
 build {
     doLast {
         buildTools.copyBuildFile()
     }
 }
+
+
 
 

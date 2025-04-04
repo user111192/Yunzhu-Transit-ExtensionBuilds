@@ -20,6 +20,10 @@ minecraft {
 	}
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 sourceSets.main.resources { srcDir "src/generated/resources" }
 
 dependencies {
@@ -40,7 +44,7 @@ java {
 		languageVersion.set(JavaLanguageVersion.of(buildTools.javaLanguageVersion))
 	}
 	withSourcesJar()
-	withJavadocJar()
+	//withJavadocJar()
 }
 
 tasks.register("setupFiles") {

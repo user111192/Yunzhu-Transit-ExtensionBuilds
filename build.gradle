@@ -5,8 +5,8 @@ plugins {
 group = "top.xfunny"
 version rootProject.properties.version
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 subprojects {
@@ -19,11 +19,5 @@ subprojects {
     repositories {
         flatDir { dirs "../libs" }
         maven { url "https://jitpack.io" }
-    }
-
-    tasks.withType(JavaCompile).tap {
-        configureEach {
-            options.encoding = 'UTF-8'
-        }
     }
 }
