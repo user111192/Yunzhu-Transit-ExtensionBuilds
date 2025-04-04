@@ -17,6 +17,7 @@ public class LinkerValidTypes {
             OtisSeries1Screen.class,
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
+            KoneMButton1.class,
             MitsubishiNexWayButton1.class,
             MitsubishiNexWayButton1WithoutScreen.class,
             MitsubishiNexWayButton2.class,

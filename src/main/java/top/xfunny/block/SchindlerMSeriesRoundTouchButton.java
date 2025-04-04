@@ -18,7 +18,7 @@ public class SchindlerMSeriesRoundTouchButton extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(5, 0, 0, 11, 8, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(4.245, 1.1, 0, 11.745, 8.825 , 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

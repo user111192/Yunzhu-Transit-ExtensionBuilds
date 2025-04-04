@@ -12,6 +12,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<TestLiftPanel.BlockEntity> TEST_LIFT_PANEL;
     public static final BlockEntityTypeRegistryObject<TestLiftDestinationDispatchTerminal.BlockEntity> TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
+    public static final BlockEntityTypeRegistryObject<KoneMButton1.BlockEntity> KONE_M_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2;
@@ -62,6 +63,7 @@ public class BlockEntityTypes {
         TEST_LIFT_DESTINATION_DISPATCH_TERMINAL = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_destination_dispatch_terminal"), TestLiftDestinationDispatchTerminal.BlockEntity::new, Blocks.TEST_LIFT_DESTINATION_DISPATCH_TERMINAL::get);
 
 
+        KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_1"), KoneMButton1.BlockEntity::new, Blocks.KONE_M_BUTTON_1::get);
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), MitsubishiNexWayButton1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1::get);
         MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), MitsubishiNexWayButton1WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), MitsubishiNexWayButton2.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2::get);
