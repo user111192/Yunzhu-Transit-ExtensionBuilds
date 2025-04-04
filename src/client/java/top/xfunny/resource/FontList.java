@@ -29,6 +29,7 @@ public class FontList {
             loadFont("koneModernization", "font/kone-modernization.ttf");
             loadFont("schindler_m_series", "font/schindler-m-line-led.ttf");
             loadFont("mitsubishi_modern", "font/mitsubishi_modern.ttf");
+            loadFont("kone-m-series", "font/kone-m-series.ttf");
             loadFont("otis_series1", "font/series1.otf");
             loadFont("schindler_lcd", "font/schindler_lcd.ttf");
             loadFont("schindler_led", "font/schindler-led.ttf");
