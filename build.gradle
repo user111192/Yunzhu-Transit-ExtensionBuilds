@@ -1,24 +1,29 @@
 plugins {
-	id "java"
+    id "java"
 }
 
 group = "top.xfunny"
 version rootProject.properties.version
 
-subprojects{
-	apply plugin: "java"
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
 
-	dependencies {
-		compileOnly "com.google.code.findbugs:jsr305:+"
-	}
+subprojects {
+    apply plugin: "java"
 
-	repositories {
-		flatDir { dirs "../libs" }
-		maven { url "https://jitpack.io" }
-	}
+    dependencies {
+        compileOnly "com.google.code.findbugs:jsr305:+"
+    }
 
-	tasks.withType(Javadoc).tap {
-		configureEach { javadoc.options.addStringOption("Xdoclint:none", "-quiet") }
-	}
+    repositories {
+        flatDir { dirs "../libs" }
+        maven { url "https://jitpack.io" }
+    }
 
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            options.encoding = 'UTF-8'
+        }
+    }
 }

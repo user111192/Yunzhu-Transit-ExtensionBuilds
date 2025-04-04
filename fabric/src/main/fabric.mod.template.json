@@ -20,9 +20,6 @@
     ],
     "client": [
       "top.xfunny.entrypoint.YunzhuTransitExtensionClient"
-    ],
-    "fabric-datagen": [
-      "top.xfunny.YunzhuTransitExtensionDataGenerator"
     ]
   },
   "depends": {

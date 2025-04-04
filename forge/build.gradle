@@ -52,14 +52,14 @@ tasks.register("setupFiles") {
 		rename "(.+).template.toml", "\$1.toml"
 	}
 
-	delete fileTree("src/main/java/top/xfunny/")
+	delete fileTree("src/main/java/top/xfunny/mod")
 	delete fileTree("src/main/resources/assets")
 	delete fileTree("src/main/resources/data")
 
 	copy {
 		outputs.upToDateWhen { false }
-		from "../fabric/src/main/java/top/xfunny"
-		into "src/main/java/top/xfunny"
+		from "../fabric/src/main/java/top/xfunny/mod"
+		into "src/main/java/top/xfunny/mod"
 	}
 
 	copy {

@@ -32,6 +32,13 @@ bin/
 
 run/
 
+forge/src/main/java/top/xfunny/mod
+forge/src/main/resources/assets
+forge/src/main/resources/data
+forge/src/main/resources/META-INF
+
+fabric.mod.json
+
 # java
 
 hs_err_*.log

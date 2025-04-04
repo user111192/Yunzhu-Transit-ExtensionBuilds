@@ -1,7 +1,7 @@
 package top.xfunny.entrypoint;
 
 import net.fabricmc.api.ModInitializer;
-import top.xfunny.Init;
+import top.xfunny.mod.Init;
 
 
 public class YunzhuTransitExtension implements ModInitializer {
