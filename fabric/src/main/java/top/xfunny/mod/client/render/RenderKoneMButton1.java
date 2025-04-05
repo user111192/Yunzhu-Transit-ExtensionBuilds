@@ -169,7 +169,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 liftFloorDisplayView.setTextureId("kone_m_button_1");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin((float) -0.3 / 16, -0.3F / 16, (float) 0.3 / 16 , 0.5F / 16);
+                liftFloorDisplayView.setMargin((float) -0.3125 / 16, -0.3F / 16, (float) 0.275 / 16 , 0.5F / 16);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
