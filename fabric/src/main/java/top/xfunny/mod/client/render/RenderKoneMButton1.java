@@ -31,7 +31,7 @@ import java.util.Comparator;
 public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFFFFF;
-    private static final int PRESSED_COLOR = 0xFFFF0000;
+    private static final int PRESSED_COLOR = 0xFF00FF00;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_arrow_1.png");
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1.png");
     private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1_light.png");
@@ -62,8 +62,9 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, -0.1325, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, -0.005, 0.062 - SMALL_OFFSET);
         });
+
 
         //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
@@ -80,7 +81,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 0.9 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setMargin(0, (float) 5 / 16, 0, 0);//设置外边距，可选
 
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
@@ -168,7 +169,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 liftFloorDisplayView.setTextureId("kone_m_button_1");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin((float) 0.1 / 16, 0, 0, 0.2F / 16);
+                liftFloorDisplayView.setMargin((float) 0.1 / 16, -0.5F / 16, 0, 0.5F / 16);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
@@ -177,9 +178,9 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.6 / 16);
-                liftArrowView.setHeight((float) 0.6 / 16);
-                liftArrowView.setMargin(0, (float) 1.07 / 16, 0, 0);
+                liftArrowView.setWidth((float) 0.5 / 16);
+                liftArrowView.setHeight((float) 0.5 / 16);
+                liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFF0000);
 
