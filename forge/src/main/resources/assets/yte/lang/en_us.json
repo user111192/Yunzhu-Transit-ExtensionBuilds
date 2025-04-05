@@ -46,5 +46,12 @@
   "item.yte.yte_lift_buttons_link_remover": "Lift Call Panel and Hall Floor Indicator Remover",
   "item.yte.yte_group_lift_buttons_link_connector": "Lift Group Call Panel and Hall Floor Indicator Connector",
   "item.yte.yte_group_lift_buttons_link_remover": "Lift Group Call Panel and Hall Floor Indicator Remover",
-  "item.yte.floor_auto_setter": "Lift Floor Auto Setter"
+  "item.yte.floor_auto_setter": "Lift Floor Auto Setter",
+
+  "massage.linker_status_finished": "Done! %d floors connected",
+  "massage.linker_status_failed": "Connection failed",
+  "massage.linker_status_finished_remove": "Done! %d floors removed",
+  "massage.linker_status_failed_remove": "Removal failed",
+  "massage.floor_auto_setter_status_finished": "Done! Set %d floor numbers",
+  "massage.floor_auto_setter_status_failed": "Operation failed"
 }

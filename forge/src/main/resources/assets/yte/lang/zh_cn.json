@@ -42,9 +42,16 @@
   "block.yte.pat_tm01_ticket_machine": "PAT TM01售票机",
   "block.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
   "item.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
-  "item.yte.yte_lift_buttons_link_connector": "电梯呼梯面板与楼层显示器连接器",
-  "item.yte.yte_lift_buttons_link_remover": "电梯呼梯面板与楼层显示器移除器",
-  "item.yte.yte_group_lift_buttons_link_connector": "井道内电梯呼梯面板与楼层显示器批量连接器",
-  "item.yte.yte_group_lift_buttons_link_remover": "井道内电梯呼梯面板与楼层显示器批量移除器",
-  "item.yte.floor_auto_setter": "电梯楼层自动设置器"
+  "item.yte.yte_lift_buttons_link_connector": "YTE普通电梯连接板手",
+  "item.yte.yte_lift_buttons_link_remover": "YTE普通电梯移除板手",
+  "item.yte.yte_group_lift_buttons_link_connector": "YTE批量电梯连接扳手",
+  "item.yte.yte_group_lift_buttons_link_remover": "YTE批量电梯移除扳手",
+  "item.yte.floor_auto_setter": "电梯楼层自动设置器",
+
+  "massage.linker_status_finished": "操作完成！已连接%d个楼层",
+  "massage.linker_status_failed": "连接失败",
+  "massage.linker_status_finished_remove": "操作完成！已移除%d个楼层",
+"massage.linker_status_failed_remove": "移除失败",
+  "massage.floor_auto_setter_status_finished": "设置完成！已设置%d个楼层编号",
+  "massage.floor_auto_setter_status_failed": "操作失败"
 }
