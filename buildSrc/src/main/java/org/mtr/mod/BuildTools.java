@@ -56,18 +56,7 @@ public class BuildTools {
 	public String getForgeVersion() {
 		return getJson("https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json").getAsJsonObject().getAsJsonObject("promos").get(minecraftVersion + "-latest").getAsString();
 	}
-/*
-	public void copyFontDefinition(String fontName) throws IOException {
-		FileUtils.write(
-				path.resolve(String.format("src/main/resources/assets/londonunderground/font/%s.json", fontName)).toFile(),
-				FileUtils.readFileToString(path.resolve("src/main/font_template.json").toFile(), StandardCharsets.UTF_8).replace(
-						"@type@",
-						majorVersion >= 20 ? "reference\",\"id\":\"minecraft:include/default" : "legacy_unicode\",\"sizes\":\"minecraft:font/glyph_sizes.bin\",\"template\":\"minecraft:font/unicode_page_%s.png"
-				).replace("@font@", fontName),
-				StandardCharsets.UTF_8
-		);
-	}
-*/
+
 	public void copyBuildFile() throws IOException {
 		final Path directory = path.getParent().resolve("build/release");
 		Files.createDirectories(directory);

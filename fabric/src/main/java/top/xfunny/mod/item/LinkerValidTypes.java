@@ -48,6 +48,5 @@ public class LinkerValidTypes {
             SchindlerSSeriesGreyButton.class,
             HitachiB85Button1.class,
             SchindlerZLine3Keypad1.class
-
     ));
 }

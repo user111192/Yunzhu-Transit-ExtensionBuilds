@@ -3,23 +3,14 @@ package top.xfunny.mod.item;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.ItemExtension;
+import org.mtr.mapping.mapper.TextHelper;
 import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.BlockLiftTrackFloor;
-import org.mtr.mod.block.IBlock;
-import top.xfunny.mod.Init;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
-
-    ArrayList<BlockPos> mark;
-    Object[] array;
-    BlockPos pos;
-    int number;
-
-
     public FloorAutoSetter(ItemSettings itemSettings) {
         super(itemSettings.maxCount(1));
     }
@@ -40,175 +31,73 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
         }
     }
 
-
     protected void onClick(ItemUsageContext context, CompoundTag compoundTag) {
+        PathFinder pathFinder = new PathFinder();
+        final PlayerEntity playerEntity = context.getPlayer();
+
         final World world = context.getWorld();
-        pos = context.getBlockPos();
-        array = new Object[2];
-        array[1] = null; // 下一个轨道pos坐标
-        mark = new ArrayList<>();
-        Boolean ding = false;
-        number = 0;
+        BlockPos pos = context.getBlockPos();
+        int number = 0;
+        int floorCount = 0;
         int floorNumber = 0;
+        boolean ding = false;
         String floorNumber2 = "";
         final BlockEntity floorEntity = world.getBlockEntity(pos);
+
+        //todo：后续改为gui操作，提供更多楼层填充策略
+        //确定初始楼层
         if (floorEntity != null && floorEntity.data instanceof BlockLiftTrackFloor.BlockEntity) {
-            String checkfloorNumber = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getFloorNumber();
-            if (checkfloorNumber != null) {
+            String checkFloorNumber = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getFloorNumber();
+            if (checkFloorNumber != null) {
                 floorNumber2 = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getFloorNumber();
             } else {
                 floorNumber2 = "1";
             }
             ding = ((BlockLiftTrackFloor.BlockEntity) floorEntity.data).getShouldDing();
-        } else {
-            Init.LOGGER.info("没有找到有效轨道");
         }
+        //判断初始楼层是否为整数
         if (floorNumber2.matches("\\d+")) {
             floorNumber = Integer.parseInt(floorNumber2);
-            Init.LOGGER.info("楼层：" + floorNumber);
-        } else {
-            Init.LOGGER.info("楼层必须是整数");
         }
 
 
         while (floorNumber2.matches("\\d+")) {
-            Init.LOGGER.info("-----------------------------------------------------------------------------------");
             if (world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackBase) {
                 final BlockEntity floorEntity1 = world.getBlockEntity(pos);
                 if (floorEntity1 != null && floorEntity1.data instanceof BlockLiftTrackFloor.BlockEntity) {
                     ((BlockLiftTrackFloor.BlockEntity) floorEntity1.data).setData(String.valueOf(floorNumber), "", ding);
-                    Init.LOGGER.info("设置楼层：" + floorNumber);
                 }
 
-                Object[] apos = check(context, pos);
-                pos = (BlockPos) apos[1];
-                // 检查返回值是否有效
-                if (pos == null) {
-                    Init.LOGGER.info("Both positions are null, exiting loop.");
-                    break; // 退出循环
+                Object[] apos = pathFinder.findPath(context, pos);
+                pos = (BlockPos) apos[0];
+
+                if(world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackFloor){
+                    floorCount++;
                 }
+
             } else {
-                Init.LOGGER.info("没有找到有效轨道，退出循环。");
-                break; // 退出循环
-            }
-            if (number == mark.size()) {
-                Init.LOGGER.info("mark.size() == number");
+                if (playerEntity != null) {
+                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("massage.floor_auto_setter_status_failed")), true);
+                }
                 break;
             }
-            number++;
+
+            if (number == pathFinder.getMark().size()) {
+                if (playerEntity != null) {
+                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("massage.floor_auto_setter_status_finished", floorCount)), true);
+                }
+                break;
+            }
+            number++;//循环计数器
+
             if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackFloor) {
                 floorNumber++;
             }
-
         }
-    }
-
-    private Object[] check(ItemUsageContext context, BlockPos pos) {
-        final World world = context.getWorld();
-        Init.LOGGER.info("checkpos1" + pos.toShortString());
-        Init.LOGGER.info("checkpos0" + array[0]);
-        checkPosition(world, pos, facingHelper(context, pos));
-        Init.LOGGER.info("checkpos3" + Arrays.toString(array));
-        return array;
-    }
-
-    private void checkPosition(World world, BlockPos pos, boolean facing) {
-        Init.LOGGER.info("checkPosition");
-        if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            Init.LOGGER.info("下");
-            if (!findMark(pos.down(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
-                array[1] = pos.down(1);
-
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        }
-        if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            Init.LOGGER.info("上");
-            if (!findMark(pos.up(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-上");
-                array[1] = pos.up(1);
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        }
-        if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            Init.LOGGER.info("南");
-            if (!findMark(pos.south(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-南");
-                array[1] = pos.south(1);
-
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        }
-        if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            Init.LOGGER.info("北");
-            if (!findMark(pos.north(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-北");
-                array[1] = pos.north(1);
-
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        }
-        if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            Init.LOGGER.info("东");
-            if (!findMark(pos.east(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
-                array[1] = pos.east(1);
-
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        }
-        if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            Init.LOGGER.info("西");
-            if (!findMark(pos.west(1))) {
-                Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断-下");
-                array[1] = pos.west(1);
-
-                mark.add(pos);
-            } else {
-                Init.LOGGER.info("重复位置，跳过");
-            }
-        } else {
-            Init.LOGGER.info((facing ? "东西向" : "南北向") + "判断失败");
-        }
-        Init.LOGGER.info("checkposition结束");
-    }
-
-    public Boolean findMark(BlockPos pos) {
-        for (int i = 0; i < mark.size(); i++) {
-            if (mark.get(i).equals(pos)) {
-                Init.LOGGER.info("找到重复位置，退出循环。");
-                return true;
-            }
-        }
-        Init.LOGGER.info("没有找到重复位置，继续循环。");
-        return false;
     }
 
     protected boolean clickCondition(ItemUsageContext context) {
         final Block block = context.getWorld().getBlockState(context.getBlockPos()).getBlock();
         return block.data instanceof BlockLiftTrackFloor;
-    }
-
-    private boolean facingHelper(ItemUsageContext context, BlockPos pos) {
-        final World world = context.getWorld();
-        if (world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackBase) {
-            if (IBlock.getStatePropertySafe(world.getBlockState(pos), FACING) == Direction.EAST || IBlock.getStatePropertySafe(world.getBlockState(pos), FACING) == Direction.WEST) {
-                return true;//东西
-            } else {
-                return false;//南北
-            }
-        }
-        return false;
     }
 }
