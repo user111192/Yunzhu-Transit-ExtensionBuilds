@@ -18,6 +18,8 @@ public class Blocks {
     public static final BlockRegistryObject TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
     public static final BlockRegistryObject KONE_M_BUTTON_1;
+    public static final BlockRegistryObject KONE_M_SCREEN_1_ODD;
+    public static final BlockRegistryObject KONE_M_SCREEN_1_EVEN;
 
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_1;
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
@@ -71,6 +73,8 @@ public class Blocks {
 
         TEST_LIFT_BUTTONS = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_buttons"), () -> new Block(new TestLiftButtons()));
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_button_1"), () -> new Block(new KoneMButton1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_M_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_screen_1_odd"), () -> new Block(new KoneMScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_M_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_screen_1_even"), () -> new Block(new KoneMScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), () -> new Block(new MitsubishiNexWayButton1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), () -> new Block(new MitsubishiNexWayButton1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), () -> new Block(new MitsubishiNexWayButton2()), CreativeModeTabs.YTE_LIFT_FIXTURES);

@@ -13,6 +13,8 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<TestLiftDestinationDispatchTerminal.BlockEntity> TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
 
     public static final BlockEntityTypeRegistryObject<KoneMButton1.BlockEntity> KONE_M_BUTTON_1;
+    public static final BlockEntityTypeRegistryObject<KoneMScreen1Odd.BlockEntity> KONE_M_SCREEN_1_ODD;
+    public static final BlockEntityTypeRegistryObject<KoneMScreen1Even.BlockEntity> KONE_M_SCREEN_1_EVEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2;
@@ -64,6 +66,8 @@ public class BlockEntityTypes {
 
 
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_1"), KoneMButton1.BlockEntity::new, Blocks.KONE_M_BUTTON_1::get);
+        KONE_M_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_screen_1_odd"), KoneMScreen1Odd.BlockEntity::new, Blocks.KONE_M_SCREEN_1_ODD::get);
+        KONE_M_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_screen_1_even"), KoneMScreen1Even.BlockEntity::new, Blocks.KONE_M_SCREEN_1_EVEN::get);
         MITSUBISHI_NEXWAY_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1"), MitsubishiNexWayButton1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1::get);
         MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), MitsubishiNexWayButton1WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), MitsubishiNexWayButton2.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2::get);

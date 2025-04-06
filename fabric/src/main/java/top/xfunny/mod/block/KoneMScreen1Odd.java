@@ -10,22 +10,22 @@ import top.xfunny.mod.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class MitsubishiNexWayScreen1Odd extends LiftButtonsBase {
-    public MitsubishiNexWayScreen1Odd() {
+public class KoneMScreen1Odd extends LiftButtonsBase {
+    public KoneMScreen1Odd() {
         super(false, true);
     }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(0.25, 9, 0, 15.75, 13.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(-1, 9, 0, 17, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
     }
 
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new MitsubishiNexWayScreen1Odd.BlockEntity(blockPos, blockState);
+        return new KoneMScreen1Odd.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MitsubishiNexWayScreen1Odd extends LiftButtonsBase {
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_1_ODD.get(), pos, state);
+            super(BlockEntityTypes.KONE_M_SCREEN_1_ODD.get(), pos, state);
         }
     }
 }
