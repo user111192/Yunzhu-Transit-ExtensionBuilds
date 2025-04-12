@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class LinkerValidTypes {
     public static final Set<Class<?>> VALID_TYPES = new HashSet<>(Arrays.asList(
+            CESScreen1Odd.class,
+            CESScreen1Even.class,
             BlockLiftTrackFloor.class,
             TestLiftButtons.class,
             TestLiftButtonsWithoutScreen.class,
@@ -18,6 +20,7 @@ public class LinkerValidTypes {
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             KoneMButton1.class,
+            KoneMButton2.class,
             KoneMScreen1Odd.class,
             KoneMScreen1Even.class,
             MitsubishiNexWayButton1.class,
@@ -49,6 +52,7 @@ public class LinkerValidTypes {
             SchindlerMSeriesScreen3Even.class,
             SchindlerSSeriesGreyButton.class,
             HitachiB85Button1.class,
+            HitachiB85Button1WithoutScreen.class,
             SchindlerZLine3Keypad1.class
     ));
 }

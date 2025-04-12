@@ -30,7 +30,7 @@ import java.util.Comparator;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
-    private static final int PRESSED_COLOR = 0xFFFFCC00;
+    private static final int PRESSED_COLOR = 0xFFCC5555;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/kone_m_lantern_arrow_1.png");
     private final boolean isOdd;
 
@@ -77,7 +77,6 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER);
-        screenLayout.setBackgroundColor(0xFF000000);
 
         LiftButtonView button = new LiftButtonView();
         button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
@@ -166,7 +165,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("kone-m-series"),//字体
-                        6,//字号
+                        7,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("kone_m_screen_1");//字体贴图id，不能与其他显示屏的重复
@@ -174,7 +173,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.END);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, (float) 0.6 / 16, 0);
+                liftFloorDisplayView.setMargin((float) -3.5 / 16, 0, (float) -6.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
             }

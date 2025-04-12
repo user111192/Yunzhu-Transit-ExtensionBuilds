@@ -18,7 +18,7 @@ public class KoneMScreen1Odd extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(-1, 9, 0, 17, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(1.75, 10, 0, 14.25, 13.25, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
     }
 

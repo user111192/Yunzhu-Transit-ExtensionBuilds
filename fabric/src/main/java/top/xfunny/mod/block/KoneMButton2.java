@@ -10,40 +10,34 @@ import top.xfunny.mod.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class KoneMScreen1Even extends LiftButtonsBase {
-    public KoneMScreen1Even() {
-        super(false, false);
+public class KoneMButton2 extends LiftButtonsBase {
+    public KoneMButton2() {
+        super(true, true);
     }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (IBlock.getStatePropertySafe(state, SIDE)) {
-            case LEFT -> {
-                return IBlock.getVoxelShapeByDirection(9.75, 10, 0, 16, 13.25, 0.1, IBlock.getStatePropertySafe(state, FACING));
-            }
-            case RIGHT -> {
-                return IBlock.getVoxelShapeByDirection(0, 10, 0, 6.25, 13.25, 0.1, IBlock.getStatePropertySafe(state, FACING));
-            }
-        }
-        return VoxelShapes.empty();
+        return IBlock.getVoxelShapeByDirection(6.4, 0, 0, 9.6, 5.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new KoneMScreen1Even.BlockEntity(blockPos, blockState);
+        return new KoneMButton2.BlockEntity(blockPos, blockState);
     }
 
     @Override
     public void addBlockProperties(List<HolderBase<?>> properties) {
         properties.add(FACING);
-        properties.add(SIDE);
+        properties.add(UNLOCKED);
+        properties.add(SINGLE);
     }
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.KONE_M_SCREEN_1_EVEN.get(), pos, state);
+            super(BlockEntityTypes.KONE_M_BUTTON_2.get(), pos, state);
         }
     }
 }
+
