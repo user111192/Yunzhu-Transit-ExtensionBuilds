@@ -35,6 +35,7 @@ public class FontList {
             loadFont("schindler_lcd", "font/schindler_lcd.ttf");
             loadFont("schindler_led", "font/schindler-led.ttf");
             loadFont("hitachi_b85", "font/hitachi_b85.ttf");
+            loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             fontsLoaded = true;
         }
     }

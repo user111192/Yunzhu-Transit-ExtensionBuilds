@@ -32,7 +32,7 @@ public class CESScreen1Even extends LiftPanelBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SchindlerDSeriesScreen2RedEven.BlockEntity(blockPos, blockState);
+        return new CESScreen1Even.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -48,4 +48,5 @@ public class CESScreen1Even extends LiftPanelBase {
             super(BlockEntityTypes.CES_SCREEN_1_EVEN.get(), pos, state);
         }
     }
+
 }

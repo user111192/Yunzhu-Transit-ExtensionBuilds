@@ -2,7 +2,6 @@ package top.xfunny.mod.client.render;
 
 
 import org.mtr.core.data.Lift;
-import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
@@ -14,28 +13,20 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.SchindlerDSeriesScreen2BlueEven;
-import top.xfunny.mod.block.SchindlerDSeriesScreen2GreenEven;
-import top.xfunny.mod.block.SchindlerDSeriesScreen2RedEven;
+import top.xfunny.mod.block.CESScreen1Even;
+import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.util.ReverseRendering;
 
 import java.util.Comparator;
 
-
 public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
-    private int fontColor;
-    private String textureId;
-    private Identifier arrowTexture;
-    private static final Identifier ARROW_TEXTURE  = new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_screen_2_arrow_red.png");
-
 
     public RenderCESScreen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -70,7 +61,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.5625F);
+        parentLayout.setPosition(isOdd ? -0.284375F : -0.784375F, 0.5725F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -82,53 +73,60 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
+            CESScreen1Even.LiftCheck(trackPosition, (floorIndex, lift) -> {
+                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
+            });
+        });
 
-            sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
-            if (!sortedPositionsAndLifts.isEmpty()) {
-                final int count = 1;
+        if (!sortedPositionsAndLifts.isEmpty()) {
+            final int count = 1;
+
+            for (int i = 0; i < count; i++) {
+                final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
+                liftFloorDisplayView.setBasicsAttributes(world,
+                        blockEntity.getPos2(),
+                        sortedPositionsAndLifts.get(i).right(),
+                        FontList.instance.getFont("ces-14x7"),
+                        8,
+                        0xFFFF8800);
+                liftFloorDisplayView.setTextureId("ces_screen_1");
+                liftFloorDisplayView.setWidth((float) 2.6 / 16);
+                liftFloorDisplayView.setHeight((float) 2.8 / 16);
+                liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setLetterSpacing(15);
+                liftFloorDisplayView.setTextScrolling(true, 2, 0);
+                liftFloorDisplayView.setMargin((float) 1.7 / 16, 0, 0, 0);
+                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+
+                final LiftArrowView liftArrowView_right = new LiftArrowView();
+                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/ces_arrow_1.png"));
+                liftArrowView_right.setArrowScrolling(true, 0.05F);
+                liftArrowView_right.setWidth((float) 0.97 / 16);
+                liftArrowView_right.setHeight((float) 2 / 16);
+                liftArrowView_right.setMargin((float) 1.2 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_right.setColor(0xFF00FF00);
+
+                final LiftArrowView liftArrowView_left = new LiftArrowView();
+                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/ces_arrow_1.png"));
+                liftArrowView_left.setArrowScrolling(true, 0.05F);
+                liftArrowView_left.setWidth((float) 0.97 / 16);
+                liftArrowView_left.setHeight((float) 2 / 16);
+                liftArrowView_left.setMargin((float) -7 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_left.setColor(0xFF00FF00);
 
 
-                for (int i = 0; i < count; i++) {
-                    final Lift lift = sortedPositionsAndLifts.get(i).right();
-                    ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails =
-                            ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
-                    final LiftDirection liftDirection = liftDetails.left();
-
-                    final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
-                    liftFloorDisplayView.setBasicsAttributes(world,
-                            blockEntity.getPos2(),
-                            sortedPositionsAndLifts.get(i).right(),
-                            FontList.instance.getFont("ces-14x7"),
-                            10,
-                            0xFFFF0000);
-                    liftFloorDisplayView.setTextureId(String.valueOf(ARROW_TEXTURE));
-                    liftFloorDisplayView.setWidth((float) 2.6 / 16);
-                    liftFloorDisplayView.setHeight((float) 2.8 / 16);
-                    liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                    liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
-                    liftFloorDisplayView.setLetterSpacing(-30);
-                    liftFloorDisplayView.setTextScrolling(true, 2, 0.005F);
-                    liftFloorDisplayView.setLetterSpacing(10);
-                    liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.5 / 16 : (float) 2.5 / 16, 0, 0, 0);
-                    liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
-
-
-                    final LiftArrowView liftArrowView = new LiftArrowView();
-                    liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
-                    liftArrowView.setTexture(arrowTexture);
-                    liftArrowView.setArrowScrolling(true, 0.05F);
-                    liftArrowView.setWidth(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
-                    liftArrowView.setHeight(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
-                    liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8 / 16 : 0, (float) 3 / 16, 0, 0);
-                    liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
-                    liftArrowView.setColor(fontColor);
-
-                    parentLayout.addChild(liftArrowView);
-                    parentLayout.addChild(liftFloorDisplayView);
-                    parentLayout.render();
-                }
+                parentLayout.addChild(liftFloorDisplayView);
+                parentLayout.addChild(liftArrowView_right);
+                parentLayout.addChild(liftArrowView_left);
             }
-        })
-    ;}
+        }
+        parentLayout.render();
+    }
 }
