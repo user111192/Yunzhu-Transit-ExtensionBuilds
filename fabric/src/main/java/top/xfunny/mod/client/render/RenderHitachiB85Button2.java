@@ -81,7 +81,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
         screenLayout.setMargin(0, (float) 1.4 / 16, 0, 0);//设置外边距，可选
-        screenLayout.setBackgroundColor(0xFF000000);
+        //screenLayout.setBackgroundColor(0xFF000000);
         screenLayout.setId("screen");
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮

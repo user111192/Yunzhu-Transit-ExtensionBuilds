@@ -5,7 +5,6 @@
 	"textures": {
 		"2": "yte:block/kone_tms_panel_1_single",
 		"4": "yte:block/kone_logo_1",
-		"5": "yte:block/kone_m_arrow_1",
 		"6": "yte:block/kone_m_screen_1",
 		"particle": "yte:block/hitachi_b85_arrow_1"
 	},
@@ -24,8 +23,8 @@
 			}
 		},
 		{
-			"from": [7.7, 7.25, 0.1],
-			"to": [8.3, 7.55, 0.1],
+			"from": [7.7, 7.25, 0.105],
+			"to": [8.3, 7.55, 0.105],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7, 6.55, 0.1]},
 			"faces": {
 				"north": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
@@ -37,34 +36,8 @@
 			}
 		},
 		{
-			"from": [7.75, 4.35, 0.14],
-			"to": [8.25, 4.85, 0.14],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7, 3.6, 0.1]},
-			"faces": {
-				"north": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"east": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"south": {"uv": [0, 16, 16, 0], "texture": "#5"},
-				"west": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"up": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"down": {"uv": [0, 0, 2, 0.4], "texture": "#missing"}
-			}
-		},
-		{
-			"from": [7.75, 6.075, 0.15],
-			"to": [8.25, 6.575, 0.15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5.325, 0.1]},
-			"faces": {
-				"north": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"east": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#5"},
-				"west": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"up": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"down": {"uv": [0, 0, 2, 0.4], "texture": "#missing"}
-			}
-		},
-		{
-			"from": [7.475, 4, 0.1],
-			"to": [8.5, 6.925, 0.1],
+			"from": [7.475, 4, 0.105],
+			"to": [8.5, 6.925, 0.105],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 0.1]},
 			"faces": {
 				"north": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},

@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "yte:item/schindler_m_series_round_touch_button"
-  }
-}
