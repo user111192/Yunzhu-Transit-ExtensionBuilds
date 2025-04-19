@@ -71,6 +71,8 @@ public class Blocks {
 
     public static final BlockRegistryObject LIFT_TRACK_EMPTY_FLOOR;
 
+    public static final BlockRegistryObject HITACHI_B85_DOOR_1;
+    public static final BlockRegistryObject KONE_M_DOOR_1;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_DOOR_1;
     public static final BlockRegistryObject SCHINDLER_QKS9_DOOR_1;
 
@@ -137,6 +139,8 @@ public class Blocks {
 
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), () -> new Block(new EmptyFloor()));
 
+        HITACHI_B85_DOOR_1 = Init.REGISTRY.registerBlock(new Identifier(Init.MOD_ID, "hitachi_b85_door_1"), () -> new Block(new HitachiB85Door1()));
+        KONE_M_DOOR_1 = Init.REGISTRY.registerBlock(new Identifier(Init.MOD_ID, "kone_m_door_1"), () -> new Block(new KoneMDoor1()));
         MITSUBISHI_NEXWAY_DOOR_1 = Init.REGISTRY.registerBlock(new Identifier(Init.MOD_ID, "mitsubishi_nexway_door_1"), () -> new Block(new MitsubishiNexWayDoor1()));
         SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlock(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), () -> new Block(new SchindlerQKS9Door1()));
     }

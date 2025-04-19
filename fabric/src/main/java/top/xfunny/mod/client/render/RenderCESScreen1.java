@@ -97,7 +97,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(15);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);
+                liftFloorDisplayView.setTextScrolling(true, 5, 0.01F);
                 liftFloorDisplayView.setMargin((float) 1.7 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
@@ -107,7 +107,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftArrowView_right.setArrowScrolling(true, 0.05F);
                 liftArrowView_right.setWidth((float) 0.97 / 16);
                 liftArrowView_right.setHeight((float) 2 / 16);
-                liftArrowView_right.setMargin((float) 1.2 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_right.setMargin((float) 1.55 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_right.setColor(0xFF00FF00);
 
@@ -117,7 +117,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftArrowView_left.setArrowScrolling(true, 0.05F);
                 liftArrowView_left.setWidth((float) 0.97 / 16);
                 liftArrowView_left.setHeight((float) 2 / 16);
-                liftArrowView_left.setMargin((float) -7 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_left.setMargin((float) -7.75 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_left.setColor(0xFF00FF00);
 

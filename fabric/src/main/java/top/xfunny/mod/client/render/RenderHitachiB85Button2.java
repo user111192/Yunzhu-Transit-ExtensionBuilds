@@ -173,7 +173,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
 
-                liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.7 / 16, 0, 0);
+                liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.1 / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
@@ -184,14 +184,14 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 liftArrowView.setWidth((float) 0.55 / 16);
                 liftArrowView.setHeight((float) 0.55 / 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setMargin(0, 0, 0, (float) 0.45 / 16);
+                liftArrowView.setMargin(0, (float) 1.5 / 16, 0, 0);
                 liftArrowView.setColor(0xFFFF0000);
 
                 final FrameLayout backgroundLayout = new FrameLayout();
                 backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                backgroundLayout.setMargin((float) 0.25 / 16, (float) 0.875 / 16, (float) 0.25 / 16, 0);
+                backgroundLayout.setMargin((float) 0.25 / 16, (float) 0.375 / 16, (float) 0.25 / 16, 0);
                 backgroundLayout.setId("background_" + i);
 
                 final ImageView screenBackground = new ImageView();
@@ -200,7 +200,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 screenBackground.setWidth((float) 1.3 / 16);
                 screenBackground.setHeight((float) 0.6 / 16);
                 screenBackground.setScale((float) 131 / 113);
-                screenBackground.setMargin(0, (float) 0.55 / 16, 0, 0);
+                screenBackground.setMargin(0, (float) 0.75 / 16, 0, 0);
                 screenBackground.setGravity(Gravity.CENTER);
 
                 //创建一个linear layout用于组合数字和箭头

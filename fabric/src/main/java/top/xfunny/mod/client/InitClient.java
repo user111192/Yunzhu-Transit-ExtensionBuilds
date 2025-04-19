@@ -81,6 +81,8 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_2, RenderHitachiB85Button2::new);
 
 
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_DOOR_1, dispatcher -> new top.xfunny.mod.client.render.RenderLiftDoor<>(dispatcher, 7));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_M_DOOR_1, dispatcher -> new top.xfunny.mod.client.render.RenderLiftDoor<>(dispatcher, 6));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_DOOR_1, dispatcher -> new top.xfunny.mod.client.render.RenderLiftDoor<>(dispatcher, 5));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_QKS9_DOOR_1, dispatcher -> new top.xfunny.mod.client.render.RenderLiftDoor<>(dispatcher, 3));
 

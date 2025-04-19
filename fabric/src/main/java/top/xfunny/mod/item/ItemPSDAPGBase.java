@@ -8,6 +8,7 @@ import org.mtr.mod.block.BlockPSDTop;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.block.TripleHorizontalBlock;
 import org.mtr.mod.generated.lang.TranslationProvider;
+import top.xfunny.mod.Blocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -93,6 +94,10 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 
     private BlockState getBlockStateFromItem() {
         switch (type) {
+            case HITACHI_B85_DOOR_1:
+                return Blocks.HITACHI_B85_DOOR_1.get().getDefaultState();
+            case KONE_M_DOOR_1:
+                return top.xfunny.mod.Blocks.KONE_M_DOOR_1.get().getDefaultState();
             case SCHINDLER_QKS9_DOOR_1:
                 return top.xfunny.mod.Blocks.SCHINDLER_QKS9_DOOR_1.get().getDefaultState();
             case MITSUBISHI_NEXWAY_DOOR_1:
@@ -104,7 +109,7 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 
     public enum EnumPSDAPGType {
 
-        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true);
+        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true), KONE_M_DOOR_1(false, false, true), HITACHI_B85_DOOR_1(false, false, true),;
 
 
         private final boolean isPSD;
