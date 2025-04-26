@@ -68,7 +68,10 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
-        backgroundLayout.setBackgroundColor(0x88000000);
+        backgroundLayout.setBackgroundColor(0xFF000000);
+        backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
+            graphicsHolder.translate(0, 0, -3*SMALL_OFFSET);
+        });
 
         LinearLayout buttonLayout = new LinearLayout(false);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
@@ -126,11 +129,11 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
                     }
                 });
             });
+            buttonLayout.addChild(buttonArrow);
+            buttonLayout.addChild(button);
+            parentLayout.addChild(backgroundLayout);
+            backgroundLayout.addChild(buttonLayout);
         });
-        buttonLayout.addChild(buttonArrow);
-        buttonLayout.addChild(button);
-        parentLayout.addChild(backgroundLayout);
-        backgroundLayout.addChild(buttonLayout);
         parentLayout.render();
     }
 }
