@@ -20,6 +20,8 @@ public class Blocks {
     public static final BlockRegistryObject CES_SCREEN_1_ODD;
     public static final BlockRegistryObject CES_SCREEN_1_EVEN;
 
+    public static final BlockRegistryObject DEWHURST_US89_BUTTON_1;
+
     public static final BlockRegistryObject KONE_M_BUTTON_1;
     public static final BlockRegistryObject KONE_M_BUTTON_2;
     public static final BlockRegistryObject KONE_M_SCREEN_1_ODD;
@@ -83,6 +85,7 @@ public class Blocks {
 
         CES_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "ces_screen_1_odd"), () -> new Block(new CESScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         CES_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "ces_screen_1_even"), () -> new Block(new CESScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        DEWHURST_US89_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "dewhurst_us89_button_1"), () -> new Block(new DewhurstUS89Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_button_1"), () -> new Block(new KoneMButton1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         KONE_M_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_button_2"), () -> new Block(new KoneMButton2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         KONE_M_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_screen_1_odd"), () -> new Block(new KoneMScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);

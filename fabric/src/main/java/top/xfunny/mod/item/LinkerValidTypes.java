@@ -11,6 +11,7 @@ public class LinkerValidTypes {
     public static final Set<Class<?>> VALID_TYPES = new HashSet<>(Arrays.asList(
             CESScreen1Odd.class,
             CESScreen1Even.class,
+            DewhurstUS89Button1.class,
             BlockLiftTrackFloor.class,
             TestLiftButtons.class,
             TestLiftButtonsWithoutScreen.class,

@@ -13,6 +13,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<TestLiftDestinationDispatchTerminal.BlockEntity> TEST_LIFT_DESTINATION_DISPATCH_TERMINAL;
     public static final BlockEntityTypeRegistryObject<CESScreen1Odd.BlockEntity> CES_SCREEN_1_ODD;
     public static final BlockEntityTypeRegistryObject<CESScreen1Even.BlockEntity> CES_SCREEN_1_EVEN;
+    public static final BlockEntityTypeRegistryObject<DewhurstUS89Button1.BlockEntity> DEWHURST_US89_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<KoneMButton1.BlockEntity> KONE_M_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<KoneMButton2.BlockEntity> KONE_M_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<KoneMScreen1Odd.BlockEntity> KONE_M_SCREEN_1_ODD;
@@ -73,6 +74,7 @@ public class BlockEntityTypes {
         CES_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "ces_screen_1_odd"), CESScreen1Odd.BlockEntity::new, Blocks.CES_SCREEN_1_ODD::get);
         CES_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "ces_screen_1_even"), CESScreen1Even.BlockEntity::new, Blocks.CES_SCREEN_1_EVEN::get);
 
+        DEWHURST_US89_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "dewhurst_us89_button_1"), DewhurstUS89Button1.BlockEntity::new, Blocks.DEWHURST_US89_BUTTON_1::get);
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_1"), KoneMButton1.BlockEntity::new, Blocks.KONE_M_BUTTON_1::get);
         KONE_M_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_2"), KoneMButton2.BlockEntity::new, Blocks.KONE_M_BUTTON_2::get);
         KONE_M_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_screen_1_odd"), KoneMScreen1Odd.BlockEntity::new, Blocks.KONE_M_SCREEN_1_ODD::get);
