@@ -24,7 +24,7 @@ import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;
 import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
-import top.xfunny.mod.client.util.ReverseRendering;
+
 
 public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
     public RenderOtisSeries1Button(Argument dispatcher) {
@@ -68,6 +68,9 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
+        backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
+            graphicsHolder.translate(0, 0, -3*SMALL_OFFSET);
+        });
         backgroundLayout.setBackgroundColor(0xFF000000);
 
         LinearLayout buttonLayout = new LinearLayout(false);
@@ -126,11 +129,13 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
                     }
                 });
             });
+            backgroundLayout.addChild(buttonLayout);
+            parentLayout.addChild(backgroundLayout);
+            buttonLayout.addChild(buttonArrow);
+            buttonLayout.addChild(button);
         });
-        backgroundLayout.addChild(buttonLayout);
-        parentLayout.addChild(backgroundLayout);
-        buttonLayout.addChild(buttonArrow);
-        buttonLayout.addChild(button);
+
+
         parentLayout.render();
     }
 }
