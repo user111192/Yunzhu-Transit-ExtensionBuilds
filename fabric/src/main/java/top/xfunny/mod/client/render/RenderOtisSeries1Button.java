@@ -68,7 +68,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
-        backgroundLayout.setBackgroundColor(0xFF000000);
+        backgroundLayout.setBackgroundColor(0xFD000000);
         backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
             graphicsHolder.translate(0, 0, -3*SMALL_OFFSET);
         });
