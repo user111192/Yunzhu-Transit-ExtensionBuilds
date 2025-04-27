@@ -4,7 +4,7 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.registry.PacketHandler;
 import org.mtr.mapping.tool.PacketBufferReceiver;
 import org.mtr.mapping.tool.PacketBufferSender;
-import org.mtr.mod.packet.ClientPacketHelper;
+import top.xfunny.mod.client.clientPacket.ClientPacketHelper;
 
 public final class PacketOpenBlockEntityScreen extends PacketHandler {
 
@@ -25,6 +25,7 @@ public final class PacketOpenBlockEntityScreen extends PacketHandler {
 
     @Override
     public void runClient() {
+        System.out.println("PacketOpenBlockEntityScreen");
         ClientPacketHelper.openBlockEntityScreen(blockPos);
     }
 }

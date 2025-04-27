@@ -9,6 +9,13 @@ import java.util.Set;
 
 public class LinkerValidTypes {
     public static final Set<Class<?>> VALID_TYPES = new HashSet<>(Arrays.asList(
+            org.mtr.mod.block.BlockLiftButtons.class,
+            org.mtr.mod.block.BlockLiftPanelEven1.class,
+            org.mtr.mod.block.BlockLiftPanelEven2.class,
+            org.mtr.mod.block.BlockLiftPanelOdd1.class,
+            org.mtr.mod.block.BlockLiftPanelOdd2.class,
+
+
             CESScreen1Odd.class,
             CESScreen1Even.class,
             DewhurstUS89Button1.class,

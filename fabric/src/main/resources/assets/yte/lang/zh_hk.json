@@ -62,7 +62,7 @@
   "item.yte.yte_group_lift_buttons_link_remover": "YTE批量升降機移除扳手",
   "item.yte.floor_auto_setter": "升降機樓層自動設定器",
 
-  "massage.linker_status_finished": "搞掂，已連接%d個樓層",
+  "massage.linker_status_finished": "搞掂！已連接%d個樓層",
   "massage.linker_status_failed": "連接失敗",
   "massage.linker_status_finished_remove": "搞掂！拆走咗%d層樓",
   "massage.linker_status_failed_remove": "拆除失敗",

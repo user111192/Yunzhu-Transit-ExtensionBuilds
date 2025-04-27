@@ -39,14 +39,14 @@ tasks.register("setupFiles") {
 }
 
 tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+	options.encoding = 'UTF-8'
 }
 
 
 build {
-    doLast {
-        buildTools.copyBuildFile()
-    }
+	doLast {
+		buildTools.copyBuildFile()
+	}
 }
 
 

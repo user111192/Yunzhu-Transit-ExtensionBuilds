@@ -4,12 +4,13 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.mapper.BlockWithEntity;
+import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.generated.lang.TranslationProvider;
 import org.mtr.mod.packet.PacketDeleteData;
 import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.base.BlockLiftTrackBase;
+
 import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
 
 import javax.annotation.Nonnull;
@@ -25,14 +26,8 @@ public class EmptyFloor extends BlockLiftTrackBase implements BlockWithEntity {
     @Override
     // Handling the use of brush, if yes, open the editing interface of floor name and description.
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        // Detecting if the player is clicking the "EmptyFloor" block using a brush.
         return IBlock.checkHoldingBrush(world, player, () -> {
             final org.mtr.mapping.holder.BlockEntity entity = world.getBlockEntity(pos);
-            /*if (entity != null && entity.data instanceof BlockEntity) {
-                ((BlockEntity) entity.data).markDirty2();
-                Init.REGISTRY.sendPacketToClient(ServerPlayerEntity.cast(player), new PacketOpenBlockEntityScreen(pos));
-            }*/
-            player.sendMessage(Text.of("Right Clicked the Empty Floor"), true);
             if (entity != null && entity.data instanceof BlockEntity) {
                 ((BlockEntity) entity.data).markDirty2();
                 Init.REGISTRY.sendPacketToClient(ServerPlayerEntity.cast(player), new PacketOpenBlockEntityScreen(pos));

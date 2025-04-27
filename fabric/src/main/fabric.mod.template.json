@@ -22,6 +22,9 @@
       "top.xfunny.entrypoint.YunzhuTransitExtensionClient"
     ]
   },
+  "mixins": [
+    "yte.mixins.json"
+  ],
   "depends": {
     "fabric": "*",
     "minecraft": "@minecraft@",

@@ -1,6 +1,8 @@
 package top.xfunny.mod.item;
 
 import org.mtr.mapping.holder.*;
+import org.mtr.mod.block.BlockLiftButtons;
+import org.mtr.mod.block.BlockLiftPanelBase;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 import org.mtr.mod.item.ItemBlockClickingBase;
 import top.xfunny.mod.ButtonRegistry;
@@ -27,7 +29,12 @@ public class YteLiftButtonsLinker extends ItemBlockClickingBase {
             if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
                 if (blockEntity1.data instanceof LiftFloorRegistry) {
                     ((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos1, world, blockPos2, isAdd);
+                }else if(blockEntity1.data instanceof BlockLiftButtons.BlockEntity){
+                    ((BlockLiftButtons.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
+                }else if (blockEntity1.data instanceof BlockLiftPanelBase.BlockEntityBase) {
+                    ((BlockLiftPanelBase.BlockEntityBase) blockEntity1.data).registerFloor(world, blockPos2, isAdd);
                 }
+
             } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase || blockEntity2.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase) {
                 if (blockEntity1.data instanceof ButtonRegistry) {
                     ((ButtonRegistry) blockEntity2.data).registerButton(world, blockPos1, isAdd);

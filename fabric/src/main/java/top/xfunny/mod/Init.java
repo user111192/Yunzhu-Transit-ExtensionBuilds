@@ -2,10 +2,12 @@ package top.xfunny.mod;
 
 import org.mtr.core.data.Position;
 import org.mtr.mapping.holder.BlockPos;
+import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.MathHelper;
 import org.mtr.mapping.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
 
 public final class Init {
     public static final String MOD_ID = "yte";
@@ -18,6 +20,12 @@ public final class Init {
         BlockEntityTypes.init();
         Items.init();
         CreativeModeTabs.init();
+
+
+        //注册mtr packet
+        REGISTRY.setupPackets(new Identifier(MOD_ID, "packet"));
+        REGISTRY.registerPacket(PacketOpenBlockEntityScreen.class, PacketOpenBlockEntityScreen::new);
+
         REGISTRY.init();
     }
 
