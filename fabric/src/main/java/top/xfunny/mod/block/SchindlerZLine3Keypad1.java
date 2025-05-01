@@ -70,13 +70,11 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
         String output = mapping.mapping(data.getScreenId(), transformedX, hitY);
 
         if (player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.mod.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
-            Init.LOGGER.info("onUse2");
             return ActionResult.PASS;
         } else {
-            // 处理输入逻辑
             processKeyInput(world, pos, data1, data, data.getScreenId(), output);
 
-            player.sendMessage(Text.of("screenId: " + data.getScreenId() + " 您点击了：" + output), true);
+            //player.sendMessage(Text.of("screenId: " + data.getScreenId() + " 您点击了：" + output), true);
 
         }
         return ActionResult.SUCCESS;

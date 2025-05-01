@@ -23,8 +23,6 @@ public class FontList {
     public void FlonList() {
         if (!fontsLoaded) {//todo:在此处添加字体
             loadFont("ces-14x7","font/ces-14x7.ttf");
-            loadFont("font1", "font/noto-sans-semibold.ttf");
-            loadFont("fontCjk1", "font/noto-serif-cjk-tc-semibold.ttf");
             loadFont("testfont", "font/schindler-m-series-lop-nz-thin-1-beta.ttf");
             loadFont("acmeled", "font/acme-led.ttf");
             loadFont("koneModernization", "font/kone-modernization.ttf");
