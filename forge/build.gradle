@@ -59,7 +59,10 @@ tasks.register("setupFiles") {
 		outputs.upToDateWhen { false }
 		from "src/main/mods.template.toml"
 		into "src/main/resources/META-INF"
-		filter(ReplaceTokens, tokens: ["minecraft": minecraftVersion, "version": version])
+		filter(ReplaceTokens, tokens: [
+            "minecraft": project.findProperty("minecraftVersion") ?: minecraftVersion,
+            "version": version
+        ])
 		rename "(.+).template.toml", "\$1.toml"
 	}
 

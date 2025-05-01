@@ -4,6 +4,8 @@ plugins {
 
 group = "top.xfunny"
 version rootProject.properties.version
+// 在 build.gradle 中打印当前版本
+println "[DEBUG] Minecraft 版本: ${project.findProperty('minecraftVersion') ?: '未定义'}"
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'

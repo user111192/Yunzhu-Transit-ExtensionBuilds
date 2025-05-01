@@ -28,14 +28,17 @@ java {
 }
 
 tasks.register("setupFiles") {
+	delete("src/main/resources/fabric.mod.json")
 	copy {
 		outputs.upToDateWhen { false }
 		from "src/main/fabric.mod.template.json"
 		into "src/main/resources"
-		filter(ReplaceTokens, tokens: ["minecraft": minecraftVersion, "version": version])
+		filter(ReplaceTokens, tokens: [
+            "minecraft": project.findProperty("minecraftVersion") ?: minecraftVersion,
+            "version": version
+        ])
 		rename "(.+).template.json", "\$1.json"
 	}
-
 }
 
 tasks.withType(JavaCompile) {
