@@ -22,11 +22,11 @@ jobs:
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: Setup Fabric files
-        run: ./gradlew fabric:setupFiles -PminecraftVersion="${{ matrix.minecraft }}" --retry=3
+        run: ./gradlew fabric:setupFiles -PminecraftVersion="${{ matrix.minecraft }}"
       - name: Setup Forge files
-        run: ./gradlew forge:setupFiles -PminecraftVersion="${{ matrix.minecraft }}" --retry=3
+        run: ./gradlew forge:setupFiles -PminecraftVersion="${{ matrix.minecraft }}"
       - name: Build ${{ matrix.minecraft }}
-        run: ./gradlew build -PminecraftVersion="${{ matrix.minecraft }}" --retry=3
+        run: ./gradlew build -PminecraftVersion="${{ matrix.minecraft }}"
       - name: Capture release artifacts
         uses: actions/upload-artifact@main
         with:
