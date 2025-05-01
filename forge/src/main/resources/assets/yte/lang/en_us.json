@@ -68,5 +68,5 @@
   "massage.linker_status_finished_remove": "Done! %d floors removed",
   "massage.linker_status_failed_remove": "Removal failed",
   "massage.floor_auto_setter_status_finished": "Done! Set %d floor numbers",
-  "massage.floor_auto_setter_status_failed": "Operation failed"
+  "message.floor_auto_setter_status_failed": "Operation failed"
 }
