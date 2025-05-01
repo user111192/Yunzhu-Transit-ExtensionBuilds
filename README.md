@@ -2,13 +2,13 @@
 
 **Yunzhu Transit Extension** is a decorative add-on for the [Minecraft Transit Railway Mod](https://github.com/jonafanho/Minecraft-Transit-Railway), providing stylish **elevator** and **metro station** elements to enhance your transit builds.
 
-## 🚀 Features
+## Features
 
 - Elevator decorations  
 - Metro station enhancements  
 - Designed to complement MTR Mod aesthetics
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 1. **Clone this repository**  
    ```bash
@@ -25,7 +25,22 @@
      ```
    - Sync the Gradle project again
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](https://raw.githubusercontent.com/X-Funny/Yunzhu-Transit-Extension/main/LICENSE).
+
+## Font License
+
+| Font Name                                | License                                                 |
+|------------------------------------------|----------------------------------------------------------|
+| ces-14x7                                 | Creative Commons Attribution License 3.0                |
+| DSEG7 Classic Bold Italic                | SIL Open Font License 1.1                               |
+| Hitachi Modern Regular                   | Creative Commons Attribution License 3.0                |
+| DSEG14 Classic Light Italic              | SIL Open Font License 1.1                               |
+| KONE M-Series Regular                    | FontStruct Non-Commercial License                       |
+| Mitsubishi Modern V2                     | Creative Commons Attribution License 3.0                |
+| Schindler Led Regular                    | Creative Commons Attribution License 3.0                |
+| Schindler M-Line LED Regular             | Creative Commons Attribution Share Alike License        |
+| Schindler M-Series LOP (NZ Thin #1) BETA | Creative Commons Attribution Non-Commercial License     |
+
 
