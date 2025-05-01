@@ -4,7 +4,8 @@
 **云筑轨交扩展包**是 [Minecraft Transit Railway Mod](https://github.com/jonafanho/Minecraft-Transit-Railway) 的装饰性附加组件，提供精美的**电梯**与**地铁站**元素，以美化您的轨交建造。  
 **Yunzhu Transit Extension** is a decorative add-on for the [Minecraft Transit Railway Mod](https://github.com/jonafanho/Minecraft-Transit-Railway), providing stylish **elevator** and **metro station** elements to enhance your transit builds.
 
-![logo_blue_background_round.webp](http://image.yunzhu.host/i/2025/05/01/681363e498172.webp)
+<img src="http://image.yunzhu.host/i/2025/05/01/681363e498172.webp" style="width: 200px; height: auto;" />
+
 
 ---
 
