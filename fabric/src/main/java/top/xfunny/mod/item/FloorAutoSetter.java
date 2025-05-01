@@ -77,14 +77,14 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
 
             } else {
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("massage.floor_auto_setter_status_failed")), true);
+                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("message.floor_auto_setter_status_failed")), true);
                 }
                 break;
             }
 
             if (number == pathFinder.getMark().size()) {
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("massage.floor_auto_setter_status_finished", floorCount)), true);
+                    playerEntity.sendMessage(Text.cast(TextHelper.translatable("message.floor_auto_setter_status_finished", floorCount)), true);
                 }
                 break;
             }

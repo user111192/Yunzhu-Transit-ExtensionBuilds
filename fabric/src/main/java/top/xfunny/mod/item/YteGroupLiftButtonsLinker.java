@@ -75,13 +75,13 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
 
             }else{
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("massage.linker_status_failed")) : Text.cast(TextHelper.translatable("massage.linker_status_failed_remove")), true);
+                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("message.linker_status_failed")) : Text.cast(TextHelper.translatable("message.linker_status_failed_remove")), true);
                 }
                 break;
             }
             if (number == pathFinder.getMark().size()) {
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("massage.linker_status_finished", floorCount)) : Text.cast(TextHelper.translatable("massage.linker_status_finished_remove", floorCount)), true);
+                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("message.linker_status_finished", floorCount)) : Text.cast(TextHelper.translatable("message.linker_status_finished_remove", floorCount)), true);
                 }
                 break;
             }
