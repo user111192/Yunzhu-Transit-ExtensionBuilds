@@ -56,6 +56,8 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1WithoutScreen.BlockEntity> HITACHI_B85_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button2.BlockEntity> HITACHI_B85_BUTTON_2;
 
+    public static final BlockEntityTypeRegistryObject<HitachiButton_PAFC.BlockEntity> HITACHI_BUTTON_PAFC;
+
     public static final BlockEntityTypeRegistryObject<HitachiB85Door1.BlockEntity> HITACHI_B85_DOOR_1;
     public static final BlockEntityTypeRegistryObject<KoneMDoor1.BlockEntity> KONE_M_DOOR_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayDoor1.BlockEntity> MITSUBISHI_NEXWAY_DOOR_1;
@@ -116,6 +118,7 @@ public class BlockEntityTypes {
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), HitachiB85Button1WithoutScreen.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN::get);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), HitachiB85Button2.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_2::get);
+        HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), HitachiButton_PAFC.BlockEntity::new, Blocks.HITACHI_BUTTON_PAFC::get);
 
         HITACHI_B85_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_door_1"), HitachiB85Door1.BlockEntity::new, Blocks.HITACHI_B85_DOOR_1::get);
         KONE_M_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_door_1"), KoneMDoor1.BlockEntity::new, Blocks.KONE_M_DOOR_1::get);
