@@ -26,7 +26,7 @@ jobs:
       - name: Setup Forge files
         run: ./gradlew forge:setupFiles -PminecraftVersion="${{ matrix.minecraft }}"
       - name: Build ${{ matrix.minecraft }}
-        run: ./gradlew build -PminecraftVersion="${{ matrix.minecraft }}"
+        run: ./gradlew build --info -PminecraftVersion="${{ matrix.minecraft }}" 
       - name: Capture release artifacts
         uses: actions/upload-artifact@main
         with:
