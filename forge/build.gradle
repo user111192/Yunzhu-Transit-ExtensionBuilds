@@ -42,6 +42,7 @@ mixin {
 
 java {
     toolchain {
+        println("Using Java "+JavaLanguageVersion.of(buildTools.javaLanguageVersion))
         languageVersion.set(JavaLanguageVersion.of(buildTools.javaLanguageVersion))
     }
     withSourcesJar()
