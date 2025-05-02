@@ -62,7 +62,6 @@
   "item.yte.yte_group_lift_buttons_link_connector": "Lift Group Buttons Connector",
   "item.yte.yte_group_lift_buttons_link_remover": "Lift Group Buttons Remover",
   "item.yte.floor_auto_setter": "Lift Floor Auto Setter",
-
   "message.linker_status_finished": "Done! %d floors connected",
   "message.linker_status_failed": "Connection failed",
   "message.linker_status_finished_remove": "Done! %d floors removed",

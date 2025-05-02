@@ -12,6 +12,7 @@ import org.mtr.mod.item.ItemBlockClickingBase;
 import top.xfunny.mod.LiftFloorRegistry;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.block.base.LiftDestinationDispatchTerminalBase;
+import top.xfunny.mod.block.base.LiftPanelBase;
 
 import static top.xfunny.mod.item.LinkerValidTypes.VALID_TYPES;
 
@@ -33,9 +34,9 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
             if (blockEntity2.data instanceof BlockLiftTrackFloor.BlockEntity) {
                 if (blockEntity1.data instanceof LiftFloorRegistry) {
                     ((LiftFloorRegistry) blockEntity1.data).registerFloor(blockPos1, world, blockPos2, isAdd);
-                }else if(blockEntity1.data instanceof BlockLiftButtons.BlockEntity){
+                } else if (blockEntity1.data instanceof BlockLiftButtons.BlockEntity) {
                     ((BlockLiftButtons.BlockEntity) blockEntity1.data).registerFloor(blockPos2, isAdd);
-                }else if (blockEntity1.data instanceof BlockLiftPanelBase.BlockEntityBase) {
+                } else if (blockEntity1.data instanceof BlockLiftPanelBase.BlockEntityBase) {
                     ((BlockLiftPanelBase.BlockEntityBase) blockEntity1.data).registerFloor(world, blockPos2, isAdd);
                 }
             } else if (blockEntity2.data instanceof LiftButtonsBase.BlockEntityBase || blockEntity2.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase) {
@@ -58,7 +59,6 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
         number = 0;
 
 
-
         while (true) {
             // 退出循环
             if (posStart != null && (world.getBlockState(posStart).getBlock().data instanceof BlockLiftTrackBase ||
@@ -69,19 +69,24 @@ public class YteGroupLiftButtonsLinker extends ItemBlockClickingBase implements 
                 posStart = (BlockPos) pos[0];
                 posEnd = (BlockPos) pos[1];
 
-                if(world.getBlockState(posStart).getBlock().data instanceof BlockLiftTrackFloor){
+                if (world.getBlockState(posEnd).getBlock().data instanceof LiftButtonsBase ||
+                        world.getBlockState(posEnd).getBlock().data instanceof LiftDestinationDispatchTerminalBase ||
+                        world.getBlockState(posEnd).getBlock().data instanceof LiftPanelBase ||
+                        world.getBlockState(posEnd).getBlock().data instanceof BlockLiftButtons ||
+                        world.getBlockState(posEnd).getBlock().data instanceof BlockLiftPanelBase
+                ) {
                     floorCount++;
                 }
 
-            }else{
+            } else {
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("message.linker_status_failed")) : Text.cast(TextHelper.translatable("message.linker_status_failed_remove")), true);
+                    playerEntity.sendMessage(isConnector ? Text.cast(TextHelper.translatable("message.linker_status_failed")) : Text.cast(TextHelper.translatable("message.linker_status_failed_remove")), true);
                 }
                 break;
             }
             if (number == pathFinder.getMark().size()) {
                 if (playerEntity != null) {
-                    playerEntity.sendMessage(isConnector? Text.cast(TextHelper.translatable("message.linker_status_finished", floorCount)) : Text.cast(TextHelper.translatable("message.linker_status_finished_remove", floorCount)), true);
+                    playerEntity.sendMessage(isConnector ? Text.cast(TextHelper.translatable("message.linker_status_finished", floorCount)) : Text.cast(TextHelper.translatable("message.linker_status_finished_remove", floorCount)), true);
                 }
                 break;
             }

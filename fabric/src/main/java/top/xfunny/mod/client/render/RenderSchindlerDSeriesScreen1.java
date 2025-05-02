@@ -15,12 +15,11 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
+import top.xfunny.mod.client.resource.FontList;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
-import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.util.ReverseRendering;
 
 import java.util.Comparator;
 

@@ -19,13 +19,13 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.client.TextureCache;
 import top.xfunny.mod.block.TestLiftPanel;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.client.TextureCache;
 import top.xfunny.mod.client.resource.TextureList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 

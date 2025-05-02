@@ -17,12 +17,15 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
-import top.xfunny.mod.client.view.*;
+import top.xfunny.mod.client.view.Gravity;
+import top.xfunny.mod.client.view.LiftButtonView;
+import top.xfunny.mod.client.view.LiftFloorDisplayView;
+import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
@@ -80,7 +83,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         screenLayout.setBackgroundColor(0xFF000000);
 
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -93,7 +96,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         button.setGravity(Gravity.CENTER);
 
         final LiftButtonView button1 = new LiftButtonView();
-        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
+        button1.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true, false);
         button1.setLight(light);
         button1.setHover(false);
         button1.setDefaultColor(0xFFFFFFFF);

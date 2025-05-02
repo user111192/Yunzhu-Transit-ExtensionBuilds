@@ -4,7 +4,6 @@ import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.ItemConvertible;
 import org.mtr.mapping.holder.ItemStack;
 import org.mtr.mapping.registry.CreativeModeTabHolder;
-import top.xfunny.mod.Items;
 
 
 public class CreativeModeTabs {

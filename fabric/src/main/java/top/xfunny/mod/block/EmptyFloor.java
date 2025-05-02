@@ -10,7 +10,6 @@ import org.mtr.mod.generated.lang.TranslationProvider;
 import org.mtr.mod.packet.PacketDeleteData;
 import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.Init;
-
 import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
 
 import javax.annotation.Nonnull;

@@ -2,113 +2,107 @@ import org.apache.tools.ant.filters.ReplaceTokens
 import org.mtr.mod.BuildTools
 
 plugins {
-	id "net.minecraftforge.gradle" version "+"
-	id "org.spongepowered.mixin" version "+"
+    id "net.minecraftforge.gradle" version "+"
+    id "org.spongepowered.mixin" version "+"
 }
 
 final BuildTools buildTools = new BuildTools(minecraftVersion, "forge", project)
 
 minecraft {
-	mappings channel: "official", version: minecraftVersion
-	runs {
-		configureEach {
-			property "forge.logging.markers", "REGISTRIES"
-			property "forge.logging.console.level", "debug"
-		}
-		client {}
-		server { args "--nogui" }
-	}
+    mappings channel: "official", version: minecraftVersion
+    runs {
+        configureEach {
+            property "forge.logging.markers", "REGISTRIES"
+            property "forge.logging.console.level", "debug"
+        }
+        client {}
+        server { args "--nogui" }
+    }
 }
 
 
-
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
 }
 
 sourceSets.main.resources { srcDir "src/generated/resources" }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:${minecraftVersion}-${buildTools.getForgeVersion()}"
-	annotationProcessor "org.spongepowered:mixin:+:processor"
-	implementation fg.deobf("org.mtr:MTR-forge:${mtrVersion}+${minecraftVersion}-server")
-	compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
-        jarJar.ranged(it, "[0.4.1,)")
-    }
-
+    minecraft "net.minecraftforge:forge:${minecraftVersion}-${buildTools.getForgeVersion()}"
+    annotationProcessor "org.spongepowered:mixin:+:processor"
+    implementation fg.deobf("org.mtr:MTR-forge:${mtrVersion}+${minecraftVersion}-server")
 }
 
 mixin {
-	add sourceSets.main, "yte.refmap.json"
-	config "yte.mixins.json"
-	debug.verbose = true
-	debug.export = true
+    add sourceSets.main, "yte.refmap.json"
+    config "yte.mixins.json"
+    debug.verbose = true
+    debug.export = true
 }
 
 java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(buildTools.javaLanguageVersion))
-	}
-	withSourcesJar()
-	//withJavadocJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(buildTools.javaLanguageVersion))
+    }
+    withSourcesJar()
+    //withJavadocJar()
 }
 
 tasks.register("setupFiles") {
-	copy {
-		outputs.upToDateWhen { false }
-		from "src/main/mods.template.toml"
-		into "src/main/resources/META-INF"
-		filter(ReplaceTokens, tokens: [
-            "minecraft": project.findProperty("minecraftVersion") ?: minecraftVersion,
-            "version": version
+    copy {
+        outputs.upToDateWhen { false }
+        from "src/main/mods.template.toml"
+        into "src/main/resources/META-INF"
+        filter(ReplaceTokens, tokens: [
+                "minecraft": project.findProperty("minecraftVersion") ?: minecraftVersion,
+                "version"  : version
         ])
-		rename "(.+).template.toml", "\$1.toml"
-	}
+        rename "(.+).template.toml", "\$1.toml"
+    }
 
-	delete fileTree("src/main/java/top/xfunny/mod")
-	delete fileTree("src/main/java/top/xfunny/mixin")
-	delete fileTree("src/main/resources/assets")
-	delete fileTree("src/main/resources/data")
-	delete fileTree("src/main/resources/yte.mixins.json")
+    delete fileTree("src/main/java/top/xfunny/mod")
+    delete fileTree("src/main/java/top/xfunny/mixin")
+    delete fileTree("src/main/resources/assets")
+    delete fileTree("src/main/resources/data")
+    delete fileTree("src/main/resources/yte.mixins.json")
 
-	copy {
-		outputs.upToDateWhen { false }
-		from "../fabric/src/main/java/top/xfunny/mod"
-		into "src/main/java/top/xfunny/mod"
-	}
+    copy {
+        outputs.upToDateWhen { false }
+        from "../fabric/src/main/java/top/xfunny/mod"
+        into "src/main/java/top/xfunny/mod"
+    }
 
-	copy{
-		outputs.upToDateWhen { false }
-		from "../fabric/src/main/java/top/xfunny/mixin"
-		into "src/main/java/top/xfunny/mixin"
-	}
+    copy {
+        outputs.upToDateWhen { false }
+        from "../fabric/src/main/java/top/xfunny/mixin"
+        into "src/main/java/top/xfunny/mixin"
+    }
 
-	copy {
-		outputs.upToDateWhen { false }
-		from "../fabric/src/main/resources/assets"
-		into "src/main/resources/assets"
-	}
+    copy {
+        outputs.upToDateWhen { false }
+        from "../fabric/src/main/resources/assets"
+        into "src/main/resources/assets"
+    }
 
-	copy {
-		outputs.upToDateWhen { false }
-		from "../fabric/src/main/resources/data"
-		into "src/main/resources/data"
-	}
+    copy {
+        outputs.upToDateWhen { false }
+        from "../fabric/src/main/resources/data"
+        into "src/main/resources/data"
+    }
 
-	copy {
-		outputs.upToDateWhen { false }
-		from "../fabric/src/main/resources/yte.mixins.json"
-		into "src/main/resources"
-	}
+    copy {
+        outputs.upToDateWhen { false }
+        from "../fabric/src/main/resources/yte.mixins.json"
+        into "src/main/resources"
+    }
 }
 
 build {
-	doLast {
-		buildTools.copyBuildFile()
-	}
+    doLast {
+        buildTools.copyBuildFile()
+    }
 }
 
 processResources {
-	dependsOn setupFiles
+    dependsOn setupFiles
 }

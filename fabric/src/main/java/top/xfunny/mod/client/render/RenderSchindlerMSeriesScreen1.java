@@ -9,22 +9,21 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.SchindlerMSeriesScreen1;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
 public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<SchindlerMSeriesScreen1.BlockEntity> implements DirectionHelper, IGui, IBlock {
-    private final boolean isOdd;
     private static final float ARROW_SPEED = 0.04F;
+    private final boolean isOdd;
 
     public RenderSchindlerMSeriesScreen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);

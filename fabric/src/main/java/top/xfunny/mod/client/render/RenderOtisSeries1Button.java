@@ -16,15 +16,14 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.OtisSeries1Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.view_group.LinearLayout;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;
 import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
     public RenderOtisSeries1Button(Argument dispatcher) {
@@ -70,7 +69,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         backgroundLayout.setGravity(Gravity.CENTER);
         backgroundLayout.setBackgroundColor(0xFD000000);
         backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, -3*SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, -3 * SMALL_OFFSET);
         });
 
         LinearLayout buttonLayout = new LinearLayout(false);
@@ -81,7 +80,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         buttonLayout.setMargin(0, 0, (float) 0.4 / 16, (float) 0.4 / 16);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setHover(true);
         button.setDefaultColor(0xFFFFFFFF);
@@ -94,7 +93,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         button.setGravity(Gravity.START);
 
         LiftButtonView buttonArrow = new LiftButtonView();
-        buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false,false);
+        buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         buttonArrow.setLight(light);
         buttonArrow.setHover(false);
         buttonArrow.setDefaultColor(0xFFFFFFFF);

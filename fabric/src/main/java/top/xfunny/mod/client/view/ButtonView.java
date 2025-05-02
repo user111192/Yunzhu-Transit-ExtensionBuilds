@@ -8,8 +8,6 @@ import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.RenderView;
 
 import java.util.function.Consumer;
 

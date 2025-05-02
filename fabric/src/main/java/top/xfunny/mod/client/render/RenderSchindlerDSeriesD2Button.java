@@ -16,13 +16,13 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerDSeriesD2Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;
 import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 public class RenderSchindlerDSeriesD2Button extends BlockEntityRenderer<SchindlerDSeriesD2Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
@@ -69,7 +69,7 @@ public class RenderSchindlerDSeriesD2Button extends BlockEntityRenderer<Schindle
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -82,7 +82,7 @@ public class RenderSchindlerDSeriesD2Button extends BlockEntityRenderer<Schindle
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setHover(true);

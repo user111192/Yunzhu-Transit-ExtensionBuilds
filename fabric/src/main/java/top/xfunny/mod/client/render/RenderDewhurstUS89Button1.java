@@ -15,7 +15,6 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.DewhurstUS89Button1;
-import top.xfunny.mod.block.SchindlerDSeriesD2Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
@@ -70,7 +69,7 @@ public class RenderDewhurstUS89Button1 extends BlockEntityRenderer<DewhurstUS89B
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -83,7 +82,7 @@ public class RenderDewhurstUS89Button1 extends BlockEntityRenderer<DewhurstUS89B
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFF000000);
         buttonLight.setHover(true);

@@ -109,7 +109,8 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 
     public enum EnumPSDAPGType {
 
-        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true), KONE_M_DOOR_1(false, false, true), HITACHI_B85_DOOR_1(false, false, true),;
+        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true), KONE_M_DOOR_1(false, false, true), HITACHI_B85_DOOR_1(false, false, true),
+        ;
 
 
         private final boolean isPSD;

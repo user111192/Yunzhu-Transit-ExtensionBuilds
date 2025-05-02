@@ -15,12 +15,14 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundTouchButton;
-import top.xfunny.mod.block.SchindlerMSeriesTouchButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.view.Gravity;
+import top.xfunny.mod.client.view.LayoutSize;
+import top.xfunny.mod.client.view.LiftButtonView;
+import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
-import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.view.view_group.FrameLayout;
 
 public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<SchindlerMSeriesRoundTouchButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
@@ -69,7 +71,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(false);
@@ -82,7 +84,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false,false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setHover(true);

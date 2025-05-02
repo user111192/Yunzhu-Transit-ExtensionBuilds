@@ -53,6 +53,7 @@ public class KoneMButton1 extends LiftButtonsBase {
         properties.add(UNLOCKED);
         properties.add(SINGLE);
     }
+
     /**
      * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension
      * 主要功能是通过CompoundTag来读取和写入特定位置集合
@@ -64,11 +65,11 @@ public class KoneMButton1 extends LiftButtonsBase {
     }
 
     /**@Override
-    *public ActionResult onUse2(BlockState state, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        *if (!world.isClient()) {
-            *world.playSound(null, blockPos, SoundEvents.getMusicDiscBlocksMapped(), SoundCategory.BLOCKS, 1, 1);
-        *}
-        *return ActionResult.SUCCESS;
+     *public ActionResult onUse2(BlockState state, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+     *if (!world.isClient()) {
+     *world.playSound(null, blockPos, SoundEvents.getMusicDiscBlocksMapped(), SoundCategory.BLOCKS, 1, 1);
+     *}
+     *return ActionResult.SUCCESS;
     }*/
 
 

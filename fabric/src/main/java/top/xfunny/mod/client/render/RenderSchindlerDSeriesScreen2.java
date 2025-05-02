@@ -18,13 +18,12 @@ import top.xfunny.mod.block.SchindlerDSeriesScreen2BlueEven;
 import top.xfunny.mod.block.SchindlerDSeriesScreen2GreenEven;
 import top.xfunny.mod.block.SchindlerDSeriesScreen2RedEven;
 import top.xfunny.mod.block.base.LiftPanelBase;
-import top.xfunny.mod.client.view.view_group.LinearLayout;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 

@@ -63,7 +63,6 @@
   "item.yte.yte_group_lift_buttons_link_connector": "YTE批量电梯连接扳手",
   "item.yte.yte_group_lift_buttons_link_remover": "YTE批量电梯移除扳手",
   "item.yte.floor_auto_setter": "电梯楼层自动设置器",
-
   "message.linker_status_finished": "操作完成！已连接%d个楼层",
   "message.linker_status_failed": "连接失败",
   "message.linker_status_finished_remove": "操作完成！已移除%d个楼层",

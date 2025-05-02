@@ -13,8 +13,10 @@ import java.util.ArrayList;
 
 
 public class PathFinder implements DirectionHelper {
-    ArrayList<BlockPos> mark = new ArrayList<>();;
-    Object[] array = new Object[2];;
+    ArrayList<BlockPos> mark = new ArrayList<>();
+    ;
+    Object[] array = new Object[2];
+    ;
 
     public Object[] findPath(ItemUsageContext context, BlockPos pos) {//调用入口
         final World world = context.getWorld();

@@ -22,11 +22,11 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.TestLiftButtons;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.resource.TextureList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 

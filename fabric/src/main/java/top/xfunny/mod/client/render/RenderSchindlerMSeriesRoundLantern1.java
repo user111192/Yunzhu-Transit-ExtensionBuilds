@@ -16,16 +16,15 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
-import top.xfunny.mod.block.SchindlerMSeriesScreen2Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.client.view.Gravity;
+import top.xfunny.mod.client.view.LayoutSize;
+import top.xfunny.mod.client.view.LiftButtonView;
+import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
-import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
-import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.view.view_group.FrameLayout;
-
-import java.util.Comparator;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
@@ -68,12 +67,12 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 7.5 / 16);
-        parentLayout.setPosition(isOdd ? (float) -3.75/16 : (float) -11.75 / 16, (float) 4.25/16);
+        parentLayout.setPosition(isOdd ? (float) -3.75 / 16 : (float) -11.75 / 16, (float) 4.25 / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true,true);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true, true);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);

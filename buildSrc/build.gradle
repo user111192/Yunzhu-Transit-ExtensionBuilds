@@ -1,20 +1,20 @@
 repositories {
-	mavenCentral()
-	maven { url "https://jitpack.io" }
+    mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-	implementation "com.google.code.gson:gson:+"
-	implementation "it.unimi.dsi:fastutil:+"
-	implementation "commons-io:commons-io:+"
-	implementation "org.apache.httpcomponents:httpmime:+"
-	implementation "com.github.jonafanho:Minecraft-Mod-API-Tools:master-SNAPSHOT"
+    implementation "com.google.code.gson:gson:+"
+    implementation "it.unimi.dsi:fastutil:+"
+    implementation "commons-io:commons-io:+"
+    implementation "org.apache.httpcomponents:httpmime:+"
+    implementation "com.github.jonafanho:Minecraft-Mod-API-Tools:master-SNAPSHOT"
 }
 
 java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(17))
-	}
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 tasks.withType(JavaCompile) {

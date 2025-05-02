@@ -1,20 +1,11 @@
 package top.xfunny.mod.block;
 
-import org.mtr.core.data.Lift;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import org.mtr.mapping.holder.BlockPos;
-import org.mtr.mapping.holder.BlockRenderType;
-import org.mtr.mapping.holder.BlockState;
-import org.mtr.mapping.holder.Item;
-import org.mtr.mapping.mapper.BlockEntityExtension;
-import org.mtr.mod.block.BlockPSDAPGDoorBase;
-import top.xfunny.mod.BlockEntityTypes;
-import top.xfunny.mod.Items;
 
 import javax.annotation.Nonnull;
 import java.util.List;

@@ -13,7 +13,7 @@ public final class ClientPacketHelper {
 
     public static void openBlockEntityScreen(BlockPos blockPos) {
         getBlockEntity(blockPos, blockEntity -> {
-             if (blockEntity.data instanceof EmptyFloor.BlockEntity) {
+            if (blockEntity.data instanceof EmptyFloor.BlockEntity) {
                 openScreen(new LiftEmptyFloorScreen(blockPos, (EmptyFloor.BlockEntity) blockEntity.data), screenExtension -> screenExtension instanceof LiftEmptyFloorScreen);
             }
         });

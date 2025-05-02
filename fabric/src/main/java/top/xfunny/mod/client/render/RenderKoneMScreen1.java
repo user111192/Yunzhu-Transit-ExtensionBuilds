@@ -16,7 +16,6 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.KoneMScreen1Even;
-import top.xfunny.mod.block.SchindlerMSeriesScreen2Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
@@ -79,7 +78,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         screenLayout.setGravity(Gravity.CENTER);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true,false);
+        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);

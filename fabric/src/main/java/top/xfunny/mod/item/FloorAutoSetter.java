@@ -71,7 +71,7 @@ public class FloorAutoSetter extends ItemExtension implements DirectionHelper {
                 Object[] apos = pathFinder.findPath(context, pos);
                 pos = (BlockPos) apos[0];
 
-                if(world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackFloor){
+                if (world.getBlockState(pos).getBlock().data instanceof BlockLiftTrackFloor) {
                     floorCount++;
                 }
 

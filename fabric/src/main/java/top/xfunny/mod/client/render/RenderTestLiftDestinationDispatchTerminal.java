@@ -9,15 +9,14 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.TestLiftDestinationDispatchTerminal;
-import top.xfunny.mod.client.view.view_group.LinearLayout;
-import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
-import top.xfunny.mod.item.YteLiftButtonsLinker;
-import top.xfunny.mod.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ArrayListToString;
 import top.xfunny.mod.client.util.TransformPositionX;
 import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
+import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
+import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
 
 import java.util.ArrayList;
 

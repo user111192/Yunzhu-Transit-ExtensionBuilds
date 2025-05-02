@@ -9,9 +9,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
-@Mixin(value = RenderLiftButtons.class,remap = false)
+@Mixin(value = RenderLiftButtons.class, remap = false)
 public class MixinRenderLiftButtons {
-       @ModifyVariable(
+    @ModifyVariable(
             method = "render*",
             at = @At(value = "STORE", ordinal = 0),
             name = "holdingLinker"
