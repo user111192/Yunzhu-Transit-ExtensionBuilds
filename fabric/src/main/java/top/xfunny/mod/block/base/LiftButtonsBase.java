@@ -36,7 +36,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         super(BlockHelper.createBlockSettings(true, true));
         this.isOdd = isOdd;
         this.allowPress = allowPress;
-        Init.LOGGER.info("LiftButtonsBase init");
     }
 
     public LiftButtonsBase(boolean allowPress, boolean isOdd, double median) {
@@ -44,7 +43,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         this.isOdd = isOdd;
         this.allowPress = allowPress;
         this.median = median;
-        Init.LOGGER.info("LiftButtonsBase init");
     }
 
     /**
@@ -94,7 +92,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         } else {
             // 如果玩家手持电梯连接器或移除器，允许进行其他操作
             if (player.isHolding(Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
-                Init.LOGGER.info("onUse2");
                 return ActionResult.PASS;
             } else {
                 // 检查按钮是否解锁，并处理客户端按钮按下逻辑
@@ -312,7 +309,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
          */
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
-            Init.LOGGER.info("正在操作");
             this.selfPos = selfPos;
             final boolean single = IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
@@ -328,7 +324,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                         final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
                         world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
                     }
-                    Init.LOGGER.info("已添加");
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
                     trackPositions.remove(pos);
@@ -336,7 +331,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                         final boolean single1 = !IBlock.getStatePropertySafe(world.getBlockState(selfPos), SINGLE);
                         world.setBlockState(selfPos, world.getBlockState(selfPos).with(new Property<>(SINGLE.data), single1));
                     }
-                    Init.LOGGER.info("已移除");
                 }
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
@@ -345,7 +339,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
         @Override
         public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
-            Init.LOGGER.info("正在进行外呼关联");
 
             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
                 final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
@@ -356,12 +349,9 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     liftButtonPositions.add(blockPos);
-                    Init.LOGGER.info("已添加到站灯" + blockPos.toShortString());
-                    Init.LOGGER.info("lanternPositions" + liftButtonPositions);
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
                     liftButtonPositions.remove(blockPos);
-                    Init.LOGGER.info("已移除到站灯");
                 }
             }
 

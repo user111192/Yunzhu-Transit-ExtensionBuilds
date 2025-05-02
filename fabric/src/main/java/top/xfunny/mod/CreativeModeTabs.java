@@ -20,6 +20,6 @@ public class CreativeModeTabs {
     }
 
     public static void init() {
-        Init.LOGGER.info("正在注册创造背包标签");
+
     }
 }

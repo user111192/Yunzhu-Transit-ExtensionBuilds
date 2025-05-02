@@ -34,7 +34,6 @@ public class TextureCache {
 
     public void reload() {
         FontList.instance.FontReload();
-        Init.LOGGER.debug("Refreshing dynamic resources");
         dynamicResources.values().forEach(dynamicResource -> dynamicResource.needsRefresh = true);
         generatingResources.clear();
     }
@@ -66,7 +65,6 @@ public class TextureCache {
         // 计算文本高度
         int textHeight = fontMetrics.getHeight() + 2 * padding;
         totalWidth = totalTextWidth;
-        Init.LOGGER.info("Text dimensions: " + totalTextWidth + "x" + textHeight);
 
         // 创建灰度图像
         BufferedImage textImage = new BufferedImage(totalTextWidth, textHeight, BufferedImage.TYPE_BYTE_GRAY);

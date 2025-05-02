@@ -161,7 +161,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         }
 
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
-            Init.LOGGER.info("正在操作");
             this.selfPos = selfPos;
             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
                 final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
@@ -172,14 +171,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     trackPositions.add(pos);
-                    trackPositions.forEach(position -> {
-                        Init.LOGGER.info(position.toShortString());
-                    });
-                    Init.LOGGER.info("已添加");
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
                     trackPositions.remove(pos);
-                    Init.LOGGER.info("已移除");
                 }
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步
@@ -188,7 +182,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         @Override
         public void registerButton(World world, BlockPos blockPos, boolean isAdd) {
-            Init.LOGGER.info("正在进行外呼关联");
 
             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
                 final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
@@ -199,12 +192,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     liftButtonPositions.add(blockPos);
-                    Init.LOGGER.info("已添加到站灯" + blockPos.toShortString());
-                    Init.LOGGER.info("lanternPositions" + liftButtonPositions);
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
                     liftButtonPositions.remove(blockPos);
-                    Init.LOGGER.info("已移除到站灯");
                 }
             }
             markDirty2();
@@ -287,11 +277,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                         } else if (liftDirection == confirmLiftDirection) {
                             if (confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                                Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
-                            } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
+                                 } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                                Init.LOGGER.info("liftDirection:" + liftDirection + "currentLiftFloor:" + currentLiftFloorNumber + "currentFloorNumber:" + currentFloorNumber);
-                            }
+                                }
                         }
                     }
 
@@ -332,8 +320,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 return String.valueOf(liftIdentifier);
 
             } else {
-                Init.LOGGER.info("没有找到合适的电梯");
-                liftIdentifier = '?';
+                 liftIdentifier = '?';
                 return String.valueOf(liftIdentifier);
             }
         }

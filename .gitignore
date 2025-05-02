@@ -45,3 +45,4 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+/forge/src/main/java/top/xfunny/mixin/

@@ -197,85 +197,95 @@ public class LinearLayout implements RenderView {
             offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[1]};//默认位于左上角
         } else {
             switch (childGravity) {
-                case START -> {
-                    if (isVertical) {
-                        offset = new float[]{width / 2 - childWidth - childMargin[0], 0};
-                    }
-                }
-                case CENTER_VERTICAL -> {
-                    if (!isVertical) {
-                        offset = new float[]{0, (height - childHeight) / 2};
-                    }
-                }
-                case END -> {
-                    if (isVertical) {
-                        offset = new float[]{-width / 2 + childMargin[3], 0};
-                    }
-                }
-                case TOP -> {
-                    if (!isVertical) {
-                        offset = new float[]{0, height - childHeight - childMargin[2]};
-                    }
-                }
-                case CENTER_HORIZONTAL -> {
-                    if (isVertical) {
-                        offset = new float[]{-childWidth / 2, 0};
-                    }
-                }
-                case BOTTOM -> {
-                    if (!isVertical) {
-                        offset = new float[]{0, childMargin[4]};
-                    }
-                }
-            }
+    case START:
+        if (isVertical) {
+            offset = new float[]{width / 2 - childWidth - childMargin[0], 0};
+        }
+        break;
+    case CENTER_VERTICAL:
+        if (!isVertical) {
+            offset = new float[]{0, (height - childHeight) / 2};
+        }
+        break;
+    case END:
+        if (isVertical) {
+            offset = new float[]{-width / 2 + childMargin[3], 0};
+        }
+        break;
+    case TOP:
+        if (!isVertical) {
+            offset = new float[]{0, height - childHeight - childMargin[2]};
+        }
+        break;
+    case CENTER_HORIZONTAL:
+        if (isVertical) {
+            offset = new float[]{-childWidth / 2, 0};
+        }
+        break;
+    case BOTTOM:
+        if (!isVertical) {
+            offset = new float[]{0, childMargin[4]};
+        }
+        break;
+}
+
 
         }
         return offset;
     }
 
 
-    public void calculateLayoutWidth() {
-        switch (widthType) {
-            case WRAP_CONTENT -> {
-                float tempWidth = 0;
-                for (RenderView child : children) {
-                    float[] margin = child.getMargin();
-                    if (!isVertical) {
-                        child.calculateLayoutWidth();
-                        tempWidth += child.getWidth() + margin[0] + margin[2];
-                    } else {
-                        child.calculateLayoutWidth();
-                        tempWidth = Math.max(tempWidth, child.getWidth() + margin[0] + margin[2]);
-                    }
+   public void calculateLayoutWidth() {
+    switch (widthType) {
+        case WRAP_CONTENT:
+            float tempWidth = 0;
+            for (RenderView child : children) {
+                float[] margin = child.getMargin();
+                if (!isVertical) {
+                    child.calculateLayoutWidth();
+                    tempWidth += child.getWidth() + margin[0] + margin[2];
+                } else {
+                    child.calculateLayoutWidth();
+                    tempWidth = Math.max(tempWidth, child.getWidth() + margin[0] + margin[2]);
                 }
-                width = tempWidth;
             }
-            case MATCH_PARENT -> width = parentWidth;
-            default -> width = widthType.ordinal();
-        }
+            width = tempWidth;
+            break;
+        case MATCH_PARENT:
+            width = parentWidth;
+            break;
+        default:
+            width = widthType.ordinal();
+            break;
     }
+}
+
 
     public void calculateLayoutHeight() {
-        switch (heightType) {
-            case WRAP_CONTENT -> {
-                float tempHeight = 0;
-                for (RenderView child : children) {
-                    float[] margin = child.getMargin();
-                    if (isVertical) {
-                        child.calculateLayoutHeight();
-                        tempHeight += child.getHeight() + margin[1] + margin[3];
-                    } else {
-                        child.calculateLayoutHeight();
-                        tempHeight = Math.max(tempHeight, child.getHeight() + margin[1] + margin[3]);
-                    }
-
+    switch (heightType) {
+        case WRAP_CONTENT:
+            float tempHeight = 0;
+            for (RenderView child : children) {
+                float[] margin = child.getMargin();
+                if (isVertical) {
+                    child.calculateLayoutHeight();
+                    tempHeight += child.getHeight() + margin[1] + margin[3];
+                } else {
+                    child.calculateLayoutHeight();
+                    tempHeight = Math.max(tempHeight, child.getHeight() + margin[1] + margin[3]);
                 }
-                height = tempHeight;
             }
-            case MATCH_PARENT -> height = parentHeight;
-            default -> height = heightType.ordinal();
-        }
+            height = tempHeight;
+            break;
+        case MATCH_PARENT:
+            height = parentHeight;
+            break;
+        default:
+            height = heightType.ordinal();
+            break;
     }
+}
+
 
     private void calculateSelfCoordinateOrigin() {
         this.coordinateOriginX = x + width / 2;

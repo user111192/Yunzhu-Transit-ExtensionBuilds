@@ -60,7 +60,6 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         // 如果玩家手持电梯连接器或移除器，允许进行其他操作
         if (player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get())) {
-            Init.LOGGER.info("onUse2");
             return ActionResult.PASS;
         }
         return ActionResult.FAIL;
@@ -160,7 +159,7 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
          * @param isAdd 指示是注册还是取消注册的操作类型；true表示注册，false表示取消注册
          */
         public void registerFloor(BlockPos selfPos, World world, BlockPos pos, boolean isAdd) {
-            Init.LOGGER.info("正在操作");
+
 
             if (IBlock.getStatePropertySafe(world, getPos2(), SIDE) == EnumSide.RIGHT) {
                 final BlockEntity blockEntity = world.getBlockEntity(getPos2().offset(IBlock.getStatePropertySafe(world, getPos2(), FACING).rotateYCounterclockwise()));
@@ -171,11 +170,10 @@ public abstract class LiftPanelBase extends BlockExtension implements DirectionH
                 if (isAdd) {
                     // 如果是添加操作，则将位置添加到跟踪列表中
                     trackPositions.add(pos);
-                    Init.LOGGER.info("已添加");
+
                 } else {
                     // 如果是非添加操作，则从跟踪列表中移除该位置
                     trackPositions.remove(pos);
-                    Init.LOGGER.info("已移除");
                 }
             }
             // 更新数据状态，标记数据为“脏”，表示需要保存或同步

@@ -20,7 +20,7 @@ public class MixinRenderLiftButtons {
         if (original) {
             return true;
         }
-        final var clientPlayerEntity = org.mtr.mapping.holder.MinecraftClient.getInstance().getPlayerMapped();
+        final org.mtr.mapping.holder.ClientPlayerEntity clientPlayerEntity = org.mtr.mapping.holder.MinecraftClient.getInstance().getPlayerMapped();
         if (clientPlayerEntity == null) {
             return false;
         }

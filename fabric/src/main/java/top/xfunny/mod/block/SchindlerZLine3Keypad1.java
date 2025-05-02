@@ -13,6 +13,7 @@ import top.xfunny.mod.keymapping.SchindlerZLine3Keypad1KeyMapping;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -59,10 +60,17 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
         final Direction facing = IBlock.getStatePropertySafe(state, FACING);
         double transformedX = TransformPositionX.transform(hitX, hitZ, facing);
 
+
         final org.mtr.mapping.holder.BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!(blockEntity.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase data))
+        if (blockEntity == null || !(blockEntity.data instanceof LiftDestinationDispatchTerminalBase.BlockEntityBase)) {
             return ActionResult.FAIL;
-        if (!(blockEntity.data instanceof SchindlerZLine3Keypad1.BlockEntity data1)) return ActionResult.FAIL;
+        }
+        final LiftDestinationDispatchTerminalBase.BlockEntityBase data = (LiftDestinationDispatchTerminalBase.BlockEntityBase) blockEntity.data;
+
+        if (!(blockEntity.data instanceof SchindlerZLine3Keypad1.BlockEntity)) {
+            return ActionResult.FAIL;
+        }
+        final SchindlerZLine3Keypad1.BlockEntity data1 = (SchindlerZLine3Keypad1.BlockEntity) blockEntity.data;
 
         // 获取按键映射
         SchindlerZLine3Keypad1KeyMapping mapping = new SchindlerZLine3Keypad1KeyMapping();
@@ -80,12 +88,18 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
     }
 
     private void processKeyInput(World world, BlockPos pos, SchindlerZLine3Keypad1.BlockEntity data1, LiftDestinationDispatchTerminalBase.BlockEntityBase data, String screenId, String output) {
-        Map<String, Integer> numberKeys = Map.of(
-                "number1", 1, "number2", 2, "number3", 3,
-                "number4", 4, "number5", 5, "number6", 6,
-                "number7", 7, "number8", 8, "number9", 9,
-                "number0", 0
-        );
+        Map<String, Integer> numberKeys = new HashMap<String, Integer>() {{
+            put("number1", 1);
+            put("number2", 2);
+            put("number3", 3);
+            put("number4", 4);
+            put("number5", 5);
+            put("number6", 6);
+            put("number7", 7);
+            put("number8", 8);
+            put("number9", 9);
+            put("number0", 0);
+        }};
 
         BiConsumer<String, String> handleScreenAndInput = (screen, input) -> {
             data1.switchScreen(screen);
@@ -108,8 +122,8 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
         };
 
         switch (screenId) {
-            case "schindler_z_line_3_keypad_1_key_mapping_home",
-                 "schindler_z_line_3_keypad_1_key_mapping_accessibility" -> {
+            case "schindler_z_line_3_keypad_1_key_mapping_home":
+            case "schindler_z_line_3_keypad_1_key_mapping_accessibility":
                 if (numberKeys.containsKey(output)) {
                     handleScreenAndInput.accept("schindler_z_line_3_keypad_1_key_mapping_input", String.valueOf(numberKeys.get(output)));
                 } else if ("basement".equals(output)) {
@@ -121,8 +135,8 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
-            }
-            case "schindler_z_line_3_keypad_1_key_mapping_input" -> {
+                break;
+            case "schindler_z_line_3_keypad_1_key_mapping_input":
                 if (numberKeys.containsKey(output)) {
                     data1.addInputString(world, pos, numberKeys.get(output), true, data1, data);
                 } else if ("basement".equals(output)) {
@@ -134,8 +148,8 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
-            }
-            case "schindler_z_line_3_keypad_1_key_mapping_identifier" -> {
+                break;
+            case "schindler_z_line_3_keypad_1_key_mapping_identifier":
                 if (numberKeys.containsKey(output)) {
                     data1.clearInputString();
                     handleScreenAndInput.accept("schindler_z_line_3_keypad_1_key_mapping_input", String.valueOf(numberKeys.get(output)));
@@ -150,8 +164,9 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
                     callResult = callResult.equals("?") ? data.callLift(world, pos, "G") : callResult;
                     handleLiftCall.accept("schindler_z_line_3_keypad_1_key_mapping_home", callResult);
                 }
-            }
+                break;
         }
+
     }
 
     public static class BlockEntity extends LiftDestinationDispatchTerminalBase.BlockEntityBase {

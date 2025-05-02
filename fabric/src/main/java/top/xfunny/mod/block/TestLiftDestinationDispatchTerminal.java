@@ -83,7 +83,6 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
 
 
         if (player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(top.xfunny.mod.Items.YTE_LIFT_BUTTONS_LINK_REMOVER.get()) || player.isHolding(top.xfunny.mod.Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR.get()) || player.isHolding(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER.get())) {
-            Init.LOGGER.info("onUse2");
             return ActionResult.PASS;
         } else {
             //todo:以后区分不同id下的点击事件
@@ -125,7 +124,6 @@ public class TestLiftDestinationDispatchTerminal extends LiftDestinationDispatch
                         break;
                     case "callLift":
                         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-                        Init.LOGGER.info("已呼梯,已登记楼层：" + ArrayListToString.arrayListToString(data1.getInputNumber()));
 
                         data.callLift(world, pos, ArrayListToString.arrayListToString(data1.getInputNumber()));
                         data1.clearInputNumber();

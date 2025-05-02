@@ -20,7 +20,6 @@ public class YteRouteMapGenerator implements IGui {
     public static NativeImage generateImage(String text, int textColor, Font font, int fontSize, int padding, int letterSpacing) {
         setConstants();
         try {
-            Init.LOGGER.info("贴图生成中");
             final int totalWidth;
             final int height = Math.round(scale * 1.5F);
             final int[] dimensions = new int[2];
@@ -35,19 +34,16 @@ public class YteRouteMapGenerator implements IGui {
             totalWidth = TextureCache.instance.totalWidth;
 
 
-            Init.LOGGER.info("scale:" + scale);
-            Init.LOGGER.info("width" + totalWidth + "|height" + height);
             final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
             nativeImage.fillRect(0, 0, totalWidth, height, 0);
             YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
             YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);
 
-            Init.LOGGER.info("nativeImageWidth" + nativeImage.getWidth());
+
             //top.xfunny.mod.util.ImageGenerator.saveNativeImageAsPng(nativeImage, "output_image.png");
             return nativeImage;
         } catch (Exception e) {
-            Init.LOGGER.error("贴图生成失败");
-            Init.LOGGER.error("", e);
+
         }
         return null;
     }

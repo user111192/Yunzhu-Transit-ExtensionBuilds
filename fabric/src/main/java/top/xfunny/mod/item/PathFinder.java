@@ -36,7 +36,7 @@ public class PathFinder implements DirectionHelper {
 
     private void checkPosition(World world, BlockPos pos, BlockPos otherPos, boolean facing) {
         if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            Init.LOGGER.info("上");
+            //Init.LOGGER.info("上");
             if (!findMark(pos.up(1))) {
                 array[0] = pos.up(1);
                 array[1] = otherPos.up(1);
@@ -44,7 +44,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            Init.LOGGER.info("下");
+           //Init.LOGGER.info("下");
             if (!findMark(pos.down(1))) {
                 array[0] = pos.down(1);
                 array[1] = otherPos.down(1);
@@ -52,7 +52,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            Init.LOGGER.info("南");
+            //Init.LOGGER.info("南");
             if (!findMark(pos.south(1))) {
                 array[0] = pos.south(1);
                 array[1] = otherPos.south(1);
@@ -60,7 +60,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            Init.LOGGER.info("北");
+            //Init.LOGGER.info("北");
             if (!findMark(pos.north(1))) {
                 array[0] = pos.north(1);
                 array[1] = otherPos.north(1);
@@ -69,7 +69,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            Init.LOGGER.info("东");
+            //Init.LOGGER.info("东");
             if (!findMark(pos.east(1))) {
                 array[0] = pos.east(1);
                 array[1] = otherPos.east(1);
@@ -77,7 +77,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            Init.LOGGER.info("西");
+            //Init.LOGGER.info("西");
             if (!findMark(pos.west(1))) {
                 array[0] = pos.west(1);
                 array[1] = otherPos.west(1);

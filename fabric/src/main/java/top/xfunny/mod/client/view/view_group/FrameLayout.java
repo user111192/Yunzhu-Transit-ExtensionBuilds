@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
+import static top.xfunny.mod.client.view.LayoutSize.MATCH_PARENT;
+import static top.xfunny.mod.client.view.LayoutSize.WRAP_CONTENT;
 
 public class FrameLayout implements RenderView {
 
@@ -158,7 +160,7 @@ public class FrameLayout implements RenderView {
     @Override
     public void calculateLayoutWidth() {
         switch (widthType) {
-            case WRAP_CONTENT -> {
+            case WRAP_CONTENT:
                 float maxWidth = 0;
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
@@ -166,16 +168,20 @@ public class FrameLayout implements RenderView {
                     maxWidth = Math.max(maxWidth, child.getWidth() + margin[0] + margin[2]);
                 }
                 width = maxWidth;
-            }
-            case MATCH_PARENT -> width = parentWidth;
-            default -> width = widthType.ordinal();
+                break;
+            case MATCH_PARENT:
+                width = parentWidth;
+                break;
+            default:
+                width = widthType.ordinal();
+                break;
         }
     }
 
     @Override
     public void calculateLayoutHeight() {
         switch (heightType) {
-            case WRAP_CONTENT -> {
+            case WRAP_CONTENT:
                 float maxHeight = 0;
                 for (RenderView child : children) {
                     float[] margin = child.getMargin();
@@ -183,11 +189,16 @@ public class FrameLayout implements RenderView {
                     maxHeight = Math.max(maxHeight, child.getHeight() + margin[1] + margin[3]);
                 }
                 height = maxHeight;
-            }
-            case MATCH_PARENT -> height = parentHeight;
-            default -> height = heightType.ordinal();
+                break;
+            case MATCH_PARENT:
+                height = parentHeight;
+                break;
+            default:
+                height = heightType.ordinal();
+                break;
         }
     }
+
 
     @Override
     public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
@@ -196,17 +207,32 @@ public class FrameLayout implements RenderView {
             offset = new float[]{width / 2 - childWidth - childMargin[0], height - childHeight - childMargin[2]};
         } else {
             switch (childGravity) {
-                case START -> offset = new float[]{width / 2 - childWidth - childMargin[0], 0};
-                case CENTER_VERTICAL -> offset = new float[]{0, -(height - childHeight) / 2};
-                case CENTER_HORIZONTAL -> offset = new float[]{-childWidth / 2, 0};
-                case CENTER -> offset = new float[]{-childWidth / 2, -(height - childHeight) / 2};
-                case END -> offset = new float[]{-width / 2 + childMargin[2], 0};
-                case TOP -> offset = new float[]{0, -height / 2 + childMargin[1]};
-                case BOTTOM -> offset = new float[]{0, height};
+                case START:
+                    offset = new float[]{width / 2 - childWidth - childMargin[0], 0};
+                    break;
+                case CENTER_VERTICAL:
+                    offset = new float[]{0, -(height - childHeight) / 2};
+                    break;
+                case CENTER_HORIZONTAL:
+                    offset = new float[]{-childWidth / 2, 0};
+                    break;
+                case CENTER:
+                    offset = new float[]{-childWidth / 2, -(height - childHeight) / 2};
+                    break;
+                case END:
+                    offset = new float[]{-width / 2 + childMargin[2], 0};
+                    break;
+                case TOP:
+                    offset = new float[]{0, -height / 2 + childMargin[1]};
+                    break;
+                case BOTTOM:
+                    offset = new float[]{0, height};
+                    break;
             }
         }
         return offset;
     }
+
 
     @Override
     public Object getParentType() {
