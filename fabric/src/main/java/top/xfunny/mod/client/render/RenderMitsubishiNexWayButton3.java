@@ -86,7 +86,7 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
+        buttonLayout.setMargin(0, (float) 1.4 / 16, 0, 0);
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
@@ -162,7 +162,7 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("mitsubishi_modern"),//字体
-                        5,//字号
+                        6,//字号
                         0xFFFFAA00);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_3_display");//字体贴图id，不能与其他显示屏的重复
@@ -177,8 +177,8 @@ public class RenderMitsubishiNexWayButton3 extends BlockEntityRenderer<Mitsubish
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.6 / 16);
-                liftArrowView.setHeight((float) 0.6 / 16);
+                liftArrowView.setWidth((float) 0.7 / 16);
+                liftArrowView.setHeight((float) 0.7 / 16);
                 liftArrowView.setMargin(0, (float) 1.07 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFAA00);
