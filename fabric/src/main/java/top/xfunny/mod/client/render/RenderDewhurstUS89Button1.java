@@ -26,7 +26,7 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 public class RenderDewhurstUS89Button1 extends BlockEntityRenderer<DewhurstUS89Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xFF880000;
+    private static final int HOVER_COLOR = 0xFF333333;
     private static final int PRESSED_COLOR = 0xFFEE0000;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/dewhurst_us89_button_1.png");
     private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/dewhurst_us89_button_1_light.png");
