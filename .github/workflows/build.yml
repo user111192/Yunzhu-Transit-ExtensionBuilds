@@ -21,10 +21,14 @@ jobs:
           distribution: 'zulu'
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: Setup files
+      - name: Setup Library
+        run: ./gradlew setupLibrary
+      - name: Sync the Gradle project  
+        run: ./gradlew --refresh-dependencies clean build
+      - name: Pre Build
         run: ./gradlew build
       - name: Build
-        run: ./gradlew build --info -PminecraftVersion="${{ matrix.minecraft }}"
+        run: ./gradlew build -PminecraftVersion="${{ matrix.minecraft }}"
       - name: Capture release artifacts
         uses: actions/upload-artifact@main
         with:
