@@ -33,6 +33,8 @@ public class FontList {
             loadFont("otis_series1", "font/series1.otf");
             loadFont("schindler_lcd", "font/schindler_lcd.ttf");
             loadFont("schindler_led", "font/schindler-led.ttf");
+            loadFont("schindler_linea", "font/schindler-linea.ttf");
+            loadFont("schindler_linea_large", "font/schindler-linea-large.ttf");
             loadFont("hitachi_b85", "font/hitachi_b85.ttf");
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             fontsLoaded = true;
