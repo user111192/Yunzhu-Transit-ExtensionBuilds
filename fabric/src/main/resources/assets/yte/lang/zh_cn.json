@@ -54,6 +54,8 @@
   "block.yte.kone_m_door_1": "通力M系列电梯门（类型1）",
   "block.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
   "block.yte.mitsubishi_nexway_door_1": "三菱NexWay电梯门（类型1）",
+  "block.yte.kone_kds330_lcd_surface_button_1": "通力KDS330系列呼梯面板（类型1,外挂式,带屏幕）",
+  "block.yte.kone_kds330_nonlcd_surface_button_1": "通力KDS330系列呼梯面板（类型1,外挂式,无屏幕）",
   "item.yte.hitachi_b85_door_1": "日立B85电梯门（类型1）",
   "item.yte.kone_m_door_1": "通力M系列电梯门（类型1）",
   "item.yte.schindler_qks9_door_1": "迅达QKS9电梯门（类型1）",
