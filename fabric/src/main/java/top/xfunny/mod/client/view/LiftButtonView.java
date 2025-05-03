@@ -39,6 +39,7 @@ public class LiftButtonView implements RenderView {
     private boolean verticalAlignment;
     private boolean isLantern;
     private boolean lockPosition;
+    private boolean isAlwaysOn;
     private double clientMedian = 0.25;
 
 
@@ -154,7 +155,7 @@ public class LiftButtonView implements RenderView {
     }
 
     private QueuedRenderLayer queuedRenderLayerRegulator(Boolean looking, Boolean buttonState) {
-        return ((looking || buttonState) & canHover) || (isLantern && buttonState) ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
+        return ((looking || buttonState) & canHover) || (isLantern && buttonState) || isAlwaysOn ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR;
     }
 
     private void positionOffset(float x, float y, float spacing) {
@@ -279,9 +280,21 @@ public class LiftButtonView implements RenderView {
         this.defaultDownColor = defaultColor;
     }
 
+    public void setDefaultColor(int defaultColor,boolean isAlwaysOn) {
+        this.defaultUpColor = defaultColor;
+        this.defaultDownColor = defaultColor;
+        this.isAlwaysOn = isAlwaysOn;
+    }
+
     public void setDefaultColor(int defaultUpColor, int defaultDownColor) {
         this.defaultUpColor = defaultUpColor;
         this.defaultDownColor = defaultDownColor;
+    }
+
+    public void setDefaultColor(int defaultUpColor, int defaultDownColor, boolean isAlwaysOn) {
+        this.defaultUpColor = defaultUpColor;
+        this.defaultDownColor = defaultDownColor;
+        this.isAlwaysOn = isAlwaysOn;
     }
 
     public void setHoverColor(int hoverColor) {

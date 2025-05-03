@@ -68,8 +68,8 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
+        parentLayout.setParentDimensions((float) 1.75 / 16, (float) 7 / 16);
+        parentLayout.setPosition((float) -0.0546875, (float) 0);//通过设置坐标的方式设置底层layout的位置
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
@@ -79,7 +79,8 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 2.7 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setMargin(0, 1.2F/16, 0, 0);//设置外边距，可选
+
 
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
@@ -87,7 +88,10 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 3.1 / 16, 0, 0);
+        buttonLayout.setMargin(0, 0.3F/16, 0, 0);
+
+
+
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
@@ -98,8 +102,8 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(0.9F / 16);//按钮宽度
-        button.setHeight(0.9F / 16);//按钮高度
+        button.setWidth(0.8F / 16);//按钮宽度
+        button.setHeight(0.8F / 16);//按钮高度
         button.setSpacing(0.2F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
@@ -107,12 +111,12 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setDefaultColor(0xFFFFFFFF, true);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(0.9F / 16);
-        buttonLight.setHeight(0.9F / 16);
+        buttonLight.setWidth(0.8F / 16);
+        buttonLight.setHeight(0.8F / 16);
         buttonLight.setSpacing(0.2F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
@@ -167,8 +171,7 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
                 liftFloorDisplayView.setTextureId("schindler_linea_1_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.4 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.2 / 16, 0, 0);
-                //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.3 / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
@@ -178,7 +181,6 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 0.55 / 16);
                 liftArrowView.setHeight((float) 0.55 / 16);
-                liftArrowView.setMargin(0, (float) 4.77 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFF0000);
 

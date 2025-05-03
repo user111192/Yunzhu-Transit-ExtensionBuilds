@@ -22,7 +22,7 @@ public class SchindlerLineaButton1White extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(single ? 6 : 6.625, 0.585, 0, single ? 10 : 9.375, 12.37, 0.5, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(single ? 6.625 : 7.125, 0, 0, single ? 9.375 : 8.875, 7, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     /**
