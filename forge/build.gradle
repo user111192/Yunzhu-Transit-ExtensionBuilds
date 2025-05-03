@@ -29,6 +29,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraftVersion}-${buildTools.getForgeVersion()}"
     annotationProcessor "org.spongepowered:mixin:+:processor"
     implementation fg.deobf("org.mtr:MTR-forge:${mtrVersion}+${minecraftVersion}-server")
+
+    println("Using Forge "+buildTools.getForgeVersion())
 }
 
 mixin {
