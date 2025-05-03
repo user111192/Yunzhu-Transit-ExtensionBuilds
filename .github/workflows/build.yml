@@ -7,28 +7,48 @@ jobs:
       fail-fast: false
       matrix:
         minecraft: [ 1.16.5, 1.17.1, 1.18.2, 1.19.2, 1.19.4, 1.20.1, 1.20.4 ]
-    #runs-on: self-hosted
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
+
       - name: Validate gradle wrapper
-        uses: gradle/wrapper-validation-action@main
+        uses: gradle/wrapper-validation-action@v2
+
       - name: Setup JDK 17
-        uses: actions/setup-java@main
+        uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: 'zulu'
+
       - name: Make gradle wrapper executable
+        shell: bash
         run: chmod +x ./gradlew
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ matrix.minecraft }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-${{ matrix.minecraft }}-
+
+      - name: Clean and refresh dependencies
+        run: ./gradlew clean --refresh-dependencies -PminecraftVersion="${{ matrix.minecraft }}"
+
       - name: Setup Fabric files
         run: ./gradlew fabric:setupFiles -PminecraftVersion="${{ matrix.minecraft }}"
+
       - name: Setup Forge files
         run: ./gradlew forge:setupFiles -PminecraftVersion="${{ matrix.minecraft }}"
+
       - name: Build ${{ matrix.minecraft }}
-        run: ./gradlew build --info -PminecraftVersion="${{ matrix.minecraft }}"
+        run: ./gradlew build --info --refresh-dependencies -PminecraftVersion="${{ matrix.minecraft }}"
+
       - name: Capture release artifacts
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v3
         with:
           name: Fabric and Forge ${{ matrix.minecraft }}
           path: build/release/
