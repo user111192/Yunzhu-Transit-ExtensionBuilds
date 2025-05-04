@@ -46,6 +46,8 @@ public class LinkerValidTypes {
             MitsubishiNexWayButton3WithoutScreen.class,
             MitsubishiNexWayScreen1Even.class,
             MitsubishiNexWayScreen1Odd.class,
+            MitsubishiNexWayScreen2Even.class,
+            MitsubishiNexWayScreen2Odd.class,
             SchindlerDSeriesD2Button.class,
             SchindlerDSeriesScreen1Even.class,
             SchindlerDSeriesScreen1Odd.class,

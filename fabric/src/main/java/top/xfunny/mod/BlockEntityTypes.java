@@ -35,6 +35,8 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayScreen1Even.BlockEntity> MITSUBISHI_NEXWAY_SCREEN_1_EVEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayScreen1Odd.BlockEntity> MITSUBISHI_NEXWAY_SCREEN_1_ODD;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayScreen2Even.BlockEntity> MITSUBISHI_NEXWAY_SCREEN_2_EVEN;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayScreen2Odd.BlockEntity> MITSUBISHI_NEXWAY_SCREEN_2_ODD;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Screen.BlockEntity> OTIS_SERIES_1_SCREEN_1;
@@ -106,6 +108,8 @@ public class BlockEntityTypes {
         MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3_without_screen"), MitsubishiNexWayButton3WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_screen_1_even"), MitsubishiNexWayScreen1Even.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_SCREEN_1_EVEN::get);
         MITSUBISHI_NEXWAY_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_screen_1_odd"), MitsubishiNexWayScreen1Odd.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_SCREEN_1_ODD::get);
+        MITSUBISHI_NEXWAY_SCREEN_2_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_screen_2_even"), MitsubishiNexWayScreen2Even.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_SCREEN_2_EVEN::get);
+        MITSUBISHI_NEXWAY_SCREEN_2_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_screen_2_odd"), MitsubishiNexWayScreen2Odd.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_SCREEN_2_ODD::get);
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_1::get);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_2::get);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), OtisSeries1Screen.BlockEntity::new, Blocks.OTIS_SERIES_1_SCREEN_1::get);
