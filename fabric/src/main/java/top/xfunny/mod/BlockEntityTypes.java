@@ -16,6 +16,9 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<DewhurstUS89Button1.BlockEntity> DEWHURST_US89_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<DewhurstUS91Button1.BlockEntity> DEWHURST_US91_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<DewhurstUS91Button1Braille.BlockEntity> DEWHURST_US91_BUTTON_1_BRAILLE;
+
+    public static final BlockEntityTypeRegistryObject<KoneKDS330Button1.BlockEntity> KONE_KDS330_BUTTON_1;
+
     public static final BlockEntityTypeRegistryObject<KoneMButton1.BlockEntity> KONE_M_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<KoneMButton2.BlockEntity> KONE_M_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<KoneMScreen1Odd.BlockEntity> KONE_M_SCREEN_1_ODD;
@@ -86,6 +89,7 @@ public class BlockEntityTypes {
         DEWHURST_US89_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "dewhurst_us89_button_1"), DewhurstUS89Button1.BlockEntity::new, Blocks.DEWHURST_US89_BUTTON_1::get);
         DEWHURST_US91_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "dewhurst_us91_button_1"), DewhurstUS91Button1.BlockEntity::new, Blocks.DEWHURST_US91_BUTTON_1::get);
         DEWHURST_US91_BUTTON_1_BRAILLE = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "dewhurst_us91_button_1_braille"), DewhurstUS91Button1Braille.BlockEntity::new, Blocks.DEWHURST_US91_BUTTON_1_BRAILLE::get);
+        KONE_KDS330_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_kds330_lcd_surface_button_1"), KoneKDS330Button1.BlockEntity::new, Blocks.KONE_KDS330_BUTTON_1::get);
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_1"), KoneMButton1.BlockEntity::new, Blocks.KONE_M_BUTTON_1::get);
         KONE_M_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_button_2"), KoneMButton2.BlockEntity::new, Blocks.KONE_M_BUTTON_2::get);
         KONE_M_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_screen_1_odd"), KoneMScreen1Odd.BlockEntity::new, Blocks.KONE_M_SCREEN_1_ODD::get);
