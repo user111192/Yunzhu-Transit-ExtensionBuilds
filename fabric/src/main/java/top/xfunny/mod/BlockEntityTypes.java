@@ -25,6 +25,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton1WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2Segmented.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2_SEGMENTED;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2LCD1.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2_LCD_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton2WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3Segmented.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED;
@@ -94,6 +95,7 @@ public class BlockEntityTypes {
         MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), MitsubishiNexWayButton1WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), MitsubishiNexWayButton2.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2::get);
         MITSUBISHI_NEXWAY_BUTTON_2_SEGMENTED = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_segmented"), MitsubishiNexWayButton2Segmented.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2_SEGMENTED::get);
+        MITSUBISHI_NEXWAY_BUTTON_2_LCD_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_lcd_1"), MitsubishiNexWayButton2LCD1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2_LCD_1::get);
         MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_without_screen"), MitsubishiNexWayButton2WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_3 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3"), MitsubishiNexWayButton3.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3::get);
         MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3_segmented"), MitsubishiNexWayButton3Segmented.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED::get);

@@ -38,6 +38,7 @@ public class Blocks {
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2_SEGMENTED;
+    public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2_LCD_1;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_3;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED;
@@ -106,6 +107,7 @@ public class Blocks {
         MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_1_without_screen"), () -> new Block(new MitsubishiNexWayButton1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2"), () -> new Block(new MitsubishiNexWayButton2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_2_SEGMENTED = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_segmented"), () -> new Block(new MitsubishiNexWayButton2Segmented()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        MITSUBISHI_NEXWAY_BUTTON_2_LCD_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_lcd_1"), () -> new Block(new MitsubishiNexWayButton2LCD1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_2_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_2_without_screen"), () -> new Block(new MitsubishiNexWayButton2WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_3 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3"), () -> new Block(new MitsubishiNexWayButton3()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3_segmented"), () -> new Block(new MitsubishiNexWayButton3Segmented()), CreativeModeTabs.YTE_LIFT_FIXTURES);

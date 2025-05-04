@@ -36,6 +36,7 @@ public class FontList {
             loadFont("schindler_linea", "font/schindler-linea.ttf");
             loadFont("schindler_linea_large", "font/schindler-linea-large.ttf");
             loadFont("hitachi_b85", "font/hitachi_b85.ttf");
+            loadFont("gill_sans_mt", "font/gill_sans_mt.ttf");
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             fontsLoaded = true;
         }
