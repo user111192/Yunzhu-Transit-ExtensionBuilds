@@ -183,6 +183,7 @@ public class RenderMitsubishiNexWayButton2LCD1 extends BlockEntityRenderer<Mitsu
                 liftArrowView.setMargin(0, (float) 1.67 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFFFFF);
+                liftArrowView.setArrowFlip(true, 0.06F);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
