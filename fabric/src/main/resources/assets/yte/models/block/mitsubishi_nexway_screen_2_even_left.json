@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"2": "yte:block/steel",
-		"3": "yte:block/base3",
+		"3": "yte:block/mitsubishi_nexway_button_lcd_1",
 		"particle": "yte:block/mitsubishi_lantern_arrow"
 	},
 	"elements": [
@@ -21,8 +21,8 @@
 			}
 		},
 		{
-			"from": [14.125, 9.875, 0.1],
-			"to": [16, 12.625, 0.1],
+			"from": [14.125, 9.875, 0.11],
+			"to": [16, 12.625, 0.11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [14.25, 11.25, 0.1]},
 			"faces": {
 				"north": {"uv": [0, 0, 2, 2], "texture": "#missing"},

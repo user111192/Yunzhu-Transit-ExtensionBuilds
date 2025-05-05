@@ -17,26 +17,26 @@ import top.xfunny.mod.block.MitsubishiNexWayScreen2Even;
 import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
+import top.xfunny.mod.client.util.ArrayListToString;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Comparator;
 
-public class CurrentTimeUse {
-    public static void main(String[] o) {
+public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+    private final boolean isOdd;
+
+    private String TimeStr;{
         Date day = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日 mm:HH ");
         String TimeStr = dateFormat.format(day);
     }
-}
-
-public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
-    private final boolean isOdd;
 
     public RenderMitsubishiNexWayScreen2(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -44,6 +44,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
     }
 
     @Override
+
     public void render(T blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
@@ -60,11 +61,12 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
+
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.059 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -108,21 +110,34 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
-                liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin((float) -0.35 / 16, 0, (float) 1.7 / 16, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/mitsubishi_nexway_2_lcd_arrow_1.png"));
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 1.8 / 16);
-                liftArrowView.setHeight((float) 1.8 / 16);
-                liftArrowView.setMargin((float) 1.7 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView.setWidth((float) 1.5 / 16);
+                liftArrowView.setHeight((float) 1.5 / 16);
+                liftArrowView.setMargin((float) 1.95 / 16, (float) 2.8 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFFFFFFE);
 
+                final TextView textView = new TextView();
+                textView.setId("textView");
+                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("Arial"), 6, 0xFFFFFFFF);
+                textView.setTextScrolling(true, 6, 0.005F);
+                textView.setTextureId("schindler_z_line_3_keypad_1_display");
+                textView.setText(TimeStr);
+                textView.setWidth(2F / 16);
+                textView.setHeight(2F / 16);
+                textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                textView.setGravity(Gravity.CENTER);
+
+
                 parentLayout.addChild(liftArrowView);
                 parentLayout.addChild(liftFloorDisplayView);
+                parentLayout.addChild(textView);
             }
         }
         parentLayout.render();

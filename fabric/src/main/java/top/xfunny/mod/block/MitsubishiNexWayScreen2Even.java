@@ -8,6 +8,7 @@ import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.block.base.LiftPanelBase;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MitsubishiNexWayScreen2Even extends LiftPanelBase {
@@ -19,10 +20,10 @@ public class MitsubishiNexWayScreen2Even extends LiftPanelBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
-            case LEFT :
+            case LEFT:
                 return IBlock.getVoxelShapeByDirection(12.25, 9, 0, 16, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
-            case RIGHT :
+            case RIGHT:
                 return IBlock.getVoxelShapeByDirection(0, 9, 0, 3.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
         }
@@ -48,5 +49,4 @@ public class MitsubishiNexWayScreen2Even extends LiftPanelBase {
             super(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_2_EVEN.get(), pos, state);
         }
     }
-
 }
