@@ -15,7 +15,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.KoneKDS330Button1;
-import top.xfunny.mod.block.KoneMButton1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ReverseRendering;
@@ -114,6 +113,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         buttonLight.setTexture(LIGHT_TEXTURE, true);
         buttonLight.setWidth(0.6F / 16);
         buttonLight.setHeight(0.6F / 16);
+        buttonLight.setClientMedian(0.3);
         buttonLight.setSpacing(0.1F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
@@ -130,7 +130,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            KoneMButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            KoneKDS330Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {

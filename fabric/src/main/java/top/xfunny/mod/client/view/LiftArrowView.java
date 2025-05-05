@@ -30,7 +30,11 @@ public class LiftArrowView implements RenderView {
     private Lift lift;
     private int upColor, downColor;
     private boolean needScroll;
+    private boolean needFlip;
     private float scrollSpeed;
+    private float flipSpeed;
+
+    private float[] flipResult = new float[2];
 
     @Override
     public String getId() {
@@ -56,18 +60,51 @@ public class LiftArrowView implements RenderView {
         final boolean goingUp = liftDirection == LiftDirection.UP;
 
         if (liftDirection != LiftDirection.NONE) {
-            final float uv = (gameTick * scrollSpeed) % 1;
             final int color = goingUp ? upColor : downColor;
+
             MainRenderer.scheduleRender(texture, false, QueuedRenderLayer.LIGHT_TRANSLUCENT, (graphicsHolder, offset) -> {
+                float[] flipResult = new float[2];
+                float[] uv = uv(goingUp,gameTick);
+                if(needFlip){
+                    flipResult = scale(gameTick);
+                }
+                float width2 = flipResult[0] == 0 ? width : flipResult[0];
+                float x2 = flipResult[1] == 0 ? x : flipResult[1];
+
                 storedMatrixTransformations1.transform(graphicsHolder, offset);
-                IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0,
-                        (!goingUp ? 0 : 1) + (needScroll ? uv : 0),
-                        1, (!goingUp ? 1 : 0) + (needScroll ? uv : 0),
+
+                IDrawing.drawTexture(graphicsHolder, x2, y, width2, height,
+                        uv[0],
+                        uv[1],
+                        uv[2],
+                        uv[3],
                         Direction.UP, color, GraphicsHolder.getDefaultLight());
                 graphicsHolder.pop();
             });
         }
     }
+
+
+    private float[] uv(boolean goingUp,float gameTick) {
+        float[] uv = new float[4];
+                float uvOffset = (gameTick * scrollSpeed) % 1;
+                uv[0] = 0; // u1
+                uv[1] = (!goingUp ? 0.0f : 1.0f) + (needScroll ? uvOffset : 0.0f); // v1
+                uv[2] = 1; // u2
+                uv[3] = (!goingUp ? 1.0f : 0.0f) + (needScroll ? uvOffset : 0.0f);// v2
+        return uv;
+    }
+
+    private float[] scale(float gameTick){
+        float multiplier = (float) Math.sin(gameTick * flipSpeed * 3) * 0.5f + 0.5f;
+        float width2  = width * multiplier;
+        float x2 = x + (width - width2) * 0.5f;
+        flipResult[0] = width2;
+        flipResult[1] = x2;
+
+        return flipResult;
+    }
+
 
     @Override
     public void setStoredMatrixTransformations(StoredMatrixTransformations storedMatrixTransformations) {
@@ -176,5 +213,10 @@ public class LiftArrowView implements RenderView {
     public void setArrowScrolling(Boolean needScroll, float scrollSpeed) {
         this.needScroll = needScroll;
         this.scrollSpeed = scrollSpeed;
+    }
+
+    public void setArrowFlip(Boolean needFlip, float flipSpeed) {
+        this.needFlip = needFlip;
+        this.flipSpeed = flipSpeed;
     }
 }
