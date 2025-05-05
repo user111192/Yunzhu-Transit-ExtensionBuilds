@@ -30,6 +30,8 @@ public class LinkerValidTypes {
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             KoneKDS330Button1.class,
+            KoneKDS330Button2.class,
+            KoneKDS330Lantern1.class,
             KoneMButton1.class,
             KoneMButton2.class,
             KoneMScreen1Odd.class,
