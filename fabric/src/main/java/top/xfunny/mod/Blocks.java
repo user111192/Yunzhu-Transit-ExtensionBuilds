@@ -75,6 +75,8 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_LINEA_BUTTON_1_WHITE;
     public static final BlockRegistryObject SCHINDLER_Z_LINE_3_KEYPAD_1;
 
+    public static final BlockRegistryObject THYSSENKRUPP_TEGL1_BUTTON_1;
+
     public static final BlockRegistryObject HITACHI_B85_BUTTON_1;
     public static final BlockRegistryObject HITACHI_B85_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockRegistryObject HITACHI_B85_BUTTON_2;
@@ -130,6 +132,8 @@ public class Blocks {
         TEST_LIFT_PANEL = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_panel"), () -> new Block(new TestLiftPanel()));
         TEST_LIFT_BUTTONS_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_buttons_without_screen"), () -> new Block(new TestLiftButtonsWithoutScreen()));
         TEST_LIFT_DESTINATION_DISPATCH_TERMINAL = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "test_lift_destination_dispatch_terminal"), () -> new Block(new TestLiftDestinationDispatchTerminal()));
+
+        THYSSENKRUPP_TEGL1_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "thyssenkrupp_te_gl1_button_1"), () -> new Block(new ThyssenkruppTEGL1Button1()));
 
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), () -> new Block(new OtisSeries1Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), () -> new Block(new OtisSeries1Button()));

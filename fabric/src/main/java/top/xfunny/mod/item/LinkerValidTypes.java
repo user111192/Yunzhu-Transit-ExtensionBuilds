@@ -74,6 +74,7 @@ public class LinkerValidTypes {
             HitachiB85Button1.class,
             HitachiB85Button1WithoutScreen.class,
             HitachiB85Button2.class,
-            SchindlerZLine3Keypad1.class
+            SchindlerZLine3Keypad1.class,
+            ThyssenkruppTEGL1Button1.class
     ));
 }
