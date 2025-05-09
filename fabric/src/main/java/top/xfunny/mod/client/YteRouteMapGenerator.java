@@ -16,7 +16,7 @@ public class YteRouteMapGenerator implements IGui {
     private static int fontSizeBig;
     private static int fontSizeSmall;
 
-    public static NativeImage generateImage(String text, int textColor, Font font, int fontSize, int padding, int letterSpacing) {
+    public static NativeImage generateImage(String text, int textColor, Font font, float fontSize, int padding, int letterSpacing) {
         setConstants();
         try {
             final int totalWidth;

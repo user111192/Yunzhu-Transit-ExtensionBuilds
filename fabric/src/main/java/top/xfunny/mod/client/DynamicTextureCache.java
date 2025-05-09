@@ -63,7 +63,7 @@ public class DynamicTextureCache {
 	}
 
 
-    public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, int fontSize, int padding, Font font, int letterSpacing) {
+    public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, float fontSize, int padding, Font font, int letterSpacing) {
         if (maxWidth <= 0) {
             dimensions[0] = 0;
             dimensions[1] = 0;
