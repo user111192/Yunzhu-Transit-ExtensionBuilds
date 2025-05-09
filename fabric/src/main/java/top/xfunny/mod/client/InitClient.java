@@ -112,12 +112,11 @@ public final class InitClient {
 
         REGISTRY_CLIENT.eventRegistryClient.registerClientJoin(() -> {
             MinecraftClientData.reset();
-            TextureCache.instance = new TextureCache();
+            DynamicTextureCache.instance = new DynamicTextureCache();
             lastMillis = System.currentTimeMillis();
             gameMillis = 0;
 
-            TextureCache.instance.reload();
-
+            DynamicTextureCache.instance.reload();
         });
         REGISTRY_CLIENT.init();
     }

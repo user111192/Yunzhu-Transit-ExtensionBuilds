@@ -5,10 +5,7 @@ import org.mtr.core.data.Lift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
-import org.mtr.mapping.mapper.BlockEntityRenderer;
-import org.mtr.mapping.mapper.DirectionHelper;
-import org.mtr.mapping.mapper.GraphicsHolder;
-import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mapping.mapper.*;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
@@ -31,12 +28,6 @@ import java.util.Comparator;
 
 public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
-
-    private String TimeStr;{
-        Date day = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日 mm:HH ");
-        String TimeStr = dateFormat.format(day);
-    }
 
     public RenderMitsubishiNexWayScreen2(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -123,12 +114,29 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFFFFFFE);
 
+
+                //时间显示
+                final long time = WorldHelper.getTimeOfDay(world);
+                Date day = new Date();
+
+                //游戏时间处理
+                long ticksInDay = time % 24000;
+                int totalSeconds = (int)(ticksInDay * 3.6);
+                int hours = (totalSeconds / 3600 + 6) % 24; //从06:00开始
+                int minutes = (totalSeconds % 3600) / 60;
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日");
+                String timeStr = dateFormat.format(day);
+                String formattedTime = String.format("%02d:%02d", hours, minutes);
+                String timePeriod = hours < 12 ? "AM" : "PM";
+                String text = timeStr + " " + formattedTime + timePeriod;
+
                 final TextView textView = new TextView();
                 textView.setId("textView");
-                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("Arial"), 6, 0xFFFFFFFF);
-                textView.setTextScrolling(true, 6, 0.005F);
+                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 6, 0xFFFFFFFF);
+                textView.setTextScrolling(true, 99, 0.005F);
                 textView.setTextureId("schindler_z_line_3_keypad_1_display");
-                textView.setText(TimeStr);
+                textView.setText(text);
                 textView.setWidth(2F / 16);
                 textView.setHeight(2F / 16);
                 textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
