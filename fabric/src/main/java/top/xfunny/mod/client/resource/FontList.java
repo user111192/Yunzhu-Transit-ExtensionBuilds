@@ -39,6 +39,7 @@ public class FontList {
             loadFont("gill_sans_mt", "font/gill_sans_mt.ttf");
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             loadFont("kone-lcd-segment", "font/kone-lcd-segment.ttf");
+            loadFont("wqy-microhei", "font/wqy-microhei.ttc");
             fontsLoaded = true;
         }
     }

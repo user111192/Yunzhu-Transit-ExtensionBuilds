@@ -5,7 +5,6 @@ import org.mtr.mapping.holder.NativeImage;
 import org.mtr.mapping.holder.NativeImageFormat;
 import org.mtr.mod.config.Config;
 import org.mtr.mod.data.IGui;
-import top.xfunny.mod.Init;
 
 import java.awt.*;
 import java.util.Locale;
@@ -23,7 +22,7 @@ public class YteRouteMapGenerator implements IGui {
             final int totalWidth;
             final int height = Math.round(scale * 1.5F);
             final int[] dimensions = new int[2];
-            final byte[] pixels = TextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH),
+            final byte[] pixels = DynamicTextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH),
                     dimensions,
                     90,
                     fontSizeSmall * fontSize,
@@ -31,10 +30,10 @@ public class YteRouteMapGenerator implements IGui {
                     font,
                     letterSpacing);
 
-            totalWidth = TextureCache.instance.totalWidth;
+            totalWidth = DynamicTextureCache.instance.totalWidth;
 
 
-            final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, false);
+            final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, true);
             nativeImage.fillRect(0, 0, totalWidth, height, 0);
             YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
             YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);

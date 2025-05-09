@@ -14,7 +14,7 @@ import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.client.TextureCache;
+import top.xfunny.mod.client.DynamicTextureCache;
 import top.xfunny.mod.client.resource.TextureList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
 
@@ -47,7 +47,7 @@ public class LiftFloorDisplayView implements RenderView {
     private boolean noFloorDisplay;
     private float gameTick;
     private String text;
-    private TextureCache.DynamicResource texture;
+    private DynamicTextureCache.DynamicResource texture;
     private float fixedWidth;
     private float textWidth;
     private float textHeight;

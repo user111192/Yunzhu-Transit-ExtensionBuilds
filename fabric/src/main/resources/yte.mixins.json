@@ -10,7 +10,8 @@
   ],
   "client": [
     "MixinRenderLiftButtons",
-    "MixinRenderLiftPanel"
+    "MixinRenderLiftPanel",
+    "MixinDynamicTextureCache"
   ],
   "server": [],
   "injectors": {
