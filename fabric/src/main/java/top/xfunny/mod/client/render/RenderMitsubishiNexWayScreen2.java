@@ -92,7 +92,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("gill_sans_mt"),
-                        9,
+                        8.5F,
                         0xFFFFFFFF);
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_2_display");
                 liftFloorDisplayView.setWidth((float) 2.8 / 16);
@@ -133,7 +133,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
 
                 final TextView textView = new TextView();
                 textView.setId("textView");
-                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 6, 0xFFFFFFFF);
+                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 3, 0xFFFFFFFF);
                 textView.setTextScrolling(true, 99, 0.005F);
                 textView.setTextureId("schindler_z_line_3_keypad_1_display");
                 textView.setText(text);
