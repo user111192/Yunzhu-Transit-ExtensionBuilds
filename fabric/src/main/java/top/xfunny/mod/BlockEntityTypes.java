@@ -54,6 +54,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerDSeriesScreen2RedEven.BlockEntity> SCHINDLER_D_SERIES_SCREEN_2_RED_EVEN;
     public static final BlockEntityTypeRegistryObject<SchindlerZLine3Keypad1.BlockEntity> SCHINDLER_Z_LINE_3_KEYPAD_1;
 
+    public static final BlockEntityTypeRegistryObject<ThyssenkruppTEGL1Button1.BlockEntity> THYSSENKRUPP_TEGL1_BUTTON_1;
 
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesButton.BlockEntity> SCHINDLER_M_SERIES_BUTTON;
     public static final BlockEntityTypeRegistryObject<SchindlerMSeriesTouchButton.BlockEntity> SCHINDLER_M_SERIES_TOUCH_BUTTON;
@@ -145,6 +146,7 @@ public class BlockEntityTypes {
         SCHINDLER_LINEA_BUTTON_1_WHITE = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_linea_button_1_white"), SchindlerLineaButton1White.BlockEntity::new, Blocks.SCHINDLER_LINEA_BUTTON_1_WHITE::get);
         SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), SchindlerZLine3Keypad1.BlockEntity::new, Blocks.SCHINDLER_Z_LINE_3_KEYPAD_1::get);
 
+        THYSSENKRUPP_TEGL1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "thyssenkrupp_te_gl1_button_1"), ThyssenkruppTEGL1Button1.BlockEntity::new, Blocks.THYSSENKRUPP_TEGL1_BUTTON_1::get);
 
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), HitachiB85Button1WithoutScreen.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN::get);
