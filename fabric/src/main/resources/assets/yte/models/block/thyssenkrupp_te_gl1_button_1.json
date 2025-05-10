@@ -1,21 +1,22 @@
 {
 	"credit": "Made with Blockbench",
+	"texture_size": [2048, 2048],
 	"textures": {
-		"particle": "IMG_0658"
+		"0": "yte:block/thyssenkrupp_button_1",
+		"particle": "yte:block/thyssenkrupp_button_1"
 	},
 	"elements": [
 		{
-			"from": [7, 0, 0],
-			"to": [9, 7, 0.4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 0]},
-			"color": 3,
+			"from": [7, 0.35, 0],
+			"to": [9, 10.15, 0.4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0.35, 0]},
 			"faces": {
-				"north": {"uv": [0, 0, 2, 7], "texture": "#missing"},
-				"east": {"uv": [0, 0, 0.4, 7], "texture": "#missing"},
-				"south": {"uv": [0, 0, 2, 7], "texture": "#missing"},
-				"west": {"uv": [0, 0, 0.4, 7], "texture": "#missing"},
-				"up": {"uv": [0, 0, 2, 0.4], "texture": "#missing"},
-				"down": {"uv": [0, 0, 2, 0.4], "texture": "#missing"}
+				"north": {"uv": [0, 0, 3.59375, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 0.94531, 16], "texture": "#0"},
+				"south": {"uv": [3.60938, 0, 7.10938, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 0.89219, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 2.33594, 0.24375], "texture": "#0"},
+				"down": {"uv": [0, 0, 2.20313, 0.26719], "texture": "#0"}
 			}
 		}
 	]

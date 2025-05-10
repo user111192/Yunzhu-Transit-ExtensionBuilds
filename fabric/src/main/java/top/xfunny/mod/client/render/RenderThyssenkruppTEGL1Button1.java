@@ -28,11 +28,11 @@ import java.util.Comparator;
 
 public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<ThyssenkruppTEGL1Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xFFFFFFFF;
-    private static final int PRESSED_COLOR = 0xFF00FF00;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_arrow_1.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1_light.png");
+    private static final int HOVER_COLOR = 0xAAFFFFFF;
+    private static final int PRESSED_COLOR = 0xFFFFFFFF;
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_allow.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button_lit.png");
 
     public RenderThyssenkruppTEGL1Button1(Argument dispatcher) {
         super(dispatcher);
@@ -60,7 +60,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.043 - SMALL_OFFSET);
         });
 
 
@@ -90,7 +90,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
 
         //添加按钮
-        final LiftButtonView button = new LiftButtonView();
+        LiftButtonView button = new LiftButtonView();
         button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setHover(false);
@@ -98,23 +98,23 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(0.6F / 16);//按钮宽度
-        button.setHeight(0.6F / 16);//按钮高度
-        button.setSpacing(0.1F / 16);//两个按钮的间距
+        button.setWidth(0.9F / 16);//按钮宽度
+        button.setHeight(0.9F / 16);//按钮高度
+        button.setSpacing(1F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
-        final LiftButtonView buttonLight = new LiftButtonView();
+        LiftButtonView buttonLight = new LiftButtonView();
         buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setDefaultColor(0x00FFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(0.6F / 16);
-        buttonLight.setHeight(0.6F / 16);
+        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, true);
+        buttonLight.setWidth(0.9F / 16);
+        buttonLight.setHeight(0.9F / 16);
         buttonLight.setClientMedian(0.3);
-        buttonLight.setSpacing(0.1F / 16);
+        buttonLight.setSpacing(1F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         //添加外呼与楼层轨道的连线
@@ -161,25 +161,25 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("kone-lcd-segment"),//字体
-                        5,//字号
-                        0xFFFFFFFF);//字体颜色
-//                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("kone-lcd-segment");//字体贴图id，不能与其他显示屏的重复
+                        FontList.instance.getFont("thyssenkrupp_lcd"),//字体
+                        4.7F,//字号
+                        0xFFFF0000);//字体颜色
+                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setTextureId("thyssenkrupp_lcd");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin(0, (float) 0.43 / 16, (float) 0.45 / 16, 0);
+                liftFloorDisplayView.setMargin(0.14F / 16, 0F / 16, 0, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.5 / 16);
-                liftArrowView.setHeight((float) 0.5 / 16);
-                liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
+                liftArrowView.setWidth(0.47F / 16);
+                liftArrowView.setHeight(0.665F / 16);
+                liftArrowView.setMargin(0, 0.0315F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFFFFF);
 

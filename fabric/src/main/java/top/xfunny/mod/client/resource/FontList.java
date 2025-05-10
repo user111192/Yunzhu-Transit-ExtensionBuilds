@@ -40,6 +40,7 @@ public class FontList {
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             loadFont("kone-lcd-segment", "font/kone-lcd-segment.ttf");
             loadFont("wqy-microhei", "font/wqy-microhei.ttc");
+            loadFont("thyssenkrupp_lcd", "font/new-thyssenkrupp.ttf");
             fontsLoaded = true;
         }
     }
