@@ -46,6 +46,7 @@ public class LinkerValidTypes {
             MitsubishiNexWayButton3.class,
             MitsubishiNexWayButton3Segmented.class,
             MitsubishiNexWayButton3WithoutScreen.class,
+            MitsubishiNexWayButton4.class,
             MitsubishiNexWayScreen1Even.class,
             MitsubishiNexWayScreen1Odd.class,
             MitsubishiNexWayScreen2Even.class,
