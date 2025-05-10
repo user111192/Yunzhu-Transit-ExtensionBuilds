@@ -83,6 +83,9 @@ public class Blocks {
 
     public static final BlockRegistryObject HITACHI_BUTTON_PAFC;
 
+    public static final BlockRegistryObject TONIC_DS_SCREEN_1_ODD;
+    public static final BlockRegistryObject TONIC_DS_SCREEN_1_EVEN;
+
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_ENTRANCE;
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_EXIT;
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_BARE;
@@ -166,6 +169,9 @@ public class Blocks {
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), () -> new Block(new HitachiB85Button1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), () -> new Block(new HitachiB85Button2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), () -> new Block(new HitachiButton_PAFC()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+
+        TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), () -> new Block(new TonicDSScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), () -> new Block(new TonicDSScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         PAT_P01_TICKET_BARRIER_ENTRANCE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_entrance"), () -> new Block(new PATTicketBarrier(true)), CreativeModeTabs.YTE_RAILWAY_FACILITIES);
         PAT_P01_TICKET_BARRIER_EXIT = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_exit"), () -> new Block(new PATTicketBarrier(false)), CreativeModeTabs.YTE_RAILWAY_FACILITIES);
