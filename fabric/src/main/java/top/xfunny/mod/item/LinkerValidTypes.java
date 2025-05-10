@@ -74,6 +74,8 @@ public class LinkerValidTypes {
             HitachiB85Button1.class,
             HitachiB85Button1WithoutScreen.class,
             HitachiB85Button2.class,
+            TonicDSScreen1Odd.class,
+            TonicDSScreen1Even.class,
             SchindlerZLine3Keypad1.class
     ));
 }

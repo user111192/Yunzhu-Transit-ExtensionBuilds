@@ -72,6 +72,9 @@ public class BlockEntityTypes {
 
     public static final BlockEntityTypeRegistryObject<HitachiButton_PAFC.BlockEntity> HITACHI_BUTTON_PAFC;
 
+    public static final BlockEntityTypeRegistryObject<TonicDSScreen1Odd.BlockEntity> TONIC_DS_SCREEN_1_ODD;
+    public static final BlockEntityTypeRegistryObject<TonicDSScreen1Even.BlockEntity> TONIC_DS_SCREEN_1_EVEN;
+
     public static final BlockEntityTypeRegistryObject<HitachiB85Door1.BlockEntity> HITACHI_B85_DOOR_1;
     public static final BlockEntityTypeRegistryObject<KoneMDoor1.BlockEntity> KONE_M_DOOR_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayDoor1.BlockEntity> MITSUBISHI_NEXWAY_DOOR_1;
@@ -145,6 +148,9 @@ public class BlockEntityTypes {
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), HitachiB85Button1WithoutScreen.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN::get);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), HitachiB85Button2.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_2::get);
         HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), HitachiButton_PAFC.BlockEntity::new, Blocks.HITACHI_BUTTON_PAFC::get);
+
+        TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), TonicDSScreen1Odd.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_ODD::get);
+        TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), TonicDSScreen1Even.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_EVEN::get);
 
         HITACHI_B85_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_door_1"), HitachiB85Door1.BlockEntity::new, Blocks.HITACHI_B85_DOOR_1::get);
         KONE_M_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_door_1"), KoneMDoor1.BlockEntity::new, Blocks.KONE_M_DOOR_1::get);
