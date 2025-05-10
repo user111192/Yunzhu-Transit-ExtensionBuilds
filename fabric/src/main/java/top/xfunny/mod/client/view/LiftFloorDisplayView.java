@@ -37,12 +37,12 @@ public class LiftFloorDisplayView implements RenderView {
     private float height;
     private float width;
     private boolean needScroll;
-    private int textSize;
+    private float textSize;
     private float scrollSpeed;
     private float x, y;
     private float textX;
     private String textureId;
-    private int fontSize;
+    private float fontSize;
     private boolean noFloorNumber;
     private boolean noFloorDisplay;
     private float gameTick;
@@ -240,7 +240,7 @@ public class LiftFloorDisplayView implements RenderView {
     }
 
 
-    public void setBasicsAttributes(World world, BlockPos blockPos, Lift lift, Font font, int fontSize, int color) {
+    public void setBasicsAttributes(World world, BlockPos blockPos, Lift lift, Font font, float fontSize, int color) {
         this.world = world;
         this.blockPos = blockPos;
         this.lift = lift;

@@ -10,7 +10,7 @@ public class TextureList {
     public static TextureList instance = new TextureList();
 
 
-    public DynamicTextureCache.DynamicResource renderFont(String id, String originalText, int textColor, Font font, int fontSize, int letterSpacing) {
+    public DynamicTextureCache.DynamicResource renderFont(String id, String originalText, int textColor, Font font, float fontSize, int letterSpacing) {
         return DynamicTextureCache.instance.getResource(String.format("%s_%s", id, originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor, font, fontSize, 0, letterSpacing), DynamicTextureCache.DefaultRenderingColor.TRANSPARENT);
     }
 
