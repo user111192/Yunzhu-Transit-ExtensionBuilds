@@ -60,13 +60,19 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
             graphicsHolder.translate(0, 0, 0.059 - SMALL_OFFSET);
         });
 
-        final LinearLayout parentLayout = new LinearLayout(false);
+        final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.5625F);
+        parentLayout.setParentDimensions((float) 3.75 / 16, (float) 2.75 / 16);
+        parentLayout.setPosition(isOdd ? -0.234375F :(float) -9.875 / 16, (float) 9.875 / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+
+        final LinearLayout numberLayout = new LinearLayout(false);
+        numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        numberLayout.setMargin(0.16F/16, 0.2F/16, 0, 0);
 
 
         final LineComponent line = new LineComponent();
@@ -92,16 +98,15 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("gill_sans_mt"),
-                        8.5F,
+                        13F,
                         0xFFFFFFFF);
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_2_display");
-                liftFloorDisplayView.setWidth((float) 2.8 / 16);
-                liftFloorDisplayView.setHeight((float) 2.8 / 16);
+                liftFloorDisplayView.setWidth((float) 1.5 / 16);
+                liftFloorDisplayView.setHeight((float) 1.5 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);
-                liftFloorDisplayView.setMargin((float) -0.35 / 16, 0, (float) 1.7 / 16, 0);
+                liftFloorDisplayView.setTextScrolling(true, 4, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
@@ -110,7 +115,6 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 1.5 / 16);
                 liftArrowView.setHeight((float) 1.5 / 16);
-                liftArrowView.setMargin((float) 1.95 / 16, (float) 2.8 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFFFFFFE);
 
@@ -137,14 +141,14 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 textView.setTextScrolling(true, 99, 0.005F);
                 textView.setTextureId("schindler_z_line_3_keypad_1_display");
                 textView.setText(text);
-                textView.setWidth(2F / 16);
-                textView.setHeight(2F / 16);
+                textView.setWidth(4F / 16);
+                textView.setHeight(1F / 16);
                 textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 textView.setGravity(Gravity.CENTER);
 
-
-                parentLayout.addChild(liftArrowView);
-                parentLayout.addChild(liftFloorDisplayView);
+                numberLayout.addChild(liftArrowView);
+                numberLayout.addChild(liftFloorDisplayView);
+                parentLayout.addChild(numberLayout);
                 parentLayout.addChild(textView);
             }
         }

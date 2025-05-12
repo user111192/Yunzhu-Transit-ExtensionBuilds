@@ -14,6 +14,7 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.mod.Init;
 import top.xfunny.mod.block.OtisSeries1Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.Gravity;
@@ -90,7 +91,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         button.setWidth(1F / 16);
         button.setHeight(1F / 16);
         button.setSpacing(0.5F / 16);
-        button.setGravity(Gravity.START);
+        button.setGravity(Gravity.END);
 
         LiftButtonView buttonArrow = new LiftButtonView();
         buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
@@ -104,7 +105,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         buttonArrow.setHeight(1F / 16);
         buttonArrow.setSpacing(0.5F / 16);
         buttonArrow.setMargin(0, 0, (float) 0.4 / 16, 0);
-        buttonArrow.setGravity(Gravity.END);
+        buttonArrow.setGravity(Gravity.START);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -128,11 +129,12 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
                     }
                 });
             });
-            buttonLayout.addChild(buttonArrow);
-            buttonLayout.addChild(button);
-            parentLayout.addChild(backgroundLayout);
-            backgroundLayout.addChild(buttonLayout);
+
         });
+        buttonLayout.addChild(buttonArrow);
+        buttonLayout.addChild(button);
+        parentLayout.addChild(backgroundLayout);
+        backgroundLayout.addChild(buttonLayout);
         parentLayout.render();
     }
 }
