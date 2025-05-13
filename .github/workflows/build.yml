@@ -13,13 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Validate gradle wrapper
-        uses: nick-fields/retry@v2
+        uses: gradle/wrapper-validation-action@main
+        timeout-minutes: 5
         with:
-         timeout_minutes: 2
-         max_attempts: 10
-         command: |
-          gradle/wrapper-validation-action@main
-
+          retry-on-error: true
+          retry-attempts: 10 
       - name: Setup JDK 17
         uses: actions/setup-java@main
         with:
