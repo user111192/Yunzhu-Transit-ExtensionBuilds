@@ -10,6 +10,10 @@ jobs:
     #runs-on: self-hosted
     runs-on: ubuntu-latest
     steps:
+      - name: Check network location
+        run: |
+         curl -s https://ipinfo.io/$(curl -s ifconfig.me)
+         echo "当前IPv6地址：" && curl -6s ifconfig.co
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Validate gradle wrapper
