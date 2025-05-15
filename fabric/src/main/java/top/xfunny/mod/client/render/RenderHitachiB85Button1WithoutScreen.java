@@ -106,7 +106,7 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setDefaultColor(0x00FFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
