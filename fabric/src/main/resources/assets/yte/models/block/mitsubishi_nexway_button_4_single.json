@@ -3,7 +3,6 @@
 	"textures": {
 		"1": "yte:block/black",
 		"2": "yte:block/steel",
-		"3": "yte:block/base5",
 		"particle": "yte:block/black"
 	},
 	"elements": [
@@ -71,19 +70,6 @@
 				"up": {"uv": [0, 0, 0.3, 11], "texture": "#2"},
 				"down": {"uv": [0, 0, 0.3, 11], "texture": "#2"}
 			}
-		},
-		{
-			"from": [9.95, 0.6, 0],
-			"to": [12.05, 12.4, 0.05],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6.775, 2, 0]},
-			"faces": {
-				"north": {"uv": [0, 0, 0.3, 11], "texture": "#2"},
-				"east": {"uv": [0, 0, 0.3, 11], "texture": "#2"},
-				"south": {"uv": [6.6069, 0, 9.46897, 16], "texture": "#3"},
-				"west": {"uv": [0, 0, 0.5, 11], "texture": "#2"},
-				"up": {"uv": [0, 0, 0.3, 11], "texture": "#2"},
-				"down": {"uv": [0, 0, 0.3, 11], "texture": "#2"}
-			}
 		}
 	],
 	"groups": [
@@ -103,7 +89,6 @@
 		1,
 		2,
 		3,
-		4,
-		5
+		4
 	]
 }

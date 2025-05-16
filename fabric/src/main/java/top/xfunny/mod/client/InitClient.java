@@ -57,6 +57,8 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED, RenderMitsubishiNexWayButton3Segmented::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN, RenderMitsubishiNexWayButton3WithoutScreen::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_4, RenderMitsubishiNexWayButton4::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_MAXIEZ_BUTTON_1_GOLD, RenderMitsubishiMaxiezButton1Gold::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_MAXIEZ_BUTTON_1_SILVER, RenderMitsubishiMaxiezButton1Silver::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen1<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen1<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_2_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen2<>(dispatcher, false));

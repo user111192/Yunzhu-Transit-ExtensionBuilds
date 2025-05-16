@@ -14,7 +14,8 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.MitsubishiNexWayButton1;
+import top.xfunny.mod.block.MitsubishiMaxiezButton1Gold;
+import top.xfunny.mod.block.MitsubishiNexWayButton4;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ReverseRendering;
@@ -26,20 +27,20 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
-public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<MitsubishiNexWayButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiMaxiezButton1Gold extends BlockEntityRenderer<MitsubishiMaxiezButton1Gold.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_2.png");
+    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_2_light.png");
 
-    public RenderMitsubishiNexWayButton1(Argument dispatcher) {
+    public RenderMitsubishiMaxiezButton1Gold(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiNexWayButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(MitsubishiMaxiezButton1Gold.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -60,7 +61,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -97,8 +98,8 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
         button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(0.9F / 16);//按钮宽度
-        button.setHeight(0.9F / 16);//按钮高度
+        button.setWidth(0.7F / 16);//按钮宽度
+        button.setHeight(0.7F / 16);//按钮高度
         button.setSpacing(0.5F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
@@ -110,9 +111,9 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(0.9F / 16);
-        buttonLight.setHeight(0.9F / 16);
-        buttonLight.setSpacing(0.5F / 16);
+        buttonLight.setWidth(0.6F / 16);
+        buttonLight.setHeight(0.6F / 16);
+        buttonLight.setSpacing(0.6F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         //添加外呼与楼层轨道的连线
@@ -128,7 +129,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            MitsubishiNexWayButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            MitsubishiNexWayButton4.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -145,6 +146,8 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
                 });
             });
         });
+
+        //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
@@ -163,10 +166,10 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
                         6,//字号
                         0xFFFA7A24);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_1_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.4 / 16);//显示屏宽度
+                liftFloorDisplayView.setTextureId("mitsubishi_maxiez_button_1_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 1.5 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin((float) 0.1 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(0, 0, (float) -0.1 / 16, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
@@ -177,7 +180,7 @@ public class RenderMitsubishiNexWayButton1 extends BlockEntityRenderer<Mitsubish
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 0.7 / 16);
                 liftArrowView.setHeight((float) 0.7 / 16);
-                liftArrowView.setMargin(0, (float) 1.07 / 16, 0, 0);
+                liftArrowView.setMargin(0, (float) 1.27 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFA7A24);
 

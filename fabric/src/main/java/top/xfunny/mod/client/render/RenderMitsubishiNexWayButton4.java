@@ -164,7 +164,7 @@ public class RenderMitsubishiNexWayButton4 extends BlockEntityRenderer<Mitsubish
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("mitsubishi_modern"),//字体
                         6,//字号
-                        0xFFFFAA00);//字体颜色
+                        0xFFFA7A24);//字体颜色
                 liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_2_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.5 / 16);//显示屏宽度
@@ -182,7 +182,7 @@ public class RenderMitsubishiNexWayButton4 extends BlockEntityRenderer<Mitsubish
                 liftArrowView.setHeight((float) 0.7 / 16);
                 liftArrowView.setMargin(0, (float) 1.27 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setColor(0xFFFFAA00);
+                liftArrowView.setColor(0xFFFA7A24);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
