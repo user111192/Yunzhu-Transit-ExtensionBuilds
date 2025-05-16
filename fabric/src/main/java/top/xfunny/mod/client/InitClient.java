@@ -69,11 +69,13 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1, RenderOtisSeries1Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_2, RenderOtisSeries1Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_SCREEN_1, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1Screen(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_ELD_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3ELDScreen1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_ELD_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3ELDScreen1<>(dispatcher, false));
 
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_D2BUTTON, RenderSchindlerDSeriesD2Button::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen1(dispatcher, true));
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen1(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen1<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2<>(dispatcher, true, top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.GREEN));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_GREEN_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2<>(dispatcher, false, top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.GREEN));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_SCREEN_2_BLUE_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2<>(dispatcher, true, top.xfunny.mod.client.render.RenderSchindlerDSeriesScreen2.renderSchindlerDSeriesScreen2Color.BLUE));

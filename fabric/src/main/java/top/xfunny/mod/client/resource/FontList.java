@@ -36,6 +36,7 @@ public class FontList {
             loadFont("schindler_linea", "font/schindler-linea.ttf");
             loadFont("schindler_linea_large", "font/schindler-linea-large.ttf");
             loadFont("hitachi_b85", "font/hitachi_b85.ttf");
+            loadFont("nimbus_sans_bold", "font/nimbus_sans_bold.ttf");
             loadFont("gill_sans_mt", "font/gill_sans_mt.ttf");
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             loadFont("kone-lcd-segment", "font/kone-lcd-segment.ttf");

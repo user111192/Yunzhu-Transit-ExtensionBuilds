@@ -27,6 +27,8 @@ public class LinkerValidTypes {
             TestLiftDestinationDispatchTerminal.class,
             OtisSeries1Button.class,
             OtisSeries1Screen.class,
+            OtisSeries3ELDScreen1Odd.class,
+            OtisSeries3ELDScreen1Even.class,
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             KoneKDS330Button1.class,
