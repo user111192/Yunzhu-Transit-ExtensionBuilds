@@ -109,7 +109,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0x00FFFFFF);
+        buttonLight.setDefaultColor(0xFF452D15);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
