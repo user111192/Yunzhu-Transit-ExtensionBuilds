@@ -8,16 +8,10 @@ jobs:
       matrix:
         minecraft: [ 1.16.5, 1.17.1, 1.18.2, 1.19.2, 1.19.4, 1.20.1, 1.20.4 ]
     #runs-on: self-hosted
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - name: Check network location
-        run: |
-         curl -s https://ipinfo.io/$(curl -s ifconfig.me)
-         echo "当前IPv6地址：" && curl -6s ifconfig.co
       - name: Checkout repository
         uses: actions/checkout@main
-      - name: Validate gradle wrapper
-        uses: gradle/wrapper-validation-action@v3
       - name: Setup JDK 17
         uses: actions/setup-java@main
         with:
