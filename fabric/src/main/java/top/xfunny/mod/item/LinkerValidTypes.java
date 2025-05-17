@@ -29,6 +29,8 @@ public class LinkerValidTypes {
             OtisSeries1Screen.class,
             OtisSeries3ELDScreen1Odd.class,
             OtisSeries3ELDScreen1Even.class,
+            OtisSeries3Lantern1ArrowOdd.class,
+            OtisSeries3Lantern1ArrowEven.class,
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             KoneKDS330Button1.class,

@@ -6,7 +6,7 @@
 		"3": "yte:block/otis_s3_eld_screen_1",
 		"4": "yte:block/2",
 		"5": "yte:block/otis_s3_eld_screen_1_mic",
-		"particle": "yte:block/base9"
+		"particle": "yte:block/otis_s3_eld_screen_1_bg"
 	},
 	"elements": [
 		{
@@ -36,7 +36,7 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 9.75, 0.1]},
 			"faces": {
 				"east": {"uv": [0, 0, 2, 2], "texture": "#missing"},
-				"south": {"uv": [0.39024, 0, 15.72125, 16], "texture": "#3"},
+				"south": {"uv": [8, 0, 15.7212, 16], "texture": "#3"},
 				"up": {"uv": [2, 0, 4, 2], "texture": "#3"},
 				"down": {"uv": [0, 0, 2, 2], "texture": "#2"}
 			}
@@ -46,7 +46,7 @@
 			"to": [4, 14.75, 0.35],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 9.75, 0.225]},
 			"faces": {
-				"south": {"uv": [0.39024, 0, 15.72125, 12.5], "texture": "#3"},
+				"south": {"uv": [8, 0, 15.7212, 12.5], "texture": "#3"},
 				"up": {"uv": [0.39024, 15, 15.72125, 16], "texture": "#3"},
 				"down": {"uv": [0.39024, 15, 15.72125, 16], "texture": "#3"}
 			}
@@ -56,7 +56,7 @@
 			"to": [4, 10.625, 0.35],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 5.625, 0.225]},
 			"faces": {
-				"south": {"uv": [0.39024, 15, 15.72125, 16], "texture": "#3"},
+				"south": {"uv": [8, 15, 15.7212, 16], "texture": "#3"},
 				"up": {"uv": [0.39024, 15, 15.72125, 16], "texture": "#3"},
 				"down": {"uv": [0.39024, 15, 15.72125, 16], "texture": "#3"}
 			}

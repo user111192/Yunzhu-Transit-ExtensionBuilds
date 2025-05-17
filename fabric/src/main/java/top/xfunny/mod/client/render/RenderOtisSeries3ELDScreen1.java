@@ -52,14 +52,14 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.042 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.6325F);
+        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.62525F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -96,15 +96,15 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
-                liftFloorDisplayView.setMargin((float) -0.4 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin((float) -0.25 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_eld_arrow_1.png"));
                 liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.8 / 16);
-                liftArrowView.setHeight((float) 0.8 / 16);
+                liftArrowView.setWidth((float) 0.65 / 16);
+                liftArrowView.setHeight((float) 0.65 / 16);
                 liftArrowView.setMargin((float) 1.1 / 16, (float) -1 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFB29B3C);
