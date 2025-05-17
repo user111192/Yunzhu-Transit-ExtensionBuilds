@@ -61,7 +61,7 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.042 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 0.047 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

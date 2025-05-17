@@ -37,6 +37,8 @@ public class Blocks {
     public static final BlockRegistryObject OTIS_SERIES_1_BUTTON_2;
     public static final BlockRegistryObject OTIS_SERIES_1_SCREEN_1;
     public static final BlockRegistryObject OTIS_SERIES_3_BUTTON_1;
+    public static final BlockRegistryObject OTIS_SERIES_3_SCREEN_1_ODD;
+    public static final BlockRegistryObject OTIS_SERIES_3_SCREEN_1_EVEN;
     public static final BlockRegistryObject OTIS_SERIES_3_ELD_SCREEN_1_ODD;
     public static final BlockRegistryObject OTIS_SERIES_3_ELD_SCREEN_1_EVEN;
     public static final BlockRegistryObject OTIS_SERIES_3_LANTERN_1_ARROW_ODD;
@@ -153,6 +155,8 @@ public class Blocks {
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), () -> new Block(new OtisSeries1Button()));
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), () -> new Block(new OtisSeries1Screen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_button_1"), () -> new Block(new OtisSeries3Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        OTIS_SERIES_3_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_screen_1_odd"), () -> new Block(new OtisSeries3Screen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        OTIS_SERIES_3_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_screen_1_even"), () -> new Block(new OtisSeries3Screen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_ELD_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_eld_screen_1_odd"), () -> new Block(new OtisSeries3ELDScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_ELD_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_eld_screen_1_even"), () -> new Block(new OtisSeries3ELDScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_LANTERN_1_ARROW_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_lantern_1_arrow_odd"), () -> new Block(new OtisSeries3Lantern1ArrowOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);

@@ -23,10 +23,10 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
-public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
 
-    public RenderOtisSeries3ELDScreen1(Argument dispatcher, Boolean isOdd) {
+    public RenderOtisSeries3Screen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
         this.isOdd = isOdd;
     }
@@ -59,7 +59,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.62525F);
+        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.4225F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -86,30 +86,19 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("nimbus_sans_bold"),
-                        6,
-                        0xFFB29B3C);
-                liftFloorDisplayView.setTextureId("otis_series_3_eld_1_screen_display");
+                        FontList.instance.getFont("otis_series_3"),
+                        5.5F,
+                        0xFFFF0000);
+                liftFloorDisplayView.setTextureId("otis_series_3_screen_1_display");
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setTextScrolling(true, 2, 0);
-                liftFloorDisplayView.setMargin((float) -0.25 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin((float) 1.95 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
-                liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_eld_arrow_1.png"));
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.65 / 16);
-                liftArrowView.setHeight((float) 0.65 / 16);
-                liftArrowView.setMargin((float) 1.1 / 16, (float) -1 / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
-                liftArrowView.setColor(0xFFB29B3C);
-
-                parentLayout.addChild(liftArrowView);
                 parentLayout.addChild(liftFloorDisplayView);
             }
         }

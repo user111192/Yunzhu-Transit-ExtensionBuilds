@@ -40,6 +40,7 @@ public class FontList {
             loadFont("gill_sans_mt", "font/gill_sans_mt.ttf");
             loadFont("hitachi_modern", "font/hitachi_modern.ttf");
             loadFont("kone-lcd-segment", "font/kone-lcd-segment.ttf");
+            loadFont("otis_series_3", "font/otis_series_3.ttf");
             loadFont("wqy-microhei", "font/wqy-microhei.ttc");
             loadFont("thyssenkrupp_lcd", "font/new-thyssenkrupp.ttf");
             fontsLoaded = true;

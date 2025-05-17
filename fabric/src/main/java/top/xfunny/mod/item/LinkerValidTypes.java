@@ -28,6 +28,8 @@ public class LinkerValidTypes {
             OtisSeries1Button.class,
             OtisSeries1Screen.class,
             OtisSeries3Button1.class,
+            OtisSeries3Screen1Odd.class,
+            OtisSeries3Screen1Even.class,
             OtisSeries3ELDScreen1Odd.class,
             OtisSeries3ELDScreen1Even.class,
             OtisSeries3Lantern1ArrowOdd.class,
