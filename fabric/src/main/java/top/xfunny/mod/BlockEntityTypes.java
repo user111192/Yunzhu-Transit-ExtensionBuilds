@@ -46,6 +46,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Button.BlockEntity> OTIS_SERIES_1_BUTTON_2;
     public static final BlockEntityTypeRegistryObject<OtisSeries1Screen.BlockEntity> OTIS_SERIES_1_SCREEN_1;
+    public static final BlockEntityTypeRegistryObject<OtisSeries3Button1.BlockEntity> OTIS_SERIES_3_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<OtisSeries3ELDScreen1Odd.BlockEntity> OTIS_SERIES_3_ELD_SCREEN_1_ODD;
     public static final BlockEntityTypeRegistryObject<OtisSeries3ELDScreen1Even.BlockEntity> OTIS_SERIES_3_ELD_SCREEN_1_EVEN;
     public static final BlockEntityTypeRegistryObject<OtisSeries3Lantern1ArrowOdd.BlockEntity> OTIS_SERIES_3_LANTERN_1_ARROW_ODD;
@@ -133,6 +134,7 @@ public class BlockEntityTypes {
         OTIS_SERIES_1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_1"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_1::get);
         OTIS_SERIES_1_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_button_2"), OtisSeries1Button.BlockEntity::new, Blocks.OTIS_SERIES_1_BUTTON_2::get);
         OTIS_SERIES_1_SCREEN_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_1_screen_1"), OtisSeries1Screen.BlockEntity::new, Blocks.OTIS_SERIES_1_SCREEN_1::get);
+        OTIS_SERIES_3_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_3_button_1"), OtisSeries3Button1.BlockEntity::new, Blocks.OTIS_SERIES_3_BUTTON_1::get);
         OTIS_SERIES_3_ELD_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_3_eld_screen_1_odd"), OtisSeries3ELDScreen1Odd.BlockEntity::new, Blocks.OTIS_SERIES_3_ELD_SCREEN_1_ODD::get);
         OTIS_SERIES_3_ELD_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_3_eld_screen_1_even"), OtisSeries3ELDScreen1Even.BlockEntity::new, Blocks.OTIS_SERIES_3_ELD_SCREEN_1_EVEN::get);
         OTIS_SERIES_3_LANTERN_1_ARROW_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_series_3_lantern_1_arrow_odd"), OtisSeries3Lantern1ArrowOdd.BlockEntity::new, Blocks.OTIS_SERIES_3_LANTERN_1_ARROW_ODD::get);
