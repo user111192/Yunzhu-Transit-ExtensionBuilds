@@ -27,6 +27,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
     private final int HOVER_COLOR = 0xFFFF9999;
     private final int PRESSED_COLOR = 0xFFFF0000;
     private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png");
+    private final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_arrow.png");
     private final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png");
     public RenderOtisSeries3Button1(Argument dispatcher) {
         super(dispatcher);
@@ -61,37 +62,50 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 6 / 16, (float) 8 / 16);
-        parentLayout.setPosition((float) -0.1875, 0);
+        parentLayout.setParentDimensions((float) 1.35 / 16, (float) 8 / 16);
+        parentLayout.setPosition((float) -0.0405, (float) -0.235);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+        parentLayout.setMargin(0, 0, (float) 0.1 / 16, (float) 0.1 / 16);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
         button.setHover(true);
-        button.setPressedColor(PRESSED_COLOR);
-        button.setHoverColor(HOVER_COLOR);
+        button.setPressedColor(0xFFFFFFFF);
+        button.setHoverColor(0xFFFFFFFF);
         button.setTexture(BUTTON_TEXTURE, false);
         button.setWidth(0.6F / 16);
         button.setHeight(0.6F / 16);
-        button.setSpacing(0.75F / 16);
-        button.setGravity(Gravity.CENTER);
-
+        button.setSpacing(0.35F / 16);
+        button.setGravity(Gravity.END);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
         buttonLight.setLight(light);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setDefaultColor(0xFF111111);
         buttonLight.setHover(true);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
         buttonLight.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png"), false);
         buttonLight.setWidth(0.6F / 16);
         buttonLight.setHeight(0.6F / 16);
-        buttonLight.setSpacing(0.75F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        buttonLight.setSpacing(0.35F / 16);
+        buttonLight.setGravity(Gravity.END);
+
+        LiftButtonView buttonArrow = new LiftButtonView();
+        buttonArrow.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
+        buttonArrow.setLight(light);
+        buttonArrow.setDefaultColor(0xFFFFFFFF);
+        buttonArrow.setHover(true);
+        buttonArrow.setPressedColor(0xFFFFFFFF);
+        buttonArrow.setHoverColor(0xFFFFFFFF);
+        buttonArrow.setTexture(ARROW_TEXTURE, true);
+        buttonArrow.setWidth(0.6F / 16);
+        buttonArrow.setHeight(0.6F / 16);
+        buttonArrow.setSpacing(0.35F / 16);
+        buttonArrow.setGravity(Gravity.START);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -119,6 +133,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
 
         parentLayout.addChild(button);
         parentLayout.addChild(buttonLight);
+        parentLayout.addChild(buttonArrow);
 
         parentLayout.render();
     }
