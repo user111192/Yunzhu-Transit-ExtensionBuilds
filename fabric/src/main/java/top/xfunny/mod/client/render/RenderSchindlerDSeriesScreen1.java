@@ -93,7 +93,7 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(-30);
                 liftFloorDisplayView.setDisplayLength( 2, 0);
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);

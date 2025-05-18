@@ -171,7 +171,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
                 liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.END);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
                 liftFloorDisplayView.setMargin((float) -3.5 / 16, 0, (float) -6.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);

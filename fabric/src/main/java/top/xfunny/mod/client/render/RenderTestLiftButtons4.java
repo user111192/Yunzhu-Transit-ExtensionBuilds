@@ -150,7 +150,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 liftFloorDisplayView.setWidth((float) 3 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 3 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();

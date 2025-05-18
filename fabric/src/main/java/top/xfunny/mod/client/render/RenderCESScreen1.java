@@ -93,7 +93,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(15);
                 liftFloorDisplayView.setDisplayLength( 5, 0.01F);
                 liftFloorDisplayView.setMargin((float) 1.7 / 16, 0, 0, 0);

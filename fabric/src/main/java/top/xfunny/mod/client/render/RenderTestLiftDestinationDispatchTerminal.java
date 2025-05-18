@@ -111,7 +111,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
             textView.setWidth(11F / 16);
             textView.setHeight(2F / 16);
             textView.setMargin((float) 1 / 16, (float) 1 / 16, 0, 0);
-            textView.setTextAlign(LiftFloorDisplayView.TextAlign.LEFT);
+            textView.setTextAlign(TextView.HorizontalTextAlign.LEFT);
 
             final ButtonView number1 = new ButtonView();
             number1.setId("number1");

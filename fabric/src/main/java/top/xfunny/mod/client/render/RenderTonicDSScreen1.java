@@ -93,9 +93,9 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setDisplayLength(5, 0.01F);
+                liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
