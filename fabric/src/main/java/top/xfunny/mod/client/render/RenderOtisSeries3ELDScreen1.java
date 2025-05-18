@@ -89,7 +89,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                         6,
                         0xFFB29B3C);
                 liftFloorDisplayView.setTextureId("otis_series_3_eld_1_screen_display");
-                liftFloorDisplayView.setWidth((float) 3.8 / 16);
+                liftFloorDisplayView.setWidth((float) 3 / 16);
                 liftFloorDisplayView.setHeight((float) 2.3 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER, TextView.VerticalTextAlign.CENTER);
