@@ -168,7 +168,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                         FontList.instance.getFont("hitachi_modern"),//字体
                         12,//字号
                         0xFFFF0000);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("hitachi_b85_screen_2_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度

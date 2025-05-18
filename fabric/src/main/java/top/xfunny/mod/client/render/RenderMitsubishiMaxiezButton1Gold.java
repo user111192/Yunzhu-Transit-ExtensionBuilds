@@ -165,7 +165,7 @@ public class RenderMitsubishiMaxiezButton1Gold extends BlockEntityRenderer<Mitsu
                         FontList.instance.getFont("mitsubishi_modern"),//字体
                         6,//字号
                         0xFFFA7A24);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_maxiez_button_1_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.5 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度

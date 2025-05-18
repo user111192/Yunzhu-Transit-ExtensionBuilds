@@ -64,7 +64,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 3.75 / 16, (float) 2.75 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F :(float) -9.875 / 16, (float) 9.875 / 16);
+        parentLayout.setPosition(isOdd ? (float) -1.875 / 16 : (float) -9.875 / 16, (float) 9.875 / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -106,8 +106,13 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setTextScrolling(true, 4, 0);
+                liftFloorDisplayView.setMargin(0.4F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                if(liftFloorDisplayView.getTextLength()>=3){
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT);
+                }else{
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.PRESERVE_RATIO);
+                }
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
@@ -137,14 +142,13 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
 
                 final TextView textView = new TextView();
                 textView.setId("textView");
-                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 3, 0xFFFFFFFF);
-                textView.setTextScrolling(true, 99, 0.005F);
+                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 5, 0xFFFFFFFF);
                 textView.setTextureId("schindler_z_line_3_keypad_1_display");
                 textView.setText(text);
                 textView.setWidth(4F / 16);
                 textView.setHeight(1F / 16);
                 textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
-                textView.setGravity(Gravity.CENTER);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);

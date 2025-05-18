@@ -145,7 +145,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                         FontList.instance.getFont("acmeled"),//字体
                         6,//字号
                         0xFFFF0000);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 3, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(3, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 3 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 3 / 16);//显示屏高度

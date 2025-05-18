@@ -12,7 +12,6 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
@@ -95,7 +94,7 @@ public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> e
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);
+                liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setMargin((float) 1.95 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 

@@ -58,7 +58,7 @@ public class ButtonView implements RenderView {
         });
 
         MainRenderer.scheduleRender(
-                texture, false, (id.equals(hitButton) && inBlock)||isAlwaysOn ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
+                texture, false, (id.equals(hitButton) && inBlock) || isAlwaysOn ? QueuedRenderLayer.LIGHT_TRANSLUCENT : QueuedRenderLayer.EXTERIOR,
                 (graphicsHolder, offset) -> {
                     storedMatrixTransformations1.transform(graphicsHolder, offset);
                     IDrawing.drawTexture(
@@ -168,7 +168,8 @@ public class ButtonView implements RenderView {
     public void setDefaultColor(int defaultColor) {
         this.defaultColor = defaultColor;
     }
-    public void setDefaultColor(int defaultColor,boolean isAlwaysOn) {
+
+    public void setDefaultColor(int defaultColor, boolean isAlwaysOn) {
         this.defaultColor = defaultColor;
         this.isAlwaysOn = isAlwaysOn;
     }
