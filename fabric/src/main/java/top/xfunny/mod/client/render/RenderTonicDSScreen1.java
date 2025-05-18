@@ -13,7 +13,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.CESScreen1Even;
 import top.xfunny.mod.block.TonicDSScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
@@ -96,7 +95,7 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setTextScrolling(true, 5, 0.01F);
+                liftFloorDisplayView.setDisplayLength(5, 0.01F);
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 

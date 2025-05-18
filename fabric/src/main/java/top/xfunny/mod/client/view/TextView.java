@@ -21,33 +21,35 @@ import static org.mtr.mod.data.IGui.ARGB_WHITE;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class TextView implements RenderView {
-    private String id;
-    private StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
-    private Font font;
-    private int color;
-    private int letterSpacing = 0;
-    private World world;
-    private BlockPos blockPos;
-    private float height;
-    private float width;
-    private boolean needScroll;
-    private int textSize;
-    private float scrollSpeed;
-    private float x, y;
-    private float textX;
-    private String textureId;
-    private int fontSize;
-    private float gameTick;
-    private String text;
-    private DynamicTextureCache.DynamicResource texture;
-    private float fixedWidth;
-    private float textWidth;
-    private float textHeight;
-    private float marginLeft, marginTop, marginRight, marginBottom;
-    private LiftFloorDisplayView.TextAlign textAlign = LiftFloorDisplayView.TextAlign.RIGHT;//文本默认右对齐
-    private Gravity gravity;
-    private Consumer<GraphicsHolder> transformation;
-    private Direction facing;
+    protected String id;
+    protected StoredMatrixTransformations storedMatrixTransformations, storedMatrixTransformations1;
+    protected Font font;
+    protected int color;
+    protected int letterSpacing = 0;
+    protected World world;
+    protected BlockPos blockPos;
+    protected float height;
+    protected float width;
+    protected boolean needScroll;
+    protected int displayTextLength;
+    protected float scrollSpeed;
+    protected float x, y;
+    protected float textX;
+    protected String textureId;
+    protected float fontSize;
+    protected float gameTick;
+    protected String text;
+    protected DynamicTextureCache.DynamicResource texture;
+    protected float fixedWidth;
+    protected float textWidth;
+    protected float textHeight;
+    protected float marginLeft, marginTop, marginRight, marginBottom;
+    protected LiftFloorDisplayView.TextAlign textAlign = LiftFloorDisplayView.TextAlign.RIGHT;//文本默认右对齐
+    protected AdaptMode adaptMode = AdaptMode.PRESERVE_RATIO;
+    protected Gravity gravity;
+    protected Consumer<GraphicsHolder> transformation;
+    protected Direction facing;
+
 
     @Override
     public String getId() {
@@ -61,6 +63,7 @@ public class TextView implements RenderView {
     public void render() {
         calculateSize();
         calculateTextPositionX();
+
         BlockState blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
         storedMatrixTransformations1 = storedMatrixTransformations.copy();
@@ -73,7 +76,7 @@ public class TextView implements RenderView {
         }
 
         float offset1;
-        if (text.length() > textSize && needScroll) {
+        if (text.length() > displayTextLength && needScroll) {
             offset1 = (gameTick * scrollSpeed) % 1;
             MainRenderer.scheduleRender(
                     texture.identifier,
@@ -81,7 +84,7 @@ public class TextView implements RenderView {
                     QueuedRenderLayer.LIGHT_TRANSLUCENT,
                     (graphicsHolder, offset) -> {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
-                        IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                        IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
                         graphicsHolder.pop();
                     });
         } else {
@@ -91,23 +94,34 @@ public class TextView implements RenderView {
                     QueuedRenderLayer.LIGHT_TRANSLUCENT,
                     (graphicsHolder, offset) -> {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
-                        IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());//楼层数字尺寸设置
+                        IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
                         graphicsHolder.pop();
                     }
             );
         }
-
     }
 
-    private void calculateSize() {
+    protected void calculateSize() {
         this.gameTick = org.mtr.mod.InitClient.getGameTick();
         this.texture = TextureList.instance.renderFont(textureId, text, color, font, fontSize, letterSpacing);
         int rawTextWidth = texture.width;
         int rawTextHeight = texture.height;
         float scale = (float) rawTextHeight / height;
-        this.textWidth = rawTextWidth / scale;//缩放处理后的文本宽度
-        this.textHeight = rawTextHeight / scale;//缩放处理后的文本高度
-        this.fixedWidth = textWidth / text.length() * textSize;
+
+        switch (adaptMode){
+            case FORCE_FIT:
+                this.fixedWidth = width;
+                this.textWidth = width;
+                this.textHeight = rawTextHeight / scale;
+                break;
+
+            case PRESERVE_RATIO:
+                this.textWidth = rawTextWidth / scale;//缩放处理后的文本宽度
+                this.textHeight = rawTextHeight / scale;//缩放处理后的文本高度
+                this.fixedWidth = textWidth / text.length() * displayTextLength;
+                break;
+        }
+
     }
 
     @Override
@@ -141,13 +155,17 @@ public class TextView implements RenderView {
         this.letterSpacing = letterSpacing;
     }
 
-    private void calculateTextPositionX() {
+    public void setAdaptMode(AdaptMode adaptMode) {
+        this.adaptMode = adaptMode;
+    }
+
+    protected void calculateTextPositionX() {
         switch (textAlign) {
             case LEFT:
-                textX = x + width - (text.length() > textSize ? fixedWidth : textWidth);
+                textX = x + width - (text.length() > displayTextLength ? (displayTextLength != 0 ? fixedWidth : textWidth) : textWidth);
                 break;
             case CENTER:
-                textX = x + width / 2 - (text.length() > textSize ? fixedWidth : textWidth) / 2;
+                textX = x + width / 2 - (text.length() > displayTextLength ? (displayTextLength != 0 ? fixedWidth : textWidth) : textWidth) / 2;
                 break;
             case RIGHT:
                 textX = x;
@@ -194,6 +212,10 @@ public class TextView implements RenderView {
         return gravity;
     }
 
+    public int getTextLength(){
+        return text.length();
+    }
+
     @Override
     public void setGravity(Gravity gravity) {
         this.gravity = gravity;
@@ -214,10 +236,12 @@ public class TextView implements RenderView {
     }
 
 
-    public void setTextScrolling(Boolean needScroll, int textSize, float scrollSpeed) {
-        this.needScroll = needScroll;
-        this.textSize = textSize;
+    public void setDisplayLength(int textSize, float scrollSpeed) {
+        this.displayTextLength = textSize;
         this.scrollSpeed = scrollSpeed;
+        if(scrollSpeed!=0){
+            this.needScroll = true;
+        }
     }
 
 
@@ -245,5 +269,10 @@ public class TextView implements RenderView {
         LEFT,
         CENTER,
         RIGHT
+    }
+
+    public enum AdaptMode {
+        FORCE_FIT,
+        PRESERVE_RATIO
     }
 }

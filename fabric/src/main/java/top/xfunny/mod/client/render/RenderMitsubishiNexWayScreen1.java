@@ -185,7 +185,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                         FontList.instance.getFont("mitsubishi_modern"),//字体
                         11,//字号
                         0xFFFFAA00);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_1");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度

@@ -164,7 +164,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
                         FontList.instance.getFont("thyssenkrupp_lcd"),//字体
                         4.7F,//字号
                         0xFFFF0000);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("thyssenkrupp_lcd");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度

@@ -100,7 +100,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
                 liftFloorDisplayView.setHeight((float) 4 / 16);
                 liftFloorDisplayView.setMargin(0, 0, (float) 0.8 / 16, 0);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);
+                liftFloorDisplayView.setDisplayLength(2, 0);
 
                 backgroundLayout.addChild(liftFloorDisplayView);
             }

@@ -17,8 +17,6 @@ import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.SMALL_OFFSET;
-import static top.xfunny.mod.client.view.LayoutSize.MATCH_PARENT;
-import static top.xfunny.mod.client.view.LayoutSize.WRAP_CONTENT;
 
 public class FrameLayout implements RenderView {
 

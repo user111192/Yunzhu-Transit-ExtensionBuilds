@@ -280,7 +280,7 @@ public class LiftButtonView implements RenderView {
         this.defaultDownColor = defaultColor;
     }
 
-    public void setDefaultColor(int defaultColor,boolean isAlwaysOn) {
+    public void setDefaultColor(int defaultColor, boolean isAlwaysOn) {
         this.defaultUpColor = defaultColor;
         this.defaultDownColor = defaultColor;
         this.isAlwaysOn = isAlwaysOn;

@@ -14,7 +14,6 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.MitsubishiNexWayButton2;
 import top.xfunny.mod.block.MitsubishiNexWayButton2Segmented;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
@@ -165,7 +164,7 @@ public class RenderMitsubishiNexWayButton2Segmented extends BlockEntityRenderer<
                         FontList.instance.getFont("mitsubishi_seg_universal"),//字体
                         7,//字号
                         0xFFFA7A24);//字体颜色
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_2_segmented_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.4 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度

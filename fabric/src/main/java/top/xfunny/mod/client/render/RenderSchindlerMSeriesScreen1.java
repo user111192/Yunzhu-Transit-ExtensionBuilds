@@ -105,9 +105,8 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                 liftFloorDisplayView.setHeight((float) 3 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
-                liftFloorDisplayView.setTextScrolling(true, 2, 0);
+                liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
-                liftFloorDisplayView.setNumberScrolling(true, 0.05F);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 screenLayout.addChild(liftFloorDisplayView);
