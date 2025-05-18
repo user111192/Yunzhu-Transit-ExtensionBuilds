@@ -72,7 +72,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
         numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
         numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        numberLayout.setMargin(0.16F/16, 0.2F/16, 0, 0);
+        numberLayout.setMargin(0.16F/16, 0.35F/16, 0, 0);
 
 
         final LineComponent line = new LineComponent();
@@ -98,7 +98,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("gill_sans_mt"),
-                        13F,
+                        16,
                         0xFFFFFFFF);
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_2_display");
                 liftFloorDisplayView.setWidth((float) 1.5 / 16);
@@ -106,7 +106,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setMargin(0.4F / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(0.2F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
                 if(liftFloorDisplayView.getTextLength()>=3){
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT);

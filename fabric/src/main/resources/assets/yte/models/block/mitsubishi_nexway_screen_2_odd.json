@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"2": "yte:block/steel",
-		"3": "yte:block/base3",
+		"3": "yte:block/mitsubishi_nexway_button_lcd_1",
 		"particle": "yte:block/mitsubishi_lantern_arrow"
 	},
 	"elements": [

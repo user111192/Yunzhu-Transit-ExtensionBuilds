@@ -1,6 +1,5 @@
 package top.xfunny.mod.client.render;
 
-
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -15,19 +14,20 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.OtisSeries1Button;
 import top.xfunny.mod.block.OtisSeries3Button1;
+import top.xfunny.mod.block.SchindlerMSeriesButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
-import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+
+    private final int HOVER_COLOR = 0xFFFF9999;
+    private final int PRESSED_COLOR = 0xFFFF0000;
+    private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png");
+    private final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png");
     public RenderOtisSeries3Button1(Argument dispatcher) {
         super(dispatcher);
     }
@@ -44,82 +44,54 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
             return;
         }
 
-        final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
-        final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
-        StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+        // 创建一个存储矩阵转换的实例，用于后续的渲染操作
+        // 参数为方块的中心位置坐标 (x, y, z)
+        final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 0.046 - SMALL_OFFSET);
         });
 
-        FrameLayout parentLayout = new FrameLayout();
+        final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4.8 / 16, (float) 6.5 / 16);
-        parentLayout.setPosition((float) -2.4 / 16, (float) 0.75 / 16);
+        parentLayout.setParentDimensions((float) 6 / 16, (float) 8 / 16);
+        parentLayout.setPosition((float) -0.1875, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        FrameLayout backgroundLayout = new FrameLayout();
-        backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
-        backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        backgroundLayout.setGravity(Gravity.CENTER);
-        backgroundLayout.setBackgroundColor(0xFD000000);
-        backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, -3 * SMALL_OFFSET);
-        });
-
-        LinearLayout buttonLayout = new LinearLayout(false);
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LayoutSize.WRAP_CONTENT);
-        buttonLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        buttonLayout.setGravity(Gravity.CENTER);
-        buttonLayout.setMargin(0, 0, (float) 0.4 / 16, (float) 0.4 / 16);
-
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
-        button.setHover(true);
         button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png"), true);
-        button.setWidth(1F / 16);
-        button.setHeight(1F / 16);
-        button.setSpacing(0.5F / 16);
-        button.setGravity(Gravity.END);
+        button.setHover(true);
+        button.setPressedColor(PRESSED_COLOR);
+        button.setHoverColor(HOVER_COLOR);
+        button.setTexture(BUTTON_TEXTURE, false);
+        button.setWidth(0.6F / 16);
+        button.setHeight(0.6F / 16);
+        button.setSpacing(0.75F / 16);
+        button.setGravity(Gravity.CENTER);
+
 
         LiftButtonView buttonLight = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setHover(true);
-        button.setDefaultColor(0xFF343434);
-        button.setPressedColor(0xFFFF0000);
-        button.setHoverColor(0xFF990000);
-        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png"), true);
-        button.setWidth(1F / 16);
-        button.setHeight(1F / 16);
-        button.setSpacing(0.5F / 16);
-        button.setGravity(Gravity.END);
-
-        LiftButtonView buttonArrow = new LiftButtonView();
-        buttonArrow.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        buttonArrow.setLight(light);
-        buttonArrow.setHover(false);
-        buttonArrow.setDefaultColor(0xFFFFFFFF);
-        buttonArrow.setPressedColor(0xFFFFFFFF);
-        buttonArrow.setHoverColor(0xFFFFFFFF);
-        buttonArrow.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_arrow.png"), true);
-        buttonArrow.setWidth(1F / 16);
-        buttonArrow.setHeight(1F / 16);
-        buttonArrow.setSpacing(0.5F / 16);
-        buttonArrow.setMargin(0, 0, (float) 0.4 / 16, 0);
-        buttonArrow.setGravity(Gravity.START);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
+        buttonLight.setLight(light);
+        buttonLight.setDefaultColor(0xFFFFFFFF);
+        buttonLight.setHover(true);
+        buttonLight.setPressedColor(PRESSED_COLOR);
+        buttonLight.setHoverColor(HOVER_COLOR);
+        buttonLight.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png"), false);
+        buttonLight.setWidth(0.6F / 16);
+        buttonLight.setHeight(0.6F / 16);
+        buttonLight.setSpacing(0.75F / 16);
+        buttonLight.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -135,21 +107,19 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            button.setDownButtonLight();
+                            buttonLight.setDownButtonLight();
                             break;
                         case UP:
-                            button.setUpButtonLight();
+                            buttonLight.setUpButtonLight();
                             break;
                     }
                 });
             });
-
         });
-        buttonLayout.addChild(buttonArrow);
-        buttonLayout.addChild(button);
-        buttonLayout.addChild(buttonLight);
-        parentLayout.addChild(backgroundLayout);
-        backgroundLayout.addChild(buttonLayout);
+
+        parentLayout.addChild(button);
+        parentLayout.addChild(buttonLight);
+
         parentLayout.render();
     }
 }
