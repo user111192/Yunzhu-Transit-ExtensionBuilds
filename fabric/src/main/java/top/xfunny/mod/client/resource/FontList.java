@@ -43,6 +43,7 @@ public class FontList {
             loadFont("otis_series_3", "font/otis_series_3.ttf");
             loadFont("wqy-microhei", "font/wqy-microhei.ttc");
             loadFont("thyssenkrupp_lcd", "font/new-thyssenkrupp.ttf");
+            loadFont("kone-kss", "font/kone-kss-800-signalization.ttf");
             fontsLoaded = true;
         }
     }

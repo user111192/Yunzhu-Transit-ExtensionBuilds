@@ -173,7 +173,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
 
                 liftFloorDisplayView.setMargin((float) 0.2 / 16, (float) 0.2 / 16, 0, 0);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();

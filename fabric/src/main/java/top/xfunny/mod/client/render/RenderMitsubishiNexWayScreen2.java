@@ -11,18 +11,14 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen2Even;
-import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ArrayListToString;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Comparator;
 
@@ -104,14 +100,14 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setWidth((float) 1.5 / 16);
                 liftFloorDisplayView.setHeight((float) 1.5 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setMargin(0.2F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
                 if(liftFloorDisplayView.getTextLength()>=3){
-                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
                 }else{
-                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.PRESERVE_RATIO);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
@@ -147,7 +143,8 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 textView.setText(text);
                 textView.setWidth(4F / 16);
                 textView.setHeight(1F / 16);
-                textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                textView.setDisplayLength(20, 0);
+                textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 numberLayout.addChild(liftArrowView);

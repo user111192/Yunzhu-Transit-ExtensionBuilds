@@ -30,11 +30,10 @@ public class TextView implements RenderView {
     protected BlockPos blockPos;
     protected float height;
     protected float width;
-    protected boolean needScroll;
-    protected int displayTextLength;
+    protected int displayTextLength = 2;
     protected float scrollSpeed;
     protected float x, y;
-    protected float textX;
+    protected float textX, textY;
     protected String textureId;
     protected float fontSize;
     protected float gameTick;
@@ -44,8 +43,9 @@ public class TextView implements RenderView {
     protected float textWidth;
     protected float textHeight;
     protected float marginLeft, marginTop, marginRight, marginBottom;
-    protected LiftFloorDisplayView.TextAlign textAlign = LiftFloorDisplayView.TextAlign.RIGHT;//文本默认右对齐
-    protected AdaptMode adaptMode = AdaptMode.PRESERVE_RATIO;
+    protected HorizontalTextAlign horizontalTextAlign = HorizontalTextAlign.RIGHT;//文本默认水平右对齐
+    protected VerticalTextAlign verticalTextAlign = VerticalTextAlign.CENTER;//默认垂直居中
+    protected AdaptMode adaptMode = AdaptMode.ASPECT_FILL;
     protected Gravity gravity;
     protected Consumer<GraphicsHolder> transformation;
     protected Direction facing;
@@ -63,6 +63,7 @@ public class TextView implements RenderView {
     public void render() {
         calculateSize();
         calculateTextPositionX();
+        calculateTextPositionY();
 
         BlockState blockState = world.getBlockState(blockPos);
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
@@ -76,7 +77,7 @@ public class TextView implements RenderView {
         }
 
         float offset1;
-        if (text.length() > displayTextLength && needScroll) {
+        if (text.length() > displayTextLength && adaptMode == AdaptMode.ASPECT_FILL) {
             offset1 = (gameTick * scrollSpeed) % 1;
             MainRenderer.scheduleRender(
                     texture.identifier,
@@ -84,7 +85,7 @@ public class TextView implements RenderView {
                     QueuedRenderLayer.LIGHT_TRANSLUCENT,
                     (graphicsHolder, offset) -> {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
-                        IDrawing.drawTexture(graphicsHolder, textX, y, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+                        IDrawing.drawTexture(graphicsHolder, textX, textY, fixedWidth, textHeight, offset1 + fixedWidth / textWidth, 1, offset1, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
                         graphicsHolder.pop();
                     });
         } else {
@@ -94,7 +95,7 @@ public class TextView implements RenderView {
                     QueuedRenderLayer.LIGHT_TRANSLUCENT,
                     (graphicsHolder, offset) -> {
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
-                        IDrawing.drawTexture(graphicsHolder, textX, y, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
+                        IDrawing.drawTexture(graphicsHolder, textX, textY, textWidth, textHeight, 1, 1, 0, 0, Direction.UP, ARGB_WHITE, GraphicsHolder.getDefaultLight());
                         graphicsHolder.pop();
                     }
             );
@@ -109,16 +110,27 @@ public class TextView implements RenderView {
         float scale = (float) rawTextHeight / height;
 
         switch (adaptMode){
-            case FORCE_FIT:
+            case FORCE_FIT_WIDTH:
                 this.fixedWidth = width;
                 this.textWidth = width;
                 this.textHeight = rawTextHeight / scale;
                 break;
 
-            case PRESERVE_RATIO:
+            case ASPECT_FILL:
                 this.textWidth = rawTextWidth / scale;//缩放处理后的文本宽度
                 this.textHeight = rawTextHeight / scale;//缩放处理后的文本高度
                 this.fixedWidth = textWidth / text.length() * displayTextLength;
+                break;
+
+            case FIT_WIDTH:
+                final float scaleByWidth = (float) rawTextWidth / width;
+                final float scaleByMaxHeight = (float) rawTextHeight / height;
+
+                final float finalScale = Math.max(scaleByWidth, scaleByMaxHeight);
+
+                this.textWidth = rawTextWidth / finalScale;
+                this.fixedWidth = textWidth;
+                this.textHeight = rawTextHeight / finalScale;
                 break;
         }
 
@@ -147,8 +159,13 @@ public class TextView implements RenderView {
         this.height = height;
     }
 
-    public void setTextAlign(LiftFloorDisplayView.TextAlign textAlign) {
-        this.textAlign = textAlign;
+    public void setTextAlign(HorizontalTextAlign horizontalTextAlign) {
+        this.horizontalTextAlign = horizontalTextAlign;
+    }
+
+    public void setTextAlign(HorizontalTextAlign horizontalTextAlign,  VerticalTextAlign verticalTextAlign) {
+        this.horizontalTextAlign = horizontalTextAlign;
+        this.verticalTextAlign = verticalTextAlign;
     }
 
     public void setLetterSpacing(int letterSpacing) {
@@ -160,7 +177,7 @@ public class TextView implements RenderView {
     }
 
     protected void calculateTextPositionX() {
-        switch (textAlign) {
+        switch (horizontalTextAlign) {
             case LEFT:
                 textX = x + width - (text.length() > displayTextLength ? (displayTextLength != 0 ? fixedWidth : textWidth) : textWidth);
                 break;
@@ -169,6 +186,20 @@ public class TextView implements RenderView {
                 break;
             case RIGHT:
                 textX = x;
+                break;
+        }
+    }
+
+    protected void calculateTextPositionY() {
+        switch (verticalTextAlign) {
+            case TOP:
+                textY = y + height - textHeight;
+                break;
+            case CENTER:
+                textY = y + height / 2 - textHeight / 2;
+                break;
+            case BOTTOM:
+                textY = y;
                 break;
         }
     }
@@ -239,9 +270,6 @@ public class TextView implements RenderView {
     public void setDisplayLength(int textSize, float scrollSpeed) {
         this.displayTextLength = textSize;
         this.scrollSpeed = scrollSpeed;
-        if(scrollSpeed!=0){
-            this.needScroll = true;
-        }
     }
 
 
@@ -265,14 +293,21 @@ public class TextView implements RenderView {
         this.transformation = transformation;
     }
 
-    public enum TextAlign {
+    public enum HorizontalTextAlign {
         LEFT,
         CENTER,
         RIGHT
     }
 
+    public enum VerticalTextAlign {
+        TOP,
+        CENTER,
+        BOTTOM
+    }
+
     public enum AdaptMode {
-        FORCE_FIT,
-        PRESERVE_RATIO
+        FORCE_FIT_WIDTH,
+        ASPECT_FILL,
+        FIT_WIDTH
     }
 }

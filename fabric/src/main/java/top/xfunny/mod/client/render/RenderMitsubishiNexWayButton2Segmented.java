@@ -170,7 +170,7 @@ public class RenderMitsubishiNexWayButton2Segmented extends BlockEntityRenderer<
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
                 liftFloorDisplayView.setMargin((float) -0.2 / 16, 0, (float) 0.3 / 16, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();

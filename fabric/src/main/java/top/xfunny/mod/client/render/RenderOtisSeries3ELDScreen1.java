@@ -17,7 +17,7 @@ import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
-import top.xfunny.mod.client.view.view_group.LinearLayout;
+import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
@@ -55,14 +55,13 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
             graphicsHolder.translate(0, 0, 0.045 - SMALL_OFFSET);
         });
 
-        final LinearLayout parentLayout = new LinearLayout(false);
+        final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.62525F);
+        parentLayout.setParentDimensions((float) 4 / 16, (float) 2.3 / 16);
+        parentLayout.setPosition(isOdd ? -1F / 16 : -9F / 16, 11.375F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
-
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -90,13 +89,13 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                         6,
                         0xFFB29B3C);
                 liftFloorDisplayView.setTextureId("otis_series_3_eld_1_screen_display");
-                liftFloorDisplayView.setWidth((float) 2.6 / 16);
-                liftFloorDisplayView.setHeight((float) 2.8 / 16);
-                liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setWidth((float) 3 / 16);
+                liftFloorDisplayView.setHeight((float) 2.3 / 16);
+                liftFloorDisplayView.setGravity(Gravity.CENTER);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER, TextView.VerticalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setDisplayLength( 2, 0);
-                liftFloorDisplayView.setMargin((float) -0.25 / 16, 0, 0, 0);
+                liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FIT_WIDTH);
+                liftFloorDisplayView.setMargin(5F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
@@ -105,7 +104,6 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 0.65 / 16);
                 liftArrowView.setHeight((float) 0.65 / 16);
-                liftArrowView.setMargin((float) 1.1 / 16, (float) -1 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFB29B3C);
 

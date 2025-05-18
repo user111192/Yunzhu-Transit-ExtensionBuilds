@@ -139,7 +139,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             textView.setText(ArrayListToString.arrayListToString(inputNumber));
             textView.setWidth(2F / 16);
             textView.setHeight(2F / 16);
-            textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+            textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
             textView.setGravity(Gravity.CENTER);
 
             textBackgroundLayout.addChild(imageView);

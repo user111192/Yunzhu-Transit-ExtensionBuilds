@@ -1,53 +1,49 @@
-# Yunzhu Transit Extension Mod
+# 云竹交通拓展Mod
 
-[简体中文](./README_zh-cn.md) | **[English](./README.md)**
+**[简体中文](./README_zh-cn.md)** | [English](./README.md)
 
-**Yunzhu Transit Extension** is a decorative add-on for
-the [Minecraft Transit Railway Mod](https://github.com/jonafanho/Minecraft-Transit-Railway), providing stylish *
-*elevator** and **metro station** elements to enhance your transit builds.
+**云筑轨交扩展包**是 [Minecraft Transit Railway Mod](https://github.com/jonafanho/Minecraft-Transit-Railway)
+的装饰性附加组件，提供精美的**电梯**与**地铁站**元素，以美化您的轨交建造。
 
 <img src="http://image.yunzhu.host/i/2025/05/01/681363e498172.webp" style="width: 200px; height: auto;" />
 
 
 ---
 
-## Features
+## 功能特色
 
-- Elevator decorations
-
-- Metro station enhancements
+- 电梯装饰组件
+- 地铁站美化内容
 
 ---
 
-## Setup Instructions
+## 安装说明
 
-1. **Clone this repository**
+1. **克隆此仓库**
    ```bash
    git clone https://github.com/X-Funny/Yunzhu-Transit-Extension.git
    ```
 
-2. **Sync the Gradle project** in your preferred IDE (e.g., IntelliJ IDEA)
+2. **在您使用的 IDE 中同步 Gradle 项目**（如 IntelliJ IDEA）
 
-3. **On first run or when switching Minecraft versions:**
-    - Sync the Gradle project
-    - In the root project, run the `setupLibrary` Gradle task:
+3. **初次运行或切换 Minecraft 版本时：**
+    - 同步 Gradle 项目
+    - 在根项目中运行 `setupLibrary` Gradle 任务：
       ```bash
       ./gradlew setupLibrary
       ```  
-    - Sync the Gradle project again
+    - 再次同步 Gradle 项目
+---
+
+## 许可协议
+
+本项目采用 [MIT 协议](https://raw.githubusercontent.com/X-Funny/Yunzhu-Transit-Extension/main/LICENSE) 开源。
 
 ---
 
-## License
+## 字体许可
 
-This project is licensed under
-the [MIT License](https://raw.githubusercontent.com/X-Funny/Yunzhu-Transit-Extension/main/LICENSE).
-
----
-
-## Font License
-
-| Font Name                                | License                                             |
+| 字体名称                                     | 许可协议                                                |
 |------------------------------------------|-----------------------------------------------------|
 | ces-14x7                                 | Creative Commons Attribution License 3.0            |
 | DSEG7 Classic Bold Italic                | SIL Open Font License 1.1                           |
