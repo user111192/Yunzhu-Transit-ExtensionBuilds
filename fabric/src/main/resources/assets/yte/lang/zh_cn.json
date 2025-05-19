@@ -98,5 +98,6 @@
   "tooltip.thyssenkrupp_te_gl1_button_1": "显示屏：MS5-E 2.1",
   "tooltip.id_card.access": "通行权限: ",
   "tooltip.id_card.floors": "通行楼层: ",
-  "tooltip.auth_qrcode.status": "未使用"
+  "tooltip.auth_qrcode.used": "已作废",
+  "tooltip.auth_qrcode.unused":"未使用"
 }
