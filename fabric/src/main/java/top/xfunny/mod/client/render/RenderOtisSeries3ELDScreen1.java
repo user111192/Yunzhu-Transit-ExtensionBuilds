@@ -104,7 +104,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 liftArrowView.setArrowScrolling(false, 0.05F);
                 liftArrowView.setWidth((float) 0.65 / 16);
                 liftArrowView.setHeight((float) 0.65 / 16);
-                liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView.setMargin(0.425F / 16, 2.5F / 16, 0, 0);
                 liftArrowView.setColor(0xFFB29B3C);
 
                 parentLayout.addChild(liftArrowView);
