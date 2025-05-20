@@ -99,7 +99,6 @@ public class LiftArrowView implements RenderView {
         float x2 = x + (width - width2) * 0.5f;
         flipResult[0] = width2;
         flipResult[1] = x2;
-
         return flipResult;
     }
 

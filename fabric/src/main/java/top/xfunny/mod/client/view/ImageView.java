@@ -1,6 +1,7 @@
 package top.xfunny.mod.client.view;
 
 import org.mtr.mapping.holder.*;
+import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.render.MainRenderer;
@@ -19,12 +20,16 @@ public class ImageView implements RenderView {
     private float x, y;
     private float marginLeft, marginTop, marginRight, marginBottom;
     private Gravity gravity;
-    private World world;
-    private BlockPos blockPos;
+    protected World world;
+    protected BlockPos blockPos;
     private Identifier texture;
     private float scale;
     private int light;
-    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
+    protected int color = ARGB_WHITE;
+    private float u1 = 1, u2 = 0, v1 = 1, v2 = 0;
+    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
+    private boolean needBlink;
+    private float blinkInterval = 0.5f;
 
     // Getters and Setters
     @Override
@@ -62,38 +67,50 @@ public class ImageView implements RenderView {
     // 渲染逻辑
     @Override
     public void render() {
+        float gameTick = InitClient.getGameTick();
         BlockState blockState = world.getBlockState(blockPos);
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET));
 
-        // 调度渲染
-        MainRenderer.scheduleRender(
-                texture,
-                false,
-                queuedRenderLayer,
-                (graphicsHolder, offset) -> {
-                    // 应用矩阵变换
-                    storedMatrixTransformations1.transform(graphicsHolder, offset);
-                    // 绘制纹理
-                    IDrawing.drawTexture(
-                            graphicsHolder,
-                            x,
-                            y,
-                            width,
-                            height,
-                            1,
-                            1,
-                            0,
-                            0,
-                            facing,
-                            ARGB_WHITE,
-                            light
-                    );
-                    graphicsHolder.pop();
-                }
-        );
+        // 闪烁逻辑
+        boolean shouldRender = true;
+        if (needBlink && blinkInterval > 0) {
+            int framesPerCycle = (int)(blinkInterval * 20);
+            int currentFrame = (int)(gameTick % framesPerCycle);
+            shouldRender = currentFrame < (framesPerCycle / 2); // 半周期亮、半周期灭
+        }
+
+        if(shouldRender){
+            // 调度渲染
+            MainRenderer.scheduleRender(
+                    texture,
+                    false,
+                    queuedRenderLayer,
+                    (graphicsHolder, offset) -> {
+                        // 应用矩阵变换
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
+                        // 绘制纹理
+                        IDrawing.drawTexture(
+                                graphicsHolder,
+                                x,
+                                y,
+                                width,
+                                height,
+                                u1,
+                                v1,
+                                u2,
+                                v2,
+                                facing,
+                                color,
+                                light
+                        );
+                        graphicsHolder.pop();
+                    }
+            );
+        }
+
     }
 
     // 计算尺寸
@@ -145,6 +162,18 @@ public class ImageView implements RenderView {
         this.marginTop = top;
         this.marginRight = right;
         this.marginBottom = bottom;
+    }
+
+    protected void setUv(float u1, float v1, float u2, float v2){
+        this.u1 = u1;
+        this.u2 = u2;
+        this.v1 = v1;
+        this.v2 = v2;
+    }
+
+    public void setAnimationBliking(boolean needBlink, float blinkInterval){
+        this.needBlink = needBlink;
+        this.blinkInterval = blinkInterval;
     }
 
     @Override

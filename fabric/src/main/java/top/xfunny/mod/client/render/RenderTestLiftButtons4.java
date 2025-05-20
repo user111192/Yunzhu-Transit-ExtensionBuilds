@@ -153,14 +153,15 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                final NewLiftArrowView liftArrowView = new NewLiftArrowView();
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), NewLiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png"));
-                liftArrowView.setArrowScrolling(true, 0.05F);
-                liftArrowView.setWidth((float) 2 / 16);
-                liftArrowView.setHeight((float) 2 / 16);
+                //liftArrowView.setAnimationScrolling(true, 0.05F);
+                liftArrowView.setAnimationBliking(true, 0.5F);
+                liftArrowView.setDimension(2F / 16);//不填高度默认宽高比为1:1
                 liftArrowView.setMargin(0, (float) 0.5 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setLight(light);
                 liftArrowView.setColor(0xFFFF0000);
 
                 //创建一个linear layout用于组合数字和箭头

@@ -39,6 +39,7 @@ public class TextView implements RenderView {
     protected float gameTick;
     protected String text;
     protected DynamicTextureCache.DynamicResource texture;
+    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
     protected float fixedWidth;
     protected float textWidth;
     protected float textHeight;
@@ -174,6 +175,10 @@ public class TextView implements RenderView {
 
     public void setAdaptMode(AdaptMode adaptMode) {
         this.adaptMode = adaptMode;
+    }
+
+    public void setQueuedRenderLayer(QueuedRenderLayer queuedRenderLayer) {
+        this.queuedRenderLayer = queuedRenderLayer;
     }
 
     protected void calculateTextPositionX() {
