@@ -25,7 +25,7 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private final int HOVER_COLOR = 0xFFFF9999;
-    private final int PRESSED_COLOR = 0xFFFF0000;
+    private final int PRESSED_COLOR = 0xFFBB0000;
     private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png");
     private final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_arrow.png");
     private final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png");

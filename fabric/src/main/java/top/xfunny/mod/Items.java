@@ -17,6 +17,7 @@ public class Items {
     public static final ItemRegistryObject HITACHI_B85_DOOR_1;
     public static final ItemRegistryObject KONE_M_DOOR_1;
     public static final ItemRegistryObject MITSUBISHI_NEXWAY_DOOR_1;
+    public static final ItemRegistryObject OTIS_E411_US_DOOR_1;
     public static final ItemRegistryObject SCHINDLER_QKS9_DOOR_1;
 
 
@@ -33,6 +34,7 @@ public class Items {
         HITACHI_B85_DOOR_1 = Init.REGISTRY.registerItem(new Identifier(Init.MOD_ID, "hitachi_b85_door_1"), itemSettings -> new Item(new ItemPSDAPGBase(ItemPSDAPGBase.EnumPSDAPGItem.PSD_APG_DOOR, ItemPSDAPGBase.EnumPSDAPGType.HITACHI_B85_DOOR_1, itemSettings)), CreativeModeTabs.YTE_LIFT_DOORS);
         KONE_M_DOOR_1 = Init.REGISTRY.registerItem(new Identifier(Init.MOD_ID, "kone_m_door_1"), itemSettings -> new Item(new ItemPSDAPGBase(ItemPSDAPGBase.EnumPSDAPGItem.PSD_APG_DOOR, ItemPSDAPGBase.EnumPSDAPGType.KONE_M_DOOR_1, itemSettings)), CreativeModeTabs.YTE_LIFT_DOORS);
         MITSUBISHI_NEXWAY_DOOR_1 = Init.REGISTRY.registerItem(new Identifier(Init.MOD_ID, "mitsubishi_nexway_door_1"), itemSettings -> new Item(new ItemPSDAPGBase(ItemPSDAPGBase.EnumPSDAPGItem.PSD_APG_DOOR, ItemPSDAPGBase.EnumPSDAPGType.MITSUBISHI_NEXWAY_DOOR_1, itemSettings)), CreativeModeTabs.YTE_LIFT_DOORS);
+        OTIS_E411_US_DOOR_1 = Init.REGISTRY.registerItem(new Identifier(Init.MOD_ID, "otis_e411_us_door_1"), itemSettings -> new Item(new ItemPSDAPGBase(ItemPSDAPGBase.EnumPSDAPGItem.PSD_APG_DOOR, ItemPSDAPGBase.EnumPSDAPGType.OTIS_E411_US_DOOR_1, itemSettings)), CreativeModeTabs.YTE_LIFT_DOORS);
         SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerItem(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), itemSettings -> new Item(new ItemPSDAPGBase(ItemPSDAPGBase.EnumPSDAPGItem.PSD_APG_DOOR, ItemPSDAPGBase.EnumPSDAPGType.SCHINDLER_QKS9_DOOR_1, itemSettings)), CreativeModeTabs.YTE_LIFT_DOORS);
     }
 
