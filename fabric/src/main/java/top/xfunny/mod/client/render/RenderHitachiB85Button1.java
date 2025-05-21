@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
@@ -171,18 +172,16 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setTextureId("hitachi_b85_screen_1_display");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
-
                 liftFloorDisplayView.setMargin((float) 0.2 / 16, (float) 0.2 / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.4 / 16);
-                liftArrowView.setHeight((float) 0.4 / 16);
+                liftArrowView.setDimension(0.4F / 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setMargin(0, 0, 0, (float) 0.2 / 16);
                 liftArrowView.setColor(0xFFFF0000);
 

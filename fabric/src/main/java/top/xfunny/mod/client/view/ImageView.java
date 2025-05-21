@@ -1,6 +1,7 @@
 package top.xfunny.mod.client.view;
 
 import org.mtr.mapping.holder.*;
+import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.IDrawing;
@@ -24,7 +25,7 @@ public class ImageView implements RenderView {
     protected BlockPos blockPos;
     private Identifier texture;
     private float scale;
-    private int light;
+    private int light = GraphicsHolder.getDefaultLight();
     protected int color = ARGB_WHITE;
     private float u1 = 1, u2 = 0, v1 = 1, v2 = 0;
     private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
@@ -54,8 +55,7 @@ public class ImageView implements RenderView {
         this.light = light;
     }
 
-    public void setLight(int light, QueuedRenderLayer queuedRenderLayer) {
-        this.light = light;
+    public void setQueuedRenderLayer(QueuedRenderLayer queuedRenderLayer) {
         this.queuedRenderLayer = queuedRenderLayer;
     }
 

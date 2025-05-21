@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.KoneKDS330Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
@@ -174,13 +175,12 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.5 / 16);
-                liftArrowView.setHeight((float) 0.5 / 16);
+                liftArrowView.setDimension(0.5F/16);
                 liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setColor(0xFFFFFFFF);
 
                 //创建一个linear layout用于组合数字和箭头

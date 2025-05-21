@@ -12,12 +12,10 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
-import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.KoneKDS330Lantern1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;
@@ -25,8 +23,6 @@ import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
-
-import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFFFCC00;

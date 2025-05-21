@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.MitsubishiNexWayButton2LCD1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
@@ -174,11 +175,10 @@ public class RenderMitsubishiNexWayButton2LCD1 extends BlockEntityRenderer<Mitsu
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.75 / 16);
-                liftArrowView.setHeight((float) 0.75 / 16);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowView.setDimension(0.75F/16);
                 liftArrowView.setMargin(0, (float) 1.67 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFFFFF);
