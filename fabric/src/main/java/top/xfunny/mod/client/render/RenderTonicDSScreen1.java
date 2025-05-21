@@ -100,18 +100,30 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
-                liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
-                liftArrowView.setDimension(0.625F/16);
-                liftArrowView.setMargin((float) 1.125 / 16, (float) 3 / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
-                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFFF0000);
+                final LiftArrowView liftArrowView_right = new LiftArrowView();
+                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
+                liftArrowView_right.setAnimationScrolling(false, 0.05F);
+                liftArrowView_right.setDimension(0.625F / 16);
+                liftArrowView_right.setMargin((float) 1.125 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowView_right.setColor(0xFFFF0000);
 
-                parentLayout.addChild(liftArrowView);
+                final LiftArrowView liftArrowView_left = new LiftArrowView();
+                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
+                liftArrowView_left.setAnimationScrolling(false, 0.05F);
+                liftArrowView_left.setDimension(0.625F / 16);
+                liftArrowView_left.setMargin((float) -5.75 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowView_left.setColor(0xFFFF0000);
+
+
                 parentLayout.addChild(liftFloorDisplayView);
-                parentLayout.addChild(liftArrowView);
+                parentLayout.addChild(liftArrowView_right);
+                parentLayout.addChild(liftArrowView_left);
 
             }
         }

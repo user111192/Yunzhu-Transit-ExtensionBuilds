@@ -63,44 +63,26 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
             graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
         });
 
-        //创建一个纵向的linear layout作为最底层的父容器
-        final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        final FrameLayout parentLayout = new FrameLayout();
+        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
-        parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
-        parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
+        parentLayout.setParentDimensions(2.05F / 16,  5.8F / 16);
+        parentLayout.setPosition(-1.025F/16,1.1F/16);
+        parentLayout.setWidth(LayoutSize.MATCH_PARENT);
+        parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        //创建一个横向的linear layout用于放置显示屏
-        final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
-        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
-        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 0.7 / 16, 0, 0);//设置外边距，可选
-
-
-        //创建一个FrameLayout用于在剩余的空间中放置按钮
-        final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
-        buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.8 / 16, 0, 0);
-
-        //添加按钮
         final LiftButtonView button = new LiftButtonView();
         button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
-        button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(0.9F / 16);//按钮宽度
-        button.setHeight(0.9F / 16);//按钮高度
-        button.setSpacing(0.5F / 16);//两个按钮的间距
-        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
+        button.setPressedColor(0xFFFFFFFF);
+        button.setHoverColor(0xFFFFFFFF);
+        button.setTexture(BUTTON_TEXTURE, true);
+        button.setWidth(0.9F / 16);
+        button.setHeight(0.9F / 16);
+        button.setSpacing(0.5F / 16);
+        button.setGravity(Gravity.CENTER);
 
         final LiftButtonView buttonLight = new LiftButtonView();
         buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
@@ -149,44 +131,9 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
-        if (!sortedPositionsAndLifts.isEmpty()) {
-            // 确定要渲染的电梯数量，这里设置为2个
-            final int count = Math.min(2, sortedPositionsAndLifts.size());
-            final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
+        parentLayout.addChild(button);
+        parentLayout.addChild(buttonLight);
 
-
-            for (int i = 0; i < count; i++) {
-                //添加箭头
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
-                liftArrowView.setDimension(1F/24);
-                liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setMargin(0, (float) 1 / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setColor(0xFFFFAA00);
-
-                //创建一个linear layout用于组合数字和箭头
-                final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
-                numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
-                numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                numberLayout.addChild(liftArrowView);
-                //将外呼显示屏添加到刚才设定的screenLayout线性布局中
-                if (reverseRendering) {
-                    screenLayout.addChild(numberLayout);
-                    screenLayout.reverseChildren();
-                } else {
-                    screenLayout.addChild(numberLayout);
-                }
-            }
-        }
-
-        buttonLayout.addChild(button);//将按钮添加到线性布局中进行渲染
-        buttonLayout.addChild(buttonLight);
-        parentLayout.addChild(screenLayout);//将screenLayout添加到父容器中
-        parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
-
-        parentLayout.render();//渲染父容器
+        parentLayout.render();
     }
 }

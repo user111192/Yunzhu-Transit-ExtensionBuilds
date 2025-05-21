@@ -161,7 +161,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(arrowTexture);
-                liftArrowView.setAnimationScrolling(false, 0.05F);
+                liftArrowView.setAnimationScrolling(true, 0.05F);
                 liftArrowView.setDimension(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
                 liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8 / 16 : 0, (float) 3 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
