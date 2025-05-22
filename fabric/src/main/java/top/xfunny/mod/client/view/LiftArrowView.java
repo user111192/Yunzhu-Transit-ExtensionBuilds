@@ -20,7 +20,6 @@ public class LiftArrowView extends ImageView{
         float gameTick = InitClient.getGameTick();
         ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
         final LiftDirection liftDirection = liftDetails.left();
-
         final float[] uv = uv(liftDirection, gameTick);
         setUv(uv[0], uv[1], uv[2], uv[3]);
 

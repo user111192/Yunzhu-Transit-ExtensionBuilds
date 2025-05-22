@@ -56,6 +56,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 7F / 16-SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器

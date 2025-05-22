@@ -38,7 +38,7 @@ public class LinearLayout implements RenderView {
     private LayoutSize widthType = LayoutSize.WRAP_CONTENT;
     private LayoutSize heightType = LayoutSize.WRAP_CONTENT;
     private String id;
-    private int backgroundColor = 0x00000000;
+    private int backgroundColor;
     private Consumer<GraphicsHolder> transformation;
 
     public LinearLayout(Boolean isVertical) {
@@ -56,8 +56,6 @@ public class LinearLayout implements RenderView {
 
     @Override
     public void render() {
-        BlockState blockState = world.getBlockState(blockPos);
-        Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         if (transformation != null) {
             storedMatrixTransformations.add(transformation);
         }
@@ -66,20 +64,32 @@ public class LinearLayout implements RenderView {
         calculateLayoutHeight();
         calculateSelfCoordinateOrigin();
 
-        StoredMatrixTransformations storedMatrixTransformations3 = storedMatrixTransformations.copy();
-        storedMatrixTransformations3.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, 0.44 - SMALL_OFFSET);
+
+
+
+        if(backgroundColor != 0){
+            StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
+            storedMatrixTransformations1.add(graphicsHolder -> {
+
+            });
+            MainRenderer.scheduleRender(
+                    new Identifier(Init.MOD_ID, "textures/block/white.png"),
+                    false,
+                    QueuedRenderLayer.LIGHT_TRANSLUCENT,
+                    (graphicsHolder, offset) -> {
+                        storedMatrixTransformations.transform(graphicsHolder, offset);
+                        IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0, 0, 1, 1, Direction.UP, backgroundColor, 15);
+                        graphicsHolder.pop();
+                    });
+        }
+
+        StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations.copy();
+        storedMatrixTransformations2.add(graphicsHolder -> {
+            graphicsHolder.translate(0, 0, (backgroundColor!=0 ? 2:0) * -SMALL_OFFSET) ;
         });
 
-        MainRenderer.scheduleRender(
-                new Identifier(Init.MOD_ID, "textures/block/white.png"),
-                false,
-                QueuedRenderLayer.LIGHT_TRANSLUCENT,
-                (graphicsHolder, offset) -> {
-                    storedMatrixTransformations3.transform(graphicsHolder, offset);
-                    IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0, 0, 1, 1, Direction.UP, backgroundColor, 15);
-                    graphicsHolder.pop();
-                });
+
+
 
         float offset = 0, remainingWidth = width, remainingHeight = height;
 
@@ -88,7 +98,7 @@ public class LinearLayout implements RenderView {
             float[] margin = child.getMargin();
             Gravity childGravity = child.getGravity();
             child.setParentType(this);
-            child.setStoredMatrixTransformations(storedMatrixTransformations);
+            child.setStoredMatrixTransformations(storedMatrixTransformations2);
 
             if (isVertical) {
                 child.setParentDimensions(width, remainingHeight);

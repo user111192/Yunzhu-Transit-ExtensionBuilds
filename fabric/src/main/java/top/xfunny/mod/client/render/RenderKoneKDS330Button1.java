@@ -61,7 +61,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.5F / 16 - SMALL_OFFSET);
         });
 
 

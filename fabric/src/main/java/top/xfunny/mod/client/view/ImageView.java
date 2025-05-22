@@ -72,7 +72,6 @@ public class ImageView implements RenderView {
         Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
-        storedMatrixTransformations1.add(graphicsHolder -> graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET));
 
         // 闪烁逻辑
         boolean shouldRender = true;

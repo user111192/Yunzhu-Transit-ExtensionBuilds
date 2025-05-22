@@ -62,7 +62,7 @@ public class RenderMitsubishiMaxiezButton1Gold extends BlockEntityRenderer<Mitsu
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.063 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.95F/16 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器

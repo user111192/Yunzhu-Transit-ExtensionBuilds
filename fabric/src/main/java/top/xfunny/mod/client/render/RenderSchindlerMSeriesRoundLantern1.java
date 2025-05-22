@@ -60,7 +60,7 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.01 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.15F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

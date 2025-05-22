@@ -65,7 +65,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(-0.5, 0, 0.060 - SMALL_OFFSET);
+            graphicsHolder.translate(-0.5, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final LineComponent line = new LineComponent();

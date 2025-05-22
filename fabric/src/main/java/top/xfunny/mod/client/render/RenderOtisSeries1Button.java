@@ -52,6 +52,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 7F/16 - SMALL_OFFSET);
         });
 
         FrameLayout parentLayout = new FrameLayout();
@@ -68,9 +69,6 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
         backgroundLayout.setBackgroundColor(0xFD000000);
-        backgroundLayout.addStoredMatrixTransformations(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, -3 * SMALL_OFFSET);
-        });
 
         LinearLayout buttonLayout = new LinearLayout(false);
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());

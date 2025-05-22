@@ -58,7 +58,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, -0.115, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, -0.115, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

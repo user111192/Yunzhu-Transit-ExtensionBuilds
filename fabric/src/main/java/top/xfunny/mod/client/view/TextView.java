@@ -70,7 +70,7 @@ public class TextView implements RenderView {
         this.facing = IBlock.getStatePropertySafe(blockState, FACING);
         storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+
         });
 
         if (transformation != null) {

@@ -60,7 +60,7 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.5F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

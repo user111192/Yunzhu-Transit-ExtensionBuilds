@@ -59,7 +59,7 @@ public class LiftButtonView implements RenderView {
         this.storedMatrixTransformations1 = storedMatrixTransformations.copy();
 
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+
         });
         dynamicRender();
     }

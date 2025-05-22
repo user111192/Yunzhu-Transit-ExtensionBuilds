@@ -54,7 +54,7 @@ public class ButtonView implements RenderView {
         }
 
         storedMatrixTransformations1.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, 0.4375 - SMALL_OFFSET);
+
         });
 
         MainRenderer.scheduleRender(
