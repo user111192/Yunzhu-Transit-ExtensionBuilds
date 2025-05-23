@@ -65,7 +65,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(-0.5, 0, 0.060 - SMALL_OFFSET);
+            graphicsHolder.translate(-0.5, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final LineComponent line = new LineComponent();
@@ -111,7 +111,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
             textView.setWidth(11F / 16);
             textView.setHeight(2F / 16);
             textView.setMargin((float) 1 / 16, (float) 1 / 16, 0, 0);
-            textView.setTextAlign(LiftFloorDisplayView.TextAlign.LEFT);
+            textView.setTextAlign(TextView.HorizontalTextAlign.LEFT);
 
             final ButtonView number1 = new ButtonView();
             number1.setId("number1");

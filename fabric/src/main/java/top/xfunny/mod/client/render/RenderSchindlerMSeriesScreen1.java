@@ -51,7 +51,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -104,7 +104,7 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                 liftFloorDisplayView.setWidth((float) 2 / 16);
                 liftFloorDisplayView.setHeight((float) 3 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));

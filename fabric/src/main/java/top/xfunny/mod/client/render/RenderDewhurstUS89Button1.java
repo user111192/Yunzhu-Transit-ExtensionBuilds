@@ -57,7 +57,7 @@ public class RenderDewhurstUS89Button1 extends BlockEntityRenderer<DewhurstUS89B
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, -0.115, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, -0.115, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

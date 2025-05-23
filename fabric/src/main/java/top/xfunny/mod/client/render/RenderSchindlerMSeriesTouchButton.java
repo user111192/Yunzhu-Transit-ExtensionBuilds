@@ -18,6 +18,7 @@ import top.xfunny.mod.block.SchindlerMSeriesTouchButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.ImageView;
+import top.xfunny.mod.client.view.LiftButtonView;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
@@ -58,7 +59,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -74,10 +75,11 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         schindlerLogo.setTexture(LOGO);
         schindlerLogo.setWidth((float) 0.3 / 16);
         schindlerLogo.setScale(16);//原图高度除以宽度
+        schindlerLogo.setLight(light);
         schindlerLogo.setMargin(0, 0, (float) 0.2 / 16, 0);
         schindlerLogo.setGravity(Gravity.END);
 
-        top.xfunny.mod.client.view.LiftButtonView button = new top.xfunny.mod.client.view.LiftButtonView();
+        LiftButtonView button = new LiftButtonView();
         button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
@@ -90,7 +92,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         button.setSpacing(0.75F / 16);
         button.setGravity(Gravity.CENTER);
 
-        top.xfunny.mod.client.view.LiftButtonView buttonLight = new top.xfunny.mod.client.view.LiftButtonView();
+        LiftButtonView buttonLight = new LiftButtonView();
         buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFFFFFFFF);

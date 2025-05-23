@@ -14,7 +14,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.DewhurstUS89Button1;
 import top.xfunny.mod.block.DewhurstUS91Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.Gravity;
@@ -58,7 +57,7 @@ public class RenderDewhurstUS91Button1 extends BlockEntityRenderer<DewhurstUS91B
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, -0.115, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, -0.115, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

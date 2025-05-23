@@ -14,10 +14,7 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.OtisSeries1Screen;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftFloorDisplayView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
@@ -53,6 +50,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 7F/16 - SMALL_OFFSET);
         });
 
         FrameLayout parentLayout = new FrameLayout();
@@ -99,7 +97,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
                 liftFloorDisplayView.setWidth((float) 2.8 / 16);
                 liftFloorDisplayView.setHeight((float) 4 / 16);
                 liftFloorDisplayView.setMargin(0, 0, (float) 0.8 / 16, 0);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setDisplayLength(2, 0);
 
                 backgroundLayout.addChild(liftFloorDisplayView);

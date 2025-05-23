@@ -12,6 +12,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.TestLiftButtons;
@@ -55,6 +56,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
+            graphicsHolder.translate(0, 0, 7F / 16-SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -150,18 +152,19 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 liftFloorDisplayView.setWidth((float) 3 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 3 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png"));
-                liftArrowView.setArrowScrolling(true, 0.05F);
-                liftArrowView.setWidth((float) 2 / 16);
-                liftArrowView.setHeight((float) 2 / 16);
+                //liftArrowView.setAnimationScrolling(true, 0.05F);
+                liftArrowView.setAnimationBliking(true, 0.5F);
+                liftArrowView.setDimension(2F / 16);//不填高度默认宽高比为1:1
                 liftArrowView.setMargin(0, (float) 0.5 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFF0000);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);

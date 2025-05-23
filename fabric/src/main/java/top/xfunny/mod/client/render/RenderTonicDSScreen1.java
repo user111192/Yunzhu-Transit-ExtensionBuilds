@@ -11,6 +11,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.TonicDSScreen1Even;
@@ -52,7 +53,7 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -93,36 +94,37 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.RIGHT);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setDisplayLength(5, 0.01F);
+                liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView_right = new LiftArrowView();
-                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
-                liftArrowView_right.setArrowScrolling(false, 0.05F);
-                liftArrowView_right.setWidth((float) 0.625 / 16);
-                liftArrowView_right.setHeight((float) 0.625 / 16);
+                liftArrowView_right.setAnimationScrolling(false, 0.05F);
+                liftArrowView_right.setDimension(0.625F / 16);
                 liftArrowView_right.setMargin((float) 1.125 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_right.setColor(0xFFFF0000);
 
                 final LiftArrowView liftArrowView_left = new LiftArrowView();
-                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
-                liftArrowView_left.setArrowScrolling(false, 0.05F);
-                liftArrowView_left.setWidth((float) 0.625 / 16);
-                liftArrowView_left.setHeight((float) 0.625 / 16);
+                liftArrowView_left.setAnimationScrolling(false, 0.05F);
+                liftArrowView_left.setDimension(0.625F / 16);
                 liftArrowView_left.setMargin((float) -5.75 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
+                liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_left.setColor(0xFFFF0000);
 
 
                 parentLayout.addChild(liftFloorDisplayView);
                 parentLayout.addChild(liftArrowView_right);
                 parentLayout.addChild(liftArrowView_left);
+
             }
         }
         parentLayout.render();

@@ -15,10 +15,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.DewhurstUS91Button1Braille;
-import top.xfunny.mod.block.SchindlerMSeriesTouchButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.ImageView;
+import top.xfunny.mod.client.view.LiftButtonView;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
@@ -59,7 +58,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, -0.115, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, -0.115, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -70,7 +69,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         parentLayout.setWidth(top.xfunny.mod.client.view.LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(top.xfunny.mod.client.view.LayoutSize.MATCH_PARENT);
 
-        top.xfunny.mod.client.view.LiftButtonView button = new top.xfunny.mod.client.view.LiftButtonView();
+        LiftButtonView button = new LiftButtonView();
         button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setDefaultColor(0xFFFFFFFF);
@@ -83,7 +82,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         button.setSpacing(0.5F / 16);
         button.setGravity(Gravity.CENTER);
 
-        top.xfunny.mod.client.view.LiftButtonView buttonLight = new top.xfunny.mod.client.view.LiftButtonView();
+        LiftButtonView buttonLight = new LiftButtonView();
         buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setDefaultColor(0xFF000000);

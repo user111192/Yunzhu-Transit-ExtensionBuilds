@@ -72,7 +72,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(-0.5, 0, 0.003);
+            graphicsHolder.translate(-0.5, 0, 7F/16 - SMALL_OFFSET);
         });
 
         final LineComponent line = new LineComponent();
@@ -94,7 +94,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         group1.setWidth(LayoutSize.MATCH_PARENT);
         group1.setHeight(LayoutSize.WRAP_CONTENT);
         group1.setMargin(1.25F / 16, screenId.equals("schindler_z_line_3_keypad_1_key_mapping_input") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_accessibility") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_identifier") ? 1.175F / 16 : 5.6F / 16, 0, 0);
-        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.013));
+        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, 0.2F / 16));
 
         final LinearLayout group2 = new LinearLayout(false);
         group2.setBasicsAttributes(world, blockEntity.getPos2());
@@ -128,7 +128,8 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
             imageView.setWidth(3.5F / 16);
             imageView.setScale(2.575F / 3.5F);
-            imageView.setLight(light, QueuedRenderLayer.LIGHT_TRANSLUCENT);
+            imageView.setLight(light);
+            imageView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageView.setGravity(Gravity.CENTER);
 
             final TextView textView = new TextView();
@@ -139,7 +140,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             textView.setText(ArrayListToString.arrayListToString(inputNumber));
             textView.setWidth(2F / 16);
             textView.setHeight(2F / 16);
-            textView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+            textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
             textView.setGravity(Gravity.CENTER);
 
             textBackgroundLayout.addChild(imageView);
@@ -160,7 +161,8 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
             imageView.setWidth(3.5F / 16);
             imageView.setScale(2.575F / 3.5F);
-            imageView.setLight(light, QueuedRenderLayer.LIGHT_TRANSLUCENT);
+            imageView.setLight(light);
+            imageView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageView.setGravity(Gravity.CENTER);
 
             final ImageView imageAccessibility = new ImageView();
@@ -168,7 +170,8 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             imageAccessibility.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_z_line_keypad/accessibility_icon.png"));
             imageAccessibility.setWidth(1F / 16);
             imageAccessibility.setScale(1);
-            imageAccessibility.setLight(light, QueuedRenderLayer.LIGHT_TRANSLUCENT);
+            imageAccessibility.setLight(light);
+            imageAccessibility.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageAccessibility.setGravity(Gravity.CENTER);
 
             textBackgroundLayout.addChild(imageView);

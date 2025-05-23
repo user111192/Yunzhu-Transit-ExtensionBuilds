@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.HitachiB85Button2;
@@ -62,7 +63,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -174,15 +175,14 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
 
                 liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.1 / 16, 0, 0);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 0.55 / 16);
-                liftArrowView.setHeight((float) 0.55 / 16);
+                liftArrowView.setDimension(0.55F/16);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setMargin(0, (float) 1.5 / 16, 0, 0);
                 liftArrowView.setColor(0xFFFF0000);

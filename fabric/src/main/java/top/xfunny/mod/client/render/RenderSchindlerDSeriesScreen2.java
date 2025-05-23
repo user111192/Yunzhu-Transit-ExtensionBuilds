@@ -12,6 +12,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerDSeriesScreen2BlueEven;
@@ -83,7 +84,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.062 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -149,7 +150,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(-30);
                 liftFloorDisplayView.setDisplayLength( 2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(10);
@@ -158,14 +159,14 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(arrowTexture);
-                liftArrowView.setArrowScrolling(true, 0.05F);
-                liftArrowView.setWidth(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
-                liftArrowView.setHeight(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
+                liftArrowView.setAnimationScrolling(true, 0.05F);
+                liftArrowView.setDimension(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
                 liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8 / 16 : 0, (float) 3 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(fontColor);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
 
                 parentLayout.addChild(liftArrowView);
                 parentLayout.addChild(liftFloorDisplayView);

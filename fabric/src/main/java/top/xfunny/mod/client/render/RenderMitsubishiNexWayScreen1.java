@@ -19,10 +19,7 @@ import top.xfunny.mod.block.MitsubishiNexWayScreen1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ClientGetLiftDetails;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LiftFloorDisplayView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
@@ -64,7 +61,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.0597 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -190,7 +187,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
-                liftFloorDisplayView.setTextAlign(LiftFloorDisplayView.TextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
                 liftFloorDisplayView.setMargin((float) 0.6 / 16, 0, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);

@@ -102,6 +102,8 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
                 return top.xfunny.mod.Blocks.SCHINDLER_QKS9_DOOR_1.get().getDefaultState();
             case MITSUBISHI_NEXWAY_DOOR_1:
                 return top.xfunny.mod.Blocks.MITSUBISHI_NEXWAY_DOOR_1.get().getDefaultState();
+            case OTIS_E411_US_DOOR_1:
+                return top.xfunny.mod.Blocks.OTIS_E411_US_DOOR_1.get().getDefaultState();
             default:
                 return org.mtr.mapping.holder.Blocks.getAirMapped().getDefaultState();
         }
@@ -109,7 +111,7 @@ public class ItemPSDAPGBase extends ItemExtension implements IBlock {
 
     public enum EnumPSDAPGType {
 
-        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true), KONE_M_DOOR_1(false, false, true), HITACHI_B85_DOOR_1(false, false, true),
+        SCHINDLER_QKS9_DOOR_1(false, false, true), MITSUBISHI_NEXWAY_DOOR_1(false, false, true), KONE_M_DOOR_1(false, false, true), HITACHI_B85_DOOR_1(false, false, true), OTIS_E411_US_DOOR_1(false, false, true),
         ;
 
 

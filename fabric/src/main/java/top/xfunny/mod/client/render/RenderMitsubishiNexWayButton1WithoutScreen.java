@@ -13,6 +13,7 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.MitsubishiNexWayButton1WithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
@@ -59,7 +60,7 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.037 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.5F/16 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -157,12 +158,11 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
             for (int i = 0; i < count; i++) {
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right());
-                liftArrowView.setArrowScrolling(false, 0.05F);
-                liftArrowView.setWidth((float) 1 / 24);
-                liftArrowView.setHeight((float) 1 / 24);
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setDimension(1F/24);
                 liftArrowView.setMargin(0, (float) 1 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setColor(0xFFFFAA00);
 
                 //创建一个linear layout用于组合数字和箭头

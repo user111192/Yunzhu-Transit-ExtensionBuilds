@@ -22,6 +22,7 @@ import top.xfunny.mod.client.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.ImageView;
 import top.xfunny.mod.client.view.LiftButtonView;
+import top.xfunny.mod.client.view.TextView;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
@@ -64,7 +65,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 0.0597 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -197,7 +198,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
-                liftFloorDisplayView.setTextAlign(top.xfunny.mod.client.view.LiftFloorDisplayView.TextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
                 liftFloorDisplayView.setMargin((float) -0.225 / 16, (float) 1.2 / 16, (float) 0.6 / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
