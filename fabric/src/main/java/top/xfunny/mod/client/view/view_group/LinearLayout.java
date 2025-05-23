@@ -58,26 +58,24 @@ public class LinearLayout implements RenderView {
     public void render() {
         if (transformation != null) {
             storedMatrixTransformations.add(transformation);
-        }
+            }
 
         calculateLayoutWidth();
         calculateLayoutHeight();
         calculateSelfCoordinateOrigin();
 
 
-
-
         if(backgroundColor != 0){
             StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
             storedMatrixTransformations1.add(graphicsHolder -> {
-
+                graphicsHolder.translate(0, 0,- SMALL_OFFSET);
             });
             MainRenderer.scheduleRender(
                     new Identifier(Init.MOD_ID, "textures/block/white.png"),
                     false,
                     QueuedRenderLayer.LIGHT_TRANSLUCENT,
                     (graphicsHolder, offset) -> {
-                        storedMatrixTransformations.transform(graphicsHolder, offset);
+                        storedMatrixTransformations1.transform(graphicsHolder, offset);
                         IDrawing.drawTexture(graphicsHolder, x, y, width, height, 0, 0, 1, 1, Direction.UP, backgroundColor, 15);
                         graphicsHolder.pop();
                     });
@@ -87,8 +85,6 @@ public class LinearLayout implements RenderView {
         storedMatrixTransformations2.add(graphicsHolder -> {
             graphicsHolder.translate(0, 0, (backgroundColor!=0 ? 2:0) * -SMALL_OFFSET) ;
         });
-
-
 
 
         float offset = 0, remainingWidth = width, remainingHeight = height;
@@ -128,7 +124,6 @@ public class LinearLayout implements RenderView {
     public void setBasicsAttributes(World world, BlockPos blockPos) {
         this.world = world;
         this.blockPos = blockPos;
-        this.storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
     }
 
     @Override
