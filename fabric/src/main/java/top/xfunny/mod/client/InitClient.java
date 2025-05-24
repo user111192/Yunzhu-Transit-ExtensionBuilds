@@ -76,6 +76,7 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_ELD_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3ELDScreen1<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_LANTERN_1_ARROW_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Lantern1Arrow<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_LANTERN_1_ARROW_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Lantern1Arrow<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_60_BUTTON_1, RenderOtisSPEC60Button1::new);
 
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_D2BUTTON, RenderSchindlerDSeriesD2Button::new);

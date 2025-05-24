@@ -43,6 +43,7 @@ public class Blocks {
     public static final BlockRegistryObject OTIS_SERIES_3_ELD_SCREEN_1_EVEN;
     public static final BlockRegistryObject OTIS_SERIES_3_LANTERN_1_ARROW_ODD;
     public static final BlockRegistryObject OTIS_SERIES_3_LANTERN_1_ARROW_EVEN;
+    public static final BlockRegistryObject OTIS_SPEC_60_BUTTON_1;
 
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1;
     public static final BlockRegistryObject MITSUBISHI_NEXWAY_BUTTON_1_SEGMENTED;
@@ -166,6 +167,7 @@ public class Blocks {
         OTIS_SERIES_3_ELD_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_eld_screen_1_even"), () -> new Block(new OtisSeries3ELDScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_LANTERN_1_ARROW_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_lantern_1_arrow_odd"), () -> new Block(new OtisSeries3Lantern1ArrowOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         OTIS_SERIES_3_LANTERN_1_ARROW_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_series_3_lantern_1_arrow_even"), () -> new Block(new OtisSeries3Lantern1ArrowEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        OTIS_SPEC_60_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "otis_spec_60_button_1"), () -> new Block(new OtisSPEC60Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         SCHINDLER_D_SERIES_D2BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_d2button"), () -> new Block(new SchindlerDSeriesD2Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_D_SERIES_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_d_series_screen_1_odd"), () -> new Block(new SchindlerDSeriesScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
