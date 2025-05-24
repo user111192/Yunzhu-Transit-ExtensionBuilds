@@ -264,7 +264,6 @@ public class FrameLayout implements RenderView {
     public void setBasicsAttributes(World world, BlockPos blockPos) {
         this.world = world;
         this.blockPos = blockPos;
-        this.storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
-    }
+        }
 }
 

@@ -28,7 +28,7 @@ public class ImageView implements RenderView {
     private int light = GraphicsHolder.getDefaultLight();
     protected int color = ARGB_WHITE;
     private float u1 = 1, u2 = 0, v1 = 1, v2 = 0;
-    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
+    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
     private boolean needBlink;
     private float blinkInterval = 0.5f;
 

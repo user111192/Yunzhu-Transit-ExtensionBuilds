@@ -15,7 +15,8 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.MitsubishiNexWayButton3Segmented;
+import top.xfunny.mod.block.MitsubishiNexWayButton2;
+import top.xfunny.mod.block.OtisSPEC60Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.util.ReverseRendering;
@@ -27,20 +28,20 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
-public class RenderMitsubishiNexWayButton3Segmented extends BlockEntityRenderer<MitsubishiNexWayButton3Segmented.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow_segmented.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_spec_60_arrow_1.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_ak10_button_1.png");
+    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_ak10_button_1_light.png");
 
-    public RenderMitsubishiNexWayButton3Segmented(Argument dispatcher) {
+    public RenderOtisSPEC60Button1(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiNexWayButton3Segmented.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(OtisSPEC60Button1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -61,7 +62,7 @@ public class RenderMitsubishiNexWayButton3Segmented extends BlockEntityRenderer<
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.5F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.95F/16 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -129,7 +130,7 @@ public class RenderMitsubishiNexWayButton3Segmented extends BlockEntityRenderer<
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            MitsubishiNexWayButton3Segmented.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            OtisSPEC60Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -162,36 +163,44 @@ public class RenderMitsubishiNexWayButton3Segmented extends BlockEntityRenderer<
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("mitsubishi_seg_universal"),//字体
-                        7,//字号
-                        0xFFFA7A24);//字体颜色
-                liftFloorDisplayView.setDisplayLength( 2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_3_segmented_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.4 / 16);//显示屏宽度
+                        FontList.instance.getFont("otis_series1"),//字体
+                        4,//字号
+                        0xFFFF0000);//字体颜色
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
+                liftFloorDisplayView.setTextureId("otis_spec_60_button_1_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth((float) 1.5 / 16);//显示屏宽度
+                liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin((float) -0.2 / 16, 0, (float) 0.3 / 16, 0);
+                liftFloorDisplayView.setMargin(0, (float) 0.5 / 16, 0, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
-                liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setWidth((float) 0.8 / 16);
-                liftArrowView.setHeight((float) 0.8 / 16);
-                liftArrowView.setMargin(0, (float) 1.07 / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setColor(0xFFFA7A24);
+                final LiftArrowView liftArrowViewUP = new LiftArrowView();
+                liftArrowViewUP.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
+                liftArrowViewUP.setTexture(ARROW_TEXTURE);
+                liftArrowViewUP.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowViewUP.setDimension(0.7F/16);
+                liftArrowViewUP.setMargin(0, (float) 1.07 / 16, 0, 0);
+                liftArrowViewUP.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowViewUP.setColor(0xFFFF0000);
+
+                final LiftArrowView liftArrowViewDown = new LiftArrowView();
+                liftArrowViewDown.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
+                liftArrowViewDown.setTexture(ARROW_TEXTURE);
+                liftArrowViewDown.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowViewDown.setDimension(0.7F/16);
+                liftArrowViewDown.setMargin(0, (float) 1.07 / 16, 0, 0);
+                liftArrowViewDown.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowViewDown.setColor(0xFFFF0000);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                numberLayout.addChild(liftArrowView);
+                numberLayout.addChild(liftArrowViewUP);
                 numberLayout.addChild(liftFloorDisplayView);
-                numberLayout.setBackgroundColor(0x00000000);
                 //将外呼显示屏添加到刚才设定的screenLayout线性布局中
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
