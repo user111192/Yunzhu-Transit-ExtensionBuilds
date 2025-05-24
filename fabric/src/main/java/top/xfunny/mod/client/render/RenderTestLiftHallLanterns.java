@@ -17,11 +17,9 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.TestLiftHallLanterns;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
@@ -31,6 +29,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 public class RenderTestLiftHallLanterns extends BlockEntityRenderer<TestLiftHallLanterns.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private final boolean isOdd;
+
 
     public RenderTestLiftHallLanterns(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);

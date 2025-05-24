@@ -15,10 +15,10 @@ import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class ImageView implements RenderView {
     // 基本属性
-    private String id;
+    protected String id;
     private StoredMatrixTransformations storedMatrixTransformations;
-    private float width, height;
-    private float x, y;
+    protected float width, height;
+    protected float x, y;
     private float marginLeft, marginTop, marginRight, marginBottom;
     private Gravity gravity;
     protected World world;
@@ -46,8 +46,38 @@ public class ImageView implements RenderView {
         this.texture = texture;
     }
 
-    public void setScale(float scale) {
+    /**
+     * 设置尺寸
+     * @param width 宽度
+     * @param rawWidth 贴图原始宽度
+     * @param rawHeight 贴图原始高度
+     */
+    public void setDimension(float width, float rawWidth, float rawHeight) {
+        float scale = rawHeight / rawWidth;
+        setWidth(width);
         this.scale = scale;
+        calculateDimensions();
+    }
+
+    /**
+     * 设置尺寸
+     * @param width 宽度
+     * @param scale 缩放比：贴图原始高度/贴图原始宽度
+     */
+    public void setDimension(float width, float scale) {
+        setWidth(width);
+        this.scale = scale;
+        calculateDimensions();
+    }
+
+    /**
+     * 设置尺寸
+     * 宽高比为1:1
+     * @param width 宽度
+     */
+    public void setDimension(float width) {
+        setWidth(width);
+        this.scale = 1;
         calculateDimensions();
     }
 

@@ -1,4 +1,4 @@
-package top.xfunny.mod.client.util;
+package top.xfunny.mod.util;
 
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
@@ -9,7 +9,7 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.World;
 import org.mtr.mod.block.BlockLiftTrackFloor;
 
-public class ClientGetLiftDetails {
+public class GetLiftDetails {
     public static ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> getLiftDetails(World world, Lift lift, BlockPos blockPos) {
         final LiftFloor liftFloor = lift.getCurrentFloor();
         final BlockEntity floorEntity = world.getBlockEntity(blockPos);

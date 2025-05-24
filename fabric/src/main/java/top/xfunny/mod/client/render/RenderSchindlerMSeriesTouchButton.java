@@ -73,8 +73,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         final ImageView schindlerLogo = new ImageView();
         schindlerLogo.setBasicsAttributes(world, blockEntity.getPos2());
         schindlerLogo.setTexture(LOGO);
-        schindlerLogo.setWidth((float) 0.3 / 16);
-        schindlerLogo.setScale(16);//原图高度除以宽度
+        schindlerLogo.setDimension(0.3F/16,16);
         schindlerLogo.setLight(light);
         schindlerLogo.setMargin(0, 0, (float) 0.2 / 16, 0);
         schindlerLogo.setGravity(Gravity.END);

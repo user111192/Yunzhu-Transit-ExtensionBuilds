@@ -19,7 +19,7 @@ import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 public class LiftButtonView implements RenderView {
 
     // 按钮状态、颜色、位置等字段
-    private boolean[] buttonStates = {false, false};  // 上下按钮状态
+    private final boolean[] buttonStates = {false, false};  // 上下按钮状态
     private Identifier upButtonTexture, downButtonTexture;
     private int defaultUpColor, defaultDownColor, hoverUpColor, hoverDownColor, pressedUpColor, pressedDownColor;
     private BlockPos blockPos;

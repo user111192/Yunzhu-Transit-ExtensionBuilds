@@ -17,7 +17,7 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;

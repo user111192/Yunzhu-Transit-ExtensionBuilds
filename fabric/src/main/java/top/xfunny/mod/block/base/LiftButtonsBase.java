@@ -13,6 +13,8 @@ import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.mod.Items;
 import top.xfunny.mod.*;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.TransformPositionX;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,13 +25,13 @@ import java.util.function.Consumer;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 ;
-
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity, IBlock {
     public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public static final BooleanProperty SINGLE = BooleanProperty.of("single");
     public static boolean allowPress;
     private final boolean isOdd;
     private double median = 0.25;//判定按下上、下按钮的分界线
+
 
 
     public LiftButtonsBase(boolean allowPress, boolean isOdd) {
@@ -97,21 +99,22 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                 // 检查按钮是否解锁，并处理客户端按钮按下逻辑
                 final boolean unlocked = IBlock.getStatePropertySafe(state, UNLOCKED);
                 final double hitY = MathHelper.fractionalPart(hit.getPos().getYMapped());
+                final BlockEntity blockEntity = world.getBlockEntity(pos);
+                final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
+                final DefaultButtonsKeyMapping keyMapping = data.getKeyMapping();
+                final String focusButton = keyMapping.mapping(TransformPositionX.transform(MathHelper.fractionalPart(hit.getPos().getXMapped()), MathHelper.fractionalPart(hit.getPos().getZMapped()), IBlock.getStatePropertySafe(state, FACING)), hitY);
+
+                Init.LOGGER.info(focusButton);
 
                 // 当按钮已解锁，且玩家点击到按钮区域时执行
-                if (unlocked && hitY < 0.5) {
+                if (unlocked) {
                     // 客户端按钮按下特殊处理
-                    if (world.isClient()) {
-
-                        final BlockEntity blockEntity = world.getBlockEntity(pos);
-                        final BlockEntityBase data = (BlockEntityBase) blockEntity.data;
-
+                    if (world.isClient() && !focusButton.equals("null")) {
                         ObjectOpenHashSet<BlockPos> connectedLanternPositions = data.getLiftButtonPositions();
 
                         // 检查并记录上下按钮状态
                         LiftButtonDescriptor descriptor = new LiftButtonDescriptor(false, false);
-                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {
-                        }));
+                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {}));
 
                         // 同时具有上下方向的按钮
                         if (descriptor.hasDownButton() && descriptor.hasUpButton()) {
@@ -126,10 +129,14 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                                         lanternData.setPressedButtonDirection(LiftDirection.UP);
                                     }
                                 }
-
                             });
 
-                            data.liftDirection = hitY < median ? LiftDirection.DOWN : LiftDirection.UP;
+                            if(focusButton.equals("up")){
+                                data.liftDirection = LiftDirection.UP;
+                            }else if (focusButton.equals("down")){
+                                data.liftDirection = LiftDirection.DOWN;
+                            }
+
                         } else {  // 只有单个方向的按钮
                             connectedLanternPositions.forEach(lanternPos -> {
                                 BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
@@ -144,7 +151,10 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                                 }
 
                             });
-                            data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
+
+                            if(focusButton.equals("up") || focusButton.equals("down")){
+                                data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
+                            }
                         }
 
                         // 创建并发送按电梯按钮事件
@@ -245,6 +255,8 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
         private LiftDirection pressedButtonDirection;
 
+        private DefaultButtonsKeyMapping keyMapping = new DefaultButtonsKeyMapping();
+
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);
         }
@@ -301,6 +313,15 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
         }
 
+        public void setKeyMapping(DefaultButtonsKeyMapping keyMapping){
+            this.keyMapping =  keyMapping;
+        }
+
+        public DefaultButtonsKeyMapping getKeyMapping(){
+            return keyMapping;
+        }
+
+
         /**
          * 注册或取消注册一个楼层位置
          * 该方法用于控制哪些楼层位置被跟踪以及在更改时标记数据为脏
@@ -354,8 +375,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                     liftButtonPositions.remove(blockPos);
                 }
             }
-
-
             markDirty2();
         }
 

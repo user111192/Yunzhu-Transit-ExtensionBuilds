@@ -19,7 +19,7 @@ import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.HitachiB85Button2;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
@@ -197,9 +197,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 final ImageView screenBackground = new ImageView();
                 screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
-                screenBackground.setWidth((float) 1.3 / 16);
-                screenBackground.setHeight((float) 0.6 / 16);
-                screenBackground.setScale((float) 131 / 113);
+                screenBackground.setDimension(1.3F /16,113,131);
                 screenBackground.setMargin(0, (float) 0.75 / 16, 0, 0);
                 screenBackground.setGravity(Gravity.CENTER);
 

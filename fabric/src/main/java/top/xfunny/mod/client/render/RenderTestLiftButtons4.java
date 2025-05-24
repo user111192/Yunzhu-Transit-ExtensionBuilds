@@ -19,7 +19,8 @@ import top.xfunny.mod.block.TestLiftButtons;
 import top.xfunny.mod.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
@@ -29,6 +30,8 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 import java.util.Comparator;
 
 public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
+    private DefaultButtonsKeyMapping  keyMapping;
+
     public RenderTestLiftButtons4(Argument argument) {
         super(argument);
     }
@@ -36,6 +39,9 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
     @Override
     public void render(TestLiftButtons.BlockEntity blockEntity, float v, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
+
+        keyMapping = blockEntity.getKeyMapping();
+
         if (world == null) {
             return;
         }
@@ -67,7 +73,6 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         parentLayout.setPosition((float) -0.25, (float) 0);//通过设置坐标的方式设置底层layout的位置
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
-        parentLayout.setId("parentLayout");//命名，可选
 
         //创建一个横向的linear layout用于放置显示屏
         final LinearLayout screenLayout = new LinearLayout(false);
@@ -78,25 +83,41 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         screenLayout.setMargin(0, (float) 2 / 16, 0, 0);//设置外边距，可选
         screenLayout.setBackgroundColor(0xFF000000);
 
-
         //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        //添加按钮
-        final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFD70000);//按钮按下时颜色
-        button.setHoverColor(0xFFEA7A7A);//准星瞄准时的颜色
-        button.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_line_d2button.png"), true);//按钮贴图
-        button.setWidth(3F / 16);//按钮宽度
-        button.setHeight(3F / 16);//按钮高度
-        button.setSpacing(0.5F / 16);//两个按钮的间距
-        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
+        final LinearLayout buttonGroup = new LinearLayout(true);
+        buttonGroup.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonGroup.setGravity(Gravity.CENTER);
+
+        NewButtonView buttonUp = new NewButtonView();
+        buttonUp.setId("up");//必须设置id
+        buttonUp.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
+        buttonUp.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
+        buttonUp.setDimension(3F / 16);
+        buttonUp.setDefaultColor(0xFFFFFFFF);
+        buttonUp.setPressedColor(0xFFFFCB3B);
+        buttonUp.setHoverColor(0xFFFF9933);
+        buttonUp.setGravity(Gravity.CENTER_HORIZONTAL);
+        buttonUp.setLight(light);
+
+        NewButtonView buttonDown = new NewButtonView();
+        buttonDown.setId("down");
+        buttonDown.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
+        buttonDown.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
+        buttonDown.setDimension(3F / 16);
+        buttonDown.setDefaultColor(0xFFFFFFFF);
+        buttonDown.setPressedColor(0xFF00FF00);
+        buttonDown.setHoverColor(0xFFCCFF66);
+        buttonDown.setGravity(Gravity.CENTER_HORIZONTAL);
+        buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
+
 
         //添加外呼与楼层轨道的连线
         final LineComponent line = new LineComponent();
@@ -118,16 +139,27 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                     switch (liftDirection) {
                         case DOWN:
                             //向下的按钮亮灯
-                            button.setDownButtonLight();
+                            buttonDown.activate();
                             break;
                         case UP:
                             //向上的按钮亮灯
-                            button.setUpButtonLight();
+                            buttonUp.activate();
                             break;
                     }
                 });
             });
         });
+
+        if(buttonDescriptor.hasUpButton()){
+            buttonGroup.addChild(buttonUp);
+        }
+
+        if(buttonDescriptor.hasDownButton()){
+            if(buttonDescriptor.hasUpButton()){
+                buttonDown.setMargin(0, 1F/ 16, 0, 0);
+            }
+            buttonGroup.addChild(buttonDown);
+        }
 
         //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
@@ -183,7 +215,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
             }
         }
 
-        buttonLayout.addChild(button);//将按钮添加到线性布局中进行渲染
+        buttonLayout.addChild(buttonGroup);//将按钮添加到线性布局中进行渲染
         parentLayout.addChild(screenLayout);//将screenLayout添加到父容器中
         parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
 
