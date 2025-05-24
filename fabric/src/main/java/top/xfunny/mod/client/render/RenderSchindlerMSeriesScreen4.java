@@ -24,10 +24,10 @@ import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
 
-public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
 
-    public RenderTonicDSScreen1(Argument dispatcher, Boolean isOdd) {
+    public RenderSchindlerMSeriesScreen4(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
         this.isOdd = isOdd;
     }
@@ -60,7 +60,7 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
-        parentLayout.setPosition(isOdd ? -0.284375F : -0.784375F, 0.5725F);
+        parentLayout.setPosition(isOdd ? -0.284375F : -0.784375F, 0.5025F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -87,35 +87,35 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("acmeled"),
-                        8,
+                        FontList.instance.getFont("schindler_m_series_segment"),
+                        3,
                         0xFFFF0000);
-                liftFloorDisplayView.setTextureId("tonic_ds_screen_1");
+                liftFloorDisplayView.setTextureId("schindler_m_series_screen_4");
                 liftFloorDisplayView.setWidth((float) 2.6 / 16);
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setDisplayLength(2, 0);
-                liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin((float) 1.225 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView_right = new LiftArrowView();
-                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
-                liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
+                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
+                liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_4_arrow.png"));
                 liftArrowView_right.setAnimationScrolling(false, 0.05F);
                 liftArrowView_right.setDimension(0.625F / 16);
-                liftArrowView_right.setMargin((float) 1.125 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_right.setMargin((float) 1.75 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_right.setColor(0xFFFF0000);
 
                 final LiftArrowView liftArrowView_left = new LiftArrowView();
-                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
-                liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
+                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
+                liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_4_arrow.png"));
                 liftArrowView_left.setAnimationScrolling(false, 0.05F);
                 liftArrowView_left.setDimension(0.625F / 16);
-                liftArrowView_left.setMargin((float) -5.75 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_left.setMargin((float) -6.5 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_left.setColor(0xFFFF0000);

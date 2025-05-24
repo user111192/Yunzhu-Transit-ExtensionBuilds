@@ -97,6 +97,8 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_2_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerMSeriesScreen2<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_3_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerMSeriesScreen3<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_3_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerMSeriesScreen3<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_4_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerMSeriesScreen4<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_M_SERIES_SCREEN_4_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerMSeriesScreen4<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_S_SERIES_GREY_BUTTON, RenderSchindlerSSeriesGreyButton::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_1_WHITE, RenderSchindlerLineaButton1White::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_Z_LINE_3_KEYPAD_1, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerZLine3Keypad1(dispatcher, true));

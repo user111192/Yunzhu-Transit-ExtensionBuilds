@@ -44,6 +44,7 @@ public class FontList {
             loadFont("wqy-microhei", "font/wqy-microhei.ttc");
             loadFont("thyssenkrupp_lcd", "font/new-thyssenkrupp.ttf");
             loadFont("kone-kss", "font/kone-kss-800-signalization.ttf");
+            loadFont("schindler_m_series_segment", "font/schindler_m_series_segment.ttf");
             fontsLoaded = true;
         }
     }

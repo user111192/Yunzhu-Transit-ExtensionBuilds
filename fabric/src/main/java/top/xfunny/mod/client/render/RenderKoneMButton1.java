@@ -185,7 +185,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 liftArrowViewDown.setTexture(ARROW_TEXTURE);
                 liftArrowViewDown.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowViewDown.setDimension(0.5F/16);
-                liftArrowViewDown.setMargin(0, 0, 0, 0);
+                liftArrowViewDown.setMargin(0, 0, 0, 1.37F / 16);
                 liftArrowViewDown.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowViewDown.setColor(0xFFFF0000);
 
