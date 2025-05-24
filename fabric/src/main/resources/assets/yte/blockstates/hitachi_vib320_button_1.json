@@ -6,7 +6,7 @@
         "single": "true"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1_single"
+        "model": "yte:block/hitachi_vib320_button_1_single"
       }
     },
     {
@@ -15,7 +15,7 @@
         "single": "true"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1_single",
+        "model": "yte:block/hitachi_vib320_button_1_single",
         "y": 90
       }
     },
@@ -25,7 +25,7 @@
         "single": "true"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1_single",
+        "model": "yte:block/hitachi_vib320_button_1_single",
         "y": 180
       }
     },
@@ -35,7 +35,7 @@
         "single": "true"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1_single",
+        "model": "yte:block/hitachi_vib320_button_1_single",
         "y": 270
       }
     },
@@ -45,7 +45,7 @@
         "single": "false"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1"
+        "model": "yte:block/hitachi_vib320_button_1"
       }
     },
     {
@@ -54,7 +54,7 @@
         "single": "false"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1",
+        "model": "yte:block/hitachi_vib320_button_1",
         "y": 90
       }
     },
@@ -64,7 +64,7 @@
         "single": "false"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1",
+        "model": "yte:block/hitachi_vib320_button_1",
         "y": 180
       }
     },
@@ -74,7 +74,7 @@
         "single": "false"
       },
       "apply": {
-        "model": "yte:block/hitachi_b85_button_1",
+        "model": "yte:block/hitachi_vib320_button_1",
         "y": 270
       }
     }
