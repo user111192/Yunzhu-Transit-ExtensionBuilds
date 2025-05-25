@@ -268,7 +268,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
          */
         @Override
         public void readCompoundTag(CompoundTag compoundTag) {
-
             // 清空当前位置集合，准备加载新的数据
             trackPositions.clear();
             liftButtonPositions.clear();

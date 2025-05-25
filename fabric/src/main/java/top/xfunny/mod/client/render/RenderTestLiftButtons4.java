@@ -42,6 +42,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         keyMapping = blockEntity.getKeyMapping();
 
+
         if (world == null) {
             return;
         }

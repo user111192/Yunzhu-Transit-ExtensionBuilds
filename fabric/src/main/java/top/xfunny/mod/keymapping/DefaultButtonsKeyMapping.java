@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultButtonsKeyMapping {
-    private Map<String, ButtonArea> buttonMap = new HashMap<>();
+    final private Map<String, ButtonArea> buttonMap = new HashMap<>();
 
     public void registerButton(String buttonName, float[] location, float[] dimension) {
         final String key = buttonName.toLowerCase();
@@ -27,8 +27,10 @@ public class DefaultButtonsKeyMapping {
             if (hit) {
                 return entry.getKey();
             }
+            String builder = "hitY:" + hitY +
+                    "location:" + area.location[1];
+            Init.LOGGER.info(builder);
         }
-
         return "null";
     }
 

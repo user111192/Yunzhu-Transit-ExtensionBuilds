@@ -3,6 +3,7 @@ package top.xfunny.mod.client.view;
 import org.mtr.mapping.holder.*;
 import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
+import org.mtr.mod.render.QueuedRenderLayer;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.TransformPositionX;
 
@@ -45,11 +46,14 @@ public class NewButtonView extends ImageView {
             final Vector3d hitLocation = hitResult.getPos();
             final String inButton = keyMapping.mapping(TransformPositionX.transform(MathHelper.fractionalPart(hitLocation.getXMapped()), MathHelper.fractionalPart(hitLocation.getZMapped()),facing), MathHelper.fractionalPart(hitLocation.getYMapped()));
             final boolean inBlock = Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
-
             isFocused = inBlock && inButton.equals(id);
         }
 
-        setUv(uv[0], uv[1], uv[2], uv[3]);
+        if(isFocused|| isPressed){
+            setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+        }
+
+        setUv(uv);
         color = isPressed?  pressedColor : isFocused? hoverColor : defaultColor;
         super.render();
     }
@@ -66,24 +70,20 @@ public class NewButtonView extends ImageView {
         this.pressedColor = pressedColor;
     }
 
-    public DefaultButtonsKeyMapping getKeyMapping(){
-        return keyMapping;
-    }
-
     public void setFlip(boolean flipVertical, boolean flipHorizontal) {
-    if (flipVertical) {
-        // 垂直翻转
-        final float tempV = uv[0];
-        uv[0] = uv[2];
-        uv[2] = tempV;
+        if (flipVertical) {
+            // 垂直翻转
+            final float tempV = uv[0];
+            uv[0] = uv[2];
+            uv[2] = tempV;
+        }
+        if (flipHorizontal) {
+            // 水平翻转
+            final float tempU = uv[1];
+            uv[1] = uv[3];
+            uv[3] = tempU;
+        }
     }
-    if (flipHorizontal) {
-        // 水平翻转
-        final float tempU = uv[1];
-        uv[1] = uv[3];
-        uv[3] = tempU;
-    }
-}
 
 
     public void activate(){

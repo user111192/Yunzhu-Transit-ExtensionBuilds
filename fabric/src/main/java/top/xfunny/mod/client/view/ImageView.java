@@ -18,7 +18,8 @@ public class ImageView implements RenderView {
     protected String id;
     private StoredMatrixTransformations storedMatrixTransformations;
     protected float width, height;
-    protected float x, y;
+    protected float x;
+    public float y;
     private float marginLeft, marginTop, marginRight, marginBottom;
     private Gravity gravity;
     protected World world;
@@ -27,10 +28,14 @@ public class ImageView implements RenderView {
     private float scale;
     private int light = GraphicsHolder.getDefaultLight();
     protected int color = ARGB_WHITE;
-    private float u1 = 1, u2 = 0, v1 = 1, v2 = 0;
+    private float[] uv;
     private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
     private boolean needBlink;
     private float blinkInterval = 0.5f;
+
+    public ImageView() {
+        this.uv = new float[]{1, 1, 0, 0};
+    }
 
     // Getters and Setters
     @Override
@@ -127,10 +132,10 @@ public class ImageView implements RenderView {
                                 y,
                                 width,
                                 height,
-                                u1,
-                                v1,
-                                u2,
-                                v2,
+                                uv[0],
+                                uv[1],
+                                uv[2],
+                                uv[3],
                                 facing,
                                 color,
                                 light
@@ -193,11 +198,23 @@ public class ImageView implements RenderView {
         this.marginBottom = bottom;
     }
 
-    protected void setUv(float u1, float v1, float u2, float v2){
-        this.u1 = u1;
-        this.u2 = u2;
-        this.v1 = v1;
-        this.v2 = v2;
+    protected void setUv(float[] uv){
+        this.uv = uv;
+    }
+
+    public void setFlip(boolean flipVertical, boolean flipHorizontal) {
+        if (flipVertical) {
+            // 垂直翻转
+            final float tempV = uv[0];
+            uv[0] = uv[2];
+            uv[2] = tempV;
+        }
+        if (flipHorizontal) {
+            // 水平翻转
+            final float tempU = uv[1];
+            uv[1] = uv[3];
+            uv[3] = tempU;
+        }
     }
 
     public void setAnimationBliking(boolean needBlink, float blinkInterval){

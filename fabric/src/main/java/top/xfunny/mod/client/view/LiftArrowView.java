@@ -21,7 +21,7 @@ public class LiftArrowView extends ImageView{
         ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
         final LiftDirection liftDirection = liftDetails.left();
         final float[] uv = uv(liftDirection, gameTick);
-        setUv(uv[0], uv[1], uv[2], uv[3]);
+        setUv(uv);
 
         switch (arrowType) {
             case UP:
