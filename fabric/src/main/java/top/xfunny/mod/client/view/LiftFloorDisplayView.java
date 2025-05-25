@@ -6,7 +6,7 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair
 import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.World;
 import org.mtr.mod.Init;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.awt.*;
 

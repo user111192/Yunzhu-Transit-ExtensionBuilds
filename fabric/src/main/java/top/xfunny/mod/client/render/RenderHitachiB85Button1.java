@@ -18,7 +18,7 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
@@ -81,7 +81,6 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
         screenLayout.setMargin(0, (float) 1.4 / 16, 0, 0);//设置外边距，可选
-        screenLayout.setId("screen");
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
@@ -194,8 +193,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 final ImageView screenBackground = new ImageView();
                 screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
-                screenBackground.setWidth((float) 1 / 16);
-                screenBackground.setScale((float) 211 / 113);
+                screenBackground.setDimension(1F/16,113,211);
                 screenBackground.setGravity(Gravity.CENTER);
 
                 //创建一个linear layout用于组合数字和箭头

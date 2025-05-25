@@ -18,7 +18,7 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.KoneMButton1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ReverseRendering;
+import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;

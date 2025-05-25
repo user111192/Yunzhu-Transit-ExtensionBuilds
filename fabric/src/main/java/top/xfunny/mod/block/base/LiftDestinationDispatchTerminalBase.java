@@ -19,7 +19,7 @@ import top.xfunny.mod.ButtonRegistry;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.LiftFloorRegistry;
 import top.xfunny.mod.LiftLanternController;
-import top.xfunny.mod.client.util.GetLiftDetails;
+import top.xfunny.mod.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

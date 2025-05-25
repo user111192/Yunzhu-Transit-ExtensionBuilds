@@ -7,7 +7,7 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.World;
 import org.mtr.mod.Init;
 import org.mtr.mod.InitClient;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 public class LiftArrowView extends ImageView{
     private Lift lift;
@@ -22,8 +22,6 @@ public class LiftArrowView extends ImageView{
         final LiftDirection liftDirection = liftDetails.left();
         final float[] uv = uv(liftDirection, gameTick);
         setUv(uv[0], uv[1], uv[2], uv[3]);
-
-
 
         switch (arrowType) {
             case UP:
@@ -57,18 +55,6 @@ public class LiftArrowView extends ImageView{
         this.arrowType = arrowType;
     }
 
-    public void setDimension(float width, float rawWidth, float rawheight) {
-        float scale = rawheight / rawWidth;
-        setWidth(width);
-        setScale(scale);
-    }
-
-
-    public void setDimension(float width) {
-        setWidth(width);
-        setScale(1);
-    }
-
     public void setColor(int color) {
         this.color = color;
     }
@@ -94,7 +80,4 @@ public class LiftArrowView extends ImageView{
         this.needScroll = needScroll;
         this.scrollSpeed = scrollSpeed;
     }
-
-
-
 }

@@ -18,7 +18,7 @@ import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesScreen3Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.ImageView;
 import top.xfunny.mod.client.view.LiftButtonView;
@@ -111,9 +111,8 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         final ImageView background = new ImageView();
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
-        background.setWidth((float) 3.25 / 16);
+        background.setDimension(3.25F/16);
         background.setLight(light);
-        background.setScale(1);
         background.setGravity(Gravity.CENTER);
 
 

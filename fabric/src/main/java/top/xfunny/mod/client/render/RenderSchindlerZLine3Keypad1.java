@@ -12,8 +12,8 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerZLine3Keypad1;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ArrayListToString;
-import top.xfunny.mod.client.util.TransformPositionX;
+import top.xfunny.mod.util.ArrayListToString;
+import top.xfunny.mod.util.TransformPositionX;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
@@ -82,7 +82,6 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setId("parentLayout");
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 6 / 16, (float) 16 / 16);
@@ -91,12 +90,11 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
         final LinearLayout group1 = new LinearLayout(false);
-        group1.setId("group1");
         group1.setBasicsAttributes(world, blockEntity.getPos2());
         group1.setWidth(LayoutSize.MATCH_PARENT);
         group1.setHeight(LayoutSize.WRAP_CONTENT);
         group1.setMargin(1.25F / 16, screenId.equals("schindler_z_line_3_keypad_1_key_mapping_input") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_accessibility") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_identifier") ? 1.175F / 16 : 5.6F / 16, 0, 0);
-        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.2F/16 + 0.5 * SMALL_OFFSET));
+        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.2F/16 + 0.9 * SMALL_OFFSET));
 
         final LinearLayout group2 = new LinearLayout(false);
         group2.setBasicsAttributes(world, blockEntity.getPos2());
@@ -128,8 +126,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             final ImageView imageView = new ImageView();
             imageView.setBasicsAttributes(world, blockEntity.getPos2());
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
-            imageView.setWidth(3.5F / 16);
-            imageView.setScale(2.575F / 3.5F);
+            imageView.setDimension(3.5F / 16, 2.575F / 3.5F);
             imageView.setLight(light);
             imageView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageView.setGravity(Gravity.CENTER);
@@ -161,8 +158,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             final ImageView imageView = new ImageView();
             imageView.setBasicsAttributes(world, blockEntity.getPos2());
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
-            imageView.setWidth(3.5F / 16);
-            imageView.setScale(2.575F / 3.5F);
+            imageView.setDimension(3.5F / 16, 2.575F / 3.5F);
             imageView.setLight(light);
             imageView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageView.setGravity(Gravity.CENTER);
@@ -170,8 +166,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             final ImageView imageAccessibility = new ImageView();
             imageAccessibility.setBasicsAttributes(world, blockEntity.getPos2());
             imageAccessibility.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_z_line_keypad/accessibility_icon.png"));
-            imageAccessibility.setWidth(1F / 16);
-            imageAccessibility.setScale(1);
+            imageAccessibility.setDimension(1F / 16);
             imageAccessibility.setLight(light);
             imageAccessibility.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
             imageAccessibility.setGravity(Gravity.CENTER);

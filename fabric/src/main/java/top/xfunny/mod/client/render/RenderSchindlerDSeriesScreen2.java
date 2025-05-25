@@ -20,7 +20,7 @@ import top.xfunny.mod.block.SchindlerDSeriesScreen2GreenEven;
 import top.xfunny.mod.block.SchindlerDSeriesScreen2RedEven;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.client.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
