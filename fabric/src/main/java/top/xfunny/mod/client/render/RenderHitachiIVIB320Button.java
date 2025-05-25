@@ -31,7 +31,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
 
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc6_arrow.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_cip71_arrow.png");
     private static final Identifier BUTTON_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up.png");
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up_light.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
@@ -63,7 +63,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7F / 16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.6F / 16 - SMALL_OFFSET);
         });
 
 
@@ -82,7 +82,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 5 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setMargin(0, 0.7F / 16, 0, 0);//设置外边距，可选
 
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
@@ -90,7 +90,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
+        buttonLayout.setMargin(0, -0.5F / 16, 0, 0);
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
@@ -100,10 +100,10 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_UP_TEXTURE,BUTTON_DOWN_TEXTURE, true);//按钮贴图
-        button.setWidth(1F / 16);//按钮宽度
-        button.setHeight(1F / 16);//按钮高度
-        button.setSpacing(2F / 16);//两个按钮的间距
+        button.setTexture(BUTTON_UP_TEXTURE,BUTTON_DOWN_TEXTURE, false);//按钮贴图
+        button.setWidth(0.8F / 16);//按钮宽度
+        button.setHeight(0.8F / 16);//按钮高度
+        button.setSpacing(0.5F / 16);//两个按钮的间距
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
@@ -113,11 +113,11 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         buttonLight.setDefaultColor(0x00FFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_UP_TEXTURE,LIGHT_DOWN_TEXTURE, true);
-        buttonLight.setWidth(1F / 16);
-        buttonLight.setHeight(1F / 16);
+        buttonLight.setTexture(LIGHT_UP_TEXTURE,LIGHT_DOWN_TEXTURE, false);
+        buttonLight.setWidth(0.8F / 16);
+        buttonLight.setHeight(0.8F / 16);
         buttonLight.setClientMedian(0.3);
-        buttonLight.setSpacing(2F / 16);
+        buttonLight.setSpacing(0.5F / 16);
         buttonLight.setGravity(Gravity.CENTER);
 
         //添加外呼与楼层轨道的连线
@@ -164,13 +164,14 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi-led-seg"),//字体
-                        5,//字号
-                        0xFFFFFFFF);//字体颜色
+                        7F,//字号
+                        0xFFFF4800);//字体颜色
 //                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("hitachi-led-seg");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin(0, (float) 0.43 / 16, (float) 0.45 / 16, 0);
+
+                liftFloorDisplayView.setMargin(0, 0, 0.55F / 16, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
@@ -178,7 +179,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.5F/16);
+                liftArrowView.setDimension(0.6F/16,384,512);
                 liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
