@@ -16,33 +16,34 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiIVIB320Button;
+import top.xfunny.mod.block.HitachiIVIB320ButtonDotMatrix;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB320Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<HitachiIVIB320ButtonDotMatrix.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_cip71_arrow.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc6_arrow.png");
     private static final Identifier BUTTON_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up.png");
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up_light.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
 
-    public RenderHitachiIVIB320Button(Argument dispatcher) {
+    public RenderHitachiIVIB320ButtonDotMatrix(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(HitachiIVIB320Button.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiIVIB320ButtonDotMatrix.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -133,7 +134,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            HitachiIVIB320Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiIVIB320ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -163,17 +164,17 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("hitachi-led-seg"),//字体
-                        7F,//字号
+                        FontList.instance.getFont("hitachi-led-dot_matrix"),//字体
+                        6F,//字号
                         0xFFFF4800);//字体颜色
 //                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("hitachi-led-seg");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId("hitachi-vib-320-dot-matrix");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
 
-                liftFloorDisplayView.setMargin(0, 0, 0.55F / 16, 0);
+                liftFloorDisplayView.setMargin(0.01F, 0, 0, 0);
                 //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
