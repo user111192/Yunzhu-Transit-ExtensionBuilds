@@ -38,6 +38,7 @@ public class LinkerValidTypes {
             TestLiftHallLanterns.class,
             TestLiftPanel.class,
             HitachiIVIB320Button.class,
+            HitachiIVIB320ButtonDotMatrix.class,
             KoneKDS330Button1.class,
             KoneKDS330Button2.class,
             KoneKDS330Lantern1.class,

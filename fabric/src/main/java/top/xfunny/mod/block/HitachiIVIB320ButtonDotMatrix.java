@@ -13,21 +13,22 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HitachiButton_PAFC extends LiftButtonsBase {
-    public HitachiButton_PAFC() {
+public class HitachiIVIB320ButtonDotMatrix extends LiftButtonsBase {
+    public HitachiIVIB320ButtonDotMatrix() {
         super(true, true);
     }
 
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(6.4, 0, 0, 9.6, 5.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
+        return IBlock.getVoxelShapeByDirection(single ? 5.7 : 6.45, 0.675, 0, single ? 10.3 : 9.55, 9.875, 0.5, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new HitachiButton_PAFC.BlockEntity(blockPos, blockState);
+        return new HitachiIVIB320ButtonDotMatrix.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -37,13 +38,15 @@ public class HitachiButton_PAFC extends LiftButtonsBase {
         properties.add(SINGLE);
     }
 
-    public static class BlockEntity extends LiftButtonsBase.BlockEntityBase {
+    public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.HITACHI_BUTTON_PAFC.get(), pos, state);
+            super(BlockEntityTypes.HITACHI_VIB320_BUTTON_DOT_MATRIX.get(), pos, state);
         }
     }
+
     @Override
     public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
-        tooltip.add(TextHelper.translatable("tooltip.warning_block_testing").formatted(TextFormatting.RED));
+        tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_dot_matrix_tip_1").formatted(TextFormatting.GRAY));
+        tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_dot_matrix_tip_2").formatted(TextFormatting.GRAY));
     }
 }

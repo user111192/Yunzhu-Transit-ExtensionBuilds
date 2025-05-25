@@ -45,6 +45,7 @@ public class FontList {
             loadFont("thyssenkrupp_lcd", "font/new-thyssenkrupp.ttf");
             loadFont("kone-kss", "font/kone-kss-800-signalization.ttf");
             loadFont("hitachi-led-seg", "font/hitachi_led_segmented_fix.ttf"); // 暂使用修改字体替代原版字体 hitachi-led-segmented.ttf
+            loadFont("hitachi-led-dot_matrix", "font/hitachi-dot-matrix-regular.ttf");
             loadFont("schindler_m_series_segment", "font/schindler_m_series_segment.ttf");
             fontsLoaded = true;
         }

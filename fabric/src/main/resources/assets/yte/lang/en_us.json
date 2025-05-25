@@ -93,6 +93,7 @@
   "message.floor_auto_setter_status_failed": "Operation failed",
   "tooltip.hitachi_vib320_button_1_tip_1": "Display：CIP-71",
   "tooltip.hitachi_vib320_button_1_tip_2": "Button：WL-MO",
-  "tooltip.hitachi_vib320_button_2_tip_1": "Display：BX-SCL-C6",
-  "tooltip.hitachi_vib320_button_2_tip_2": "Button：WL-MO"
+  "tooltip.hitachi_vib320_button_1_dot_matrix_tip_1": "Display：BX-SCL-C6",
+  "tooltip.hitachi_vib320_button_1_dot_matrix_tip_2": "Button：WL-MO",
+  "tooltip.warning_block_testing": "!!!Warning: This block is being tested and is not recommended"
 }

@@ -103,11 +103,12 @@
   "message.floor_auto_setter_status_failed": "操作失败",
   "tooltip.hitachi_vib320_button_1_tip_1": "显示器型号：CIP-71",
   "tooltip.hitachi_vib320_button_1_tip_2": "按钮型号：WL-MO",
-  "tooltip.hitachi_vib320_button_2_tip_1": "显示器型号：BX-SCL-C6",
-  "tooltip.hitachi_vib320_button_2_tip_2": "按钮型号：WL-MO",
+  "tooltip.hitachi_vib320_button_1_dot_matrix_tip_1": "显示器型号：BX-SCL-C6",
+  "tooltip.hitachi_vib320_button_1_dot_matrix_tip_2": "按钮型号：WL-MO",
   "tooltip.thyssenkrupp_te_gl1_button_1": "显示屏：MS5-E 2.1",
   "tooltip.id_card.access": "通行权限: %d",
   "tooltip.id_card.floors": "通行楼层: %d",
   "tooltip.auth_qrcode.used": "已作废",
-  "tooltip.auth_qrcode.unused":"未使用"
+  "tooltip.auth_qrcode.unused":"未使用",
+  "tooltip.warning_block_testing": "!!!警告:此方块正在测试中，我们并不建议您使用此方块"
 }
