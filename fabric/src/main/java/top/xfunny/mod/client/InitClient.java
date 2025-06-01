@@ -17,7 +17,6 @@ public final class InitClient {
     public static final RegistryClient REGISTRY_CLIENT = new RegistryClient(Init.REGISTRY);
     private static long lastMillis = 0;
     private static long gameMillis = 0;
-    private int a =1;
 
 
     public static void init() {

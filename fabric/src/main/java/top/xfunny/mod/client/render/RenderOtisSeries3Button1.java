@@ -18,13 +18,13 @@ import top.xfunny.mod.block.OtisSeries3Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private final int HOVER_COLOR = 0xFFFF9999;
-    private final int PRESSED_COLOR = 0xFFBB0000;
     private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png");
     private final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_arrow.png");
     private final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png");
@@ -44,67 +44,113 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
             return;
         }
 
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
+
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
-        // 创建一个存储矩阵转换的实例，用于后续的渲染操作
-        // 参数为方块的中心位置坐标 (x, y, z)
+        
+        
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
             graphicsHolder.translate(0, 0, 7.65F/16 - SMALL_OFFSET);
         });
 
-        final FrameLayout parentLayout = new FrameLayout();
+        final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 1.35 / 16, (float) 8 / 16);
-        parentLayout.setPosition((float) -0.0405, (float) -0.235);
+        parentLayout.setParentDimensions(1.35F / 16, 3.725F / 16);
+        parentLayout.setPosition(-0.0405F, 0.9F/16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
-        parentLayout.setMargin(0, 0, (float) 0.1 / 16, (float) 0.1 / 16);
 
-        LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
-        button.setLight(light);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setHover(true);
-        button.setPressedColor(0xFFFFFFFF);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE, false);
-        button.setWidth(0.6F / 16);
-        button.setHeight(0.6F / 16);
-        button.setSpacing(0.35F / 16);
-        button.setGravity(Gravity.END);
 
-        LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
-        buttonLight.setLight(light);
-        buttonLight.setDefaultColor(0xFF111111);
-        buttonLight.setHover(true);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png"), false);
-        buttonLight.setWidth(0.6F / 16);
-        buttonLight.setHeight(0.6F / 16);
-        buttonLight.setSpacing(0.35F / 16);
-        buttonLight.setGravity(Gravity.END);
+        final LinearLayout buttonContainer = new LinearLayout(true);
+        buttonContainer.setBasicsAttributes(world, blockPos);
+        buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setMargin(0, 0.45F/16, 0.1F / 16, 0);
 
-        LiftButtonView buttonArrow = new LiftButtonView();
-        buttonArrow.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, true);
-        buttonArrow.setLight(light);
-        buttonArrow.setDefaultColor(0xFFFFFFFF);
-        buttonArrow.setHover(true);
-        buttonArrow.setPressedColor(0xFFFFFFFF);
-        buttonArrow.setHoverColor(0xFFFFFFFF);
-        buttonArrow.setTexture(ARROW_TEXTURE, true);
-        buttonArrow.setWidth(0.6F / 16);
-        buttonArrow.setHeight(0.6F / 16);
-        buttonArrow.setSpacing(0.35F / 16);
-        buttonArrow.setGravity(Gravity.START);
+        final LinearLayout upButtonGroup = new LinearLayout(false);
+        upButtonGroup.setBasicsAttributes(world, blockPos);
+        upButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        upButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        final LinearLayout downButtonGroup = new LinearLayout(false);
+        downButtonGroup.setBasicsAttributes(world, blockPos);
+        downButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        downButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        final FrameLayout upButtonLightGroup  = new FrameLayout();
+        upButtonLightGroup.setBasicsAttributes(world, blockPos);
+        upButtonLightGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        upButtonLightGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        upButtonLightGroup.setGravity(Gravity.END);
+
+        final FrameLayout downButtonLightGroup  = new FrameLayout();
+        downButtonLightGroup.setBasicsAttributes(world, blockPos);
+        downButtonLightGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        downButtonLightGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        downButtonLightGroup.setGravity(Gravity.END);
+
+        ImageView buttonUpArrow  = new ImageView();
+        buttonUpArrow.setBasicsAttributes(world, blockPos);
+        buttonUpArrow.setTexture(ARROW_TEXTURE);
+        buttonUpArrow.setDimension(0.6F/16);
+        buttonUpArrow.setGravity(Gravity.START);
+        buttonUpArrow.setLight(light);
+
+        ImageView buttonDownArrow  = new ImageView();
+        buttonDownArrow.setBasicsAttributes(world, blockPos);
+        buttonDownArrow.setTexture(ARROW_TEXTURE);
+        buttonDownArrow.setDimension(0.6F/16);
+        buttonDownArrow.setGravity(Gravity.START);
+        buttonDownArrow.setLight(light);
+        buttonDownArrow.setFlip(false, true);
+
+        ImageView buttonUpBackground = new ImageView();
+        buttonUpBackground.setBasicsAttributes(world, blockPos);
+        buttonUpBackground.setTexture(BUTTON_TEXTURE);
+        buttonUpBackground.setDimension(0.6F/16);
+        buttonUpBackground.setGravity(Gravity.CENTER);
+        buttonUpBackground.setLight(light);
+
+        ImageView buttonDownBackground = new ImageView();
+        buttonDownBackground.setBasicsAttributes(world, blockPos);
+        buttonDownBackground.setTexture(BUTTON_TEXTURE);
+        buttonDownBackground.setDimension(0.6F/16);
+        buttonDownBackground.setGravity(Gravity.CENTER);
+        buttonDownBackground.setLight(light);
+
+        NewButtonView buttonUpLight = new NewButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonUpLight.setDimension(0.6F/16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(0xFF111111);
+        buttonUpLight.setHoverColor(0xFFCCFFCC);
+        buttonUpLight.setPressedColor(0xFF66FF66);
+
+        NewButtonView buttonDownLight = new NewButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonDownLight.setDimension(0.6F/16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(0xFF111111);
+        buttonDownLight.setHoverColor(0xFFFF9999);
+        buttonDownLight.setPressedColor(0xFFFF0000);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -120,19 +166,38 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            buttonLight.setDownButtonLight();
+                            buttonDownLight.activate();
                             break;
                         case UP:
-                            buttonLight.setUpButtonLight();
+                            buttonUpLight.activate();
                             break;
                     }
                 });
             });
         });
 
-        parentLayout.addChild(button);
-        parentLayout.addChild(buttonLight);
-        parentLayout.addChild(buttonArrow);
+        upButtonLightGroup.addChild(buttonUpBackground);
+        upButtonLightGroup.addChild(buttonUpLight);
+
+        downButtonLightGroup.addChild(buttonDownBackground);
+        downButtonLightGroup.addChild(buttonDownLight);
+
+        if(buttonDescriptor.hasUpButton()){
+            upButtonGroup.addChild(buttonUpArrow);
+            upButtonGroup.addChild(upButtonLightGroup);
+            buttonContainer.addChild(upButtonGroup);
+        }
+
+        if(buttonDescriptor.hasDownButton()){
+            if(buttonDescriptor.hasUpButton()){
+                downButtonGroup.setMargin(0, 0.35F/ 16, 0, 0);
+            }
+            downButtonGroup.addChild(buttonDownArrow);
+            downButtonGroup.addChild(downButtonLightGroup);
+            buttonContainer.addChild(downButtonGroup);
+        }
+
+        parentLayout.addChild(buttonContainer);
 
         parentLayout.render();
     }

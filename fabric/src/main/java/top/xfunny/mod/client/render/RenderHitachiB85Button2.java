@@ -19,6 +19,7 @@ import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.HitachiB85Button2;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
@@ -32,6 +33,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
 
     private static final int HOVER_COLOR = 0xFFCCFFDD;
     private static final int PRESSED_COLOR = 0xFFFFCC66;
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_dot_arrow_1.png");
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_b85_button.png");
     private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_b85_button_light.png");
@@ -53,6 +55,8 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
             return;
         }
 
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
+
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
@@ -66,132 +70,153 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
             graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
         });
 
-        //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 8.875 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.125, (float) 0);//通过设置坐标的方式设置底层layout的位置
-        parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
-        parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
+        parentLayout.setParentDimensions(4F / 16, 8.875F / 16);
+        parentLayout.setPosition(-0.125F, 0);
+        parentLayout.setWidth(LayoutSize.MATCH_PARENT);
+        parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        //创建一个横向的linear layout用于放置显示屏
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 1.4 / 16, 0, 0);//设置外边距，可选
-        //screenLayout.setBackgroundColor(0xFF000000);
+        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+        screenLayout.setMargin(0, 1.4F / 16, 0, 0);
+        
         screenLayout.setId("screen");
 
-        //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 0.25 / 16, 0, 0);
+        buttonLayout.setMargin(0, 0.25F / 16, 0, 0);
 
-        //添加按钮
-        final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
-        button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(1F / 16);//按钮宽度
-        button.setHeight(1F / 16);//按钮高度
-        button.setSpacing(0.2F / 16);//两个按钮的间距
-        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
+        final LinearLayout buttonContainer = new LinearLayout(true);
+        buttonContainer.setBasicsAttributes(world, blockPos);
+        buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setGravity(Gravity.CENTER);
 
-        final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        buttonLight.setLight(light);
-        buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFF452D15);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
-        buttonLight.setWidth(1F / 16);
-        buttonLight.setHeight(1F / 16);
-        buttonLight.setClientMedian(0.125);
-        buttonLight.setSpacing(0.2F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        final FrameLayout upButtonGroup = new FrameLayout();
+        upButtonGroup.setBasicsAttributes(world, blockPos);
+        upButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        upButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        //添加外呼与楼层轨道的连线
+        final FrameLayout downButtonGroup = new FrameLayout();
+        downButtonGroup.setBasicsAttributes(world, blockPos);
+        downButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        downButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ImageView buttonUp = new ImageView();
+        buttonUp.setBasicsAttributes(world, blockPos);
+        buttonUp.setTexture(BUTTON_TEXTURE);
+        buttonUp.setDimension(1F/16);
+        buttonUp.setGravity(Gravity.CENTER);
+        buttonUp.setLight(light);
+
+        NewButtonView buttonUpLight = new NewButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonUpLight.setDimension(1F / 16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(DEFAULT_COLOR);
+        buttonUpLight.setHoverColor(HOVER_COLOR);
+        buttonUpLight.setPressedColor(PRESSED_COLOR);
+
+        ImageView buttonDown = new ImageView();
+        buttonDown.setBasicsAttributes(world, blockPos);
+        buttonDown.setTexture(BUTTON_TEXTURE);
+        buttonDown.setDimension(1F / 16);
+        buttonDown.setGravity(Gravity.CENTER);
+        buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
+
+        NewButtonView buttonDownLight = new NewButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonDownLight.setDimension(1F / 16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(DEFAULT_COLOR);
+        buttonDownLight.setHoverColor(HOVER_COLOR);
+        buttonDownLight.setPressedColor(PRESSED_COLOR);
+
+        
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
-        // 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-        // 遍历每个轨道位置，进行后续处理
         blockEntity.forEachTrackPosition(trackPosition -> {
-            //开始渲染外呼与轨道的连线
+            
             line.RenderLine(holdingLinker, trackPosition);
 
-            //判断是否渲染上下按钮
             HitachiB85Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            //向下的按钮亮灯
-                            buttonLight.setDownButtonLight();
+                            buttonDownLight.activate();
                             break;
                         case UP:
-                            //向上的按钮亮灯
-                            buttonLight.setUpButtonLight();
+                            buttonUpLight.activate();
                             break;
                     }
                 });
             });
         });
 
-        //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
+        
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            // 确定要渲染的电梯数量，这里设置为2个
+            
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
 
             for (int i = 0; i < count; i++) {
-                //添加外呼显示屏
+                
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("hitachi_modern"),//字体
-                        12,//字号
-                        0xFFFF0000);//字体颜色
-                liftFloorDisplayView.setDisplayLength(2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("hitachi_b85_screen_2_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 0.6 / 16);//显示屏宽度
-                liftFloorDisplayView.setHeight((float) 0.6 / 16);//显示屏高度
+                        FontList.instance.getFont("hitachi_modern"),
+                        12,
+                        0xFFFF0000);
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);
+                liftFloorDisplayView.setTextureId("hitachi_b85_screen_2_display");
+                liftFloorDisplayView.setWidth(0.6F / 16);
+                liftFloorDisplayView.setHeight(0.6F / 16);
 
-                liftFloorDisplayView.setMargin((float) 0.1 / 16, (float) 0.1 / 16, 0, 0);
-                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setMargin(0.1F / 16, 0.1F / 16, 0, 0);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
 
-                //添加箭头
+                
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.55F/16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setMargin(0, (float) 1.5 / 16, 0, 0);
+                liftArrowView.setMargin(0, 1.5F / 16, 0, 0);
                 liftArrowView.setColor(0xFFFF0000);
 
                 final FrameLayout backgroundLayout = new FrameLayout();
                 backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                backgroundLayout.setMargin((float) 0.25 / 16, (float) 0.375 / 16, (float) 0.25 / 16, 0);
+                backgroundLayout.setMargin(0.25F / 16, 0.375F / 16, 0.25F / 16, 0);
                 backgroundLayout.setId("background_" + i);
 
                 final ImageView screenBackground = new ImageView();
@@ -201,7 +226,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 screenBackground.setMargin(0, (float) 0.75 / 16, 0, 0);
                 screenBackground.setGravity(Gravity.CENTER);
 
-                //创建一个linear layout用于组合数字和箭头
+                
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
@@ -209,8 +234,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
                 numberLayout.setGravity(Gravity.CENTER);
-
-                //将外呼显示屏添加到刚才设定的screenLayout线性布局中
+                
                 if (reverseRendering) {
                     backgroundLayout.addChild(screenBackground);
                     backgroundLayout.addChild(numberLayout);
@@ -224,11 +248,26 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
             }
         }
 
-        buttonLayout.addChild(button);//将按钮添加到线性布局中进行渲染
-        buttonLayout.addChild(buttonLight);
-        parentLayout.addChild(screenLayout);//将screenLayout添加到父容器中
-        parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
+        upButtonGroup.addChild(buttonUp);
+        upButtonGroup.addChild(buttonUpLight);
+        downButtonGroup.addChild(buttonDown);
+        downButtonGroup.addChild(buttonDownLight);
 
-        parentLayout.render();//渲染父容器
+        if(buttonDescriptor.hasUpButton()){
+            buttonContainer.addChild(upButtonGroup);
+        }
+
+        if(buttonDescriptor.hasDownButton()){
+            if(buttonDescriptor.hasUpButton()){
+                downButtonGroup.setMargin(0, 0.2F/ 16, 0, 0);
+            }
+            buttonContainer.addChild(downButtonGroup);
+        }
+
+        buttonLayout.addChild(buttonContainer);
+        parentLayout.addChild(screenLayout);
+        parentLayout.addChild(buttonLayout);
+
+        parentLayout.render();
     }
 }

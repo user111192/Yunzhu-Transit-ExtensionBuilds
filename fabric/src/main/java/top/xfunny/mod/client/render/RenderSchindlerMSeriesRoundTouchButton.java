@@ -16,13 +16,12 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundTouchButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<SchindlerMSeriesRoundTouchButton.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
@@ -48,14 +47,15 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
             return;
         }
 
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
+
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
-        // 创建一个存储矩阵转换的实例，用于后续的渲染操作
-        // 参数为方块的中心位置坐标 (x, y, z)
+
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
@@ -65,36 +65,67 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 6 / 16, (float) 8 / 16);
-        parentLayout.setPosition((float) -0.1875, 0);
+        parentLayout.setParentDimensions(6F / 16, 8F / 16);
+        parentLayout.setPosition(-0.1875F, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setHover(false);
-        button.setPressedColor(0xFFFFFFFF);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE_UP, BUTTON_TEXTURE_DOWN, false);
-        button.setWidth(1.25F / 16);
-        button.setHeight(1.25F / 16);
-        button.setSpacing(0.75F / 16);
-        button.setGravity(Gravity.CENTER);
+        final LinearLayout buttonContainer = new LinearLayout(true);
+        buttonContainer.setBasicsAttributes(world, blockPos);
+        buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setGravity(Gravity.CENTER);
 
-        LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        buttonLight.setLight(light);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
-        buttonLight.setHover(true);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE, false);
-        buttonLight.setWidth(1.25F / 16);
-        buttonLight.setHeight(1.25F / 16);
-        buttonLight.setSpacing(0.75F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        final FrameLayout upButtonGroup = new FrameLayout();
+        upButtonGroup.setBasicsAttributes(world, blockPos);
+        upButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        upButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        final FrameLayout downButtonGroup = new FrameLayout();
+        downButtonGroup.setBasicsAttributes(world, blockPos);
+        downButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        downButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ImageView buttonUp = new ImageView();
+        buttonUp.setBasicsAttributes(world, blockPos);
+        buttonUp.setTexture(BUTTON_TEXTURE_UP);
+        buttonUp.setDimension(1.25F/16);
+        buttonUp.setGravity(Gravity.CENTER);
+        buttonUp.setLight(light);
+
+        NewButtonView buttonUpLight = new NewButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonUpLight.setDimension(1.25F/16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(ARGB_WHITE);
+        buttonUpLight.setHoverColor(HOVER_COLOR);
+        buttonUpLight.setPressedColor(PRESSED_COLOR);
+
+        ImageView buttonDown = new ImageView();
+        buttonDown.setBasicsAttributes(world, blockPos);
+        buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
+        buttonDown.setDimension(1.25F/16);
+        buttonDown.setGravity(Gravity.CENTER);
+        buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
+
+        NewButtonView buttonDownLight = new NewButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonDownLight.setDimension(1.25F/16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(ARGB_WHITE);
+        buttonDownLight.setHoverColor(HOVER_COLOR);
+        buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -110,18 +141,33 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            buttonLight.setDownButtonLight();
+                            buttonDownLight.activate();
                             break;
                         case UP:
-                            buttonLight.setUpButtonLight();
+                            buttonUpLight.activate();
                             break;
                     }
                 });
             });
         });
 
-        parentLayout.addChild(button);
-        parentLayout.addChild(buttonLight);
+        upButtonGroup.addChild(buttonUp);
+        upButtonGroup.addChild(buttonUpLight);
+        downButtonGroup.addChild(buttonDown);
+        downButtonGroup.addChild(buttonDownLight);
+
+        if(buttonDescriptor.hasUpButton()){
+            buttonContainer.addChild(upButtonGroup);
+        }
+
+        if(buttonDescriptor.hasDownButton()){
+            if(buttonDescriptor.hasUpButton()){
+                downButtonGroup.setMargin(0, 0.75F/ 16, 0, 0);
+            }
+            buttonContainer.addChild(downButtonGroup);
+        }
+
+        parentLayout.addChild(buttonContainer);
         parentLayout.render();
     }
 }

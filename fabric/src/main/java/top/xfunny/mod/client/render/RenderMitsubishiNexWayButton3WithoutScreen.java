@@ -16,10 +16,12 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.MitsubishiNexWayButton3WithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 import java.util.Comparator;
 
@@ -27,9 +29,8 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
+     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_button_1_light.png");
 
     public RenderMitsubishiNexWayButton3WithoutScreen(Argument dispatcher) {
         super(dispatcher);
@@ -46,6 +47,8 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         if (clientPlayerEntity == null) {
             return;
         }
+
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
 
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         final BlockPos blockPos = blockEntity.getPos2();
@@ -68,68 +71,112 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(0.9F / 16);
-        button.setHeight(0.9F / 16);
-        button.setSpacing(0.5F / 16);
-        button.setGravity(Gravity.CENTER);
+        final LinearLayout buttonContainer = new LinearLayout(true);
+        buttonContainer.setBasicsAttributes(world, blockPos);
+        buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonContainer.setGravity(Gravity.CENTER);
 
-        final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
-        buttonLight.setLight(light);
-        buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(0.9F / 16);
-        buttonLight.setHeight(0.9F / 16);
-        buttonLight.setSpacing(0.5F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        final FrameLayout upButtonGroup = new FrameLayout();
+        upButtonGroup.setBasicsAttributes(world, blockPos);
+        upButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        upButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        upButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        //添加外呼与楼层轨道的连线
+        final FrameLayout downButtonGroup = new FrameLayout();
+        downButtonGroup.setBasicsAttributes(world, blockPos);
+        downButtonGroup.setStoredMatrixTransformations(storedMatrixTransformations1);
+        downButtonGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        downButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ImageView buttonUp = new ImageView();
+        buttonUp.setBasicsAttributes(world, blockPos);
+        buttonUp.setTexture(BUTTON_TEXTURE);
+        buttonUp.setDimension(0.9F/16);
+        buttonUp.setGravity(Gravity.CENTER);
+        buttonUp.setLight(light);
+
+        NewButtonView buttonUpLight = new NewButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonUpLight.setDimension(0.9F/16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(ARGB_WHITE);
+        buttonUpLight.setHoverColor(HOVER_COLOR);
+        buttonUpLight.setPressedColor(PRESSED_COLOR);
+
+        ImageView buttonDown = new ImageView();
+        buttonDown.setBasicsAttributes(world, blockPos);
+        buttonDown.setTexture(BUTTON_TEXTURE);
+        buttonDown.setDimension(0.9F/16);
+        buttonDown.setGravity(Gravity.CENTER);
+        buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
+
+        NewButtonView buttonDownLight = new NewButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonDownLight.setDimension(0.9F/16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(ARGB_WHITE);
+        buttonDownLight.setHoverColor(HOVER_COLOR);
+        buttonDownLight.setPressedColor(PRESSED_COLOR);
+
+        
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
-        // 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
+        
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-        // 遍历每个轨道位置，进行后续处理
+        
         blockEntity.forEachTrackPosition(trackPosition -> {
-            //开始渲染外呼与轨道的连线
+            
             line.RenderLine(holdingLinker, trackPosition);
 
-            //判断是否渲染上下按钮
+            
             MitsubishiNexWayButton3WithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            //向下的按钮亮灯
-                            buttonLight.setDownButtonLight();
+                            buttonDownLight.activate();
                             break;
                         case UP:
-                            //向上的按钮亮灯
-                            buttonLight.setUpButtonLight();
+                            buttonUpLight.activate();
                             break;
                     }
                 });
             });
         });
 
-        //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
+        
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
-        parentLayout.addChild(button);
-        parentLayout.addChild(buttonLight);
+        upButtonGroup.addChild(buttonUp);
+        upButtonGroup.addChild(buttonUpLight);
+        downButtonGroup.addChild(buttonDown);
+        downButtonGroup.addChild(buttonDownLight);
+
+        if(buttonDescriptor.hasUpButton()){
+            buttonContainer.addChild(upButtonGroup);
+        }
+
+        if(buttonDescriptor.hasDownButton()){
+            if(buttonDescriptor.hasUpButton()){
+                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+            }
+            buttonContainer.addChild(downButtonGroup);
+        }
+
+        parentLayout.addChild(buttonContainer);
 
         parentLayout.render();
     }
