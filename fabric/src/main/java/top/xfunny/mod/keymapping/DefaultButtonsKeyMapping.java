@@ -27,9 +27,6 @@ public class DefaultButtonsKeyMapping {
             if (hit) {
                 return entry.getKey();
             }
-            String builder = "hitY:" + hitY +
-                    "location:" + area.location[1];
-            Init.LOGGER.info(builder);
         }
         return "null";
     }
