@@ -93,6 +93,12 @@ public class LinkerValidTypes {
             ThyssenkruppTEGL1Button1.class,
             TonicDSScreen1Odd.class,
             TonicDSScreen1Even.class,
+            TonicDMScreen1RedOdd.class,
+            TonicDMScreen1RedEven.class,
+            TonicDMScreen1GreenOdd.class,
+            TonicDMScreen1GreenEven.class,
+            TonicDMScreen1YellowOdd.class,
+            TonicDMScreen1YellowEven.class,
             SchindlerZLine3Keypad1.class
     ));
 }

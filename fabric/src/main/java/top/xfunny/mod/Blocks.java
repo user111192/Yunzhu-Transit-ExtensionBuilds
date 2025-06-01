@@ -101,6 +101,12 @@ public class Blocks {
 
     public static final BlockRegistryObject TONIC_DS_SCREEN_1_ODD;
     public static final BlockRegistryObject TONIC_DS_SCREEN_1_EVEN;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_RED_ODD;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_RED_EVEN;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_GREEN_ODD;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_GREEN_EVEN;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_YELLOW_ODD;
+    public static final BlockRegistryObject TONIC_DM_SCREEN_1_YELLOW_EVEN;
 
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_ENTRANCE;
     public static final BlockRegistryObject PAT_P01_TICKET_BARRIER_EXIT;
@@ -207,6 +213,12 @@ public class Blocks {
 
         TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), () -> new Block(new TonicDSScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), () -> new Block(new TonicDSScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_RED_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_red_odd"), () -> new Block(new TonicDMScreen1RedOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_RED_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_red_even"), () -> new Block(new TonicDMScreen1RedEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_GREEN_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_green_odd"), () -> new Block(new TonicDMScreen1GreenOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_GREEN_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_green_even"), () -> new Block(new TonicDMScreen1GreenEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_YELLOW_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_yellow_odd"), () -> new Block(new TonicDMScreen1YellowOdd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        TONIC_DM_SCREEN_1_YELLOW_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_yellow_even"), () -> new Block(new TonicDMScreen1YellowEven()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         PAT_P01_TICKET_BARRIER_ENTRANCE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_entrance"), () -> new Block(new PATTicketBarrier(true)), CreativeModeTabs.YTE_RAILWAY_FACILITIES);
         PAT_P01_TICKET_BARRIER_EXIT = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "pat_p01_ticket_barrier_exit"), () -> new Block(new PATTicketBarrier(false)), CreativeModeTabs.YTE_RAILWAY_FACILITIES);

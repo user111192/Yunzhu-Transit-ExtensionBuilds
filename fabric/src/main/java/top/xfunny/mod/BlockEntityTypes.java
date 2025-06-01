@@ -93,6 +93,14 @@ public class BlockEntityTypes {
 
     public static final BlockEntityTypeRegistryObject<TonicDSScreen1Odd.BlockEntity> TONIC_DS_SCREEN_1_ODD;
     public static final BlockEntityTypeRegistryObject<TonicDSScreen1Even.BlockEntity> TONIC_DS_SCREEN_1_EVEN;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1RedOdd.BlockEntity> TONIC_DM_SCREEN_1_RED_ODD;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1RedEven.BlockEntity> TONIC_DM_SCREEN_1_RED_EVEN;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1GreenOdd.BlockEntity> TONIC_DM_SCREEN_1_GREEN_ODD;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1GreenEven.BlockEntity> TONIC_DM_SCREEN_1_GREEN_EVEN;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1YellowOdd.BlockEntity> TONIC_DM_SCREEN_1_YELLOW_ODD;
+    public static final BlockEntityTypeRegistryObject<TonicDMScreen1YellowEven.BlockEntity> TONIC_DM_SCREEN_1_YELLOW_EVEN;
+
+
 
     public static final BlockEntityTypeRegistryObject<HitachiB85Door1.BlockEntity> HITACHI_B85_DOOR_1;
     public static final BlockEntityTypeRegistryObject<KoneMDoor1.BlockEntity> KONE_M_DOOR_1;
@@ -187,6 +195,12 @@ public class BlockEntityTypes {
 
         TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), TonicDSScreen1Odd.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_ODD::get);
         TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), TonicDSScreen1Even.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_EVEN::get);
+        TONIC_DM_SCREEN_1_RED_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_red_odd"), TonicDMScreen1RedOdd.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_RED_ODD::get);
+        TONIC_DM_SCREEN_1_RED_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_red_even"), TonicDMScreen1RedEven.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_RED_EVEN::get);
+        TONIC_DM_SCREEN_1_GREEN_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_green_odd"), TonicDMScreen1GreenOdd.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_GREEN_ODD::get);
+        TONIC_DM_SCREEN_1_GREEN_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_green_even"), TonicDMScreen1GreenEven.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_GREEN_EVEN::get);
+        TONIC_DM_SCREEN_1_YELLOW_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_yellow_odd"), TonicDMScreen1YellowOdd.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_YELLOW_ODD::get);
+        TONIC_DM_SCREEN_1_YELLOW_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_dm_screen_1_yellow_even"), TonicDMScreen1YellowEven.BlockEntity::new, Blocks.TONIC_DM_SCREEN_1_YELLOW_EVEN::get);
 
         HITACHI_B85_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_door_1"), HitachiB85Door1.BlockEntity::new, Blocks.HITACHI_B85_DOOR_1::get);
         KONE_M_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "kone_m_door_1"), KoneMDoor1.BlockEntity::new, Blocks.KONE_M_DOOR_1::get);
