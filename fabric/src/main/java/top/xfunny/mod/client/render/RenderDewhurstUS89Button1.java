@@ -66,7 +66,7 @@ public class RenderDewhurstUS89Button1 extends BlockEntityRenderer<DewhurstUS89B
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions(2.7f / 16, 6.25F / 16);
+        parentLayout.setParentDimensions(2.7F / 16, 6.25F / 16);
         parentLayout.setPosition(-1.35F / 16, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);

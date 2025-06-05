@@ -6,12 +6,13 @@
   "refmap": "yte.refmap.json",
   "mixins": [
     "MixinBlockLiftButtons",
-    "MixinBlockLiftPanelBase"
+    "MixinBlockLiftPanelBase",
+    "MixinLiftSchema"
   ],
   "client": [
+    "MixinDynamicTextureCache",
     "MixinRenderLiftButtons",
-    "MixinRenderLiftPanel",
-    "MixinDynamicTextureCache"
+    "MixinRenderLiftPanel"
   ],
   "server": [],
   "injectors": {

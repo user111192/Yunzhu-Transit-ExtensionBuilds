@@ -1,5 +1,6 @@
 package top.xfunny.mod.client.render;
 
+import org.mtr.core.data.Client;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -10,14 +11,17 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.mixin.MixinLiftSchema;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.TestLiftButtons;
 import top.xfunny.mod.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.client_data.LiftSpeed;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.ReverseRendering;
@@ -28,9 +32,18 @@ import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.util.Comparator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private DefaultButtonsKeyMapping  keyMapping;
+
+    private float lastUpdateTick = -1;
+    private static final float UPDATE_INTERVAL_TICKS = 1; // 20tick/s * 0.5s = 10 ticks
+    private double lastSpeed = 0;
+    private static final Map<Long, Double> liftSpeedCache = new ConcurrentHashMap<>();
+
+
 
     public RenderTestLiftButtons4(Argument argument) {
         super(argument);
@@ -41,7 +54,6 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         final World world = blockEntity.getWorld2();
 
         keyMapping = blockEntity.getKeyMapping();
-
 
         if (world == null) {
             return;
@@ -99,7 +111,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         NewButtonView buttonUp = new NewButtonView();
         buttonUp.setId("up");//必须设置id
         buttonUp.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
-        buttonUp.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
+        buttonUp.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonUp.setDimension(3F / 16);
         buttonUp.setDefaultColor(0xFFFFFFFF);
         buttonUp.setPressedColor(0xFFFFCB3B);
@@ -110,7 +122,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         NewButtonView buttonDown = new NewButtonView();
         buttonDown.setId("down");
         buttonDown.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
-        buttonDown.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
+        buttonDown.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonDown.setDimension(3F / 16);
         buttonDown.setDefaultColor(0xFFFFFFFF);
         buttonDown.setPressedColor(0xFF00FF00);
@@ -118,7 +130,6 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         buttonDown.setGravity(Gravity.CENTER_HORIZONTAL);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
-
 
         //添加外呼与楼层轨道的连线
         final LineComponent line = new LineComponent();
@@ -136,6 +147,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
             TestLiftButtonsWithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
+
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
@@ -170,13 +182,52 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
+            final float currentTick = InitClient.getGameTick();
+            boolean needUpdate = false;
+
+            if(currentTick < lastUpdateTick){
+                lastUpdateTick = currentTick;
+                liftSpeedCache.clear();;
+            }
+
+            if (currentTick - lastUpdateTick > UPDATE_INTERVAL_TICKS) {
+                needUpdate = true;
+                lastUpdateTick = currentTick; // 记录本次更新时刻
+            }
 
             for (int i = 0; i < count; i++) {
+                final Lift lift = sortedPositionsAndLifts.get(i).right();
+                final long liftId = lift.getId();
+
+
+                double currentSpeed;
+                if (needUpdate) {
+                    currentSpeed = new LiftSpeed(lift).getSpeed();
+                    liftSpeedCache.put(liftId, currentSpeed);
+                } else {
+                    currentSpeed = liftSpeedCache.getOrDefault(liftId, 0.00);
+                }
+
+
+                //速度显示
+                TextView textView = new TextView();
+                textView.setBasicsAttributes(world,
+                        blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"),
+                        7,
+                        0xFFFF0000);
+                textView.setWidth(2F / 16);
+                textView.setHeight(1F / 16);
+                textView.setDisplayLength(10, 0.2F);
+                textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                textView.setText(String.format("%.2f m/s", currentSpeed));
+
+
                 //添加外呼显示屏
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
-                        sortedPositionsAndLifts.get(i).right(),
+                        lift,
                         FontList.instance.getFont("acmeled"),//字体
                         6,//字号
                         0xFFFF0000);//字体颜色
@@ -189,8 +240,8 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
-                liftArrowView.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png"));
+                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), lift, LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png"));
                 //liftArrowView.setAnimationScrolling(true, 0.05F);
                 liftArrowView.setAnimationBliking(true, 0.5F);
                 liftArrowView.setDimension(2F / 16);//不填高度默认宽高比为1:1
@@ -206,6 +257,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
+                numberLayout.addChild(textView);
                 //将外呼显示屏添加到刚才设定的screenLayout线性布局中
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
