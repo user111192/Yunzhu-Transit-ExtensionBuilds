@@ -147,6 +147,7 @@ public class RenderMitsubishiNexWayButton1Segmented extends BlockEntityRenderer<
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
+        buttonDownLight.setFlip(false, true);
 
 
         final LineComponent line = new LineComponent();

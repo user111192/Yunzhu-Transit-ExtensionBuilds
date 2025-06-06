@@ -62,19 +62,14 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
         });
 
 
-        final LinearLayout parentLayout = new LinearLayout(true);
+        final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions(4F / 16, 12F / 16);
-        parentLayout.setPosition(-0.125F, 0.0625F);
+        parentLayout.setParentDimensions(2.35F / 16, 5.3F / 16);
+        parentLayout.setPosition(-1.175F /16,  1.35F/16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
-        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
-        buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, 1.8F / 16, 0, 0);
 
         final LinearLayout buttonContainer = new LinearLayout(true);
         buttonContainer.setBasicsAttributes(world, blockPos);
@@ -120,7 +115,6 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
         buttonDown.setDimension(0.9F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");
@@ -132,6 +126,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
+        buttonDownLight.setFlip(false, true);
 
 
         final LineComponent line = new LineComponent();
@@ -178,8 +173,7 @@ public class RenderMitsubishiNexWayButton2WithoutScreen extends BlockEntityRende
             buttonContainer.addChild(downButtonGroup);
         }
 
-        buttonLayout.addChild(buttonContainer);
-        parentLayout.addChild(buttonLayout);
+        parentLayout.addChild(buttonContainer);
 
         parentLayout.render();
     }

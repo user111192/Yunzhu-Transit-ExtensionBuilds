@@ -114,7 +114,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_UP_TEXTURE);
-        buttonUp.setDimension(0.8F / 16);
+        buttonUp.setDimension(1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -122,7 +122,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(LIGHT_UP_TEXTURE);
-        buttonUpLight.setDimension(0.8F / 16);
+        buttonUpLight.setDimension(1F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(DEFAULT_COLOR);
@@ -132,21 +132,22 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_DOWN_TEXTURE);
-        buttonDown.setDimension(0.8F / 16);
+        buttonDown.setDimension(1F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
+        buttonDown.setFlip(false, false);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(LIGHT_DOWN_TEXTURE);
-        buttonDownLight.setDimension(0.8F / 16);
+        buttonDownLight.setDimension(1F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(DEFAULT_COLOR);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
+        buttonDownLight.setFlip(false, false);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());

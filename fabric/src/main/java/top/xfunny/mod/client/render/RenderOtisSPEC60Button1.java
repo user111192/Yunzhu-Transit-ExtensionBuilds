@@ -200,7 +200,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setHeight(1.7F / 16);
-                liftFloorDisplayView.setMargin(0.25F / 16, 2.5F / 16, 0.45F / 16, 0);
+                liftFloorDisplayView.setMargin(-0.225F / 16, 2.5F / 16, 0.3F / 16, 0);
 
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
 
@@ -209,7 +209,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
                 liftArrowViewUP.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
                 liftArrowViewUP.setTexture(ARROW_TEXTURE);
                 liftArrowViewUP.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowViewUP.setDimension(0.7F / 16);
+                liftArrowViewUP.setDimension(0.5F / 16);
                 liftArrowViewUP.setMargin(0, 1.07F / 16, 0, 0);
                 liftArrowViewUP.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowViewUP.setColor(0xFFFF0000);

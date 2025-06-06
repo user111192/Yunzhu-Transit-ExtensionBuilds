@@ -148,7 +148,7 @@ public class RenderMitsubishiMaxiezButton1Silver extends BlockEntityRenderer<Mit
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
-
+        buttonDownLight.setFlip(false, true);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());

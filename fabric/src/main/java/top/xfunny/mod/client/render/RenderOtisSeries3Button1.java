@@ -73,7 +73,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         buttonContainer.setBasicsAttributes(world, blockPos);
         buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
         buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
-        buttonContainer.setMargin(0, 0.45F / 16, 0.1F / 16, 0);
+        buttonContainer.setMargin(0.1F / 16, 0.45F / 16, 0, 0);
 
         final LinearLayout upButtonGroup = new LinearLayout(false);
         upButtonGroup.setBasicsAttributes(world, blockPos);
