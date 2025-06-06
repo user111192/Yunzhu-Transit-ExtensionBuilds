@@ -15,6 +15,7 @@ public class NewButtonView extends ImageView {
     private int defaultColor;
     private boolean isFocused;
     private boolean isPressed;
+    private boolean isAlwaysOn;
     private DefaultButtonsKeyMapping keyMapping;
     private float[] location, dimension;
     private float[] uv;
@@ -30,32 +31,42 @@ public class NewButtonView extends ImageView {
         super.setBasicsAttributes(world, blockPos);
     }
 
+    public void setBasicsAttributes(World world, BlockPos blockPos) {
+        super.setBasicsAttributes(world, blockPos);
+    }
+
     @Override
     public void render() {
         location[0] = x;
         location[1] = y;
         dimension[0] = width;
         dimension[1] = height;
-        keyMapping.registerButton(id, location, dimension);
 
         final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-        if (hitResult != null) {
+        if (hitResult != null && keyMapping != null) {
+            keyMapping.registerButton(id, location, dimension);
             BlockState blockState = world.getBlockState(blockPos);
             Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
             final Vector3d hitLocation = hitResult.getPos();
             final String inButton = keyMapping.mapping(TransformPositionX.transform(MathHelper.fractionalPart(hitLocation.getXMapped()), MathHelper.fractionalPart(hitLocation.getZMapped()), facing), MathHelper.fractionalPart(hitLocation.getYMapped()));
             final boolean inBlock = Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
+
             isFocused = inBlock && inButton.equals(id);
         }
 
-        if (isFocused || isPressed) {
+        if (isFocused || isPressed || isAlwaysOn) {
             setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
         }
 
         setUv(uv);
         color = isPressed ? pressedColor : isFocused ? hoverColor : defaultColor;
         super.render();
+    }
+
+    public void setDefaultColor(int defaultColor, boolean isAlwaysOn) {
+        this.defaultColor = defaultColor;
+        this.isAlwaysOn = isAlwaysOn;
     }
 
     public void setDefaultColor(int defaultColor) {

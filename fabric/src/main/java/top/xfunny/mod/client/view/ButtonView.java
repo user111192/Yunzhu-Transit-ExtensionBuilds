@@ -183,6 +183,4 @@ public class ButtonView implements RenderView {
     public void addStoredMatrixTransformations(Consumer<GraphicsHolder> transformation) {
         storedMatrixTransformations1.add(transformation);
     }
-
-
 }
