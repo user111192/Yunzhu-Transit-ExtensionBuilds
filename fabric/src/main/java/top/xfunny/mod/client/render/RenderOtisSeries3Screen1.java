@@ -51,7 +51,7 @@ public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> e
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.65F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.65F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);

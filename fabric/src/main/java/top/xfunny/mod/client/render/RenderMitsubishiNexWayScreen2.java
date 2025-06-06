@@ -20,8 +20,8 @@ import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Comparator;
+import java.util.Date;
 
 public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
@@ -54,7 +54,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
@@ -69,7 +69,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
         numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
         numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        numberLayout.setMargin(0.16F/16, 0.35F/16, 0, 0);
+        numberLayout.setMargin(0.16F / 16, 0.35F / 16, 0, 0);
 
 
         final LineComponent line = new LineComponent();
@@ -105,16 +105,16 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setMargin(0.2F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
-                if(liftFloorDisplayView.getTextLength()>=3){
+                if (liftFloorDisplayView.getTextLength() >= 3) {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
-                }else{
+                } else {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/mitsubishi_nexway_2_lcd_arrow_1.png"));
-                liftArrowView.setDimension(1.5F/16);
+                liftArrowView.setDimension(1.5F / 16);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setColor(0xFFFFFFFE);
@@ -126,7 +126,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
 
                 //游戏时间处理
                 long ticksInDay = time % 24000;
-                int totalSeconds = (int)(ticksInDay * 3.6);
+                int totalSeconds = (int) (ticksInDay * 3.6);
                 int hours = (totalSeconds / 3600 + 6) % 24; //从06:00开始
                 int minutes = (totalSeconds % 3600) / 60;
 

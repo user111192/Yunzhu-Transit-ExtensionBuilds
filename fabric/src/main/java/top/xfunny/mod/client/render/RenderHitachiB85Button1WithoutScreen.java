@@ -59,14 +59,14 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions( 2F / 16, 4.7F / 16);
-        parentLayout.setPosition(-1F/16, 0F);
+        parentLayout.setParentDimensions(2F / 16, 4.7F / 16);
+        parentLayout.setPosition(-1F / 16, 0F);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
 
@@ -93,7 +93,7 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1F/16);
+        buttonUp.setDimension(1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -156,13 +156,13 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.2F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.2F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

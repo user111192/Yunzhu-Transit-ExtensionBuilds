@@ -12,7 +12,6 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
-import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class ButtonView implements RenderView {
     String hitButton;

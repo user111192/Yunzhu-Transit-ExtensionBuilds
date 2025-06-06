@@ -37,13 +37,14 @@ public class HitachiButton_PAFC extends LiftButtonsBase {
         properties.add(SINGLE);
     }
 
+    @Override
+    public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
+        tooltip.add(TextHelper.translatable("tooltip.warning_block_testing").formatted(TextFormatting.RED));
+    }
+
     public static class BlockEntity extends LiftButtonsBase.BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.HITACHI_BUTTON_PAFC.get(), pos, state);
         }
-    }
-    @Override
-    public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
-        tooltip.add(TextHelper.translatable("tooltip.warning_block_testing").formatted(TextFormatting.RED));
     }
 }

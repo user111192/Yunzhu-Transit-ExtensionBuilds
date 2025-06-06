@@ -28,6 +28,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
     private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1.png");
     private final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_arrow.png");
     private final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_button_1_light.png");
+
     public RenderOtisSeries3Button1(Argument dispatcher) {
         super(dispatcher);
     }
@@ -52,19 +53,18 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         final boolean holdingLinker = PlayerHelper.isHolding(PlayerEntity.cast(clientPlayerEntity), item -> item.data instanceof YteLiftButtonsLinker || item.data instanceof YteGroupLiftButtonsLinker);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
-        
-        
+
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.65F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.65F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(1.35F / 16, 3.725F / 16);
-        parentLayout.setPosition(-0.0405F, 0.9F/16);
+        parentLayout.setPosition(-0.0405F, 0.9F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -73,7 +73,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         buttonContainer.setBasicsAttributes(world, blockPos);
         buttonContainer.setWidth(LayoutSize.WRAP_CONTENT);
         buttonContainer.setHeight(LayoutSize.WRAP_CONTENT);
-        buttonContainer.setMargin(0, 0.45F/16, 0.1F / 16, 0);
+        buttonContainer.setMargin(0, 0.45F / 16, 0.1F / 16, 0);
 
         final LinearLayout upButtonGroup = new LinearLayout(false);
         upButtonGroup.setBasicsAttributes(world, blockPos);
@@ -89,29 +89,29 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         downButtonGroup.setHeight(LayoutSize.WRAP_CONTENT);
         downButtonGroup.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        final FrameLayout upButtonLightGroup  = new FrameLayout();
+        final FrameLayout upButtonLightGroup = new FrameLayout();
         upButtonLightGroup.setBasicsAttributes(world, blockPos);
         upButtonLightGroup.setWidth(LayoutSize.WRAP_CONTENT);
         upButtonLightGroup.setHeight(LayoutSize.WRAP_CONTENT);
         upButtonLightGroup.setGravity(Gravity.END);
 
-        final FrameLayout downButtonLightGroup  = new FrameLayout();
+        final FrameLayout downButtonLightGroup = new FrameLayout();
         downButtonLightGroup.setBasicsAttributes(world, blockPos);
         downButtonLightGroup.setWidth(LayoutSize.WRAP_CONTENT);
         downButtonLightGroup.setHeight(LayoutSize.WRAP_CONTENT);
         downButtonLightGroup.setGravity(Gravity.END);
 
-        ImageView buttonUpArrow  = new ImageView();
+        ImageView buttonUpArrow = new ImageView();
         buttonUpArrow.setBasicsAttributes(world, blockPos);
         buttonUpArrow.setTexture(ARROW_TEXTURE);
-        buttonUpArrow.setDimension(0.6F/16);
+        buttonUpArrow.setDimension(0.6F / 16);
         buttonUpArrow.setGravity(Gravity.START);
         buttonUpArrow.setLight(light);
 
-        ImageView buttonDownArrow  = new ImageView();
+        ImageView buttonDownArrow = new ImageView();
         buttonDownArrow.setBasicsAttributes(world, blockPos);
         buttonDownArrow.setTexture(ARROW_TEXTURE);
-        buttonDownArrow.setDimension(0.6F/16);
+        buttonDownArrow.setDimension(0.6F / 16);
         buttonDownArrow.setGravity(Gravity.START);
         buttonDownArrow.setLight(light);
         buttonDownArrow.setFlip(false, true);
@@ -119,14 +119,14 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         ImageView buttonUpBackground = new ImageView();
         buttonUpBackground.setBasicsAttributes(world, blockPos);
         buttonUpBackground.setTexture(BUTTON_TEXTURE);
-        buttonUpBackground.setDimension(0.6F/16);
+        buttonUpBackground.setDimension(0.6F / 16);
         buttonUpBackground.setGravity(Gravity.CENTER);
         buttonUpBackground.setLight(light);
 
         ImageView buttonDownBackground = new ImageView();
         buttonDownBackground.setBasicsAttributes(world, blockPos);
         buttonDownBackground.setTexture(BUTTON_TEXTURE);
-        buttonDownBackground.setDimension(0.6F/16);
+        buttonDownBackground.setDimension(0.6F / 16);
         buttonDownBackground.setGravity(Gravity.CENTER);
         buttonDownBackground.setLight(light);
 
@@ -134,7 +134,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(0.6F/16);
+        buttonUpLight.setDimension(0.6F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(0xFF111111);
@@ -145,7 +145,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(0.6F/16);
+        buttonDownLight.setDimension(0.6F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(0xFF111111);
@@ -182,15 +182,15 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         downButtonLightGroup.addChild(buttonDownBackground);
         downButtonLightGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             upButtonGroup.addChild(buttonUpArrow);
             upButtonGroup.addChild(upButtonLightGroup);
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.35F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.35F / 16, 0, 0);
             }
             downButtonGroup.addChild(buttonDownArrow);
             downButtonGroup.addChild(downButtonLightGroup);

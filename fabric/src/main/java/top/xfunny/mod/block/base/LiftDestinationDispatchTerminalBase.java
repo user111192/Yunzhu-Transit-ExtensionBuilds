@@ -277,9 +277,9 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                         } else if (liftDirection == confirmLiftDirection) {
                             if (confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                                 } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
+                            } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                                }
+                            }
                         }
                     }
 
@@ -320,7 +320,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 return String.valueOf(liftIdentifier);
 
             } else {
-                 liftIdentifier = '?';
+                liftIdentifier = '?';
                 return String.valueOf(liftIdentifier);
             }
         }

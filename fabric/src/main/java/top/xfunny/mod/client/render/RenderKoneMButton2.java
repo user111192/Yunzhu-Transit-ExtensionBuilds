@@ -26,9 +26,9 @@ import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private final int HOVER_COLOR = 0xFFDDDDDD;
     private final int PRESSED_COLOR = 0xFFCC0000;
-    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_m_button_2_up_b.png");
     private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_m_button_2_down_b.png");
     private final Identifier LIGHT_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/kone_m_button_2_light.png");
@@ -60,14 +60,14 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(3.2F / 16, 5.5F / 16);
-        parentLayout.setPosition(-1.6F/16, 0);
+        parentLayout.setPosition(-1.6F / 16, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -94,7 +94,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(1.25F/16,353,178);
+        buttonUp.setDimension(1.25F / 16, 353, 178);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -102,7 +102,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.25F/16,353,178);
+        buttonUpLight.setDimension(1.25F / 16, 353, 178);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(DEFAULT_COLOR);
@@ -112,7 +112,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
-        buttonDown.setDimension(1.25F/16,353,178);
+        buttonDown.setDimension(1.25F / 16, 353, 178);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -121,7 +121,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.25F/16,353,178);
+        buttonDownLight.setDimension(1.25F / 16, 353, 178);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(DEFAULT_COLOR);
@@ -157,13 +157,13 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

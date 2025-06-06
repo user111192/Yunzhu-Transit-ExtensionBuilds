@@ -10,13 +10,16 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.TestLiftDestinationDispatchTerminal;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ArrayListToString;
-import top.xfunny.mod.util.TransformPositionX;
-import top.xfunny.mod.client.view.*;
+import top.xfunny.mod.client.view.ButtonView;
+import top.xfunny.mod.client.view.LayoutSize;
+import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.TextView;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
+import top.xfunny.mod.util.ArrayListToString;
+import top.xfunny.mod.util.TransformPositionX;
 
 import java.util.ArrayList;
 
@@ -65,7 +68,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(-0.5, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(-0.5, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LineComponent line = new LineComponent();

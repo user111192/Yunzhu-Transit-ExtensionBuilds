@@ -19,10 +19,10 @@ public class KoneMScreen1Even extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
-            case LEFT :
+            case LEFT:
                 return IBlock.getVoxelShapeByDirection(9.75, 10, 0, 16, 13.25, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
-            case RIGHT :
+            case RIGHT:
                 return IBlock.getVoxelShapeByDirection(0, 10, 0, 6.25, 13.25, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
         }

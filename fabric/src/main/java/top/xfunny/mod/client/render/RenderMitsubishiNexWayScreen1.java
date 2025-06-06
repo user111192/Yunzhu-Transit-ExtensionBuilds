@@ -18,11 +18,11 @@ import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
@@ -61,7 +61,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

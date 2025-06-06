@@ -18,13 +18,13 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.ThyssenkruppTEGL1Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -64,16 +64,15 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.65F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.65F / 16 - SMALL_OFFSET);
         });
 
 
-        
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 10.75F / 16);
-        parentLayout.setPosition(-0.125F, 2.45F /16);
+        parentLayout.setPosition(-0.125F, 2.45F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -114,7 +113,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(0.9F/16);
+        buttonUp.setDimension(0.9F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -122,7 +121,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(0.9F/16);
+        buttonUpLight.setDimension(0.9F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -132,7 +131,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE);
-        buttonDown.setDimension(0.9F/16);
+        buttonDown.setDimension(0.9F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -141,26 +140,26 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(0.9F/16);
+        buttonDownLight.setDimension(0.9F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
-        
+
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
-        
+
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-        
+
         blockEntity.forEachTrackPosition(trackPosition -> {
-            
+
             line.RenderLine(holdingLinker, trackPosition);
 
-            
+
             ThyssenkruppTEGL1Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
@@ -179,13 +178,13 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            
+
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
 
             for (int i = 0; i < count; i++) {
-                
+
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
@@ -198,27 +197,27 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
                 liftFloorDisplayView.setWidth(1.6F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
                 liftFloorDisplayView.setMargin(0.14F / 16, 0F / 16, 0, 0);
-                
+
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
 
-                
+
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.47F / 16,106,150);
+                liftArrowView.setDimension(0.47F / 16, 106, 150);
                 liftArrowView.setMargin(0, 0.0315F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFFFFFF);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
 
-                
+
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
-                
+
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
                     screenLayout.reverseChildren();
@@ -233,13 +232,13 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 1F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 1F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

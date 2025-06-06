@@ -38,15 +38,15 @@ public class HitachiIVIB320Button extends LiftButtonsBase {
         properties.add(SINGLE);
     }
 
-    public static class BlockEntity extends BlockEntityBase {
-        public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.HITACHI_VIB320_BUTTON.get(), pos, state);
-        }
-    }
-
     @Override
     public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
         tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_tip_1").formatted(TextFormatting.GRAY));
         tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_tip_2").formatted(TextFormatting.GRAY));
+    }
+
+    public static class BlockEntity extends BlockEntityBase {
+        public BlockEntity(BlockPos pos, BlockState state) {
+            super(BlockEntityTypes.HITACHI_VIB320_BUTTON.get(), pos, state);
+        }
     }
 }

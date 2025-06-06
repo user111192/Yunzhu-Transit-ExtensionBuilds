@@ -16,7 +16,10 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesTouchButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.*;
+import top.xfunny.mod.client.view.Gravity;
+import top.xfunny.mod.client.view.ImageView;
+import top.xfunny.mod.client.view.LayoutSize;
+import top.xfunny.mod.client.view.NewButtonView;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
@@ -61,7 +64,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -75,7 +78,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         final ImageView schindlerLogo = new ImageView();
         schindlerLogo.setBasicsAttributes(world, blockEntity.getPos2());
         schindlerLogo.setTexture(LOGO);
-        schindlerLogo.setDimension(0.3F/16,16);
+        schindlerLogo.setDimension(0.3F / 16, 16);
         schindlerLogo.setLight(light);
         schindlerLogo.setMargin(0, 0, 0.2F / 16, 0);
         schindlerLogo.setGravity(Gravity.END);
@@ -103,7 +106,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(1.75F/16);
+        buttonUp.setDimension(1.75F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -111,7 +114,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.75F/16);
+        buttonUpLight.setDimension(1.75F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -121,7 +124,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
-        buttonDown.setDimension(1.75F/16);
+        buttonDown.setDimension(1.75F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -130,7 +133,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.75F/16);
+        buttonDownLight.setDimension(1.75F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -166,13 +169,13 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.75F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.75F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

@@ -20,11 +20,11 @@ import top.xfunny.mod.block.SchindlerDSeriesScreen2GreenEven;
 import top.xfunny.mod.block.SchindlerDSeriesScreen2RedEven;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
@@ -84,7 +84,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -152,7 +152,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(-30);
-                liftFloorDisplayView.setDisplayLength( 2, 0.005F);
+                liftFloorDisplayView.setDisplayLength(2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.5 / 16 : (float) 2.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));

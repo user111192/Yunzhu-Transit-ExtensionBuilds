@@ -7,9 +7,9 @@ import org.mtr.mod.block.IBlock;
 import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.Items;
 import top.xfunny.mod.block.base.LiftDestinationDispatchTerminalBase;
+import top.xfunny.mod.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
 import top.xfunny.mod.util.ArrayListToString;
 import top.xfunny.mod.util.TransformPositionX;
-import top.xfunny.mod.keymapping.TestLiftDestinationDispatchTerminalKeyMapping;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

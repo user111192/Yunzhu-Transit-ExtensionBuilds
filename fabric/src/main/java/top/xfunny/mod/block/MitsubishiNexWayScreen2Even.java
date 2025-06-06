@@ -8,7 +8,6 @@ import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.block.base.LiftPanelBase;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MitsubishiNexWayScreen2Even extends LiftPanelBase {

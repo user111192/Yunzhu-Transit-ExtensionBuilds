@@ -18,12 +18,12 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.KoneKDS330Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -177,7 +177,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.5F/16);
+                liftArrowView.setDimension(0.5F / 16);
                 liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);

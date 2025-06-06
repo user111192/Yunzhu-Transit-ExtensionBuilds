@@ -26,9 +26,9 @@ import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<DewhurstUS91Button1Braille.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private final int HOVER_COLOR = 0xFFFF9999;
     private final int PRESSED_COLOR = 0xFFFF0000;
-    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/dewhurst_us91_button_1_braille_up.png");
     private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/dewhurst_us91_button_1_braille_down.png");
     private final Identifier BUTTON_LIGHT_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/dewhurst_us91_button_1_braille_up_light.png");
@@ -62,7 +62,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -96,7 +96,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(1.1F/16);
+        buttonUp.setDimension(1.1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -159,13 +159,13 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

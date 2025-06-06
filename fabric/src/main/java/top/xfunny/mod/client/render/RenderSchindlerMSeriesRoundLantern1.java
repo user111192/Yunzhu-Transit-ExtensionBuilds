@@ -17,7 +17,6 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.LayoutSize;
 import top.xfunny.mod.client.view.LiftButtonView;
@@ -25,6 +24,7 @@ import top.xfunny.mod.client.view.LineComponent;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
@@ -60,7 +60,7 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.15F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.15F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();

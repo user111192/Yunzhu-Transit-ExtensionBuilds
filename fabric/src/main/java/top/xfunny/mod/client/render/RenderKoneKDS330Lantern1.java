@@ -55,7 +55,7 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0.17, 7.5F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0.17, 7.5F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -103,21 +103,21 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
 
-                KoneKDS330Lantern1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            KoneKDS330Lantern1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
 
-                    final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
+                final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 
-                    instructionDirections.forEach(liftDirection -> {
-                        switch (liftDirection) {
-                            case DOWN:
-                                buttonLight.setDownButtonLight();
-                                break;
-                            case UP:
-                                buttonLight.setUpButtonLight();
-                                break;
-                        }
-                    });
+                instructionDirections.forEach(liftDirection -> {
+                    switch (liftDirection) {
+                        case DOWN:
+                            buttonLight.setDownButtonLight();
+                            break;
+                        case UP:
+                            buttonLight.setUpButtonLight();
+                            break;
+                    }
                 });
+            });
         });
 
         blockEntity.forEachLiftButtonPosition(buttonPosition -> {

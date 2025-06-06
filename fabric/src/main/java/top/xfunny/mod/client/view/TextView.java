@@ -18,7 +18,6 @@ import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.ARGB_WHITE;
-import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class TextView implements RenderView {
     protected String id;
@@ -39,7 +38,6 @@ public class TextView implements RenderView {
     protected float gameTick;
     protected String text;
     protected DynamicTextureCache.DynamicResource texture;
-    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
     protected float fixedWidth;
     protected float textWidth;
     protected float textHeight;
@@ -50,7 +48,7 @@ public class TextView implements RenderView {
     protected Gravity gravity;
     protected Consumer<GraphicsHolder> transformation;
     protected Direction facing;
-
+    private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR_TRANSLUCENT;
 
     @Override
     public String getId() {
@@ -110,7 +108,7 @@ public class TextView implements RenderView {
         int rawTextHeight = texture.height;
         float scale = (float) rawTextHeight / height;
 
-        switch (adaptMode){
+        switch (adaptMode) {
             case FORCE_FIT_WIDTH:
                 this.fixedWidth = width;
                 this.textWidth = width;
@@ -164,7 +162,7 @@ public class TextView implements RenderView {
         this.horizontalTextAlign = horizontalTextAlign;
     }
 
-    public void setTextAlign(HorizontalTextAlign horizontalTextAlign,  VerticalTextAlign verticalTextAlign) {
+    public void setTextAlign(HorizontalTextAlign horizontalTextAlign, VerticalTextAlign verticalTextAlign) {
         this.horizontalTextAlign = horizontalTextAlign;
         this.verticalTextAlign = verticalTextAlign;
     }
@@ -248,13 +246,13 @@ public class TextView implements RenderView {
         return gravity;
     }
 
-    public int getTextLength(){
-        return text.length();
-    }
-
     @Override
     public void setGravity(Gravity gravity) {
         this.gravity = gravity;
+    }
+
+    public int getTextLength() {
+        return text.length();
     }
 
     @Override

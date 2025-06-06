@@ -53,7 +53,7 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -96,14 +96,14 @@ public class RenderSchindlerDSeriesScreen1<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(-30);
-                liftFloorDisplayView.setDisplayLength( 2, 0);
+                liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_screen_1_arrow.png"));
-                liftArrowView.setDimension(1.3F/16,256,600);
+                liftArrowView.setDimension(1.3F / 16, 256, 600);
                 liftArrowView.setMargin((float) 1.2 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(0xFFFF0000);

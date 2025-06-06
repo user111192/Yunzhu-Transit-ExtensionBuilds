@@ -59,7 +59,7 @@ public class RenderDewhurstUS91Button1 extends BlockEntityRenderer<DewhurstUS91B
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -93,7 +93,7 @@ public class RenderDewhurstUS91Button1 extends BlockEntityRenderer<DewhurstUS91B
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1.1F/16);
+        buttonUp.setDimension(1.1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -156,13 +156,13 @@ public class RenderDewhurstUS91Button1 extends BlockEntityRenderer<DewhurstUS91B
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

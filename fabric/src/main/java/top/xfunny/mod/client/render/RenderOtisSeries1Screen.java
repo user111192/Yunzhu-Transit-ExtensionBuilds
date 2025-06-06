@@ -50,7 +50,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7F / 16 - SMALL_OFFSET);
         });
 
         FrameLayout parentLayout = new FrameLayout();

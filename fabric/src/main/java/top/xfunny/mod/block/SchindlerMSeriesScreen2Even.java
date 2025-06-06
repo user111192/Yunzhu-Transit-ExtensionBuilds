@@ -19,10 +19,10 @@ public class SchindlerMSeriesScreen2Even extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
-            case LEFT :
+            case LEFT:
                 return IBlock.getVoxelShapeByDirection(7, 9, 0, 16, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
-            case RIGHT :
+            case RIGHT:
                 return IBlock.getVoxelShapeByDirection(0, 9, 0, 9, 12, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
         }

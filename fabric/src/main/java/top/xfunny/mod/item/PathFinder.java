@@ -7,7 +7,6 @@ import org.mtr.mapping.holder.World;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.IBlock;
-import top.xfunny.mod.Init;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class PathFinder implements DirectionHelper {
             }
         }
         if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
-           //Init.LOGGER.info("下");
+            //Init.LOGGER.info("下");
             if (!findMark(pos.down(1))) {
                 array[0] = pos.down(1);
                 array[1] = otherPos.down(1);

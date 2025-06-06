@@ -18,13 +18,13 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -66,7 +66,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
@@ -113,7 +113,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1F/16);
+        buttonUp.setDimension(1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -211,7 +211,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
                 final ImageView screenBackground = new ImageView();
                 screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
-                screenBackground.setDimension(1F/16,113,211);
+                screenBackground.setDimension(1F / 16, 113, 211);
                 screenBackground.setGravity(Gravity.CENTER);
 
                 final LinearLayout numberLayout = new LinearLayout(true);
@@ -240,13 +240,13 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.2F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.2F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

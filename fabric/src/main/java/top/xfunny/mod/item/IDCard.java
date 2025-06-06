@@ -1,25 +1,38 @@
 package top.xfunny.mod.item;
 
-import org.jetbrains.annotations.NotNull;
-import org.mtr.mapping.annotation.MappedMethod;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.ItemExtension;
 import org.mtr.mapping.mapper.TextHelper;
-import org.mtr.mod.generated.lang.TranslationProvider;
 import top.xfunny.mod.block.SchindlerZLine3Keypad1;
-import top.xfunny.mod.block.SchindlerZLine3Keypad1.BlockEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class IDCard extends ItemExtension{
+public class IDCard extends ItemExtension {
 
     public static final String FLOOR_TAG = "floor";
     public static final String ACCESS_TAG = "access_level";
 
     public IDCard(ItemSettings itemSettings) {
         super(itemSettings.maxCount(1)); // 限制堆叠数为1
+    }
+
+    /* 静态工具方法 */
+    public static void setFloor(ItemStack stack, int floor) {
+        stack.getOrCreateTag().putInt(FLOOR_TAG, floor);
+    }
+
+    public static void setAccessLevel(ItemStack stack, int level) {
+        stack.getOrCreateTag().putInt(ACCESS_TAG, level);
+    }
+
+    public static int getFloor(ItemStack stack) {
+        return stack.getOrCreateTag().getInt(FLOOR_TAG);
+    }
+
+    public static int getAccessLevel(ItemStack stack) {
+        return stack.getOrCreateTag().getInt(ACCESS_TAG);
     }
 
     @Nonnull
@@ -70,22 +83,5 @@ public class IDCard extends ItemExtension{
     private boolean isValidBlock(ItemUsageContext context) {
         Block block = context.getWorld().getBlockState(context.getBlockPos()).getBlock();
         return block.data instanceof SchindlerZLine3Keypad1;
-    }
-
-    /* 静态工具方法 */
-    public static void setFloor(ItemStack stack, int floor) {
-        stack.getOrCreateTag().putInt(FLOOR_TAG, floor);
-    }
-
-    public static void setAccessLevel(ItemStack stack, int level) {
-        stack.getOrCreateTag().putInt(ACCESS_TAG, level);
-    }
-
-    public static int getFloor(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(FLOOR_TAG);
-    }
-
-    public static int getAccessLevel(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(ACCESS_TAG);
     }
 }

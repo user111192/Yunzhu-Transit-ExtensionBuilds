@@ -12,14 +12,14 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerZLine3Keypad1;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ArrayListToString;
-import top.xfunny.mod.util.TransformPositionX;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.SchindlerZLine3Keypad1KeyMapping;
+import top.xfunny.mod.util.ArrayListToString;
+import top.xfunny.mod.util.TransformPositionX;
 
 import java.util.ArrayList;
 
@@ -72,7 +72,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(-0.5, 0, 7F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(-0.5, 0, 7F / 16 - SMALL_OFFSET);
         });
 
         final LineComponent line = new LineComponent();
@@ -94,7 +94,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         group1.setWidth(LayoutSize.MATCH_PARENT);
         group1.setHeight(LayoutSize.WRAP_CONTENT);
         group1.setMargin(1.25F / 16, screenId.equals("schindler_z_line_3_keypad_1_key_mapping_input") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_accessibility") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_identifier") ? 1.175F / 16 : 5.6F / 16, 0, 0);
-        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.2F/16 + 0.9 * SMALL_OFFSET));
+        group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.2F / 16 + 0.9 * SMALL_OFFSET));
 
         final LinearLayout group2 = new LinearLayout(false);
         group2.setBasicsAttributes(world, blockEntity.getPos2());
@@ -134,7 +134,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             final TextView textView = new TextView();
             textView.setId("textView");
             textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("Arial"), 6, 0xFF212121);
-            textView.setDisplayLength( 6, 0.005F);
+            textView.setDisplayLength(6, 0.005F);
             textView.setTextureId("schindler_z_line_3_keypad_1_display");
             textView.setText(ArrayListToString.arrayListToString(inputNumber));
             textView.setWidth(2F / 16);

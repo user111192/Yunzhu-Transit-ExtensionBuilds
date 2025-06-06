@@ -14,7 +14,6 @@ import top.xfunny.mod.block.base.LiftButtonsBase;
 import java.util.function.Consumer;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
-import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class LiftButtonView implements RenderView {
 

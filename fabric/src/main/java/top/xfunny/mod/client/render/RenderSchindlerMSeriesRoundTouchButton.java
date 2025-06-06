@@ -59,7 +59,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0.055, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0.055, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -93,7 +93,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(1.25F/16);
+        buttonUp.setDimension(1.25F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -101,7 +101,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.25F/16);
+        buttonUpLight.setDimension(1.25F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -111,7 +111,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
-        buttonDown.setDimension(1.25F/16);
+        buttonDown.setDimension(1.25F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -120,7 +120,7 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.25F/16);
+        buttonDownLight.setDimension(1.25F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -156,13 +156,13 @@ public class RenderSchindlerMSeriesRoundTouchButton extends BlockEntityRenderer<
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.75F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.75F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

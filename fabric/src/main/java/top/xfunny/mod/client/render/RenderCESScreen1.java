@@ -53,7 +53,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.91F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.91F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -96,7 +96,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(15);
-                liftFloorDisplayView.setDisplayLength( 5, 0.01F);
+                liftFloorDisplayView.setDisplayLength(5, 0.01F);
                 liftFloorDisplayView.setMargin((float) 1.7 / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
@@ -104,7 +104,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/ces_arrow_1.png"));
                 liftArrowView_right.setAnimationScrolling(true, 0.05F);
-                liftArrowView_right.setDimension(0.97F / 16,434,999);
+                liftArrowView_right.setDimension(0.97F / 16, 434, 999);
                 liftArrowView_right.setMargin((float) 1.55 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
@@ -114,7 +114,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                 liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/ces_arrow_1.png"));
                 liftArrowView_left.setAnimationScrolling(true, 0.05F);
-                liftArrowView_left.setDimension(0.97F / 16,434,999);
+                liftArrowView_left.setDimension(0.97F / 16, 434, 999);
                 liftArrowView_left.setMargin((float) -7.75 / 16, (float) 3 / 16, 0, 0);
                 liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);

@@ -45,7 +45,7 @@ public class LiftFloorDisplayView extends TextView {
         this.color = color;
     }
 
-    public int getTextLength(){
+    public int getTextLength() {
         formatFloorText();
         return text.length();
     }

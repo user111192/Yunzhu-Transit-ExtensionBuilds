@@ -15,7 +15,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.*;
+import top.xfunny.mod.block.TonicDMScreen1GreenEven;
+import top.xfunny.mod.block.TonicDMScreen1RedEven;
+import top.xfunny.mod.block.TonicDMScreen1YellowEven;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -82,7 +84,7 @@ public class RenderTonicDMScreen1<T extends LiftPanelBase.BlockEntityBase> exten
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
@@ -149,7 +151,7 @@ public class RenderTonicDMScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                 liftFloorDisplayView.setHeight((float) 2.8 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
-                liftFloorDisplayView.setDisplayLength( 2, 0.005F);
+                liftFloorDisplayView.setDisplayLength(2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) -0.5 / 16 : (float) 2.5 / 16, (float) 0.5 / 16, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));

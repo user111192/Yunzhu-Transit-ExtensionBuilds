@@ -60,7 +60,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -74,7 +74,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         final ImageView schindlerLogo = new ImageView();
         schindlerLogo.setBasicsAttributes(world, blockEntity.getPos2());
         schindlerLogo.setTexture(LOGO);
-        schindlerLogo.setDimension(0.3F / 16,16);
+        schindlerLogo.setDimension(0.3F / 16, 16);
         schindlerLogo.setMargin(0, 0, 0.2F / 16, 0);
         schindlerLogo.setGravity(Gravity.END);
 
@@ -101,7 +101,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(1.75F/16);
+        buttonUp.setDimension(1.75F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -109,7 +109,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.75F/16);
+        buttonUpLight.setDimension(1.75F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -119,7 +119,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
-        buttonDown.setDimension(1.75F/16);
+        buttonDown.setDimension(1.75F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -128,7 +128,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.75F/16);
+        buttonDownLight.setDimension(1.75F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -164,17 +164,17 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.75F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.75F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }
-        
+
         parentLayout.addChild(buttonContainer);
         parentLayout.addChild(schindlerLogo);
 

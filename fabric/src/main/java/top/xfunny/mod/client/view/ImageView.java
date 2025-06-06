@@ -11,23 +11,22 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 
 import static org.mtr.mapping.mapper.DirectionHelper.FACING;
 import static org.mtr.mod.data.IGui.ARGB_WHITE;
-import static org.mtr.mod.data.IGui.SMALL_OFFSET;
 
 public class ImageView implements RenderView {
+    public float y;
     // 基本属性
     protected String id;
-    private StoredMatrixTransformations storedMatrixTransformations;
     protected float width, height;
     protected float x;
-    public float y;
-    private float marginLeft, marginTop, marginRight, marginBottom;
-    private Gravity gravity;
     protected World world;
     protected BlockPos blockPos;
+    protected int color = ARGB_WHITE;
+    private StoredMatrixTransformations storedMatrixTransformations;
+    private float marginLeft, marginTop, marginRight, marginBottom;
+    private Gravity gravity;
     private Identifier texture;
     private float scale;
     private int light = GraphicsHolder.getDefaultLight();
-    protected int color = ARGB_WHITE;
     private float[] uv;
     private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
     private boolean needBlink;
@@ -53,8 +52,9 @@ public class ImageView implements RenderView {
 
     /**
      * 设置尺寸
-     * @param width 宽度
-     * @param rawWidth 贴图原始宽度
+     *
+     * @param width     宽度
+     * @param rawWidth  贴图原始宽度
      * @param rawHeight 贴图原始高度
      */
     public void setDimension(float width, float rawWidth, float rawHeight) {
@@ -66,6 +66,7 @@ public class ImageView implements RenderView {
 
     /**
      * 设置尺寸
+     *
      * @param width 宽度
      * @param scale 缩放比：贴图原始高度/贴图原始宽度
      */
@@ -78,6 +79,7 @@ public class ImageView implements RenderView {
     /**
      * 设置尺寸
      * 宽高比为1:1
+     *
      * @param width 宽度
      */
     public void setDimension(float width) {
@@ -111,12 +113,12 @@ public class ImageView implements RenderView {
         // 闪烁逻辑
         boolean shouldRender = true;
         if (needBlink && blinkInterval > 0) {
-            int framesPerCycle = (int)(blinkInterval * 20);
-            int currentFrame = (int)(gameTick % framesPerCycle);
+            int framesPerCycle = (int) (blinkInterval * 20);
+            int currentFrame = (int) (gameTick % framesPerCycle);
             shouldRender = currentFrame < (framesPerCycle / 2); // 半周期亮、半周期灭
         }
 
-        if(shouldRender){
+        if (shouldRender) {
             // 调度渲染
             MainRenderer.scheduleRender(
                     texture,
@@ -198,7 +200,7 @@ public class ImageView implements RenderView {
         this.marginBottom = bottom;
     }
 
-    protected void setUv(float[] uv){
+    protected void setUv(float[] uv) {
         this.uv = uv;
     }
 
@@ -217,7 +219,7 @@ public class ImageView implements RenderView {
         }
     }
 
-    public void setAnimationBliking(boolean needBlink, float blinkInterval){
+    public void setAnimationBliking(boolean needBlink, float blinkInterval) {
         this.needBlink = needBlink;
         this.blinkInterval = blinkInterval;
     }

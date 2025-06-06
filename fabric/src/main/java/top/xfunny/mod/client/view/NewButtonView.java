@@ -16,11 +16,11 @@ public class NewButtonView extends ImageView {
     private boolean isFocused;
     private boolean isPressed;
     private DefaultButtonsKeyMapping keyMapping;
-    private float[] location,dimension;
+    private float[] location, dimension;
     private float[] uv;
 
-    public NewButtonView(){
-        location  = new float[2];
+    public NewButtonView() {
+        location = new float[2];
         dimension = new float[2];
         uv = new float[]{1, 1, 0, 0};
     }
@@ -36,25 +36,25 @@ public class NewButtonView extends ImageView {
         location[1] = y;
         dimension[0] = width;
         dimension[1] = height;
-        keyMapping.registerButton(id,  location, dimension);
+        keyMapping.registerButton(id, location, dimension);
 
         final HitResult hitResult = MinecraftClient.getInstance().getCrosshairTargetMapped();
-        if(hitResult != null ){
-            BlockState  blockState = world.getBlockState(blockPos);
+        if (hitResult != null) {
+            BlockState blockState = world.getBlockState(blockPos);
             Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
 
             final Vector3d hitLocation = hitResult.getPos();
-            final String inButton = keyMapping.mapping(TransformPositionX.transform(MathHelper.fractionalPart(hitLocation.getXMapped()), MathHelper.fractionalPart(hitLocation.getZMapped()),facing), MathHelper.fractionalPart(hitLocation.getYMapped()));
+            final String inButton = keyMapping.mapping(TransformPositionX.transform(MathHelper.fractionalPart(hitLocation.getXMapped()), MathHelper.fractionalPart(hitLocation.getZMapped()), facing), MathHelper.fractionalPart(hitLocation.getYMapped()));
             final boolean inBlock = Init.newBlockPos(hitLocation.getXMapped(), hitLocation.getYMapped(), hitLocation.getZMapped()).equals(blockPos);
             isFocused = inBlock && inButton.equals(id);
         }
 
-        if(isFocused|| isPressed){
+        if (isFocused || isPressed) {
             setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
         }
 
         setUv(uv);
-        color = isPressed?  pressedColor : isFocused? hoverColor : defaultColor;
+        color = isPressed ? pressedColor : isFocused ? hoverColor : defaultColor;
         super.render();
     }
 
@@ -86,7 +86,7 @@ public class NewButtonView extends ImageView {
     }
 
 
-    public void activate(){
+    public void activate() {
         isPressed = true;
     }
 }

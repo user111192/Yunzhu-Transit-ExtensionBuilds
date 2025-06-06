@@ -3,8 +3,8 @@ package top.xfunny.mod.block.behavior;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
-import top.xfunny.mod.util.BlockUtil;
 import top.xfunny.mod.data.BlockProperties;
+import top.xfunny.mod.util.BlockUtil;
 
 import java.util.List;
 

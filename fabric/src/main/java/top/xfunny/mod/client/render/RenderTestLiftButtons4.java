@@ -10,7 +10,6 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
-import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
@@ -22,20 +21,18 @@ import top.xfunny.mod.block.TestLiftButtonsWithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.client_data.LiftSpeed;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
-    private DefaultButtonsKeyMapping  keyMapping;
+    private DefaultButtonsKeyMapping keyMapping;
     private LiftSpeed liftSpeed = new LiftSpeed();
 
     public RenderTestLiftButtons4(Argument argument) {
@@ -68,7 +65,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7F / 16-SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7F / 16 - SMALL_OFFSET);
         });
 
         //创建一个纵向的linear layout作为最底层的父容器
@@ -103,7 +100,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         NewButtonView buttonUp = new NewButtonView();
         buttonUp.setId("up");//必须设置id
-        buttonUp.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
+        buttonUp.setBasicsAttributes(world, blockEntity.getPos2(), keyMapping);
         buttonUp.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonUp.setDimension(3F / 16);
         buttonUp.setDefaultColor(0xFFFFFFFF);
@@ -114,7 +111,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         NewButtonView buttonDown = new NewButtonView();
         buttonDown.setId("down");
-        buttonDown.setBasicsAttributes(world, blockEntity.getPos2(),keyMapping);
+        buttonDown.setBasicsAttributes(world, blockEntity.getPos2(), keyMapping);
         buttonDown.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonDown.setDimension(3F / 16);
         buttonDown.setDefaultColor(0xFFFFFFFF);
@@ -156,13 +153,13 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
             });
         });
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonGroup.addChild(buttonUp);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                buttonDown.setMargin(0, 1F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                buttonDown.setMargin(0, 1F / 16, 0, 0);
             }
             buttonGroup.addChild(buttonDown);
         }
@@ -177,8 +174,6 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
             for (int i = 0; i < count; i++) {
                 final Lift lift = sortedPositionsAndLifts.get(i).right();
-                double currentSpeed = ((MixinLiftSchema)lift).getSpeed()*1000;
-
 
                 //速度显示
                 TextView textView = new TextView();
@@ -192,7 +187,6 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
                 textView.setText(String.format("%.2f m/s", liftSpeed.getSpeed(lift)));
-
 
 
                 //添加外呼显示屏

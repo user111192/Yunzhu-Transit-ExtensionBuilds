@@ -12,7 +12,7 @@ import java.util.List;
 
 public class KoneKDS330Button2 extends LiftButtonsBase {
     public KoneKDS330Button2() {
-        super(true, true,0.3);
+        super(true, true, 0.3);
     }
 
     @Nonnull

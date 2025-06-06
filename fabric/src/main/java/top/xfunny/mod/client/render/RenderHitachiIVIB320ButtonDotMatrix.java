@@ -15,7 +15,6 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiIVIB320Button;
 import top.xfunny.mod.block.HitachiIVIB320ButtonDotMatrix;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
@@ -72,7 +71,6 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         });
 
 
-        
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
@@ -81,15 +79,15 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        
+
         final LinearLayout screenLayout = new LinearLayout(false);
         screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         screenLayout.setMargin(0, 0.7F / 16, 0, 0);
-        
-        
+
+
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
@@ -120,7 +118,7 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_UP_TEXTURE);
-        buttonUp.setDimension(0.8F/16);
+        buttonUp.setDimension(0.8F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -153,19 +151,19 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         buttonDownLight.setDefaultColor(DEFAULT_COLOR);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
-        
+
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
-        
+
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-        
+
         blockEntity.forEachTrackPosition(trackPosition -> {
-            
+
             line.RenderLine(holdingLinker, trackPosition);
 
-            
+
             HitachiIVIB320ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
@@ -184,12 +182,12 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            
+
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
             for (int i = 0; i < count; i++) {
-                
+
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
@@ -204,24 +202,24 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
                 liftFloorDisplayView.setMargin(0.01F, 0, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
 
-                
+
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.6F/16,384,512);
+                liftArrowView.setDimension(0.6F / 16, 384, 512);
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setColor(0xFFFFFFFF);
 
-                
+
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
-                
+
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
                     screenLayout.reverseChildren();
@@ -236,13 +234,13 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

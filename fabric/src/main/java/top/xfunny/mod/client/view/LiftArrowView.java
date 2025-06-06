@@ -9,7 +9,7 @@ import org.mtr.mod.Init;
 import org.mtr.mod.InitClient;
 import top.xfunny.mod.util.ClientGetLiftDetails;
 
-public class LiftArrowView extends ImageView{
+public class LiftArrowView extends ImageView {
     private Lift lift;
     private ArrowType arrowType;
     private boolean needScroll;
@@ -69,15 +69,15 @@ public class LiftArrowView extends ImageView{
         return uv;
     }
 
-    public enum ArrowType{
+    public void setAnimationScrolling(boolean needScroll, float scrollSpeed) {
+        this.needScroll = needScroll;
+        this.scrollSpeed = scrollSpeed;
+    }
+
+    public enum ArrowType {
         UP,
         DOWN,
         BOTH,
         AUTO
-    }
-
-    public void setAnimationScrolling(boolean needScroll, float scrollSpeed){
-        this.needScroll = needScroll;
-        this.scrollSpeed = scrollSpeed;
     }
 }

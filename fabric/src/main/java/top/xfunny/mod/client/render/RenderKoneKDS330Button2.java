@@ -61,7 +61,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         final StoredMatrixTransformations storedMatrixTransformations1 = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.5F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.5F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -79,7 +79,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         button.setDefaultColor(0xFFFFFFFF);
         button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
         button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE_UP,BUTTON_TEXTURE_DOWN, true);//按钮贴图
+        button.setTexture(BUTTON_TEXTURE_UP, BUTTON_TEXTURE_DOWN, true);//按钮贴图
         button.setWidth(0.9F / 16);//按钮宽度
         button.setHeight(0.9F / 16);//按钮高度
         button.setSpacing(3.565F / 16);//两个按钮的间距
@@ -92,7 +92,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         buttonLight.setDefaultColor(0xFFFFFFFF);
         buttonLight.setPressedColor(PRESSED_COLOR);
         buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE_UP,BUTTON_LIGHT_TEXTURE_DOWN, false);
+        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE_UP, BUTTON_LIGHT_TEXTURE_DOWN, false);
         buttonLight.setWidth(0.9F / 16);
         buttonLight.setHeight(0.9F / 16);
         buttonLight.setClientMedian(0.3);

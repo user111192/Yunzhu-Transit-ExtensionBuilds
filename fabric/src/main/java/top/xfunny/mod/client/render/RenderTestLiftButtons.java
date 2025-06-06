@@ -22,10 +22,10 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.TestLiftButtons;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.TextureList;
-import top.xfunny.mod.util.ClientGetLiftDetails;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -208,7 +208,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
                         5F / 16, 5F / 16,
                         0, 0, 1, 1,
                         Direction.UP,
-                        (isPressed ? PRESSED_COLOR : HOVER_COLOR) & 0x00FFFFFF | ((int)(pulse * 255) << 24),
+                        (isPressed ? PRESSED_COLOR : HOVER_COLOR) & 0x00FFFFFF | ((int) (pulse * 255) << 24),
                         light
                 );
             }
@@ -245,7 +245,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
                 width + 0.02F, height + 0.02F,
                 0, 0, 1, 1,
                 Direction.UP,
-                GLOW_COLOR & 0x00FFFFFF | ((int)(pulse * 88) << 24),
+                GLOW_COLOR & 0x00FFFFFF | ((int) (pulse * 88) << 24),
                 light
         );
     }
@@ -360,7 +360,7 @@ public class RenderTestLiftButtons extends BlockEntityRenderer<TestLiftButtons.B
                                     0, 0,
                                     1, 1,
                                     Direction.UP,
-                                    ARGB_WHITE | ((int)(pulse * 255) << 24),
+                                    ARGB_WHITE | ((int) (pulse * 255) << 24),
                                     GraphicsHolder.getDefaultLight()
                             );
                             graphicsHolder.pop();

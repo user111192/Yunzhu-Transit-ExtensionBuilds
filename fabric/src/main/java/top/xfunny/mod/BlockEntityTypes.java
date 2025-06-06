@@ -101,7 +101,6 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<TonicDMScreen1YellowEven.BlockEntity> TONIC_DM_SCREEN_1_YELLOW_EVEN;
 
 
-
     public static final BlockEntityTypeRegistryObject<HitachiB85Door1.BlockEntity> HITACHI_B85_DOOR_1;
     public static final BlockEntityTypeRegistryObject<KoneMDoor1.BlockEntity> KONE_M_DOOR_1;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayDoor1.BlockEntity> MITSUBISHI_NEXWAY_DOOR_1;

@@ -18,13 +18,13 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiIVIB320Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -114,7 +114,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_UP_TEXTURE);
-        buttonUp.setDimension(0.8F/16);
+        buttonUp.setDimension(0.8F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -154,10 +154,10 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
         blockEntity.forEachTrackPosition(trackPosition -> {
-            
+
             line.RenderLine(holdingLinker, trackPosition);
 
-            
+
             HitachiIVIB320Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
@@ -176,12 +176,12 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            
+
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
             for (int i = 0; i < count; i++) {
-                
+
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
@@ -195,13 +195,13 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);
 
                 liftFloorDisplayView.setMargin(0, 0, 0.55F / 16, 0);
-                
+
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.6F/16,384,512);
+                liftArrowView.setDimension(0.6F / 16, 384, 512);
                 liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
@@ -213,7 +213,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
-                
+
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
                     screenLayout.reverseChildren();
@@ -228,17 +228,17 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }
-        
+
         buttonLayout.addChild(buttonContainer);
         parentLayout.addChild(screenLayout);
         parentLayout.addChild(buttonLayout);

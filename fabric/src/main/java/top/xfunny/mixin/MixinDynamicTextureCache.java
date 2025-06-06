@@ -19,7 +19,7 @@ public abstract class MixinDynamicTextureCache {
             method = "tick",
             remap = false)
     private void afterTick(CallbackInfo ci) {
-       top.xfunny.mod.client.DynamicTextureCache.instance.tick();
+        top.xfunny.mod.client.DynamicTextureCache.instance.tick();
     }
 
 }

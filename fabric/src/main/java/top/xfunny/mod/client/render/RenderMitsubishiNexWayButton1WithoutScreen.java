@@ -13,19 +13,15 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
-import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.MitsubishiNexWayButton1WithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
-
-import java.util.Comparator;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRenderer<MitsubishiNexWayButton1WithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
@@ -62,10 +58,10 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.5F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.5F / 16 - SMALL_OFFSET);
         });
 
-        
+
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
@@ -74,7 +70,7 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        
+
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
@@ -104,7 +100,7 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(0.9F/16);
+        buttonUp.setDimension(0.9F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -112,7 +108,7 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(0.9F/16);
+        buttonUpLight.setDimension(0.9F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -122,7 +118,7 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE);
-        buttonDown.setDimension(0.9F/16);
+        buttonDown.setDimension(0.9F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -131,26 +127,26 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(0.9F/16);
+        buttonDownLight.setDimension(0.9F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
-        
+
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
-        
+
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
-        
+
         blockEntity.forEachTrackPosition(trackPosition -> {
-            
+
             line.RenderLine(holdingLinker, trackPosition);
 
-            
+
             MitsubishiNexWayButton1WithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
@@ -172,13 +168,13 @@ public class RenderMitsubishiNexWayButton1WithoutScreen extends BlockEntityRende
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.5F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

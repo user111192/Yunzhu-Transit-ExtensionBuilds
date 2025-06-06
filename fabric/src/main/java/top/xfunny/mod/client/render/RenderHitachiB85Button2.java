@@ -19,13 +19,13 @@ import top.xfunny.mod.block.HitachiB85Button1;
 import top.xfunny.mod.block.HitachiB85Button2;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.util.ReverseRendering;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
@@ -67,7 +67,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
@@ -84,7 +84,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         screenLayout.setMargin(0, 1.4F / 16, 0, 0);
-        
+
         screenLayout.setId("screen");
 
         final FrameLayout buttonLayout = new FrameLayout();
@@ -116,7 +116,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1F/16);
+        buttonUp.setDimension(1F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -150,14 +150,14 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
-        
+
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
         blockEntity.forEachTrackPosition(trackPosition -> {
-            
+
             line.RenderLine(holdingLinker, trackPosition);
 
             HitachiB85Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
@@ -176,17 +176,17 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
             });
         });
 
-        
+
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
-            
+
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
 
             for (int i = 0; i < count; i++) {
-                
+
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
@@ -202,11 +202,11 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 liftFloorDisplayView.setMargin(0.1F / 16, 0.1F / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
 
-                
+
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.55F/16);
+                liftArrowView.setDimension(0.55F / 16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setMargin(0, 1.5F / 16, 0, 0);
@@ -222,11 +222,11 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 final ImageView screenBackground = new ImageView();
                 screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
-                screenBackground.setDimension(1.3F /16,113,131);
+                screenBackground.setDimension(1.3F / 16, 113, 131);
                 screenBackground.setMargin(0, (float) 0.75 / 16, 0, 0);
                 screenBackground.setGravity(Gravity.CENTER);
 
-                
+
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
@@ -234,7 +234,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 numberLayout.addChild(liftArrowView);
                 numberLayout.addChild(liftFloorDisplayView);
                 numberLayout.setGravity(Gravity.CENTER);
-                
+
                 if (reverseRendering) {
                     backgroundLayout.addChild(screenBackground);
                     backgroundLayout.addChild(numberLayout);
@@ -253,13 +253,13 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         downButtonGroup.addChild(buttonDown);
         downButtonGroup.addChild(buttonDownLight);
 
-        if(buttonDescriptor.hasUpButton()){
+        if (buttonDescriptor.hasUpButton()) {
             buttonContainer.addChild(upButtonGroup);
         }
 
-        if(buttonDescriptor.hasDownButton()){
-            if(buttonDescriptor.hasUpButton()){
-                downButtonGroup.setMargin(0, 0.2F/ 16, 0, 0);
+        if (buttonDescriptor.hasDownButton()) {
+            if (buttonDescriptor.hasUpButton()) {
+                downButtonGroup.setMargin(0, 0.2F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

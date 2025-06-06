@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ThyssenkruppTEGL1Button1 extends LiftButtonsBase {
     public ThyssenkruppTEGL1Button1() {
-        super(true, true,0.3);
+        super(true, true, 0.3);
     }
 
     @Nonnull

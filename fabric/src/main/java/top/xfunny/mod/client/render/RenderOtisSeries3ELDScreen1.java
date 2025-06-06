@@ -53,7 +53,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.65F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.65F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -102,7 +102,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_eld_arrow_1.png"));
-                liftArrowView.setDimension(0.65F/16);
+                liftArrowView.setDimension(0.65F / 16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setMargin(0.425F / 16, 2.5F / 16, 0, 0);
                 liftArrowView.setColor(0xFFB29B3C);

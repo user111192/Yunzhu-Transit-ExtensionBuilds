@@ -7,7 +7,7 @@ import org.mtr.mapping.mapper.TextHelper;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AuthQRCode extends ItemExtension{
+public class AuthQRCode extends ItemExtension {
 
     public AuthQRCode(ItemSettings itemSettings) {
         super(itemSettings.maxCount(1));

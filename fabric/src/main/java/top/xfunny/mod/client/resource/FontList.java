@@ -77,7 +77,7 @@ public class FontList {
                 if (font != null) {
                     return font;
                 } else {
-                     return new Font("Arial", Font.PLAIN, 12); // 默认字体
+                    return new Font("Arial", Font.PLAIN, 12); // 默认字体
                 }
             }
         }

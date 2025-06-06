@@ -4,15 +4,15 @@ import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.core.operation.PressLift;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import org.mtr.mapping.holder.Blocks;
 import org.mtr.mapping.holder.*;
+import org.mtr.mapping.holder.Blocks;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mod.InitClient;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
-import top.xfunny.mod.Items;
 import top.xfunny.mod.*;
+import top.xfunny.mod.Items;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.TransformPositionX;
 
@@ -25,13 +25,13 @@ import java.util.function.Consumer;
 import static org.mtr.core.data.LiftDirection.NONE;
 
 ;
+
 public abstract class LiftButtonsBase extends BlockExtension implements DirectionHelper, BlockWithEntity, IBlock {
     public static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public static final BooleanProperty SINGLE = BooleanProperty.of("single");
     public static boolean allowPress;
     private final boolean isOdd;
     private double median = 0.25;//判定按下上、下按钮的分界线
-
 
 
     public LiftButtonsBase(boolean allowPress, boolean isOdd) {
@@ -114,7 +114,8 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
                         // 检查并记录上下按钮状态
                         LiftButtonDescriptor descriptor = new LiftButtonDescriptor(false, false);
-                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {}));
+                        data.trackPositions.forEach(trackPosition -> LiftButtonsBase.hasButtonsClient(trackPosition, descriptor, (floor, lift) -> {
+                        }));
 
                         // 同时具有上下方向的按钮
                         if (descriptor.hasDownButton() && descriptor.hasUpButton()) {
@@ -131,9 +132,9 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
                                 }
                             });
 
-                            if(focusButton.equals("up")){
+                            if (focusButton.equals("up")) {
                                 data.liftDirection = LiftDirection.UP;
-                            }else if (focusButton.equals("down")){
+                            } else if (focusButton.equals("down")) {
                                 data.liftDirection = LiftDirection.DOWN;
                             }
 
@@ -152,7 +153,7 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
                             });
 
-                            if(focusButton.equals("up") || focusButton.equals("down")){
+                            if (focusButton.equals("up") || focusButton.equals("down")) {
                                 data.liftDirection = descriptor.hasDownButton() ? LiftDirection.DOWN : LiftDirection.UP;
                             }
                         }
@@ -312,14 +313,13 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
 
         }
 
-        public void setKeyMapping(DefaultButtonsKeyMapping keyMapping){
-            this.keyMapping =  keyMapping;
-        }
-
-        public DefaultButtonsKeyMapping getKeyMapping(){
+        public DefaultButtonsKeyMapping getKeyMapping() {
             return keyMapping;
         }
 
+        public void setKeyMapping(DefaultButtonsKeyMapping keyMapping) {
+            this.keyMapping = keyMapping;
+        }
 
         /**
          * 注册或取消注册一个楼层位置

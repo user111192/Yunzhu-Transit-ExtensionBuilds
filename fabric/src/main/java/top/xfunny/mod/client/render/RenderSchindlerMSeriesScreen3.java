@@ -18,7 +18,6 @@ import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesScreen3Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
-import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.client.view.Gravity;
 import top.xfunny.mod.client.view.ImageView;
 import top.xfunny.mod.client.view.LiftButtonView;
@@ -26,6 +25,7 @@ import top.xfunny.mod.client.view.TextView;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
@@ -65,7 +65,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.9F/16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
 
         final FrameLayout parentLayout = new FrameLayout();
@@ -111,7 +111,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         final ImageView background = new ImageView();
         background.setBasicsAttributes(world, blockEntity.getPos2());
         background.setTexture(new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/schindler_m_series_screen_1_white.png"));
-        background.setDimension(3.25F/16);
+        background.setDimension(3.25F / 16);
         background.setLight(light);
         background.setGravity(Gravity.CENTER);
 
