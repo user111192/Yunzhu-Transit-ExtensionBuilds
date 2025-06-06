@@ -35,8 +35,8 @@ public class YteRouteMapGenerator implements IGui {
 
             final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, true);
             nativeImage.fillRect(0, 0, totalWidth, height, 0);
-            YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, ARGB_BLACK, textColor, false);
-            YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);
+            YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, 0x00000000, textColor, false);
+            //YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);
 
 
             //top.xfunny.mod.util.ImageGenerator.saveNativeImageAsPng(nativeImage, "output_image.png");
@@ -52,94 +52,6 @@ public class YteRouteMapGenerator implements IGui {
         lineSize = scale / 8;
         fontSizeBig = lineSize * 2;
         fontSizeSmall = fontSizeBig / 2;
-    }
-
-    public static void clearColor(NativeImage nativeImage, int targetColor, int tolerance) {
-        int width = nativeImage.getWidth();
-        int height = nativeImage.getHeight();
-
-        int targetR = (targetColor >> 16) & 0xFF;
-        int targetG = (targetColor >> 8) & 0xFF;
-        int targetB = targetColor & 0xFF;
-        int targetA = (targetColor >> 24) & 0xFF;
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                int currentColor = nativeImage.getColor(x, y);
-
-                int currentR = (currentColor >> 16) & 0xFF;
-                int currentG = (currentColor >> 8) & 0xFF;
-                int currentB = currentColor & 0xFF;
-                int currentA = (currentColor >> 24) & 0xFF;
-
-                int deltaR = Math.abs(currentR - targetR);
-                int deltaG = Math.abs(currentG - targetG);
-                int deltaB = Math.abs(currentB - targetB);
-                int deltaA = Math.abs(currentA - targetA);
-
-                if (deltaR <= tolerance && deltaG <= tolerance && deltaB <= tolerance && deltaA <= tolerance) {
-                    // 将目标像素直接设置为完全透明
-                    nativeImage.setPixelColor(x, y, 0);
-                } else {
-                    // 对非匹配区域应用 FXAA 抗锯齿处理
-                    int blurredColor = applyFXAA(nativeImage, x, y);
-                    nativeImage.setPixelColor(x, y, blurredColor);
-                }
-            }
-        }
-    }
-
-    private static int applyFXAA(NativeImage image, int x, int y) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        // 当前像素及其四周像素的颜色值
-        int colorCenter = image.getColor(x, y);
-        int colorLeft = x > 0 ? image.getColor(x - 1, y) : colorCenter;
-        int colorRight = x < width - 1 ? image.getColor(x + 1, y) : colorCenter;
-        int colorUp = y > 0 ? image.getColor(x, y - 1) : colorCenter;
-        int colorDown = y < height - 1 ? image.getColor(x, y + 1) : colorCenter;
-
-        // 检查透明度是否为 0（完全透明）
-        if (((colorCenter >> 24) & 0xFF) == 0) {
-            return 0; // 保持完全透明
-        }
-
-        // 计算加权平均颜色
-        int blendedR = (
-                ((colorLeft >> 16) & 0xFF) +
-                        ((colorRight >> 16) & 0xFF) +
-                        ((colorUp >> 16) & 0xFF) +
-                        ((colorDown >> 16) & 0xFF) +
-                        ((colorCenter >> 16) & 0xFF)
-        ) / 5;
-
-        int blendedG = (
-                ((colorLeft >> 8) & 0xFF) +
-                        ((colorRight >> 8) & 0xFF) +
-                        ((colorUp >> 8) & 0xFF) +
-                        ((colorDown >> 8) & 0xFF) +
-                        ((colorCenter >> 8) & 0xFF)
-        ) / 5;
-
-        int blendedB = (
-                (colorLeft & 0xFF) +
-                        (colorRight & 0xFF) +
-                        (colorUp & 0xFF) +
-                        (colorDown & 0xFF) +
-                        (colorCenter & 0xFF)
-        ) / 5;
-
-        int blendedA = (
-                ((colorLeft >> 24) & 0xFF) +
-                        ((colorRight >> 24) & 0xFF) +
-                        ((colorUp >> 24) & 0xFF) +
-                        ((colorDown >> 24) & 0xFF) +
-                        ((colorCenter >> 24) & 0xFF)
-        ) / 5;
-
-        // 返回模糊后的颜色
-        return (blendedA << 24) | (blendedR << 16) | (blendedG << 8) | blendedB;
     }
 
 
@@ -173,33 +85,62 @@ public class YteRouteMapGenerator implements IGui {
 
     private static void blendPixel(NativeImage nativeImage, int x, int y, int color) {
         if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
-            final float percent = (float) ((color >> 24) & 0xFF) / 0xFF;
-            if (percent > 0) {
-                final int existingPixel = nativeImage.getColor(x, y);
-                final boolean existingTransparent = ((existingPixel >> 24) & 0xFF) == 0;
-                final int r1 = existingTransparent ? 0xFF : (existingPixel & 0xFF);
-                final int g1 = existingTransparent ? 0xFF : ((existingPixel >> 8) & 0xFF);
-                final int b1 = existingTransparent ? 0xFF : ((existingPixel >> 16) & 0xFF);
-                final int r2 = (color >> 16) & 0xFF;
-                final int g2 = (color >> 8) & 0xFF;
-                final int b2 = color & 0xFF;
-                final float inversePercent = 1 - percent;
-                final int finalColor = ARGB_BLACK | (((int) (r1 * inversePercent + r2 * percent) << 16) + ((int) (g1 * inversePercent + g2 * percent) << 8) + (int) (b1 * inversePercent + b2 * percent));
-                drawPixelSafe(nativeImage, x, y, finalColor);
+            // 1. 读取ABGR格式的像素并正确解析通道
+            final int existingPixel = nativeImage.getColor(x, y);
+            final int a1 = (existingPixel >> 24) & 0xFF;
+            final int r1 = (existingPixel) & 0xFF;       // ABGR中的R分量（实际是存储的B分量）
+            final int g1 = (existingPixel >> 8) & 0xFF;  // G分量
+            final int b1 = (existingPixel >> 16) & 0xFF; // ABGR中的B分量（实际是存储的R分量）
+
+            // 2. 正确解析文本颜色(ARGB格式)
+            final int a2 = (color >>> 24) & 0xFF;
+            final int r2 = (color >> 16) & 0xFF; // ARGB中的R分量
+            final int g2 = (color >> 8) & 0xFF;  // G分量
+            final int b2 = color & 0xFF;         // B分量
+
+            // 3. 透明背景特殊处理：当背景透明时，RGB设为0而不是255
+            if (a1 == 0) {
+                // 使用标准混合公式计算新颜色
+                if (a2 > 0) {
+                    final float alpha = a2 / 255.0f;
+                    final int r = (int) (r2 * alpha);
+                    final int g = (int) (g2 * alpha);
+                    final int b = (int) (b2 * alpha);
+
+                    // 注意：这里直接使用原色值，因为背景透明不需要混合
+                    final int finalColor = (a2 << 24) | (b << 16) | (g << 8) | r; // 转换为ABGR格式
+                    nativeImage.setPixelColor(x, y, finalColor);
+                }
+            } else {
+                // 4. 非透明背景使用正确混合公式
+                final float alpha1 = a1 / 255.0f;
+                final float alpha2 = a2 / 255.0f;
+                final float outAlpha = alpha1 + alpha2 * (1 - alpha1);
+
+                if (outAlpha > 0) {
+                    final float factor = alpha2 * (1 - alpha1) / outAlpha;
+                    final int r = (int) ((r1 * (1 - factor)) + (r2 * factor));
+                    final int g = (int) ((g1 * (1 - factor)) + (g2 * factor));
+                    final int b = (int) ((b1 * (1 - factor)) + (b2 * factor));
+                    final int a = (int) (outAlpha * 255);
+
+                    // 转换为ABGR格式存储
+                    final int finalColor = (a << 24) | (b << 16) | (g << 8) | r;
+                    nativeImage.setPixelColor(x, y, finalColor);
+                }
             }
         }
     }
 
+    // 5. 移除冗余的颜色反转方法
+    // public static int invertColor(int color) { ... } // 完全删除这个方法
+
     private static void drawPixelSafe(NativeImage nativeImage, int x, int y, int color) {
         if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
-            nativeImage.setPixelColor(x, y, invertColor(color));
+            // 6. 直接写入颜色（不再调用invertColor）
+            nativeImage.setPixelColor(x, y, color);
         }
     }
-
-    public static int invertColor(int color) {
-        return ((color & ARGB_BLACK) != 0 ? ARGB_BLACK : 0) + ((color & 0xFF) << 16) + (color & 0xFF00) + ((color & 0xFF0000) >> 16);
-    }
-
 
 }
 

@@ -1,6 +1,5 @@
 package top.xfunny.mod.client.render;
 
-import org.mtr.core.data.Client;
 import org.mtr.core.data.Lift;
 import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -37,13 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.BlockEntity> implements DirectionHelper, IGui, IBlock {
     private DefaultButtonsKeyMapping  keyMapping;
-
-    private float lastUpdateTick = -1;
-    private static final float UPDATE_INTERVAL_TICKS = 1; // 20tick/s * 0.5s = 10 ticks
-    private double lastSpeed = 0;
-    private static final Map<Long, Double> liftSpeedCache = new ConcurrentHashMap<>();
-
-
+    private LiftSpeed liftSpeed = new LiftSpeed();
 
     public RenderTestLiftButtons4(Argument argument) {
         super(argument);
@@ -182,31 +175,9 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
-            final float currentTick = InitClient.getGameTick();
-            boolean needUpdate = false;
-
-            if(currentTick < lastUpdateTick){
-                lastUpdateTick = currentTick;
-                liftSpeedCache.clear();;
-            }
-
-            if (currentTick - lastUpdateTick > UPDATE_INTERVAL_TICKS) {
-                needUpdate = true;
-                lastUpdateTick = currentTick; // 记录本次更新时刻
-            }
-
             for (int i = 0; i < count; i++) {
                 final Lift lift = sortedPositionsAndLifts.get(i).right();
-                final long liftId = lift.getId();
-
-
-                double currentSpeed;
-                if (needUpdate) {
-                    currentSpeed = new LiftSpeed(lift).getSpeed();
-                    liftSpeedCache.put(liftId, currentSpeed);
-                } else {
-                    currentSpeed = liftSpeedCache.getOrDefault(liftId, 0.00);
-                }
+                double currentSpeed = ((MixinLiftSchema)lift).getSpeed()*1000;
 
 
                 //速度显示
@@ -220,7 +191,8 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 textView.setDisplayLength(10, 0.2F);
                 textView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                textView.setText(String.format("%.2f m/s", currentSpeed));
+                textView.setText(String.format("%.2f m/s", liftSpeed.getSpeed(lift)));
+
 
 
                 //添加外呼显示屏
