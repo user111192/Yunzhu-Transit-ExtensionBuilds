@@ -1,7 +1,5 @@
 package top.xfunny.mod.keymapping;
 
-import top.xfunny.mod.Init;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +20,7 @@ public class DefaultButtonsKeyMapping {
     public String mapping(double x, double hitY) {
         for (Map.Entry<String, ButtonArea> entry : buttonMap.entrySet()) {
             ButtonArea area = entry.getValue();
-            boolean hit = x < -(area.location[0]-0.5) && x > -(area.location[0]-0.5) - area.dimension[0]
+            boolean hit = x < -(area.location[0] - 0.5) && x > -(area.location[0] - 0.5) - area.dimension[0]
                     && hitY > area.location[1] && hitY < area.location[1] + area.dimension[1];
             if (hit) {
                 return entry.getKey();

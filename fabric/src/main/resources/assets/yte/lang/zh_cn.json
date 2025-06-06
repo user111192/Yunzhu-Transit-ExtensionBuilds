@@ -117,6 +117,6 @@
   "tooltip.id_card.access": "通行权限: %d",
   "tooltip.id_card.floors": "通行楼层: %d",
   "tooltip.auth_qrcode.used": "已作废",
-  "tooltip.auth_qrcode.unused":"未使用",
+  "tooltip.auth_qrcode.unused": "未使用",
   "tooltip.warning_block_testing": "!!!警告:此方块正在测试中，我们并不建议您使用此方块"
 }

@@ -11,7 +11,7 @@ public class Items {
     public static final ItemRegistryObject YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR;
     public static final ItemRegistryObject YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER;
     public static final ItemRegistryObject FLOOR_AUTO_SETTER;
-//    public static final ItemRegistryObject ID_CARD;
+    //    public static final ItemRegistryObject ID_CARD;
     public static final ItemRegistryObject AUTH_QRCODE;
 
     public static final ItemRegistryObject HITACHI_B85_DOOR_1;

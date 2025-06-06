@@ -42,25 +42,25 @@ public class DynamicTextureCache {
     }
 
     public void tick() {
-		final ObjectArrayList<String> keysToRemove = new ObjectArrayList<>();
-		dynamicResources.forEach((checkKey, checkDynamicResource) -> {
-			if (checkDynamicResource.expiryTime < System.currentTimeMillis()) {
-				checkDynamicResource.remove();
-				deletedResources.put(checkDynamicResource.identifier, System.currentTimeMillis() + COOL_DOWN_TIME);
-				keysToRemove.add(checkKey);
-			}
-		});
-		keysToRemove.forEach(dynamicResources::remove);
+        final ObjectArrayList<String> keysToRemove = new ObjectArrayList<>();
+        dynamicResources.forEach((checkKey, checkDynamicResource) -> {
+            if (checkDynamicResource.expiryTime < System.currentTimeMillis()) {
+                checkDynamicResource.remove();
+                deletedResources.put(checkDynamicResource.identifier, System.currentTimeMillis() + COOL_DOWN_TIME);
+                keysToRemove.add(checkKey);
+            }
+        });
+        keysToRemove.forEach(dynamicResources::remove);
 
-		final ObjectArrayList<Identifier> deletedResourcesToRemove = new ObjectArrayList<>();
-		deletedResources.forEach((identifier, expiryTime) -> {
-			if (expiryTime < System.currentTimeMillis()) {
-				MinecraftClient.getInstance().getTextureManager().destroyTexture(identifier);
-				deletedResourcesToRemove.add(identifier);
-			}
-		});
-		deletedResourcesToRemove.forEach(deletedResources::removeLong);
-	}
+        final ObjectArrayList<Identifier> deletedResourcesToRemove = new ObjectArrayList<>();
+        deletedResources.forEach((identifier, expiryTime) -> {
+            if (expiryTime < System.currentTimeMillis()) {
+                MinecraftClient.getInstance().getTextureManager().destroyTexture(identifier);
+                deletedResourcesToRemove.add(identifier);
+            }
+        });
+        deletedResourcesToRemove.forEach(deletedResources::removeLong);
+    }
 
 
     public byte[] getTextPixels(String text, int[] dimensions, int maxWidth, float fontSize, int padding, Font font, int letterSpacing) {

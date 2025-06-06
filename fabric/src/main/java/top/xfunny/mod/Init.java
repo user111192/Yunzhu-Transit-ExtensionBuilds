@@ -7,7 +7,6 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.MathHelper;
 import org.mtr.mapping.registry.Registry;
-
 import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
 
 public final class Init {

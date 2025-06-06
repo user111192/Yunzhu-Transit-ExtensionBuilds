@@ -132,8 +132,6 @@ public class YteRouteMapGenerator implements IGui {
         }
     }
 
-    // 5. 移除冗余的颜色反转方法
-    // public static int invertColor(int color) { ... } // 完全删除这个方法
 
     private static void drawPixelSafe(NativeImage nativeImage, int x, int y, int color) {
         if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
