@@ -115,7 +115,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         buttonDown.setDimension(1.25F / 16, 353, 178);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
+        buttonDown.setFlip(false, false);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");

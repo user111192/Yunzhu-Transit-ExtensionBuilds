@@ -117,7 +117,7 @@ public class RenderDewhurstUS91Button1Braille extends BlockEntityRenderer<Dewhur
         buttonDown.setDimension(1.1F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
+        buttonDown.setFlip(false, false);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");

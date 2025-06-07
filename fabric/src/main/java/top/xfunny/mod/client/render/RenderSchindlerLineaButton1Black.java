@@ -15,7 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiIVIB320Button;
+import top.xfunny.mod.block.SchindlerLineaButton1Black;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -28,23 +28,20 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB320Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerLineaButton1Black extends BlockEntityRenderer<SchindlerLineaButton1Black.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xAAFFFFFF;
-    private static final int PRESSED_COLOR = 0xFFFFFFFF;
-    private static final int DEFAULT_COLOR = 0x00FFFFFF;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_cip71_arrow.png");
-    private static final Identifier BUTTON_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up.png");
-    private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up_light.png");
-    private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
-    private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
+    private static final int HOVER_COLOR = 0xFF990000;
+    private static final int PRESSED_COLOR = 0xFFFF0000;
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/schindler_linea_arrow_2.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/schindler_linea_button_1.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/schindler_linea_button_1_light.png");
 
-    public RenderHitachiIVIB320Button(Argument dispatcher) {
+    public RenderSchindlerLineaButton1Black(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(HitachiIVIB320Button.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(SchindlerLineaButton1Black.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -67,29 +64,32 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.55F / 16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.9F / 16 - SMALL_OFFSET);
         });
+
 
         final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions(4F / 16, 12F / 16);
-        parentLayout.setPosition(-0.125F, 0.0625F);
+        parentLayout.setParentDimensions(1.75F / 16, 7F / 16);
+        parentLayout.setPosition(-0.0546875F, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+
 
         final LinearLayout screenLayout = new LinearLayout(false);
         screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-        screenLayout.setMargin(0, 0.7F / 16, 0, 0);
+        screenLayout.setMargin(0, 1.2F / 16, 0, 0);
+
 
         final FrameLayout buttonLayout = new FrameLayout();
         buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, -0.5F / 16, 0, 0);
+        buttonLayout.setMargin(0, 0.3F / 16, 0, 0);
 
         final LinearLayout buttonContainer = new LinearLayout(true);
         buttonContainer.setBasicsAttributes(world, blockPos);
@@ -113,53 +113,55 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
 
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
-        buttonUp.setTexture(BUTTON_UP_TEXTURE);
-        buttonUp.setDimension(1F / 16);
+        buttonUp.setTexture(BUTTON_TEXTURE);
+        buttonUp.setDimension(0.8F / 16);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
         NewButtonView buttonUpLight = new NewButtonView();
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
-        buttonUpLight.setTexture(LIGHT_UP_TEXTURE);
-        buttonUpLight.setDimension(1F / 16);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonUpLight.setDimension(0.8F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
-        buttonUpLight.setDefaultColor(DEFAULT_COLOR);
+        buttonUpLight.setDefaultColor(ARGB_WHITE,true);
         buttonUpLight.setHoverColor(HOVER_COLOR);
         buttonUpLight.setPressedColor(PRESSED_COLOR);
 
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
-        buttonDown.setTexture(BUTTON_DOWN_TEXTURE);
-        buttonDown.setDimension(1F / 16);
+        buttonDown.setTexture(BUTTON_TEXTURE);
+        buttonDown.setDimension(0.8F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, false);
+        buttonDown.setFlip(false, true);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
-        buttonDownLight.setTexture(LIGHT_DOWN_TEXTURE);
-        buttonDownLight.setDimension(1F / 16);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
+        buttonDownLight.setDimension(0.8F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
-        buttonDownLight.setDefaultColor(DEFAULT_COLOR);
+        buttonDownLight.setDefaultColor(ARGB_WHITE,true);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
-        buttonDownLight.setFlip(false, false);
+
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
 
+
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
+
 
         blockEntity.forEachTrackPosition(trackPosition -> {
 
             line.RenderLine(holdingLinker, trackPosition);
 
 
-            HitachiIVIB320Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            SchindlerLineaButton1Black.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -181,32 +183,32 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
             final int count = Math.min(2, sortedPositionsAndLifts.size());
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
+
             for (int i = 0; i < count; i++) {
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockEntity.getPos2(),
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("hitachi-led-seg"),
-                        7F,
-                        0xFFFF4800);
+                        FontList.instance.getFont("schindler_linea_large"),
+                        7,
+                        0xFFFF0000);
+                liftFloorDisplayView.setDisplayLength(2, 0.05F);
+                liftFloorDisplayView.setTextureId("schindler_linea_1_display");
+                liftFloorDisplayView.setWidth(1.4F / 16);
+                liftFloorDisplayView.setHeight(1.7F / 16);
+                liftFloorDisplayView.setMargin(-0.1F / 16, -0.1F / 16, -0.1F / 16, 0);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
 
-                liftFloorDisplayView.setTextureId("hitachi-led-seg");
-                liftFloorDisplayView.setWidth((float) 1.6 / 16);
-                liftFloorDisplayView.setHeight((float) 1.7 / 16);
-
-                liftFloorDisplayView.setMargin(0, 0, 0.55F / 16, 0);
-
-                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.6F / 16, 384, 512);
-                liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setDimension(0.55F / 16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFFFFFFF);
+                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setColor(0xFFFF0000);
+
 
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
@@ -235,7 +237,7 @@ public class RenderHitachiIVIB320Button extends BlockEntityRenderer<HitachiIVIB3
 
         if (buttonDescriptor.hasDownButton()) {
             if (buttonDescriptor.hasUpButton()) {
-                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
+                downButtonGroup.setMargin(0, 0.2F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

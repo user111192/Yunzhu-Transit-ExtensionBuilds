@@ -122,7 +122,7 @@ public class RenderSchindlerMSeriesButton extends BlockEntityRenderer<SchindlerM
         buttonDown.setDimension(1.75F / 16);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
+        buttonDown.setFlip(false, false);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");

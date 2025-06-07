@@ -27,7 +27,7 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
 
     private static final int HOVER_COLOR = 0xFFCCFFDD;
     private static final int PRESSED_COLOR = 0xFFFFCC66;
-    private static final int DEFAULT_COLOR = 0xFF000000;
+    private static final int DEFAULT_COLOR = 0xFF452D15;
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_b85_button.png");
     private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_b85_button_light.png");
 
