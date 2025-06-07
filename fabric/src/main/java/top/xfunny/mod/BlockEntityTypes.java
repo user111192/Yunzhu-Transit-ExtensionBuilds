@@ -108,6 +108,19 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<OtisE411USDoor1.BlockEntity> OTIS_E411_US_DOOR_1;
     public static final BlockEntityTypeRegistryObject<SchindlerQKS9Door1.BlockEntity> SCHINDLER_QKS9_DOOR_1;
 
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_2_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_2_ODD;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_3_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_3_ODD;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_4_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_4_ODD;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_5_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_5_ODD;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_6_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_6_ODD;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_7_EVEN;
+    public static final BlockEntityTypeRegistryObject<PATRS01RailwaySign.BlockEntity> PAT_RS01_RAILWAY_SIGN_7_ODD;
+
     public static final BlockEntityTypeRegistryObject<EmptyFloor.BlockEntity> LIFT_TRACK_EMPTY_FLOOR;
 
 
@@ -208,6 +221,19 @@ public class BlockEntityTypes {
         MITSUBISHI_NEXWAY_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_door_1"), MitsubishiNexWayDoor1.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_DOOR_1::get);
         OTIS_E411_US_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "otis_e411_us_door_1"), OtisE411USDoor1.BlockEntity::new, Blocks.OTIS_E411_US_DOOR_1::get);
         SCHINDLER_QKS9_DOOR_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_qks9_door_1"), SchindlerQKS9Door1.BlockEntity::new, Blocks.SCHINDLER_QKS9_DOOR_1::get);
+
+        PAT_RS01_RAILWAY_SIGN_2_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_2_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(2, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_2_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_2_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_2_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(2, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_2_ODD::get);
+        PAT_RS01_RAILWAY_SIGN_3_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_3_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(3, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_3_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_3_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_3_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(3, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_3_ODD::get);
+        PAT_RS01_RAILWAY_SIGN_4_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_4_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(4, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_4_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_4_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_4_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(4, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_4_ODD::get);
+        PAT_RS01_RAILWAY_SIGN_5_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_5_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(5, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_5_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_5_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_5_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(5, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_5_ODD::get);
+        PAT_RS01_RAILWAY_SIGN_6_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_6_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(6, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_6_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_6_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_6_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(6, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_6_ODD::get);
+        PAT_RS01_RAILWAY_SIGN_7_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_7_even"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(7, false, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_7_EVEN::get);
+        PAT_RS01_RAILWAY_SIGN_7_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "pat_rs01_railway_sign_7_odd"), (pos, state) -> new PATRS01RailwaySign.BlockEntity(7, true, pos, state), Blocks.PAT_RS01_RAILWAY_SIGN_7_ODD::get);
 
         LIFT_TRACK_EMPTY_FLOOR = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "lift_track_empty_floor"), EmptyFloor.BlockEntity::new, Blocks.LIFT_TRACK_EMPTY_FLOOR::get);
 
