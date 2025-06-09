@@ -196,6 +196,10 @@ public class LinearLayout implements RenderView {
         this.parentType = thisObject;
     }
 
+    public ObjectArrayList<RenderView> getChildren() {
+        return children;
+    }
+
     @Override
     public float[] calculateChildGravityOffset(float childWidth, float childHeight, float[] childMargin, Gravity childGravity) {
         float[] offset = new float[2];

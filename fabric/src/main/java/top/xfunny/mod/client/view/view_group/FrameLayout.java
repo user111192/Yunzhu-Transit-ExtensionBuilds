@@ -246,6 +246,10 @@ public class FrameLayout implements RenderView {
         this.parentType = thisObject;
     }
 
+    public ObjectArrayList<RenderView> getChildren() {
+        return children;
+    }
+
     private void calculateSelfCoordinateOrigin() {
         this.coordinateOriginX = x + width / 2;
         this.coordinateOriginY = y;

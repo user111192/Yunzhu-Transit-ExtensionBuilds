@@ -81,7 +81,7 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         upLantern.setPressedColor(PRESSED_COLOR_UP);
         upLantern.setMargin(0, 0.5F/16, 0, 1.1F/16);
 
-        NewButtonView  downLantern  = new NewButtonView();
+        NewButtonView downLantern  = new NewButtonView();
         downLantern.setBasicsAttributes(world, blockEntity.getPos2());
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(1.2F / 16);

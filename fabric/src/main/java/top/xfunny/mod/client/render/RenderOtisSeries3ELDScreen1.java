@@ -2,7 +2,9 @@ package top.xfunny.mod.client.render;
 
 
 import org.mtr.core.data.Lift;
+import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
@@ -12,20 +14,30 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
+import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
+import top.xfunny.mod.block.OtisSeries3ELDScreen1Even;
 import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
+import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
+import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
-public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+import static org.mtr.core.data.LiftDirection.NONE;
+
+public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
+    private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_eld_arrow_1.png");
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
+    private static final int PRESSED_COLOR = 0xFFB29B3C;
 
     public RenderOtisSeries3ELDScreen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -48,6 +60,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
@@ -59,20 +72,95 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 2.3 / 16);
+        parentLayout.setParentDimensions(4F / 16, 2.3F / 16);
         parentLayout.setPosition(isOdd ? -1F / 16 : -9F / 16, 11.375F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
+        final NewButtonView upLantern = new NewButtonView();
+        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setTexture(ARROW_TEXTURE);
+        upLantern.setDimension(0.65F / 16);
+        upLantern.setGravity(Gravity.CENTER);
+        upLantern.setLight(light);
+        upLantern.setDefaultColor(DEFAULT_COLOR);
+        upLantern.setPressedColor(PRESSED_COLOR);
+
+        final NewButtonView downLantern = new NewButtonView();
+        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setTexture(ARROW_TEXTURE);
+        downLantern.setDimension(0.65F / 16);
+        downLantern.setGravity(Gravity.CENTER);
+        downLantern.setLight(light);
+        downLantern.setDefaultColor(DEFAULT_COLOR);
+        downLantern.setPressedColor(PRESSED_COLOR);
+        downLantern.setFlip(false,true);
+
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
+
+        final LineComponent buttonLine = new LineComponent();
+        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
-            SchindlerDSeriesScreen1Even.LiftCheck(trackPosition, (floorIndex, lift) -> {
+
+            OtisSeries3ELDScreen1Even.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
+
+                LiftDirection pressedButtonDirection = blockEntity.getPressedButtonDirection();
+
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                String floorNumber = liftDetails.right().left();
+                String currentFloorNumber = RenderLifts.getLiftDetails(world, lift, trackPosition).right().left();
+
+                final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
+
+                if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
+                    switch (pressedButtonDirection) {
+                        case DOWN:
+                            parentLayout.addChild(downLantern);
+                            downLantern.activate();
+                            break;
+                        case UP:
+                            parentLayout.addChild(upLantern);
+                            upLantern.activate();
+                            break;
+                    }
+                }
+
+                instructionDirections.forEach(liftDirection -> {
+                    if (lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
+                        if (liftDirection == NONE) {
+                            if (pressedButtonDirection != null) {
+                                switch (pressedButtonDirection) {
+                                    case DOWN:
+                                        parentLayout.addChild(downLantern);
+                                        downLantern.activate();
+                                        break;
+                                    case UP:
+                                        parentLayout.addChild(upLantern);
+                                        upLantern.activate();
+                                        break;
+                                }
+                            }
+                        } else {
+                            switch (liftDirection) {
+                                case DOWN:
+                                    parentLayout.addChild(downLantern);
+                                    downLantern.activate();
+                                    break;
+                                case UP:
+                                    parentLayout.addChild(upLantern);
+                                    upLantern.activate();
+                                    break;
+                            }
+                        }
+                    }
+
+                });
             });
         });
 
@@ -99,18 +187,17 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftPanelBase.BlockEntityBase
                 liftFloorDisplayView.setMargin(5F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
-                final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
-                liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/otis_s3_eld_arrow_1.png"));
-                liftArrowView.setDimension(0.65F / 16);
-                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setMargin(0.425F / 16, 2.5F / 16, 0, 0);
-                liftArrowView.setColor(0xFFB29B3C);
+                if(!parentLayout.getChildren().contains(upLantern) && !parentLayout.getChildren().contains(downLantern)){
+                    parentLayout.addChild(liftFloorDisplayView);
+                }
 
-                parentLayout.addChild(liftArrowView);
-                parentLayout.addChild(liftFloorDisplayView);
             }
         }
+
+        blockEntity.forEachLiftButtonPosition(buttonPosition -> {
+            buttonLine.RenderLine(holdingLinker, buttonPosition, true);
+        });
+
         parentLayout.render();
     }
 }

@@ -5,14 +5,15 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.mod.BlockEntityTypes;
+import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.block.base.LiftPanelBase;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class OtisSeries3ELDScreen1Odd extends LiftPanelBase {
+public class OtisSeries3ELDScreen1Odd extends LiftButtonsBase {
     public OtisSeries3ELDScreen1Odd() {
-        super(true);
+        super(false,true);
     }
 
     @Nonnull
