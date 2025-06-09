@@ -17,11 +17,9 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.util.ClientGetLiftDetails;
@@ -31,6 +29,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR_UP = 0xFF00FF00;
     private static final int PRESSED_COLOR_DOWN = 0xFFFF0000;
+    private static final int DEFAULT_COLOR = 0xFF222222;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/otis_s3_lantern_1_arrow.png");
     private final boolean isOdd;
 
@@ -64,25 +63,34 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
             graphicsHolder.translate(0, 0, 7.65F / 16 - SMALL_OFFSET);
         });
 
-        final FrameLayout parentLayout = new FrameLayout();
+        final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 7.5 / 16);
-        parentLayout.setPosition(isOdd ? (float) -3.75 / 16 : (float) -11.75 / 16, (float) 4.25 / 16);
+        parentLayout.setParentDimensions(7.5F / 16, 4.55F / 16);
+        parentLayout.setPosition(isOdd ? -3.75F / 16 : -11.75F / 16, 5.725F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true, true);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFF222222);
-        button.setHoverColor(0xFF222222);
-        button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(1.2F / 16);
-        button.setHeight(1.2F / 16);
-        button.setSpacing(1.1F / 16);
-        button.setGravity(Gravity.CENTER);
+        NewButtonView upLantern  = new NewButtonView();
+        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setTexture(BUTTON_TEXTURE);
+        upLantern.setDimension(1.2F / 16);
+        upLantern.setGravity(Gravity.CENTER_HORIZONTAL);
+        upLantern.setLight(light);
+        upLantern.setDefaultColor(DEFAULT_COLOR);
+        upLantern.setPressedColor(PRESSED_COLOR_UP);
+        upLantern.setMargin(0, 0.5F/16, 0, 1.1F/16);
+
+        NewButtonView  downLantern  = new NewButtonView();
+        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setTexture(BUTTON_TEXTURE);
+        downLantern.setDimension(1.2F / 16);
+        downLantern.setGravity(Gravity.CENTER_HORIZONTAL);
+        downLantern.setLight(light);
+        downLantern.setDefaultColor(DEFAULT_COLOR);
+        downLantern.setPressedColor(PRESSED_COLOR_DOWN);
+        downLantern.setFlip(false,true);
+        downLantern.setMargin(0, 0, 0, 0);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -109,12 +117,10 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
                 if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
                     switch (pressedButtonDirection) {
                         case DOWN:
-                            button.setDownButtonLight();
-                            button.setPressedColor(PRESSED_COLOR_DOWN);
+                            downLantern.activate();
                             break;
                         case UP:
-                            button.setUpButtonLight();
-                            button.setPressedColor(PRESSED_COLOR_UP);
+                            upLantern.activate();
                             break;
                     }
                 }
@@ -125,24 +131,20 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
                             if (pressedButtonDirection != null) {
                                 switch (pressedButtonDirection) {
                                     case DOWN:
-                                        button.setDownButtonLight();
-                                        button.setPressedColor(PRESSED_COLOR_DOWN);
+                                        downLantern.activate();
                                         break;
                                     case UP:
-                                        button.setUpButtonLight();
-                                        button.setPressedColor(PRESSED_COLOR_UP);
+                                        upLantern.activate();
                                         break;
                                 }
                             }
                         } else {
                             switch (liftDirection) {
                                 case DOWN:
-                                    button.setDownButtonLight();
-                                    button.setPressedColor(PRESSED_COLOR_DOWN);
+                                    downLantern.activate();
                                     break;
                                 case UP:
-                                    button.setUpButtonLight();
-                                    button.setPressedColor(PRESSED_COLOR_UP);
+                                    upLantern.activate();
                                     break;
                             }
                         }
@@ -155,7 +157,9 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         blockEntity.forEachLiftButtonPosition(buttonPosition -> {
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
-        parentLayout.addChild(button);
+
+        parentLayout.addChild(upLantern);
+        parentLayout.addChild(downLantern);
 
         parentLayout.render();
     }
