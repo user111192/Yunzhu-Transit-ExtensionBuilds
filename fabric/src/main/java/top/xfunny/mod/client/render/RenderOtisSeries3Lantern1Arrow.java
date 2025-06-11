@@ -158,8 +158,10 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
 
-        parentLayout.addChild(upLantern);
-        parentLayout.addChild(downLantern);
+        if(buttonDescriptor.hasUpButton() || buttonDescriptor.hasDownButton()){
+            parentLayout.addChild(upLantern);
+            parentLayout.addChild(downLantern);
+        }
 
         parentLayout.render();
     }

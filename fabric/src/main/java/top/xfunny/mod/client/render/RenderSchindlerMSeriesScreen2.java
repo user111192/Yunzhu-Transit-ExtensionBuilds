@@ -20,6 +20,7 @@ import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.util.ClientGetLiftDetails;
@@ -30,6 +31,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFFFCC00;
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_panel_arrow_1.png");
     private final boolean isOdd;
 
@@ -66,30 +68,64 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 18 / 16, (float) 3 / 16);
-        parentLayout.setPosition(isOdd ? (float) -0.5625 : (float) -1.0625, (float) 0.5625);
+        parentLayout.setParentDimensions( 18F / 16, 3F / 16);
+        parentLayout.setPosition(isOdd ? -0.5625F : -1.0625F, 0.5625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+
+        final LinearLayout linearLayout = new LinearLayout(false);
+        linearLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        linearLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        linearLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        linearLayout.setGravity(Gravity.CENTER);
 
         final FrameLayout screenLayout = new FrameLayout();
         screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER);
+        screenLayout.setGravity(Gravity.CENTER_VERTICAL);
         screenLayout.setBackgroundColor(0xFF000000);
+        screenLayout.setMargin(0, 0, 1F/16, 0);
 
-        LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, false, true, true, false);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(PRESSED_COLOR);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(2F / 16);
-        button.setHeight(2F / 16);
-        button.setSpacing(6F / 16);
-        button.setGravity(Gravity.CENTER);
+        NewButtonView upLantern  = new NewButtonView();
+        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setTexture(BUTTON_TEXTURE);
+        upLantern.setDimension(2F / 16);
+        upLantern.setGravity(Gravity.CENTER_VERTICAL);
+        upLantern.setLight(light);
+        upLantern.setDefaultColor(DEFAULT_COLOR);
+        upLantern.setPressedColor(PRESSED_COLOR);
+        upLantern.setMargin(0, 0, 1F/16, 0);
+
+        NewButtonView upLantern1  = new NewButtonView();
+        upLantern1.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern1.setTexture(BUTTON_TEXTURE);
+        upLantern1.setDimension(2F / 16);
+        upLantern1.setGravity(Gravity.CENTER_VERTICAL);
+        upLantern1.setLight(light);
+        upLantern1.setDefaultColor(DEFAULT_COLOR);
+        upLantern1.setPressedColor(PRESSED_COLOR);
+
+        NewButtonView downLantern  = new NewButtonView();
+        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setTexture(BUTTON_TEXTURE);
+        downLantern.setDimension(2F / 16);
+        downLantern.setGravity(Gravity.CENTER_VERTICAL);
+        downLantern.setLight(light);
+        downLantern.setDefaultColor(DEFAULT_COLOR);
+        downLantern.setPressedColor(PRESSED_COLOR);
+        downLantern.setFlip(false,true);
+        downLantern.setMargin(0, 0, 1F/16, 0);
+
+        NewButtonView downLantern1  = new NewButtonView();
+        downLantern1.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern1.setTexture(BUTTON_TEXTURE);
+        downLantern1.setDimension(2F / 16);
+        downLantern1.setGravity(Gravity.CENTER_VERTICAL);
+        downLantern1.setLight(light);
+        downLantern1.setDefaultColor(DEFAULT_COLOR);
+        downLantern1.setPressedColor(PRESSED_COLOR);
+        downLantern1.setFlip(false,true);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -116,10 +152,12 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
                 if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
                     switch (pressedButtonDirection) {
                         case DOWN:
-                            button.setDownButtonLight();
+                            downLantern.activate();
+                            downLantern1.activate();
                             break;
                         case UP:
-                            button.setUpButtonLight();
+                            upLantern.activate();
+                            upLantern1.activate();
                             break;
                     }
                 }
@@ -130,20 +168,24 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
                             if (pressedButtonDirection != null) {
                                 switch (pressedButtonDirection) {
                                     case DOWN:
-                                        button.setDownButtonLight();
+                                        downLantern.activate();
+                                        downLantern1.activate();
                                         break;
                                     case UP:
-                                        button.setUpButtonLight();
+                                        upLantern.activate();
+                                        upLantern1.activate();
                                         break;
                                 }
                             }
                         } else {
                             switch (liftDirection) {
                                 case DOWN:
-                                    button.setDownButtonLight();
+                                    downLantern.activate();
+                                    downLantern1.activate();
                                     break;
                                 case UP:
-                                    button.setUpButtonLight();
+                                    upLantern.activate();
+                                    upLantern1.activate();
                                     break;
                             }
                         }
@@ -155,8 +197,9 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
 
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
+
+
         if (!sortedPositionsAndLifts.isEmpty()) {
-            // 确定要渲染的电梯数量，这里设置为2个
             final int count = 1;
 
             for (int i = 0; i < count; i++) {
@@ -169,11 +212,11 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("schindler_m_series_screen_2_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 2 / 16);//显示屏宽度
-                liftFloorDisplayView.setHeight((float) 2 / 16);//显示屏高度
+                liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin((float) 0.6 / 16, 0, (float) 0.6 / 16, 0);
+                liftFloorDisplayView.setMargin(0.6F / 16, 0, 0.6F / 16, 0);
 
                 screenLayout.addChild(liftFloorDisplayView);
             }
@@ -183,9 +226,22 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
 
-        parentLayout.addChild(screenLayout);
-        parentLayout.addChild(button);
+        if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
+            linearLayout.addChild(downLantern);
+            linearLayout.addChild(screenLayout);
+            linearLayout.addChild(upLantern1);
+        } else if (buttonDescriptor.hasDownButton()) {
+            linearLayout.addChild(downLantern);
+            linearLayout.addChild(screenLayout);
+            linearLayout.addChild(downLantern1);
+        } else if (buttonDescriptor.hasUpButton()) {
+            linearLayout.addChild(upLantern);
+            linearLayout.addChild(screenLayout);
+            linearLayout.addChild(upLantern1);
+        }
 
+
+        parentLayout.addChild(linearLayout);
         parentLayout.render();
     }
 }
