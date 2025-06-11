@@ -197,11 +197,24 @@ public class RenderHitachiIVIB320ButtonDotMatrix extends BlockEntityRenderer<Hit
                         6F,
                         0xFFFF4800);
                 liftFloorDisplayView.setTextureId("hitachi-vib-320-dot-matrix");
-                liftFloorDisplayView.setWidth(1.6F / 16);
+                liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
 
                 liftFloorDisplayView.setMargin(0.01F, 0, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
+                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                if (liftFloorDisplayView.getTextLength() >= 3) {
+                    liftFloorDisplayView.setBasicsAttributes(world,
+                            blockEntity.getPos2(),
+                            sortedPositionsAndLifts.get(i).right(),
+                            FontList.instance.getFont("hitachi-led-dot_matrix_small"),
+                            6F,
+                            0xFFFF4800);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                } else {
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
+                }
+
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
