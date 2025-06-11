@@ -12,8 +12,8 @@ minecraft {
     mappings channel: "official", version: minecraftVersion
     runs {
         configureEach {
-            properties.put("forge.logging.markers", "REGISTRIES")
-            properties.put("forge.logging.console.level", "debug")
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
         }
         client {}
         server { args "--nogui" }
