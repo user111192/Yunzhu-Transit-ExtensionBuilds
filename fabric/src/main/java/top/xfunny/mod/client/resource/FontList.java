@@ -28,6 +28,7 @@ public class FontList {
             loadFont("koneModernization", "font/kone-modernization.ttf");
             loadFont("schindler_m_series", "font/schindler-m-line-led.ttf");
             loadFont("mitsubishi_modern", "font/mitsubishi_modern.ttf");
+            loadFont("mitsubishi_small_sht", "font/mitsubishi-dot-matrix-small-shanghai-tower.ttf");
             loadFont("mitsubishi_seg_universal", "font/mitsubishi_seg_universal.ttf");
             loadFont("kone-m-series", "font/kone-m-series.ttf");
             loadFont("otis_series1", "font/series1.otf");
@@ -46,6 +47,7 @@ public class FontList {
             loadFont("kone-kss", "font/kone-kss-800-signalization.ttf");
             loadFont("hitachi-led-seg", "font/hitachi_led_segmented_fix.ttf"); // 暂使用修改字体替代原版字体 hitachi-led-segmented.ttf
             loadFont("hitachi-led-dot_matrix", "font/hitachi-dot-matrix-regular.ttf");
+            loadFont("hitachi-led-dot_matrix_small","font/hitachi-dot-matrix-small.ttf");
             loadFont("schindler_m_series_segment", "font/schindler_m_series_segment.ttf");
             loadFont("tonic-led", "font/tonic-led.ttf");
             fontsLoaded = true;
