@@ -12,8 +12,8 @@ minecraft {
     mappings channel: "official", version: minecraftVersion
     runs {
         configureEach {
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
+            properties.put("forge.logging.markers", "REGISTRIES")
+            properties.put("forge.logging.console.level", "debug")
         }
         client {}
         server { args "--nogui" }
@@ -27,8 +27,6 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraftVersion}-${buildTools.getForgeVersion()}"
     annotationProcessor "org.spongepowered:mixin:+:processor"
     implementation fg.deobf("org.mtr:MTR-forge:${mtrVersion}+${minecraftVersion}-server")
-
-    println("Using Forge " + buildTools.getForgeVersion())
 }
 
 mixin {
