@@ -7,7 +7,7 @@ modId = "yte"
 version = "1.0.2-beta.1"
 displayName = "Yunzhu Transit Extension"
 authors = "xfunny\nMrNTKey\nQBYQ"
-description = "云竹交通\n云筑工坊交通拓展"
+description = "云竹交�?�\n云筑工坊交�?�拓�?"
 logoFile = "icon.png"
 
 [[dependencies.yte]]
