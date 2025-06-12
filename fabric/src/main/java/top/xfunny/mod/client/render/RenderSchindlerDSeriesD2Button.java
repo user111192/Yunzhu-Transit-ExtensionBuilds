@@ -127,7 +127,7 @@ public class RenderSchindlerDSeriesD2Button extends BlockEntityRenderer<Schindle
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

@@ -70,7 +70,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 2.3F / 16);
         parentLayout.setPosition(isOdd ? -1F / 16 : -9F / 16, 11.375F / 16);
@@ -78,7 +78,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final NewButtonView upLantern = new NewButtonView();
-        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setBasicsAttributes(world, blockPos);
         upLantern.setTexture(ARROW_TEXTURE);
         upLantern.setDimension(0.65F / 16);
         upLantern.setGravity(Gravity.CENTER);
@@ -87,7 +87,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         upLantern.setPressedColor(PRESSED_COLOR);
 
         final NewButtonView downLantern = new NewButtonView();
-        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setBasicsAttributes(world, blockPos);
         downLantern.setTexture(ARROW_TEXTURE);
         downLantern.setDimension(0.65F / 16);
         downLantern.setGravity(Gravity.CENTER);
@@ -97,10 +97,10 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         downLantern.setFlip(false,true);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final LineComponent buttonLine = new LineComponent();
-        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLine.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -164,7 +164,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
             });
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -172,7 +172,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("nimbus_sans_bold"),
                         6,

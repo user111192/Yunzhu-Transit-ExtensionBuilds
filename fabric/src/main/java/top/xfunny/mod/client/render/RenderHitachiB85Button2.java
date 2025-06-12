@@ -71,7 +71,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 8.875F / 16);
         parentLayout.setPosition(-0.125F, 0);
@@ -79,7 +79,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -88,7 +88,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         screenLayout.setId("screen");
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, 0.25F / 16, 0, 0);
@@ -152,7 +152,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -177,7 +177,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
         });
 
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
 
@@ -189,7 +189,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi_modern"),
                         12,
@@ -204,7 +204,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.55F / 16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
@@ -213,14 +213,14 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
                 liftArrowView.setColor(0xFFFF0000);
 
                 final FrameLayout backgroundLayout = new FrameLayout();
-                backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                backgroundLayout.setBasicsAttributes(world, blockPos);
                 backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setMargin(0.25F / 16, 0.375F / 16, 0.25F / 16, 0);
                 backgroundLayout.setId("background_" + i);
 
                 final ImageView screenBackground = new ImageView();
-                screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
+                screenBackground.setBasicsAttributes(world, blockPos);
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
                 screenBackground.setDimension(1.3F / 16, 113, 131);
                 screenBackground.setMargin(0, (float) 0.75 / 16, 0, 0);
@@ -228,7 +228,7 @@ public class RenderHitachiB85Button2 extends BlockEntityRenderer<HitachiB85Butto
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);

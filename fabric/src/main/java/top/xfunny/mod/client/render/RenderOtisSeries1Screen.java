@@ -54,22 +54,22 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
         });
 
         FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4.8 / 16, (float) 6.5 / 16);
-        parentLayout.setPosition((float) -2.4 / 16, (float) 0.75 / 16);
+        parentLayout.setParentDimensions(4.8F / 16, 6.5F / 16);
+        parentLayout.setPosition(-2.4F / 16, 0.75F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LinearLayout backgroundLayout = new LinearLayout(false);
-        backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        backgroundLayout.setBasicsAttributes(world, blockPos);
         backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
         backgroundLayout.setBackgroundColor(0xFF000000);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -80,7 +80,7 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
             });
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -88,15 +88,15 @@ public class RenderOtisSeries1Screen extends BlockEntityRenderer<OtisSeries1Scre
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("otis_series1"),
                         4,
                         0xFF1D953F);
                 liftFloorDisplayView.setTextureId("otis_series1_screen");
-                liftFloorDisplayView.setWidth((float) 2.8 / 16);
-                liftFloorDisplayView.setHeight((float) 4 / 16);
-                liftFloorDisplayView.setMargin(0, 0, (float) 0.8 / 16, 0);
+                liftFloorDisplayView.setWidth(2.8F / 16);
+                liftFloorDisplayView.setHeight(4F / 16);
+                liftFloorDisplayView.setMargin(0, 0, 0.8F / 16, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setDisplayLength(2, 0);
 

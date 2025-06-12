@@ -129,7 +129,7 @@ public class RenderDewhurstUS91Button1 extends BlockEntityRenderer<DewhurstUS91B
         buttonDownLight.setFlip(false, true);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

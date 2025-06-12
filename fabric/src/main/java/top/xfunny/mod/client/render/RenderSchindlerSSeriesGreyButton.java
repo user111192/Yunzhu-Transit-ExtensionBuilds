@@ -63,7 +63,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(3.5F / 16, 9F / 16);
         parentLayout.setPosition(-0.109375F, 0);
@@ -129,7 +129,7 @@ public class RenderSchindlerSSeriesGreyButton extends BlockEntityRenderer<Schind
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

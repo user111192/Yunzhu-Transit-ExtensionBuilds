@@ -88,16 +88,16 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
+        parentLayout.setParentDimensions(7.5F / 16, 5F / 16);
         parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.5625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -106,28 +106,22 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
 
             switch (color) {
                 case GREEN:
-                    SchindlerDSeriesScreen2GreenEven.LiftCheck(trackPosition, (floorIndex, lift) -> {
-                        sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-                    });
+                    SchindlerDSeriesScreen2GreenEven.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
                     break;
 
                 case BLUE:
-                    SchindlerDSeriesScreen2BlueEven.LiftCheck(trackPosition, (floorIndex, lift) -> {
-                        sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-                    });
+                    SchindlerDSeriesScreen2BlueEven.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
                     break;
 
                 case RED:
-                    SchindlerDSeriesScreen2RedEven.LiftCheck(trackPosition, (floorIndex, lift) -> {
-                        sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-                    });
+                    SchindlerDSeriesScreen2RedEven.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
                     break;
             }
 
 
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -141,29 +135,28 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("schindler_led"),
                         10,
                         fontColor);
                 liftFloorDisplayView.setTextureId(textureId);
-                liftFloorDisplayView.setWidth((float) 2.6 / 16);
-                liftFloorDisplayView.setHeight((float) 2.8 / 16);
+                liftFloorDisplayView.setWidth(2.6F / 16);
+                liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(-30);
                 liftFloorDisplayView.setDisplayLength(2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(10);
-                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.5 / 16 : (float) 2.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? 0.5F / 16 : 2.5F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
-
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(arrowTexture);
                 liftArrowView.setAnimationScrolling(true, 0.05F);
-                liftArrowView.setDimension(liftDirection != LiftDirection.NONE ? ((float) 2.2 / 16) : 0);
-                liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.8 / 16 : 0, (float) 3 / 16, 0, 0);
+                liftArrowView.setDimension(liftDirection != LiftDirection.NONE ? (2.2F / 16) : 0);
+                liftArrowView.setMargin(liftDirection != LiftDirection.NONE ? 0.8F / 16 : 0, 3F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView.setColor(fontColor);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);

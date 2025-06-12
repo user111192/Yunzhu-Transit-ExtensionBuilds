@@ -63,7 +63,7 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(2F / 16, 4.7F / 16);
         parentLayout.setPosition(-1F / 16, 0F);
@@ -128,7 +128,7 @@ public class RenderHitachiB85Button1WithoutScreen extends BlockEntityRenderer<Hi
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

@@ -70,16 +70,16 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4F / 16, (float) 12F / 16);
-        parentLayout.setPosition((float) -0.125F, (float) 0.0625F);
+        parentLayout.setParentDimensions(4F / 16, 12F / 16);
+        parentLayout.setPosition(-0.125F, 0.0625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -87,7 +87,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, 0.5F / 16, 0, 0);
@@ -151,7 +151,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -177,7 +177,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 });
             });
         });
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
 
@@ -189,7 +189,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("kone-m-series"),
                         4,
@@ -204,7 +204,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
 
                 final LiftArrowView liftArrowViewUp = new LiftArrowView();
-                liftArrowViewUp.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
+                liftArrowViewUp.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
                 liftArrowViewUp.setTexture(ARROW_TEXTURE);
                 liftArrowViewUp.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowViewUp.setDimension(0.5F / 16);
@@ -213,7 +213,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                 liftArrowViewUp.setColor(0xFFFF0000);
 
                 final LiftArrowView liftArrowViewDown = new LiftArrowView();
-                liftArrowViewDown.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
+                liftArrowViewDown.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
                 liftArrowViewDown.setTexture(ARROW_TEXTURE);
                 liftArrowViewDown.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowViewDown.setDimension(0.5F / 16);
@@ -223,7 +223,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowViewUp);

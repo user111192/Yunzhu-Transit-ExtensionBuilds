@@ -68,7 +68,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(6F / 16, 8F / 16);
         parentLayout.setPosition(-0.1875F, 0);
@@ -76,7 +76,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         parentLayout.setHeight(top.xfunny.mod.client.view.LayoutSize.MATCH_PARENT);
 
         final ImageView schindlerLogo = new ImageView();
-        schindlerLogo.setBasicsAttributes(world, blockEntity.getPos2());
+        schindlerLogo.setBasicsAttributes(world, blockPos);
         schindlerLogo.setTexture(LOGO);
         schindlerLogo.setDimension(0.3F / 16, 16);
         schindlerLogo.setLight(light);
@@ -141,7 +141,7 @@ public class RenderSchindlerMSeriesTouchButton extends BlockEntityRenderer<Schin
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final top.xfunny.mod.client.view.LineComponent line = new top.xfunny.mod.client.view.LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

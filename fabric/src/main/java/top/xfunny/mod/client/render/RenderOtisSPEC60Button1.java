@@ -69,7 +69,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 12F / 16);
         parentLayout.setPosition(-0.125F, 0.0625F);
@@ -78,7 +78,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -86,7 +86,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, 0.4F / 16, 0, 0);
@@ -150,7 +150,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -178,7 +178,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
         });
 
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
 
@@ -190,7 +190,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("otis_series1"),
                         4,
@@ -206,7 +206,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
                 final LiftArrowView liftArrowViewUP = new LiftArrowView();
-                liftArrowViewUP.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
+                liftArrowViewUP.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
                 liftArrowViewUP.setTexture(ARROW_TEXTURE);
                 liftArrowViewUP.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowViewUP.setDimension(0.5F / 16);
@@ -215,7 +215,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
                 liftArrowViewUP.setColor(0xFFFF0000);
 
                 final LiftArrowView liftArrowViewDown = new LiftArrowView();
-                liftArrowViewDown.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
+                liftArrowViewDown.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
                 liftArrowViewDown.setTexture(ARROW_TEXTURE);
                 liftArrowViewDown.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowViewDown.setDimension(0.7F / 16);
@@ -225,7 +225,7 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowViewUP);

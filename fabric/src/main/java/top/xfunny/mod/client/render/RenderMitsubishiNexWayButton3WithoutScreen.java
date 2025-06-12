@@ -64,7 +64,7 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(2.05F / 16, 5.8F / 16);
         parentLayout.setPosition(-1.025F / 16, 1.1F / 16);
@@ -131,7 +131,7 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -159,7 +159,7 @@ public class RenderMitsubishiNexWayButton3WithoutScreen extends BlockEntityRende
         });
 
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         upButtonGroup.addChild(buttonUp);
         upButtonGroup.addChild(buttonUpLight);

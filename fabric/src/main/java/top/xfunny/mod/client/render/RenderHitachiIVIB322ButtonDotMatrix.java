@@ -72,7 +72,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 12F / 16);
         parentLayout.setPosition(-0.125F, 0.0625F);
@@ -81,7 +81,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -89,7 +89,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, -0.5F / 16, 0, 0);
@@ -154,7 +154,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
         buttonDownLight.setFlip(false, false);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -180,7 +180,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
                 });
             });
         });
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
 
@@ -191,7 +191,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi-led-dot_matrix"),
                         6F,
@@ -205,7 +205,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.6F / 16, 384, 512);
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
@@ -215,7 +215,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);

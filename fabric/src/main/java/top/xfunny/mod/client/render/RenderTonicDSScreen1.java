@@ -57,27 +57,25 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
+        parentLayout.setParentDimensions(7.5F / 16, 5F / 16);
         parentLayout.setPosition(isOdd ? -0.284375F : -0.784375F, 0.5725F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
-            TonicDSScreen1Even.LiftCheck(trackPosition, (floorIndex, lift) -> {
-                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-            });
+            TonicDSScreen1Even.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -85,37 +83,37 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("acmeled"),
                         8,
                         0xFFFF0000);
                 liftFloorDisplayView.setTextureId("tonic_ds_screen_1");
-                liftFloorDisplayView.setWidth((float) 2.6 / 16);
-                liftFloorDisplayView.setHeight((float) 2.8 / 16);
+                liftFloorDisplayView.setWidth(2.6F / 16);
+                liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setDisplayLength(2, 0);
-                liftFloorDisplayView.setMargin((float) 1.5 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(1.5F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 final LiftArrowView liftArrowView_right = new LiftArrowView();
-                liftArrowView_right.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
+                liftArrowView_right.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
                 liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
                 liftArrowView_right.setAnimationScrolling(false, 0.05F);
                 liftArrowView_right.setDimension(0.625F / 16);
-                liftArrowView_right.setMargin((float) 1.125 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_right.setMargin(1.125F / 16, 3F / 16, 0, 0);
                 liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_right.setColor(0xFFFF0000);
 
                 final LiftArrowView liftArrowView_left = new LiftArrowView();
-                liftArrowView_left.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
+                liftArrowView_left.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
                 liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/dewhurst_ul200_arrow_1.png"));
                 liftArrowView_left.setAnimationScrolling(false, 0.05F);
                 liftArrowView_left.setDimension(0.625F / 16);
-                liftArrowView_left.setMargin((float) -5.75 / 16, (float) 3 / 16, 0, 0);
+                liftArrowView_left.setMargin(-5.75F / 16, 3F / 16, 0, 0);
                 liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
                 liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView_left.setColor(0xFFFF0000);

@@ -67,7 +67,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
         //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        parentLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
         parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
@@ -76,7 +76,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
         //创建一个横向的linear layout用于放置显示屏
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        screenLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
@@ -85,14 +85,14 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
 
         //添加按钮
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(light);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -105,7 +105,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);
@@ -120,7 +120,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
         //添加外呼与楼层轨道的连线
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         // 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -148,7 +148,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                 });
             });
         });
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             // 确定要渲染的电梯数量，这里设置为2个
@@ -160,7 +160,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                 //添加外呼显示屏
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("kone-lcd-segment"),//字体
                         5,//字号
@@ -175,7 +175,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.5F / 16);
                 liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
@@ -185,7 +185,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);

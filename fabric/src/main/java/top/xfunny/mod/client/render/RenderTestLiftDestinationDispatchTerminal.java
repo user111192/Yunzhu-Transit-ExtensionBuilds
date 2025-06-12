@@ -72,13 +72,13 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
         });
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 16 / 16, (float) 11 / 16);
         parentLayout.setPosition((float) 0, (float) 0);
@@ -88,37 +88,37 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
         if (screenId.equals("test_lift_destination_dispatch_terminal_key_mapping_home")) {
             final LinearLayout group1 = new LinearLayout(false);
-            group1.setBasicsAttributes(world, blockEntity.getPos2());
+            group1.setBasicsAttributes(world, blockPos);
             group1.setWidth(LayoutSize.MATCH_PARENT);
             group1.setHeight(LayoutSize.WRAP_CONTENT);
             group1.setMargin(0, 1F / 16, 0, 0);
 
             final LinearLayout group2 = new LinearLayout(false);
-            group2.setBasicsAttributes(world, blockEntity.getPos2());
+            group2.setBasicsAttributes(world, blockPos);
             group2.setWidth(LayoutSize.MATCH_PARENT);
             group2.setHeight(LayoutSize.WRAP_CONTENT);
             group2.setMargin(0, 1F / 16, 0, 0);
 
             final LinearLayout group3 = new LinearLayout(false);
-            group3.setBasicsAttributes(world, blockEntity.getPos2());
+            group3.setBasicsAttributes(world, blockPos);
             group3.setWidth(LayoutSize.MATCH_PARENT);
             group3.setHeight(LayoutSize.WRAP_CONTENT);
             group3.setMargin(0, 1F / 16, 0, 0);
 
             final TextView textView = new TextView();
             textView.setId("textView");
-            textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("mitsubishi_modern"), 6, HOVER_COLOR);
+            textView.setBasicsAttributes(world, blockPos, FontList.instance.getFont("mitsubishi_modern"), 6, HOVER_COLOR);
             textView.setDisplayLength(19, 0.005F);
             textView.setTextureId("test_lift_destination_dispatch_terminal_display");
             textView.setText(ArrayListToString.arrayListToString(inputNumber));
             textView.setWidth(11F / 16);
             textView.setHeight(2F / 16);
-            textView.setMargin((float) 1 / 16, (float) 1 / 16, 0, 0);
+            textView.setMargin(1F / 16, 1F / 16, 0, 0);
             textView.setTextAlign(TextView.HorizontalTextAlign.LEFT);
 
             final ButtonView number1 = new ButtonView();
             number1.setId("number1");
-            number1.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number1.setBasicsAttributes(world, blockPos, hitButton);
             number1.setWidth(1F / 16);
             number1.setHeight(1F / 16);
             number1.setMargin(1F / 16, 0, 0, 0);
@@ -129,7 +129,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number2 = new ButtonView();
             number2.setId("number2");
-            number2.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number2.setBasicsAttributes(world, blockPos, hitButton);
             number2.setWidth(1F / 16);
             number2.setHeight(1F / 16);
             number2.setMargin(1F / 16, 0, 0, 0);
@@ -140,7 +140,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number3 = new ButtonView();
             number3.setId("number3");
-            number3.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number3.setBasicsAttributes(world, blockPos, hitButton);
             number3.setWidth(1F / 16);
             number3.setHeight(1F / 16);
             number3.setMargin(1F / 16, 0, 0, 0);
@@ -151,7 +151,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number4 = new ButtonView();
             number4.setId("number4");
-            number4.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number4.setBasicsAttributes(world, blockPos, hitButton);
             number4.setWidth(1F / 16);
             number4.setHeight(1F / 16);
             number4.setMargin(1F / 16, 0, 0, 0);
@@ -162,7 +162,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number5 = new ButtonView();
             number5.setId("number5");
-            number5.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number5.setBasicsAttributes(world, blockPos, hitButton);
             number5.setWidth(1F / 16);
             number5.setHeight(1F / 16);
             number5.setMargin(1F / 16, 0, 0, 0);
@@ -173,7 +173,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number6 = new ButtonView();
             number6.setId("number6");
-            number6.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number6.setBasicsAttributes(world, blockPos, hitButton);
             number6.setWidth(1F / 16);
             number6.setHeight(1F / 16);
             number6.setMargin(1F / 16, 0, 0, 0);
@@ -184,7 +184,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number7 = new ButtonView();
             number7.setId("number7");
-            number7.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number7.setBasicsAttributes(world, blockPos, hitButton);
             number7.setWidth(1F / 16);
             number7.setHeight(1F / 16);
             number7.setMargin(1F / 16, 0, 0, 0);
@@ -195,7 +195,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number8 = new ButtonView();
             number8.setId("number8");
-            number8.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number8.setBasicsAttributes(world, blockPos, hitButton);
             number8.setWidth(1F / 16);
             number8.setHeight(1F / 16);
             number8.setMargin(1F / 16, 0, 0, 0);
@@ -206,7 +206,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number9 = new ButtonView();
             number9.setId("number9");
-            number9.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number9.setBasicsAttributes(world, blockPos, hitButton);
             number9.setWidth(1F / 16);
             number9.setHeight(1F / 16);
             number9.setMargin(1F / 16, 0, 0, 0);
@@ -217,7 +217,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView number0 = new ButtonView();
             number0.setId("number0");
-            number0.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            number0.setBasicsAttributes(world, blockPos, hitButton);
             number0.setWidth(1F / 16);
             number0.setHeight(1F / 16);
             number0.setMargin(1F / 16, 0, 0, 0);
@@ -228,7 +228,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView clearNumber = new ButtonView();
             clearNumber.setId("clearNumber");
-            clearNumber.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            clearNumber.setBasicsAttributes(world, blockPos, hitButton);
             clearNumber.setWidth(1F / 16);
             clearNumber.setHeight(1F / 16);
             clearNumber.setMargin(1F / 16, 0, 0, 0);
@@ -239,7 +239,7 @@ public class RenderTestLiftDestinationDispatchTerminal extends BlockEntityRender
 
             final ButtonView callLift = new ButtonView();
             callLift.setId("callLift");
-            callLift.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+            callLift.setBasicsAttributes(world, blockPos, hitButton);
             callLift.setWidth(1F / 16);
             callLift.setHeight(1F / 16);
             callLift.setMargin(1F / 16, 0, 0, 0);

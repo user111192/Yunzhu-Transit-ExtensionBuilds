@@ -70,37 +70,37 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         //创建一个纵向的linear layout作为最底层的父容器
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        parentLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 8 / 16, (float) 16 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.25, (float) 0);//通过设置坐标的方式设置底层layout的位置
+        parentLayout.setParentDimensions(8F / 16, 16F / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
+        parentLayout.setPosition(-0.25F, 0);//通过设置坐标的方式设置底层layout的位置
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
         //创建一个横向的linear layout用于放置显示屏
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());//传入必要的参数
+        screenLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 2 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setMargin(0, 2F / 16, 0, 0);//设置外边距，可选
         screenLayout.setBackgroundColor(0xFF000000);
 
         //创建一个FrameLayout用于在剩余的空间中放置按钮
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LinearLayout buttonGroup = new LinearLayout(true);
-        buttonGroup.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonGroup.setBasicsAttributes(world, blockPos);
         buttonGroup.setWidth(LayoutSize.WRAP_CONTENT);
         buttonGroup.setHeight(LayoutSize.WRAP_CONTENT);
         buttonGroup.setGravity(Gravity.CENTER);
 
         NewButtonView buttonUp = new NewButtonView();
         buttonUp.setId("up");//必须设置id
-        buttonUp.setBasicsAttributes(world, blockEntity.getPos2(), keyMapping);
+        buttonUp.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUp.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonUp.setDimension(3F / 16);
         buttonUp.setDefaultColor(0xFFFFFFFF);
@@ -111,7 +111,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         NewButtonView buttonDown = new NewButtonView();
         buttonDown.setId("down");
-        buttonDown.setBasicsAttributes(world, blockEntity.getPos2(), keyMapping);
+        buttonDown.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDown.setTexture(new Identifier(Init.MOD_ID, "textures/block/thyssenkrupp_button.png"));
         buttonDown.setDimension(3F / 16);
         buttonDown.setDefaultColor(0xFFFFFFFF);
@@ -123,7 +123,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
 
         //添加外呼与楼层轨道的连线
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         // 创建一个对象列表，用于存储排序后的位置和升降机的配对信息
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -165,7 +165,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
         }
 
         //按距离对数组元素进行排序，使其只渲染最近的两部电梯的信息
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             // 确定要渲染的电梯数量，这里设置为2个
@@ -178,7 +178,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 //速度显示
                 TextView textView = new TextView();
                 textView.setBasicsAttributes(world,
-                        blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"),
+                        blockPos, FontList.instance.getFont("wqy-microhei"),
                         7,
                         0xFFFF0000);
                 textView.setWidth(2F / 16);
@@ -192,33 +192,33 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                 //添加外呼显示屏
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         lift,
                         FontList.instance.getFont("acmeled"),//字体
                         6,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(3, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 3 / 16);//显示屏宽度
-                liftFloorDisplayView.setHeight((float) 3 / 16);//显示屏高度
+                liftFloorDisplayView.setWidth(3F / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight(3F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), lift, LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, lift, LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png"));
                 //liftArrowView.setAnimationScrolling(true, 0.05F);
                 liftArrowView.setAnimationBliking(true, 0.5F);
                 liftArrowView.setDimension(2F / 16);//不填高度默认宽高比为1:1
-                liftArrowView.setMargin(0, (float) 0.5 / 16, 0, 0);
+                liftArrowView.setMargin(0, 0.5F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFF0000);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);

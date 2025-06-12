@@ -61,7 +61,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(1.35F / 16, 3.725F / 16);
         parentLayout.setPosition(-0.0405F, 0.9F / 16);
@@ -153,7 +153,7 @@ public class RenderOtisSeries3Button1 extends BlockEntityRenderer<OtisSeries3But
         buttonDownLight.setPressedColor(0xFFFF0000);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

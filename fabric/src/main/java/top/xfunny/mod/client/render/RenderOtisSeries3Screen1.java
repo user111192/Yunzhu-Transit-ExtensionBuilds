@@ -55,16 +55,16 @@ public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> e
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 5 / 16);
+        parentLayout.setParentDimensions(7.5F / 16, 5F / 16);
         parentLayout.setPosition(isOdd ? -0.234375F : -0.734375F, 0.4225F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -75,7 +75,7 @@ public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> e
             });
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -83,19 +83,19 @@ public class RenderOtisSeries3Screen1<T extends LiftPanelBase.BlockEntityBase> e
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("otis_series_3"),
                         5.5F,
                         0xFFFF0000);
                 liftFloorDisplayView.setTextureId("otis_series_3_screen_1_display");
-                liftFloorDisplayView.setWidth((float) 2.6 / 16);
-                liftFloorDisplayView.setHeight((float) 2.8 / 16);
+                liftFloorDisplayView.setWidth(2.6F / 16);
+                liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setDisplayLength(2, 0);
-                liftFloorDisplayView.setMargin((float) 1.95 / 16, 0, 0, 0);
+                liftFloorDisplayView.setMargin(1.95F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
                 parentLayout.addChild(liftFloorDisplayView);

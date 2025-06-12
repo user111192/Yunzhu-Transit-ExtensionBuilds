@@ -64,7 +64,7 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(7.5F / 16, 4.55F / 16);
         parentLayout.setPosition(isOdd ? -3.75F / 16 : -11.75F / 16, 5.725F / 16);
@@ -72,7 +72,7 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         NewButtonView upLantern  = new NewButtonView();
-        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setBasicsAttributes(world, blockPos);
         upLantern.setTexture(BUTTON_TEXTURE);
         upLantern.setDimension(1.2F / 16);
         upLantern.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -82,7 +82,7 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         upLantern.setMargin(0, 0.5F/16, 0, 1.1F/16);
 
         NewButtonView downLantern  = new NewButtonView();
-        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setBasicsAttributes(world, blockPos);
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(1.2F / 16);
         downLantern.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -93,10 +93,10 @@ public class RenderOtisSeries3Lantern1Arrow<T extends LiftButtonsBase.BlockEntit
         downLantern.setMargin(0, 0, 0, 0);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final LineComponent buttonLine = new LineComponent();
-        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLine.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

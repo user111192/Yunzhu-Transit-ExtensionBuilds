@@ -4,7 +4,7 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.registry.PacketHandler;
 import org.mtr.mapping.tool.PacketBufferReceiver;
 import org.mtr.mapping.tool.PacketBufferSender;
-import top.xfunny.mod.client.clientPacket.ClientPacketHelper;
+import top.xfunny.mod.client.client_packet.ClientPacketHelper;
 
 public final class PacketOpenBlockEntityScreen extends PacketHandler {
 

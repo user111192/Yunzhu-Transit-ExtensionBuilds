@@ -17,11 +17,9 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
+import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.util.ClientGetLiftDetails;
@@ -30,6 +28,7 @@ import static org.mtr.core.data.LiftDirection.NONE;
 
 public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFFFCC00;
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_round_lantern_1.png");
     private final boolean isOdd;
 
@@ -63,26 +62,33 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
             graphicsHolder.translate(0, 0, 7.15F / 16 - SMALL_OFFSET);
         });
 
-        final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        final LinearLayout parentLayout = new LinearLayout(true);
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 7.5 / 16, (float) 7.5 / 16);
-        parentLayout.setPosition(isOdd ? (float) -3.75 / 16 : (float) -11.75 / 16, (float) 4.25 / 16);
+        parentLayout.setParentDimensions(7.5F / 16, 7.5F / 16);
+        parentLayout.setPosition(isOdd ? -3.75F / 16 : -11.75F / 16, 4.25F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true, true);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(PRESSED_COLOR);
-        button.setHoverColor(0xFFFFFFFF);
-        button.setTexture(BUTTON_TEXTURE, true);
-        button.setWidth(7.5F / 16);
-        button.setHeight(3.475F / 16);
-        button.setSpacing(0.55F / 16);
-        button.setGravity(Gravity.CENTER);
+        NewButtonView lanternUp = new NewButtonView();
+        lanternUp.setBasicsAttributes(world, blockPos);
+        lanternUp.setTexture(BUTTON_TEXTURE);
+        lanternUp.setDimension(7.5F / 16,3.475F / 7.5F);
+        lanternUp.setGravity(Gravity.CENTER_HORIZONTAL);
+        lanternUp.setDefaultColor(DEFAULT_COLOR);
+        lanternUp.setPressedColor(PRESSED_COLOR);
+        lanternUp.setMargin(0, 0, 0, 0.55F/16);
+        lanternUp.setLight(light);
+
+        NewButtonView lanternDown = new NewButtonView();
+        lanternDown.setBasicsAttributes(world, blockPos);
+        lanternDown.setTexture(BUTTON_TEXTURE);
+        lanternDown.setDimension(7.5F / 16,3.475F / 7.5F);
+        lanternDown.setGravity(Gravity.CENTER_HORIZONTAL);
+        lanternDown.setDefaultColor(DEFAULT_COLOR);
+        lanternDown.setPressedColor(PRESSED_COLOR);
+        lanternDown.setLight(light);
+        lanternDown.setFlip(false,true);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -109,10 +115,10 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
                 if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
                     switch (pressedButtonDirection) {
                         case DOWN:
-                            button.setDownButtonLight();
+                            lanternDown.activate();
                             break;
                         case UP:
-                            button.setUpButtonLight();
+                            lanternUp.activate();
                             break;
                     }
                 }
@@ -123,20 +129,20 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
                             if (pressedButtonDirection != null) {
                                 switch (pressedButtonDirection) {
                                     case DOWN:
-                                        button.setDownButtonLight();
+                                        lanternDown.activate();
                                         break;
                                     case UP:
-                                        button.setUpButtonLight();
+                                        lanternUp.activate();
                                         break;
                                 }
                             }
                         } else {
                             switch (liftDirection) {
                                 case DOWN:
-                                    button.setDownButtonLight();
+                                    lanternDown.activate();
                                     break;
                                 case UP:
-                                    button.setUpButtonLight();
+                                    lanternUp.activate();
                                     break;
                             }
                         }
@@ -149,7 +155,12 @@ public class RenderSchindlerMSeriesRoundLantern1<T extends LiftButtonsBase.Block
         blockEntity.forEachLiftButtonPosition(buttonPosition -> {
             buttonLine.RenderLine(holdingLinker, buttonPosition, true);
         });
-        parentLayout.addChild(button);
+
+
+        if (buttonDescriptor.hasDownButton() || buttonDescriptor.hasUpButton()) {
+            parentLayout.addChild(lanternUp);
+            parentLayout.addChild(lanternDown);
+        }
 
         parentLayout.render();
     }

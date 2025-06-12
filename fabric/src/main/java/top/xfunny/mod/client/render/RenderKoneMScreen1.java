@@ -65,7 +65,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         });
 
         final LinearLayout parentLayout = new LinearLayout(false);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(12.5F / 16, 3.25F / 16);
         parentLayout.setPosition(isOdd ? -6.25F/16 : -14.25F/16, 10F/16);
@@ -73,7 +73,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         NewButtonView upLantern  = new NewButtonView();
-        upLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern.setBasicsAttributes(world, blockPos);
         upLantern.setTexture(BUTTON_TEXTURE);
         upLantern.setDimension(2F / 16);
         upLantern.setGravity(Gravity.CENTER_VERTICAL);
@@ -83,7 +83,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         upLantern.setMargin(1F/16, 0, 3F/16, 0);
 
         NewButtonView upLantern1  = new NewButtonView();
-        upLantern1.setBasicsAttributes(world, blockEntity.getPos2());
+        upLantern1.setBasicsAttributes(world, blockPos);
         upLantern1.setTexture(BUTTON_TEXTURE);
         upLantern1.setDimension(2F / 16);
         upLantern1.setGravity(Gravity.CENTER_VERTICAL);
@@ -93,7 +93,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         upLantern1.setMargin(0, 0, 1.2F/16, 0);
 
         NewButtonView downLantern  = new NewButtonView();
-        downLantern.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern.setBasicsAttributes(world, blockPos);
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(2F / 16);
         downLantern.setGravity(Gravity.CENTER_VERTICAL);
@@ -104,7 +104,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         downLantern.setFlip(false,true);
 
         NewButtonView downLantern1  = new NewButtonView();
-        downLantern1.setBasicsAttributes(world, blockEntity.getPos2());
+        downLantern1.setBasicsAttributes(world, blockPos);
         downLantern1.setTexture(BUTTON_TEXTURE);
         downLantern1.setDimension(2F / 16);
         downLantern1.setGravity(Gravity.CENTER_VERTICAL);
@@ -115,10 +115,10 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         downLantern1.setMargin(0,0,1.2F/16,0);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final LineComponent buttonLine = new LineComponent();
-        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLine.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -182,7 +182,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
             });
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
             parentLayout.addChild(downLantern);
@@ -202,7 +202,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("kone-m-series"),//字体
                         7,//字号

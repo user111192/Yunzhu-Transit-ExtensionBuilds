@@ -58,33 +58,31 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 3.75 / 16, (float) 2.75 / 16);
-        parentLayout.setPosition(isOdd ? (float) -1.875 / 16 : (float) -9.875 / 16, (float) 9.875 / 16);
+        parentLayout.setParentDimensions(3.75F / 16, 2.75F / 16);
+        parentLayout.setPosition(isOdd ? -1.875F / 16 : -9.875F / 16, 9.875F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LinearLayout numberLayout = new LinearLayout(false);
-        numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        numberLayout.setBasicsAttributes(world, blockPos);
         numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
         numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
         numberLayout.setMargin(0.16F / 16, 0.35F / 16, 0, 0);
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
-            MitsubishiNexWayScreen2Even.LiftCheck(trackPosition, (floorIndex, lift) -> {
-                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
-            });
+            MitsubishiNexWayScreen2Even.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
@@ -92,14 +90,14 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("gill_sans_mt"),
                         16,
                         0xFFFFFFFF);
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_2_display");
-                liftFloorDisplayView.setWidth((float) 1.5 / 16);
-                liftFloorDisplayView.setHeight((float) 1.5 / 16);
+                liftFloorDisplayView.setWidth(1.5F / 16);
+                liftFloorDisplayView.setHeight(1.5F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.setLetterSpacing(0);
@@ -112,7 +110,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
                 }
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(new Identifier(Init.MOD_ID, "textures/block/mitsubishi_nexway_2_lcd_arrow_1.png"));
                 liftArrowView.setDimension(1.5F / 16);
                 liftArrowView.setGravity(Gravity.CENTER_VERTICAL);
@@ -138,7 +136,7 @@ public class RenderMitsubishiNexWayScreen2<T extends LiftPanelBase.BlockEntityBa
 
                 final TextView textView = new TextView();
                 textView.setId("textView");
-                textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("wqy-microhei"), 5, 0xFFFFFFFF);
+                textView.setBasicsAttributes(world, blockPos, FontList.instance.getFont("wqy-microhei"), 5, 0xFFFFFFFF);
                 textView.setTextureId("schindler_z_line_3_keypad_1_display");
                 textView.setText(text);
                 textView.setWidth(4F / 16);

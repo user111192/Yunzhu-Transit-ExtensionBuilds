@@ -64,7 +64,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(3.2F / 16, 5.5F / 16);
         parentLayout.setPosition(-1.6F / 16, 0);
@@ -129,7 +129,7 @@ public class RenderKoneMButton2 extends BlockEntityRenderer<KoneMButton2.BlockEn
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

@@ -69,7 +69,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4F / 16, 10.75F / 16);
         parentLayout.setPosition(-0.125F, 2.45F / 16);
@@ -77,7 +77,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -85,7 +85,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
         buttonLayout.setMargin(0, 1.2F / 16, 0, 0);
@@ -149,7 +149,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
@@ -175,7 +175,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
                 });
             });
         });
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
 
@@ -187,7 +187,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("thyssenkrupp_lcd"),
                         4.7F,
@@ -202,7 +202,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.47F / 16, 106, 150);
                 liftArrowView.setMargin(0, 0.0315F / 16, 0, 0);
@@ -212,7 +212,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);

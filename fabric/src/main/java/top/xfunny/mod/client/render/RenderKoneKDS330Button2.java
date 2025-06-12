@@ -65,7 +65,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions((float) 6 / 16, (float) 8 / 16);
         parentLayout.setPosition((float) -0.1875, 0.0265F);
@@ -73,7 +73,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         button.setLight(255);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -86,7 +86,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
 
         final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, false, false);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
         buttonLight.setLight(light);
         buttonLight.setHover(true);
         buttonLight.setDefaultColor(0xFFFFFFFF);
@@ -100,7 +100,7 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
         buttonLight.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

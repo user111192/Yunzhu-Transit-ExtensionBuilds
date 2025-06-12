@@ -27,7 +27,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
     private static final int HOVER_COLOR = 0xFFFFFFFF;
     private final boolean isOdd;
     private final float buttonMarginRight = 0.225F / 16;
-    private final float buttonHight = 1 * ((float) 101 / 94) / 16;
+    private final float buttonHight = 1 * (101F / 94) / 16;
 
 
     public RenderSchindlerZLine3Keypad1(Argument dispatcher, boolean isOdd) {
@@ -76,55 +76,55 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
         });
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 6 / 16, (float) 16 / 16);
-        parentLayout.setPosition((float) 5 / 16, (float) 0);
+        parentLayout.setParentDimensions(6F / 16, 16F / 16);
+        parentLayout.setPosition(5F / 16, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
 
         final LinearLayout group1 = new LinearLayout(false);
-        group1.setBasicsAttributes(world, blockEntity.getPos2());
+        group1.setBasicsAttributes(world, blockPos);
         group1.setWidth(LayoutSize.MATCH_PARENT);
         group1.setHeight(LayoutSize.WRAP_CONTENT);
         group1.setMargin(1.25F / 16, screenId.equals("schindler_z_line_3_keypad_1_key_mapping_input") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_accessibility") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_identifier") ? 1.175F / 16 : 5.6F / 16, 0, 0);
         group1.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -0.2F / 16 + 0.9 * SMALL_OFFSET));
 
         final LinearLayout group2 = new LinearLayout(false);
-        group2.setBasicsAttributes(world, blockEntity.getPos2());
+        group2.setBasicsAttributes(world, blockPos);
         group2.setWidth(LayoutSize.MATCH_PARENT);
         group2.setHeight(LayoutSize.WRAP_CONTENT);
         group2.setMargin(1.25F / 16, 0.625F / 16, 0, 0);
 
         final LinearLayout group3 = new LinearLayout(false);
-        group3.setBasicsAttributes(world, blockEntity.getPos2());
+        group3.setBasicsAttributes(world, blockPos);
         group3.setWidth(LayoutSize.MATCH_PARENT);
         group3.setHeight(LayoutSize.WRAP_CONTENT);
         group3.setMargin(1.25F / 16, 0.625F / 16, 0, 0);
 
         final LinearLayout group4 = new LinearLayout(false);
-        group4.setBasicsAttributes(world, blockEntity.getPos2());
+        group4.setBasicsAttributes(world, blockPos);
         group4.setWidth(LayoutSize.MATCH_PARENT);
         group4.setHeight(LayoutSize.WRAP_CONTENT);
         group4.setMargin(1.25F / 16, 0.625F / 16, 0, 0);
 
         if (screenId.equals("schindler_z_line_3_keypad_1_key_mapping_input") || screenId.equals("schindler_z_line_3_keypad_1_key_mapping_identifier")) {
             final FrameLayout textBackgroundLayout = new FrameLayout();
-            textBackgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+            textBackgroundLayout.setBasicsAttributes(world, blockPos);
             textBackgroundLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
             textBackgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
             textBackgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
             textBackgroundLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-            textBackgroundLayout.setMargin(0, (float) 1.85 / 16, 0, 0);
+            textBackgroundLayout.setMargin(0, 1.85F / 16, 0, 0);
 
             final ImageView imageView = new ImageView();
-            imageView.setBasicsAttributes(world, blockEntity.getPos2());
+            imageView.setBasicsAttributes(world, blockPos);
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
             imageView.setDimension(3.5F / 16, 2.575F / 3.5F);
             imageView.setLight(light);
@@ -133,7 +133,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
             final TextView textView = new TextView();
             textView.setId("textView");
-            textView.setBasicsAttributes(world, blockEntity.getPos2(), FontList.instance.getFont("Arial"), 6, 0xFF212121);
+            textView.setBasicsAttributes(world, blockPos, FontList.instance.getFont("Arial"), 6, 0xFF212121);
             textView.setDisplayLength(6, 0.005F);
             textView.setTextureId("schindler_z_line_3_keypad_1_display");
             textView.setText(ArrayListToString.arrayListToString(inputNumber));
@@ -148,15 +148,15 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         } else if (screenId.equals("schindler_z_line_3_keypad_1_key_mapping_accessibility")) {
             final FrameLayout textBackgroundLayout = new FrameLayout();
-            textBackgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+            textBackgroundLayout.setBasicsAttributes(world, blockPos);
             textBackgroundLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
             textBackgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
             textBackgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
             textBackgroundLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-            textBackgroundLayout.setMargin(0, (float) 1.85 / 16, 0, 0);
+            textBackgroundLayout.setMargin(0, 1.85F / 16, 0, 0);
 
             final ImageView imageView = new ImageView();
-            imageView.setBasicsAttributes(world, blockEntity.getPos2());
+            imageView.setBasicsAttributes(world, blockPos);
             imageView.setTexture(new Identifier(Init.MOD_ID, "textures/block/white.png"));
             imageView.setDimension(3.5F / 16, 2.575F / 3.5F);
             imageView.setLight(light);
@@ -164,7 +164,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
             imageView.setGravity(Gravity.CENTER);
 
             final ImageView imageAccessibility = new ImageView();
-            imageAccessibility.setBasicsAttributes(world, blockEntity.getPos2());
+            imageAccessibility.setBasicsAttributes(world, blockPos);
             imageAccessibility.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_z_line_keypad/accessibility_icon.png"));
             imageAccessibility.setDimension(1F / 16);
             imageAccessibility.setLight(light);
@@ -178,7 +178,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number1 = new ButtonView();
         number1.setId("number1");
-        number1.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number1.setBasicsAttributes(world, blockPos, hitButton);
         number1.setWidth(1F / 16);
         number1.setHeight(buttonHight);
         number1.setMargin(0, 0, buttonMarginRight, 0);
@@ -189,7 +189,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number2 = new ButtonView();
         number2.setId("number2");
-        number2.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number2.setBasicsAttributes(world, blockPos, hitButton);
         number2.setWidth(1F / 16);
         number2.setHeight(buttonHight);
         number2.setMargin(0, 0, buttonMarginRight, 0);
@@ -200,7 +200,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number3 = new ButtonView();
         number3.setId("number3");
-        number3.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number3.setBasicsAttributes(world, blockPos, hitButton);
         number3.setWidth(1F / 16);
         number3.setHeight(buttonHight);
         number3.setMargin(0, 0, 0, 0);
@@ -211,7 +211,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number4 = new ButtonView();
         number4.setId("number4");
-        number4.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number4.setBasicsAttributes(world, blockPos, hitButton);
         number4.setWidth(1F / 16);
         number4.setHeight(buttonHight);
         number4.setMargin(0, 0, buttonMarginRight, 0);
@@ -222,7 +222,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number5 = new ButtonView();
         number5.setId("number5");
-        number5.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number5.setBasicsAttributes(world, blockPos, hitButton);
         number5.setWidth(1F / 16);
         number5.setHeight(buttonHight);
         number5.setMargin(0, 0, buttonMarginRight, 0);
@@ -233,7 +233,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number6 = new ButtonView();
         number6.setId("number6");
-        number6.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number6.setBasicsAttributes(world, blockPos, hitButton);
         number6.setWidth(1F / 16);
         number6.setHeight(buttonHight);
         number6.setMargin(0, 0, 0, 0);
@@ -244,7 +244,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number7 = new ButtonView();
         number7.setId("number7");
-        number7.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number7.setBasicsAttributes(world, blockPos, hitButton);
         number7.setWidth(1F / 16);
         number7.setHeight(buttonHight);
         number7.setMargin(0, 0, buttonMarginRight, 0);
@@ -255,7 +255,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number8 = new ButtonView();
         number8.setId("number8");
-        number8.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number8.setBasicsAttributes(world, blockPos, hitButton);
         number8.setWidth(1F / 16);
         number8.setHeight(buttonHight);
         number8.setMargin(0, 0, buttonMarginRight, 0);
@@ -266,7 +266,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number9 = new ButtonView();
         number9.setId("number9");
-        number9.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number9.setBasicsAttributes(world, blockPos, hitButton);
         number9.setWidth(1F / 16);
         number9.setHeight(buttonHight);
         number9.setMargin(0, 0, 0, 0);
@@ -277,7 +277,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView lobby = new ButtonView();
         lobby.setId("lobby");
-        lobby.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        lobby.setBasicsAttributes(world, blockPos, hitButton);
         lobby.setWidth(1F / 16);
         lobby.setHeight(buttonHight);
         lobby.setMargin(0, 0, buttonMarginRight, 0);
@@ -288,7 +288,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView number0 = new ButtonView();
         number0.setId("number0");
-        number0.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        number0.setBasicsAttributes(world, blockPos, hitButton);
         number0.setWidth(1F / 16);
         number0.setHeight(buttonHight);
         number0.setMargin(0, 0, buttonMarginRight, 0);
@@ -299,7 +299,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView basement = new ButtonView();
         basement.setId("basement");
-        basement.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        basement.setBasicsAttributes(world, blockPos, hitButton);
         basement.setWidth(1F / 16);
         basement.setHeight(buttonHight);
         basement.setMargin(0, 0, 0, 0);
@@ -310,7 +310,7 @@ public class RenderSchindlerZLine3Keypad1 extends BlockEntityRenderer<SchindlerZ
 
         final ButtonView accessibility = new ButtonView();
         accessibility.setId("accessibility");
-        accessibility.setBasicsAttributes(world, blockEntity.getPos2(), hitButton);
+        accessibility.setBasicsAttributes(world, blockPos, hitButton);
         accessibility.setWidth(3.5F / 16);
         accessibility.setHeight(3.5F * (98F / 326) / 16);
         accessibility.setMargin(1.25F / 16, 0.95F / 16, 0, 0);

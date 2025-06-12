@@ -85,9 +85,9 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_VERTICAL);
         screenLayout.setBackgroundColor(0xFF000000);
-        screenLayout.setMargin(0, 0, 1F/16, 0);
+        screenLayout.setMargin(0, 0, 1.5F/16, 0);
 
-        NewButtonView upLantern  = new NewButtonView();
+        NewButtonView upLantern = new NewButtonView();
         upLantern.setBasicsAttributes(world, blockEntity.getPos2());
         upLantern.setTexture(BUTTON_TEXTURE);
         upLantern.setDimension(2F / 16);
@@ -95,7 +95,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         upLantern.setLight(light);
         upLantern.setDefaultColor(DEFAULT_COLOR);
         upLantern.setPressedColor(PRESSED_COLOR);
-        upLantern.setMargin(0, 0, 1F/16, 0);
+        upLantern.setMargin(0, 0, 1.5F/16, 0);
 
         NewButtonView upLantern1  = new NewButtonView();
         upLantern1.setBasicsAttributes(world, blockEntity.getPos2());
@@ -115,7 +115,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         downLantern.setDefaultColor(DEFAULT_COLOR);
         downLantern.setPressedColor(PRESSED_COLOR);
         downLantern.setFlip(false,true);
-        downLantern.setMargin(0, 0, 1F/16, 0);
+        downLantern.setMargin(0, 0, 1.5F/16, 0);
 
         NewButtonView downLantern1  = new NewButtonView();
         downLantern1.setBasicsAttributes(world, blockEntity.getPos2());

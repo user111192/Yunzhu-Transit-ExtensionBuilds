@@ -62,7 +62,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         });
 
         FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(4.8F / 16, 6.5F / 16);
         parentLayout.setPosition(-2.4F / 16, 0.75F / 16);
@@ -70,7 +70,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         FrameLayout backgroundLayout = new FrameLayout();
-        backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        backgroundLayout.setBasicsAttributes(world, blockPos);
         backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
         backgroundLayout.setGravity(Gravity.CENTER);
@@ -138,7 +138,7 @@ public class RenderOtisSeries1Button extends BlockEntityRenderer<OtisSeries1Butt
 
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

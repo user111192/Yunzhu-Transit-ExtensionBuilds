@@ -59,7 +59,7 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         });
 
         final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(7.5F / 16, 7.5F / 16);
         parentLayout.setPosition(-3.75F / 16, 4.25F / 16);
@@ -67,7 +67,7 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true, true);
+        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, true, true);
         button.setLight(255);
         button.setHover(false);
         button.setDefaultColor(0xFFFFFFFF);
@@ -80,7 +80,7 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         button.setGravity(Gravity.CENTER);
 
         LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockEntity.getPos2(), buttonDescriptor, true, false, true, true);
+        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, true, true);
         buttonLight.setLight(255);
         buttonLight.setHover(false);
         buttonLight.setDefaultColor(0x00FFFFFF);
@@ -93,10 +93,10 @@ public class RenderKoneKDS330Lantern1<T extends LiftButtonsBase.BlockEntityBase>
         buttonLight.setGravity(Gravity.CENTER);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final LineComponent buttonLine = new LineComponent();
-        buttonLine.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLine.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 

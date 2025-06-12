@@ -70,25 +70,25 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         });
 
         final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 8.875 / 16);
-        parentLayout.setPosition((float) -0.125, (float) 0);
+        parentLayout.setParentDimensions(4F / 16, 8.875F / 16);
+        parentLayout.setPosition(-0.125F, 0);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-        screenLayout.setMargin(0, (float) 1.4 / 16, 0, 0);
+        screenLayout.setMargin(0, 1.4F / 16, 0, 0);
 
         final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 0.5 / 16, 0, 0);
+        buttonLayout.setMargin(0, 0.5F / 16, 0, 0);
 
         final LinearLayout buttonContainer = new LinearLayout(true);
         buttonContainer.setBasicsAttributes(world, blockPos);
@@ -148,7 +148,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         final LineComponent line = new LineComponent();
-        line.setBasicsAttributes(world, blockEntity.getPos2());
+        line.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
 
@@ -171,7 +171,7 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
             });
         });
 
-        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = Math.min(2, sortedPositionsAndLifts.size());
@@ -181,41 +181,41 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
-                        blockEntity.getPos2(),
+                        blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi_b85"),
                         10,
                         0xFFFF0000);
                 liftFloorDisplayView.setDisplayLength(2, 0.05F);
                 liftFloorDisplayView.setTextureId("hitachi_b85_screen_1_display");
-                liftFloorDisplayView.setWidth((float) 0.6 / 16);
-                liftFloorDisplayView.setHeight((float) 0.6 / 16);
-                liftFloorDisplayView.setMargin((float) 0.2 / 16, (float) 0.2 / 16, 0, 0);
+                liftFloorDisplayView.setWidth(0.6F / 16);
+                liftFloorDisplayView.setHeight(0.6F / 16);
+                liftFloorDisplayView.setMargin(0.2F / 16, 0.2F / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
-                liftArrowView.setBasicsAttributes(world, blockEntity.getPos2(), sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.4F / 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setMargin(0, 0, 0, (float) 0.2 / 16);
+                liftArrowView.setMargin(0, 0, 0, 0.2F / 16);
                 liftArrowView.setColor(0xFFFF0000);
 
                 final FrameLayout backgroundLayout = new FrameLayout();
-                backgroundLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                backgroundLayout.setBasicsAttributes(world, blockPos);
                 backgroundLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 backgroundLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                backgroundLayout.setMargin((float) 0.42 / 16, 0, (float) 0.42 / 16, 0);
+                backgroundLayout.setMargin(0.42F / 16, 0, 0.42F / 16, 0);
 
                 final ImageView screenBackground = new ImageView();
-                screenBackground.setBasicsAttributes(world, blockEntity.getPos2());
+                screenBackground.setBasicsAttributes(world, blockPos);
                 screenBackground.setTexture(SCREEN_BACKGROUND_TEXTURE);
                 screenBackground.setDimension(1F / 16, 113, 211);
                 screenBackground.setGravity(Gravity.CENTER);
 
                 final LinearLayout numberLayout = new LinearLayout(true);
-                numberLayout.setBasicsAttributes(world, blockEntity.getPos2());
+                numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
                 numberLayout.addChild(liftArrowView);
