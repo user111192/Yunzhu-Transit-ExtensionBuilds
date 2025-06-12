@@ -212,6 +212,7 @@ public class RenderMitsubishiNexWayButton2 extends BlockEntityRenderer<Mitsubish
                             6,
                             0xFFFA7A24);
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                    liftFloorDisplayView.setMargin(0.25F / 16, 0, 0, 0);
                 } else {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }

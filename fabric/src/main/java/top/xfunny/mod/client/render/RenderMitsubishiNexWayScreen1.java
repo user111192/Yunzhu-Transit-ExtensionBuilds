@@ -255,6 +255,20 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
                 liftFloorDisplayView.setMargin(0.6F / 16, 0, 0.6F / 16, 0);
+                // Three-digits WIP
+//                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+//                if (liftFloorDisplayView.getTextLength() >= 3) {
+//                    liftFloorDisplayView.setBasicsAttributes(world,
+//                            blockPos,
+//                            sortedPositionsAndLifts.get(i).right(),
+//                            FontList.instance.getFont("mitsubishi_small_sht"),
+//                            11,
+//                            0xFFFFAA00);
+//                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+//                    liftFloorDisplayView.setMargin(0.7F / 16, 0, 0.5F / 16, 0);
+//                } else {
+//                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
+//                }
                 screenLayout.addChild(liftFloorDisplayView);
             }
         }

@@ -195,13 +195,26 @@ public class RenderMitsubishiNexWayButton4 extends BlockEntityRenderer<Mitsubish
                         FontList.instance.getFont("mitsubishi_modern"),
                         6,
                         0xFFFA7A24);
-                liftFloorDisplayView.setDisplayLength(2, 0.05F);
+                //liftFloorDisplayView.setDisplayLength(2, 0.05F);
                 liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_2_display");
-                liftFloorDisplayView.setWidth((float) 1.5 / 16);
+                liftFloorDisplayView.setWidth((float) 1.3 / 16);
                 liftFloorDisplayView.setHeight((float) 1.7 / 16);
                 liftFloorDisplayView.setMargin(0, 0, (float) -0.1 / 16, 0);
 
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
+                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                if (liftFloorDisplayView.getTextLength() >= 3) {
+                    liftFloorDisplayView.setBasicsAttributes(world,
+                            blockPos,
+                            sortedPositionsAndLifts.get(i).right(),
+                            FontList.instance.getFont("mitsubishi_small_sht"),
+                            6,
+                            0xFFFA7A24);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                    liftFloorDisplayView.setMargin(0.25F / 16, 0, 0, 0);
+                } else {
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
+                }
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
