@@ -8,10 +8,11 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mod.block.BlockPSDAPGDoorBase;
 import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.Items;
+import top.xfunny.mod.block.base.OldBlockPSDAPGDoorBase;
 
 import javax.annotation.Nonnull;
 
-public class MitsubishiNexWayDoor1 extends BlockPSDAPGDoorBase {
+public class MitsubishiNexWayDoor1 extends OldBlockPSDAPGDoorBase {
 
     @Nonnull
     @Override

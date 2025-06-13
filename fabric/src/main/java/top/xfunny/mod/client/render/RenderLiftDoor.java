@@ -1,6 +1,5 @@
 package top.xfunny.mod.client.render;
 
-import org.mtr.init.MTR;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.EntityModelExtension;
@@ -12,8 +11,9 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.MainRenderer;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.mod.block.base.OldBlockAPGDoor;
 
-public class RenderLiftDoor<T extends BlockAPGDoor.BlockEntityBase> extends BlockEntityRenderer<T> implements IGui, IBlock {
+public class RenderLiftDoor<T extends OldBlockAPGDoor.BlockEntityBase> extends BlockEntityRenderer<T> implements IGui, IBlock {
 
     private static final ModelSingleCube MODEL_PSD_DOOR_LOCKED = new ModelSingleCube(6, 6, 5, 6, 1, 6, 6, 0);
     private static final ModelSingleCube MODEL_LIFT_LEFT = new ModelSingleCube(28, 18, 0, 0, 0, 12, 16, 2);
@@ -27,7 +27,6 @@ public class RenderLiftDoor<T extends BlockAPGDoor.BlockEntityBase> extends Bloc
     }
 
 
-
     @Override
     public void render(T entity, float tickDelta, GraphicsHolder graphicsHolder, int light, int overlay) {
         final World world = entity.getWorld2();
@@ -35,18 +34,15 @@ public class RenderLiftDoor<T extends BlockAPGDoor.BlockEntityBase> extends Bloc
             return;
         }
 
-        entity.tick(tickDelta);
+        //entity.tick(tickDelta);
 
         final BlockPos blockPos = entity.getPos2();
         final Direction facing = IBlock.getStatePropertySafe(world, blockPos, BlockPSDAPGDoorBase.FACING);
         final boolean side = IBlock.getStatePropertySafe(world, blockPos, BlockPSDAPGDoorBase.SIDE) == EnumSide.RIGHT;
         final boolean half = IBlock.getStatePropertySafe(world, blockPos, BlockPSDAPGDoorBase.HALF) == DoubleBlockHalf.UPPER;
         final boolean unlocked = IBlock.getStatePropertySafe(world, blockPos, BlockPSDAPGDoorBase.UNLOCKED);
-        final double open = Math.min(entity.getDoorValue(), 1);//todo
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(entity);
-        stringBuilder.append(","+entity.getDoorValue());
-        Init.LOGGER.info(stringBuilder);
+        final double open = Math.min(entity.getDoorValue(), type >= 3 ? 0.75F : 1);//todo
+
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(0.5 + entity.getPos2().getX(), entity.getPos2().getY(), 0.5 + entity.getPos2().getZ());
         storedMatrixTransformations.add(graphicsHolderNew -> {

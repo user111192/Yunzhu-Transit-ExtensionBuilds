@@ -2,6 +2,7 @@ package top.xfunny.mod.client.render;
 
 
 import org.mtr.core.data.Lift;
+import org.mtr.core.data.LiftDirection;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectObjectImmutablePair;
 import org.mtr.mapping.holder.*;
@@ -14,18 +15,27 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
+import top.xfunny.mod.block.SchindlerMSeriesScreen2Even;
+import top.xfunny.mod.block.SchindlerMSeriesScreen4Even;
 import top.xfunny.mod.block.TonicDSScreen1Even;
+import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
+import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
 
-public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+public class RenderSchindlerMSeriesScreen4<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private final boolean isOdd;
+    private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_4_arrow.png");
+
+    private static final int PRESSED_COLOR = 0xFFFF0000;
+    private static final int DEFAULT_COLOR = 0xFF4D0000;
 
     public RenderSchindlerMSeriesScreen4(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
@@ -48,6 +58,8 @@ public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBa
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
+
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
@@ -59,10 +71,59 @@ public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBa
         final LinearLayout parentLayout = new LinearLayout(false);
         parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions(7.5F / 16, 5F / 16);
-        parentLayout.setPosition(isOdd ? -0.284375F : -0.784375F, 0.5025F);
+        parentLayout.setParentDimensions(9F / 16, 2F / 16);
+        parentLayout.setPosition(isOdd ? -4.5F/16 : -12.5F/16F, 9.5F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+
+        final FrameLayout screenLayout = new FrameLayout();
+        screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
+        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        screenLayout.setGravity(Gravity.CENTER_VERTICAL);
+        screenLayout.setMargin(0.9F/16, 0, 0, 0);
+
+        NewButtonView upLanternLeft = new NewButtonView();
+        upLanternLeft.setBasicsAttributes(world, blockEntity.getPos2());
+        upLanternLeft.setTexture(BUTTON_TEXTURE);
+        upLanternLeft.setDimension(0.625F / 16);
+        upLanternLeft.setGravity(Gravity.CENTER_VERTICAL);
+        upLanternLeft.setLight(light);
+        upLanternLeft.setDefaultColor(DEFAULT_COLOR);
+        upLanternLeft.setPressedColor(PRESSED_COLOR);
+        upLanternLeft.setMargin(1.25F/16, 0, 0, 0);
+
+        NewButtonView upLanternRight  = new NewButtonView();
+        upLanternRight.setBasicsAttributes(world, blockEntity.getPos2());
+        upLanternRight.setTexture(BUTTON_TEXTURE);
+        upLanternRight.setDimension(0.625F / 16);
+        upLanternRight.setGravity(Gravity.CENTER_VERTICAL);
+        upLanternRight.setLight(light);
+        upLanternRight.setDefaultColor(DEFAULT_COLOR);
+        upLanternRight.setPressedColor(PRESSED_COLOR);
+        upLanternRight.setMargin(1.75F / 16, 0, 0, 0);
+
+        NewButtonView downLanternLeft  = new NewButtonView();
+        downLanternLeft.setBasicsAttributes(world, blockEntity.getPos2());
+        downLanternLeft.setTexture(BUTTON_TEXTURE);
+        downLanternLeft.setDimension(0.625F / 16);
+        downLanternLeft.setGravity(Gravity.CENTER_VERTICAL);
+        downLanternLeft.setLight(light);
+        downLanternLeft.setDefaultColor(DEFAULT_COLOR);
+        downLanternLeft.setPressedColor(PRESSED_COLOR);
+        downLanternLeft.setFlip(false,true);
+        downLanternLeft.setMargin(1.25F/16, 0, 0, 0);
+
+        NewButtonView downLanternRight  = new NewButtonView();
+        downLanternRight.setBasicsAttributes(world, blockEntity.getPos2());
+        downLanternRight.setTexture(BUTTON_TEXTURE);
+        downLanternRight.setDimension(0.625F / 16);
+        downLanternRight.setGravity(Gravity.CENTER_VERTICAL);
+        downLanternRight.setLight(light);
+        downLanternRight.setDefaultColor(DEFAULT_COLOR);
+        downLanternRight.setPressedColor(PRESSED_COLOR);
+        downLanternRight.setFlip(false,true);
+        downLanternRight.setMargin(1.75F / 16, 0, 0, 0);
 
 
         final LineComponent line = new LineComponent();
@@ -72,7 +133,21 @@ public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBa
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
-            TonicDSScreen1Even.LiftCheck(trackPosition, (floorIndex, lift) -> sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift)));
+            SchindlerMSeriesScreen4Even.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+                sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, org.mtr.mod.Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                final LiftDirection liftDirection = liftDetails.left();
+                switch (liftDirection){
+                    case UP:
+                        upLanternRight.activate();
+                        upLanternLeft.activate();
+                        break;
+                    case DOWN:
+                        downLanternRight.activate();
+                        downLanternLeft.activate();
+                        break;
+                }
+            });
         });
 
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
@@ -95,36 +170,27 @@ public class RenderSchindlerMSeriesScreen4<T extends LiftPanelBase.BlockEntityBa
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.setLetterSpacing(0);
                 liftFloorDisplayView.setDisplayLength(2, 0);
-                liftFloorDisplayView.setMargin(1.225F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                liftFloorDisplayView.setGravity(Gravity.CENTER);
 
-                final LiftArrowView liftArrowView_right = new LiftArrowView();
-                liftArrowView_right.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.UP);
-                liftArrowView_right.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_4_arrow.png"));
-                liftArrowView_right.setAnimationScrolling(false, 0.05F);
-                liftArrowView_right.setDimension(0.625F / 16);
-                liftArrowView_right.setMargin(1.75F / 16, 3F / 16, 0, 0);
-                liftArrowView_right.setGravity(Gravity.CENTER_VERTICAL);
-                liftArrowView_right.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView_right.setColor(0xFFFF0000);
-
-                final LiftArrowView liftArrowView_left = new LiftArrowView();
-                liftArrowView_left.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.DOWN);
-                liftArrowView_left.setTexture(new Identifier(Init.MOD_ID, "textures/block/schindler_m_series_screen_4_arrow.png"));
-                liftArrowView_left.setAnimationScrolling(false, 0.05F);
-                liftArrowView_left.setDimension(0.625F / 16);
-                liftArrowView_left.setMargin(-6.5F / 16, 3F / 16, 0, 0);
-                liftArrowView_left.setGravity(Gravity.CENTER_VERTICAL);
-                liftArrowView_left.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView_left.setColor(0xFFFF0000);
-
-
-                parentLayout.addChild(liftFloorDisplayView);
-                parentLayout.addChild(liftArrowView_right);
-                parentLayout.addChild(liftArrowView_left);
-
+                screenLayout.addChild(liftFloorDisplayView);
             }
         }
+
+        if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
+            parentLayout.addChild(downLanternLeft);
+            parentLayout.addChild(screenLayout);
+            parentLayout.addChild(upLanternRight);
+        } else if (buttonDescriptor.hasDownButton()) {
+            parentLayout.addChild(downLanternLeft);
+            parentLayout.addChild(screenLayout);
+            parentLayout.addChild(downLanternRight);
+        } else if (buttonDescriptor.hasUpButton()) {
+            parentLayout.addChild(upLanternLeft);
+            parentLayout.addChild(screenLayout);
+            parentLayout.addChild(upLanternRight);
+        }
+
         parentLayout.render();
     }
 }

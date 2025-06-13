@@ -14,6 +14,7 @@ public class LiftArrowView extends ImageView {
     private ArrowType arrowType;
     private boolean needScroll;
     private float scrollSpeed;
+    private boolean alwaysOn;
 
     @Override
     public void render() {
@@ -25,22 +26,22 @@ public class LiftArrowView extends ImageView {
 
         switch (arrowType) {
             case UP:
-                if (liftDirection.equals(LiftDirection.UP)) {
+                if (alwaysOn||liftDirection.equals(LiftDirection.UP)) {
                     super.render();
                 }
                 break;
             case DOWN:
-                if (liftDirection.equals(LiftDirection.DOWN)) {
+                if (alwaysOn||liftDirection.equals(LiftDirection.DOWN)) {
                     super.render();
                 }
                 break;
             case BOTH:
-                if (liftDirection.equals(LiftDirection.NONE) && lift.getDoorValue() != 0) {
+                if (alwaysOn||liftDirection.equals(LiftDirection.NONE) && lift.getDoorValue() != 0) {
                     super.render();
                 }
                 break;
             case AUTO:
-                if (!liftDirection.equals(LiftDirection.NONE)) {
+                if (alwaysOn||!liftDirection.equals(LiftDirection.NONE)) {
                     super.render();
                 }
                 break;
@@ -57,6 +58,11 @@ public class LiftArrowView extends ImageView {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public void setDefaultColor(int color){
+        this.color = color;
+        this.alwaysOn = true;
     }
 
     private float[] uv(LiftDirection direction, float gameTick) {

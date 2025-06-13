@@ -5,14 +5,15 @@ import org.mtr.mapping.mapper.BlockEntityExtension;
 import org.mtr.mapping.tool.HolderBase;
 import org.mtr.mod.block.IBlock;
 import top.xfunny.mod.BlockEntityTypes;
+import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.block.base.LiftPanelBase;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class SchindlerMSeriesScreen4Even extends LiftPanelBase {
+public class SchindlerMSeriesScreen4Even extends LiftButtonsBase {
     public SchindlerMSeriesScreen4Even() {
-        super(false);
+        super(false,false);
     }
 
     @Nonnull

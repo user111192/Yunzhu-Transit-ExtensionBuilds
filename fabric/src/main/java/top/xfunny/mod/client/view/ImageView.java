@@ -219,6 +219,7 @@ public class ImageView implements RenderView {
         }
     }
 
+
     public void setAnimationBliking(boolean needBlink, float blinkInterval) {
         this.needBlink = needBlink;
         this.blinkInterval = blinkInterval;
