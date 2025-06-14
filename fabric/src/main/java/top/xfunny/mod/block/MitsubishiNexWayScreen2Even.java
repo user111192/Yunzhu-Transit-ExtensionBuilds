@@ -20,10 +20,10 @@ public class MitsubishiNexWayScreen2Even extends LiftPanelBase {
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
             case LEFT:
-                return IBlock.getVoxelShapeByDirection(12.25, 9, 0, 16, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(13.675, 9.5, 0, 16, 13, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
             case RIGHT:
-                return IBlock.getVoxelShapeByDirection(0, 9, 0, 3.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(0, 9.5, 0, 2.325, 13, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
         }
         return VoxelShapes.empty();

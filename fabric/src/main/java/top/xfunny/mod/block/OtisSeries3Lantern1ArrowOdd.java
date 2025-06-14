@@ -18,7 +18,7 @@ public class OtisSeries3Lantern1ArrowOdd extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(4.245, 4.25, 0, 11.745, 11.775, 0.85, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(6.825, 5.725, 0, 9.175, 10.275, 0.35, IBlock.getStatePropertySafe(state, FACING));
 
     }
 

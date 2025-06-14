@@ -21,7 +21,7 @@ public class OtisSeries3Button1 extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(5.45, 0.75, 0, 10.55, 7.25, 1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(6.825, 0.9, 0, 9.175, 4.65, 0.35, IBlock.getStatePropertySafe(state, FACING));
     }
 
 

@@ -20,10 +20,10 @@ public class OtisSeries3Lantern1ArrowEven extends LiftButtonsBase {
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
             case LEFT:
-                return IBlock.getVoxelShapeByDirection(12.245, 4.25, 0, 16, 11.775, 0.85, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(14.825, 5.725, 0, 16, 10.275, 0.85, IBlock.getStatePropertySafe(state, FACING));
 
             case RIGHT:
-                return IBlock.getVoxelShapeByDirection(0, 4.25, 0, 3.75, 11.775, 0.85, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(0, 5.725, 0, 1.175, 10.275, 0.85, IBlock.getStatePropertySafe(state, FACING));
 
         }
         return VoxelShapes.empty();

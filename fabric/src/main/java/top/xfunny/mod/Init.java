@@ -8,6 +8,7 @@ import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.MathHelper;
 import org.mtr.mapping.registry.Registry;
 import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
+import top.xfunny.mod.packet.PacketUpdatePATRS01RailwaySignConfig;
 
 public final class Init {
     public static final String MOD_ID = "yte";
@@ -25,6 +26,7 @@ public final class Init {
         //注册mtr packet
         REGISTRY.setupPackets(new Identifier(MOD_ID, "packet"));
         REGISTRY.registerPacket(PacketOpenBlockEntityScreen.class, PacketOpenBlockEntityScreen::new);
+        REGISTRY.registerPacket(PacketUpdatePATRS01RailwaySignConfig.class, PacketUpdatePATRS01RailwaySignConfig::new);
 
         REGISTRY.init();
     }

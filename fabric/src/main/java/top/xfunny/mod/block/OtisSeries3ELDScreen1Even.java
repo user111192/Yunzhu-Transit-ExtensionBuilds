@@ -21,10 +21,10 @@ public class OtisSeries3ELDScreen1Even extends LiftButtonsBase {
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
             case LEFT:
-                return IBlock.getVoxelShapeByDirection(12.25, 9, 0, 16, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(11.825, 9.5, 0, 16, 15, 0.35, IBlock.getStatePropertySafe(state, FACING));
 
             case RIGHT:
-                return IBlock.getVoxelShapeByDirection(0, 9, 0, 3.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(0, 9.5, 0, 4.175, 15, 0.35, IBlock.getStatePropertySafe(state, FACING));
 
         }
         return VoxelShapes.empty();

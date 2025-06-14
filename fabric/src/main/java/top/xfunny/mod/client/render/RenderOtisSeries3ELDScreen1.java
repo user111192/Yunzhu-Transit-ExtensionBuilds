@@ -80,7 +80,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         final NewButtonView upLantern = new NewButtonView();
         upLantern.setBasicsAttributes(world, blockPos);
         upLantern.setTexture(ARROW_TEXTURE);
-        upLantern.setDimension(0.65F / 16);
+        upLantern.setDimension(1.5F / 16);
         upLantern.setGravity(Gravity.CENTER);
         upLantern.setLight(light);
         upLantern.setDefaultColor(DEFAULT_COLOR);
@@ -89,7 +89,7 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
         final NewButtonView downLantern = new NewButtonView();
         downLantern.setBasicsAttributes(world, blockPos);
         downLantern.setTexture(ARROW_TEXTURE);
-        downLantern.setDimension(0.65F / 16);
+        downLantern.setDimension(1.5F / 16);
         downLantern.setGravity(Gravity.CENTER);
         downLantern.setLight(light);
         downLantern.setDefaultColor(DEFAULT_COLOR);

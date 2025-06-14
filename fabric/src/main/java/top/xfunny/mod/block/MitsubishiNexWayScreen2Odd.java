@@ -18,7 +18,7 @@ public class MitsubishiNexWayScreen2Odd extends LiftPanelBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(4.25, 9, 0, 11.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(5.725, 9.5, 0, 10.275, 13, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

@@ -22,7 +22,7 @@ public class HitachiIVIB322ButtonDotMatrix extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(single ? 5.7 : 6.45, 0.675, 0, single ? 10.3 : 9.55, 9.875, 0.5, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(single ? 6 : 6.75, 2.775, 0, single ? 10 : 9.25, 12.275, 0.45, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

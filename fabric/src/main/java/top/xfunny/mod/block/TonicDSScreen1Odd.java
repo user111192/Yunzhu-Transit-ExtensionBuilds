@@ -18,7 +18,7 @@ public class TonicDSScreen1Odd extends LiftPanelBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(4.25, 9, 0, 11.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(2.5, 10, 0, 13.5, 13.25, 0.09, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

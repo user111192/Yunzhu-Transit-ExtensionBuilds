@@ -19,7 +19,7 @@ public class SchindlerMSeriesScreen4Odd extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(4.25, 9, 0, 11.75, 14, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(3.5, 9.5, 0, 12.5, 11.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

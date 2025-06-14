@@ -50,6 +50,7 @@ public class FontList {
             loadFont("hitachi-led-dot_matrix_small","font/hitachi-dot-matrix-small.ttf");
             loadFont("schindler_m_series_segment", "font/schindler_m_series_segment.ttf");
             loadFont("tonic-led", "font/tonic-led.ttf");
+            loadFont("mitsubishi_old_segmented_1", "font/mitsubishi_old_segmented_1.ttf");
             fontsLoaded = true;
         }
     }
