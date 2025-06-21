@@ -184,9 +184,9 @@ public class RenderSchindlerMSeriesScreen4<T extends LiftButtonsBase.BlockEntity
         } else if (buttonDescriptor.hasDownButton()) {
             parentLayout.addChild(downLanternLeft);
             parentLayout.addChild(screenLayout);
-            parentLayout.addChild(downLanternRight);
+            parentLayout.addChild(upLanternRight);
         } else if (buttonDescriptor.hasUpButton()) {
-            parentLayout.addChild(upLanternLeft);
+            parentLayout.addChild(downLanternLeft);
             parentLayout.addChild(screenLayout);
             parentLayout.addChild(upLanternRight);
         }
