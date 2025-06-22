@@ -15,6 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
+import top.xfunny.mod.Init;
 import top.xfunny.mod.block.KoneKDS330Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
@@ -23,6 +24,7 @@ import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -31,9 +33,12 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
 
     private static final int HOVER_COLOR = 0xFFFFFFFF;
     private static final int PRESSED_COLOR = 0xFF00FF00;
+    private static final int DEFAULT_COLOR = 0xFF452D15;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_arrow_1.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1.png");
-    private static final Identifier LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/kone_m_button_1_light.png");
+    private final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button.png");
+    private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_b.png");
+    private final Identifier BUTTON_LIGHT_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");
+    private final Identifier BUTTON_LIGHT_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_light.png");
 
     public RenderKoneKDS330Button1(Argument dispatcher) {
         super(dispatcher);
@@ -64,59 +69,86 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
             graphicsHolder.translate(0, 0, 7.5F / 16 - SMALL_OFFSET);
         });
 
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
 
-        //创建一个纵向的linear layout作为最底层的父容器
-        final LinearLayout parentLayout = new LinearLayout(true);
-        parentLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
-        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 4 / 16, (float) 12 / 16);//宽度为8，高度为16，宽高取决于外呼模型像素大小，一个立方体其中一个面的像素宽高为16x16
-        parentLayout.setPosition((float) -0.125, (float) 0.0625);//通过设置坐标的方式设置底层layout的位置
-        parentLayout.setWidth(LayoutSize.MATCH_PARENT);//宽度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
-        parentLayout.setHeight(LayoutSize.MATCH_PARENT);//高度为match_parent，即占满父容器，最底层父容器大小已通过setParentDimensions设置
+        final FrameLayout screenContainer = new FrameLayout();
+        screenContainer.setBasicsAttributes(world, blockPos);
+        screenContainer.setStoredMatrixTransformations(storedMatrixTransformations1);
+        screenContainer.setParentDimensions(4.5F / 16, 3F / 16);
+        screenContainer.setPosition(-2.25F/16, 3.775F/16);
+        screenContainer.setWidth(LayoutSize.MATCH_PARENT);
+        screenContainer.setHeight(LayoutSize.MATCH_PARENT);
 
-        //创建一个横向的linear layout用于放置显示屏
+        final FrameLayout buttonUpLayout = new FrameLayout();
+        buttonUpLayout.setBasicsAttributes(world, blockPos);
+        buttonUpLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        buttonUpLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
+        buttonUpLayout.setPosition(-2.25F/16, 6.775F/16);
+        buttonUpLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonUpLayout.setHeight(LayoutSize.MATCH_PARENT);
+
+        final FrameLayout buttonDownLayout = new FrameLayout();
+        buttonDownLayout.setBasicsAttributes(world, blockPos);
+        buttonDownLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        buttonDownLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
+        buttonDownLayout.setPosition(-2.25F/16, 0.725F/16);
+        buttonDownLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonDownLayout.setHeight(LayoutSize.MATCH_PARENT);
+
         final LinearLayout screenLayout = new LinearLayout(false);
-        screenLayout.setBasicsAttributes(world, blockPos);//传入必要的参数
+        screenLayout.setBasicsAttributes(world, blockPos);
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);//居中
-        screenLayout.setMargin(0, (float) 5 / 16, 0, 0);//设置外边距，可选
+        screenLayout.setGravity(Gravity.CENTER);
+        screenLayout.setMargin(0, 5F / 16, 0, 0);
 
+        final FrameLayout buttonUpGroup = new FrameLayout();
+        buttonUpGroup.setBasicsAttributes(world, blockPos);
+        buttonUpGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonUpGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonUpGroup.setGravity(Gravity.CENTER);
 
-        //创建一个FrameLayout用于在剩余的空间中放置按钮
-        final FrameLayout buttonLayout = new FrameLayout();
-        buttonLayout.setBasicsAttributes(world, blockPos);
-        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
-        buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, (float) 1.2 / 16, 0, 0);
+        final FrameLayout buttonDownGroup = new FrameLayout();
+        buttonDownGroup.setBasicsAttributes(world, blockPos);
+        buttonDownGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonDownGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonDownGroup.setGravity(Gravity.CENTER);
 
-        //添加按钮
-        final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        button.setLight(light);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
-        button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE, true);//按钮贴图
-        button.setWidth(0.6F / 16);//按钮宽度
-        button.setHeight(0.6F / 16);//按钮高度
-        button.setSpacing(0.1F / 16);//两个按钮的间距
-        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
+        ImageView buttonUp = new ImageView();
+        buttonUp.setBasicsAttributes(world, blockPos);
+        buttonUp.setTexture(BUTTON_TEXTURE_UP);
+        buttonUp.setDimension(0.9F / 16);
+        buttonUp.setGravity(Gravity.CENTER);
+        buttonUp.setLight(light);
 
-        final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        buttonLight.setLight(light);
-        buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(LIGHT_TEXTURE, true);
-        buttonLight.setWidth(0.6F / 16);
-        buttonLight.setHeight(0.6F / 16);
-        buttonLight.setClientMedian(0.3);
-        buttonLight.setSpacing(0.1F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        NewButtonView buttonUpLight = new NewButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE_UP);
+        buttonUpLight.setDimension(0.9F / 16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(DEFAULT_COLOR);
+        buttonUpLight.setHoverColor(HOVER_COLOR);
+        buttonUpLight.setPressedColor(PRESSED_COLOR);
+
+        ImageView buttonDown = new ImageView();
+        buttonDown.setBasicsAttributes(world, blockPos);
+        buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
+        buttonDown.setDimension(0.9F / 16);
+        buttonDown.setGravity(Gravity.CENTER);
+        buttonDown.setLight(light);
+
+        NewButtonView buttonDownLight = new NewButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE_DOWN);
+        buttonDownLight.setDimension(0.9F / 16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(DEFAULT_COLOR);
+        buttonDownLight.setHoverColor(HOVER_COLOR);
+        buttonDownLight.setPressedColor(PRESSED_COLOR);
 
         //添加外呼与楼层轨道的连线
         final LineComponent line = new LineComponent();
@@ -138,11 +170,11 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                     switch (liftDirection) {
                         case DOWN:
                             //向下的按钮亮灯
-                            buttonLight.setDownButtonLight();
+                            buttonDownLight.activate();
                             break;
                         case UP:
                             //向上的按钮亮灯
-                            buttonLight.setUpButtonLight();
+                            buttonUpLight.activate();
                             break;
                     }
                 });
@@ -165,12 +197,10 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                         FontList.instance.getFont("kone-lcd-segment"),//字体
                         5,//字号
                         0xFFFFFFFF);//字体颜色
-//                liftFloorDisplayView.setTextScrolling(true, 2, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
                 liftFloorDisplayView.setTextureId("kone-lcd-segment");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth((float) 1.6 / 16);//显示屏宽度
-                liftFloorDisplayView.setHeight((float) 1.7 / 16);//显示屏高度
-                liftFloorDisplayView.setMargin(0, (float) 0.43 / 16, (float) 0.45 / 16, 0);
-                //liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftFloorDisplayView.setWidth(1.6F / 16);//显示屏宽度
+                liftFloorDisplayView.setHeight(1.7F / 16);//显示屏高度
+                liftFloorDisplayView.setMargin(0, 0.43F / 16, 0.45F / 16, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
@@ -178,7 +208,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.5F / 16);
-                liftArrowView.setMargin(0, (float) 1.37 / 16, 0, 0);
+                liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setColor(0xFFFFFFFF);
@@ -200,11 +230,22 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
             }
         }
 
-        buttonLayout.addChild(button);//将按钮添加到线性布局中进行渲染
-        buttonLayout.addChild(buttonLight);
-        parentLayout.addChild(screenLayout);//将screenLayout添加到父容器中
-        parentLayout.addChild(buttonLayout);//将buttonLayout添加到父容器中
+        screenContainer.addChild(screenLayout);
 
-        parentLayout.render();//渲染父容器
+        if (buttonDescriptor.hasUpButton()) {
+            buttonUpGroup.addChild(buttonUp);
+            buttonUpLayout.addChild(buttonUpLight);
+            buttonUpLayout.addChild(buttonUpGroup);
+        }
+
+        if (buttonDescriptor.hasDownButton()) {
+            buttonDownGroup.addChild(buttonDown);
+            buttonDownLayout.addChild(buttonDownLight);
+            buttonDownLayout.addChild(buttonDownGroup);
+        }
+
+        buttonDownLayout.render();
+        buttonUpLayout.render();
+        screenLayout.render();
     }
 }
