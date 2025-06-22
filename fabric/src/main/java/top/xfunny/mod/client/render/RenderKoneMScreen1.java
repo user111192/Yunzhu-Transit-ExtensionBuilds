@@ -185,8 +185,8 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
         if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
-            parentLayout.addChild(downLantern);
-            parentLayout.addChild(upLantern1);
+            parentLayout.addChild(upLantern);
+            parentLayout.addChild(downLantern1);
         } else if (buttonDescriptor.hasDownButton()) {
             parentLayout.addChild(downLantern);
             parentLayout.addChild(downLantern1);

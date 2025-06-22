@@ -15,7 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiIVIB322ButtonDotMatrix;
+import top.xfunny.mod.block.HitachiVIB322ButtonDotMatrix;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -28,7 +28,7 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<HitachiIVIB322ButtonDotMatrix.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<HitachiVIB322ButtonDotMatrix.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
@@ -44,7 +44,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
     }
 
     @Override
-    public void render(HitachiIVIB322ButtonDotMatrix.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiVIB322ButtonDotMatrix.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -165,7 +165,7 @@ public class RenderHitachiIVIB322ButtonDotMatrix extends BlockEntityRenderer<Hit
             line.RenderLine(holdingLinker, trackPosition);
 
 
-            HitachiIVIB322ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiVIB322ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {

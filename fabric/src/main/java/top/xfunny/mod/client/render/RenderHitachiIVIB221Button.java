@@ -15,7 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiIVIB221Button;
+import top.xfunny.mod.block.HitachiVIB221Button;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -28,7 +28,7 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiIVIB221Button extends BlockEntityRenderer<HitachiIVIB221Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiIVIB221Button extends BlockEntityRenderer<HitachiVIB221Button.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
@@ -44,7 +44,7 @@ public class RenderHitachiIVIB221Button extends BlockEntityRenderer<HitachiIVIB2
     }
 
     @Override
-    public void render(HitachiIVIB221Button.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiVIB221Button.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -159,7 +159,7 @@ public class RenderHitachiIVIB221Button extends BlockEntityRenderer<HitachiIVIB2
             line.RenderLine(holdingLinker, trackPosition);
 
 
-            HitachiIVIB221Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiVIB221Button.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {

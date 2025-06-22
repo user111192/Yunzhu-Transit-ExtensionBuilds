@@ -18,10 +18,7 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.OtisSeries3ELDScreen1Even;
-import top.xfunny.mod.block.SchindlerDSeriesScreen1Even;
-import top.xfunny.mod.block.SchindlerMSeriesRoundLantern1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
@@ -168,7 +165,6 @@ public class RenderOtisSeries3ELDScreen1<T extends LiftButtonsBase.BlockEntityBa
 
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
-
             for (int i = 0; i < count; i++) {
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,

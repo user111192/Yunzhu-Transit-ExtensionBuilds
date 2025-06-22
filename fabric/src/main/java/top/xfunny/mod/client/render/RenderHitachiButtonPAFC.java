@@ -15,7 +15,7 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.block.HitachiButton_PAFC;
-import top.xfunny.mod.block.HitachiIVIB320ButtonDotMatrix;
+import top.xfunny.mod.block.HitachiVIB320ButtonDotMatrix;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;

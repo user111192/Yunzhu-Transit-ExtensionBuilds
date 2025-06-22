@@ -15,7 +15,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiVIB221ButtonDotMatrix;
+import top.xfunny.mod.block.HitachiVIB320ButtonDotMatrix;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -28,7 +28,7 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiIVIB221ButtonDotMatrix extends BlockEntityRenderer<HitachiVIB221ButtonDotMatrix.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiVIB320ButtonDotMatrix extends BlockEntityRenderer<HitachiVIB320ButtonDotMatrix.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
@@ -39,12 +39,12 @@ public class RenderHitachiIVIB221ButtonDotMatrix extends BlockEntityRenderer<Hit
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
 
-    public RenderHitachiIVIB221ButtonDotMatrix(Argument dispatcher) {
+    public RenderHitachiVIB320ButtonDotMatrix(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(HitachiVIB221ButtonDotMatrix.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiVIB320ButtonDotMatrix.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -165,7 +165,7 @@ public class RenderHitachiIVIB221ButtonDotMatrix extends BlockEntityRenderer<Hit
             line.RenderLine(holdingLinker, trackPosition);
 
 
-            HitachiVIB221ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiVIB320ButtonDotMatrix.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -196,7 +196,7 @@ public class RenderHitachiIVIB221ButtonDotMatrix extends BlockEntityRenderer<Hit
                         FontList.instance.getFont("hitachi-led-dot_matrix"),
                         6F,
                         0xFFFF4800);
-                liftFloorDisplayView.setTextureId("hitachi-vib-221-dot-matrix");
+                liftFloorDisplayView.setTextureId("hitachi-vib-320-dot-matrix");
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
 

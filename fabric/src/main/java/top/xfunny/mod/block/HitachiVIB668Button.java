@@ -13,8 +13,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HitachiIVIB322Button extends LiftButtonsBase {
-    public HitachiIVIB322Button() {
+public class HitachiVIB668Button extends LiftButtonsBase {
+    public HitachiVIB668Button() {
         super(true, true);
     }
 
@@ -28,7 +28,7 @@ public class HitachiIVIB322Button extends LiftButtonsBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new HitachiIVIB322Button.BlockEntity(blockPos, blockState);
+        return new HitachiVIB668Button.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -40,13 +40,13 @@ public class HitachiIVIB322Button extends LiftButtonsBase {
 
     @Override
     public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
-        tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_tip_1").formatted(TextFormatting.GRAY));
-        tooltip.add(TextHelper.translatable("tooltip.hitachi_vib320_button_1_tip_2").formatted(TextFormatting.GRAY));
+        tooltip.add(TextHelper.translatable("tooltip.hitachi_display_cip_71").formatted(TextFormatting.GRAY));
+        tooltip.add(TextHelper.translatable("tooltip.hitachi_button_ml_mo").formatted(TextFormatting.GRAY));
     }
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.HITACHI_VIB322_BUTTON.get(), pos, state);
+            super(BlockEntityTypes.HITACHI_VIB668_BUTTON.get(), pos, state);
         }
     }
 }

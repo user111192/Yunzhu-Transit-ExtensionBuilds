@@ -17,12 +17,14 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<DewhurstUS91Button1.BlockEntity> DEWHURST_US91_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<DewhurstUS91Button1Braille.BlockEntity> DEWHURST_US91_BUTTON_1_BRAILLE;
 
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB320Button.BlockEntity> HITACHI_VIB320_BUTTON;
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB320ButtonDotMatrix.BlockEntity> HITACHI_VIB320_BUTTON_DOT_MATRIX;
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB322Button.BlockEntity> HITACHI_VIB322_BUTTON;
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB322ButtonDotMatrix.BlockEntity> HITACHI_VIB322_BUTTON_DOT_MATRIX;
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB221Button.BlockEntity> HITACHI_VIB221_BUTTON;
-    public static final BlockEntityTypeRegistryObject<HitachiIVIB221ButtonDotMatrix.BlockEntity> HITACHI_VIB221_BUTTON_DOT_MATRIX;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB320Button.BlockEntity> HITACHI_VIB320_BUTTON;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB320ButtonDotMatrix.BlockEntity> HITACHI_VIB320_BUTTON_DOT_MATRIX;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB322Button.BlockEntity> HITACHI_VIB322_BUTTON;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB322ButtonDotMatrix.BlockEntity> HITACHI_VIB322_BUTTON_DOT_MATRIX;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB221Button.BlockEntity> HITACHI_VIB221_BUTTON;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB221ButtonDotMatrix.BlockEntity> HITACHI_VIB221_BUTTON_DOT_MATRIX;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB820Button.BlockEntity> HITACHI_VIB820_BUTTON;
+    public static final BlockEntityTypeRegistryObject<HitachiVIB668Button.BlockEntity> HITACHI_VIB668_BUTTON;
 
     public static final BlockEntityTypeRegistryObject<KoneKDS330Button1.BlockEntity> KONE_KDS330_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<KoneKDS330Button2.BlockEntity> KONE_KDS330_BUTTON_2;
@@ -43,6 +45,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3Segmented.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton3WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton4.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_4;
+    public static final BlockEntityTypeRegistryObject<MitsubishiNexWayButton4WithoutScreen.BlockEntity> MITSUBISHI_NEXWAY_BUTTON_4_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<MitsubishiMaxiezButton1Gold.BlockEntity> MITSUBISHI_MAXIEZ_BUTTON_1_GOLD;
     public static final BlockEntityTypeRegistryObject<MitsubishiMaxiezButton1Silver.BlockEntity> MITSUBISHI_MAXIEZ_BUTTON_1_SILVER;
     public static final BlockEntityTypeRegistryObject<MitsubishiNexWayScreen1Even.BlockEntity> MITSUBISHI_NEXWAY_SCREEN_1_EVEN;
@@ -93,7 +96,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerSSeriesGreyButton.BlockEntity> SCHINDLER_S_SERIES_GREY_BUTTON;
     public static final BlockEntityTypeRegistryObject<SchindlerLineaButton1White.BlockEntity> SCHINDLER_LINEA_BUTTON_1_WHITE;
     public static final BlockEntityTypeRegistryObject<SchindlerLineaButton1Black.BlockEntity> SCHINDLER_LINEA_BUTTON_1_BLACK;
-    public static final BlockEntityTypeRegistryObject<HitachiB85Button1.BlockEntity> HITACHI_B85_BUTTON_1;
+     public static final BlockEntityTypeRegistryObject<HitachiB85Button1.BlockEntity> HITACHI_B85_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1WithoutScreen.BlockEntity> HITACHI_B85_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button2.BlockEntity> HITACHI_B85_BUTTON_2;
 
@@ -162,6 +165,7 @@ public class BlockEntityTypes {
         MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3_segmented"), MitsubishiNexWayButton3Segmented.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3_SEGMENTED::get);
         MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_3_without_screen"), MitsubishiNexWayButton3WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN::get);
         MITSUBISHI_NEXWAY_BUTTON_4 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_4"), MitsubishiNexWayButton4.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_4::get);
+        MITSUBISHI_NEXWAY_BUTTON_4_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_button_4_without_screen"), MitsubishiNexWayButton4WithoutScreen.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_BUTTON_4_WITHOUT_SCREEN::get);
         MITSUBISHI_MAXIEZ_BUTTON_1_GOLD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_maxiez_button_1_gold"), MitsubishiMaxiezButton1Gold.BlockEntity::new, Blocks.MITSUBISHI_MAXIEZ_BUTTON_1_GOLD::get);
         MITSUBISHI_MAXIEZ_BUTTON_1_SILVER = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_maxiez_button_1_silver"), MitsubishiMaxiezButton1Silver.BlockEntity::new, Blocks.MITSUBISHI_MAXIEZ_BUTTON_1_SILVER::get);
         MITSUBISHI_NEXWAY_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "mitsubishi_nexway_screen_1_even"), MitsubishiNexWayScreen1Even.BlockEntity::new, Blocks.MITSUBISHI_NEXWAY_SCREEN_1_EVEN::get);
@@ -210,12 +214,14 @@ public class BlockEntityTypes {
 
         THYSSENKRUPP_TEGL1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "thyssenkrupp_te_gl1_button_1"), ThyssenkruppTEGL1Button1.BlockEntity::new, Blocks.THYSSENKRUPP_TEGL1_BUTTON_1::get);
 
-        HITACHI_VIB320_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib320_button_1"), HitachiIVIB320Button.BlockEntity::new, Blocks.HITACHI_VIB320_BUTTON::get);
-        HITACHI_VIB320_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib320_button_1_dot_matrix"), HitachiIVIB320ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB320_BUTTON_DOT_MATRIX::get);
-        HITACHI_VIB322_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib322_button_1"), HitachiIVIB322Button.BlockEntity::new, Blocks.HITACHI_VIB322_BUTTON::get);
-        HITACHI_VIB322_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib322_button_1_dot_matrix"), HitachiIVIB322ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB322_BUTTON_DOT_MATRIX::get);
-        HITACHI_VIB221_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1"), HitachiIVIB221Button.BlockEntity::new, Blocks.HITACHI_VIB221_BUTTON::get);
-        HITACHI_VIB221_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1_dot_matrix"), HitachiIVIB221ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB221_BUTTON_DOT_MATRIX::get);
+        HITACHI_VIB320_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib320_button_1"), HitachiVIB320Button.BlockEntity::new, Blocks.HITACHI_VIB320_BUTTON::get);
+        HITACHI_VIB320_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib320_button_1_dot_matrix"), HitachiVIB320ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB320_BUTTON_DOT_MATRIX::get);
+        HITACHI_VIB322_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib322_button_1"), HitachiVIB322Button.BlockEntity::new, Blocks.HITACHI_VIB322_BUTTON::get);
+        HITACHI_VIB322_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib322_button_1_dot_matrix"), HitachiVIB322ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB322_BUTTON_DOT_MATRIX::get);
+        HITACHI_VIB221_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1"), HitachiVIB221Button.BlockEntity::new, Blocks.HITACHI_VIB221_BUTTON::get);
+        HITACHI_VIB221_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1_dot_matrix"), HitachiVIB221ButtonDotMatrix.BlockEntity::new, Blocks.HITACHI_VIB221_BUTTON_DOT_MATRIX::get);
+        HITACHI_VIB820_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib820_button_1"), HitachiVIB820Button.BlockEntity::new, Blocks.HITACHI_VIB820_BUTTON::get);
+        HITACHI_VIB668_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_vib668_button_1"), HitachiVIB668Button.BlockEntity::new, Blocks.HITACHI_VIB668_BUTTON::get);
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), HitachiB85Button1WithoutScreen.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN::get);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), HitachiB85Button2.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_2::get);
