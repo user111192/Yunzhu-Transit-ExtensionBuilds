@@ -45,6 +45,7 @@ public class LinkerValidTypes {
             HitachiVIB221ButtonDotMatrix.class,
             HitachiVIB820Button.class,
             HitachiVIB668Button.class,
+            HitachiButtonPAFC.class,
             KoneKDS330Button1.class,
             KoneKDS330Button2.class,
             KoneKDS330Lantern1.class,
