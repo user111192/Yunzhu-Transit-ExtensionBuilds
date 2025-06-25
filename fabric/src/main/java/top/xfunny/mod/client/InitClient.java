@@ -120,6 +120,7 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1, RenderHitachiB85Button1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN, RenderHitachiB85Button1WithoutScreen::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_2, RenderHitachiB85Button2::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_BUTTON_PAFC, RenderHitachiButtonPAFC::new);
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TONIC_DS_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderTonicDSScreen1<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.TONIC_DS_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderTonicDSScreen1<>(dispatcher, false));

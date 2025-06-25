@@ -100,7 +100,7 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1WithoutScreen.BlockEntity> HITACHI_B85_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button2.BlockEntity> HITACHI_B85_BUTTON_2;
 
-    public static final BlockEntityTypeRegistryObject<HitachiButton_PAFC.BlockEntity> HITACHI_BUTTON_PAFC;
+    public static final BlockEntityTypeRegistryObject<HitachiButtonPAFC.BlockEntity> HITACHI_BUTTON_PAFC;
 
     public static final BlockEntityTypeRegistryObject<TonicDSScreen1Odd.BlockEntity> TONIC_DS_SCREEN_1_ODD;
     public static final BlockEntityTypeRegistryObject<TonicDSScreen1Even.BlockEntity> TONIC_DS_SCREEN_1_EVEN;
@@ -225,7 +225,7 @@ public class BlockEntityTypes {
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), HitachiB85Button1.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1::get);
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), HitachiB85Button1WithoutScreen.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN::get);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), HitachiB85Button2.BlockEntity::new, Blocks.HITACHI_B85_BUTTON_2::get);
-        HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), HitachiButton_PAFC.BlockEntity::new, Blocks.HITACHI_BUTTON_PAFC::get);
+        HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), HitachiButtonPAFC.BlockEntity::new, Blocks.HITACHI_BUTTON_PAFC::get);
 
         TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), TonicDSScreen1Odd.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_ODD::get);
         TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), TonicDSScreen1Even.BlockEntity::new, Blocks.TONIC_DS_SCREEN_1_EVEN::get);

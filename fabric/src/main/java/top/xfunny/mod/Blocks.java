@@ -247,7 +247,7 @@ public class Blocks {
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), () -> new Block(new HitachiB85Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_B85_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_1_without_screen"), () -> new Block(new HitachiB85Button1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_B85_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_2"), () -> new Block(new HitachiB85Button2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
-        HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), () -> new Block(new HitachiButton_PAFC()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        HITACHI_BUTTON_PAFC = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_button_pafc"), () -> new Block(new HitachiButtonPAFC()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         TONIC_DS_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_odd"), () -> new Block(new TonicDSScreen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         TONIC_DS_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "tonic_ds_screen_1_even"), () -> new Block(new TonicDSScreen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);

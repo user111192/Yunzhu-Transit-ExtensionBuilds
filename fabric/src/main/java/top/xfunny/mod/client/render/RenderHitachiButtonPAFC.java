@@ -14,8 +14,7 @@ import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.HitachiButton_PAFC;
-import top.xfunny.mod.block.HitachiVIB320ButtonDotMatrix;
+import top.xfunny.mod.block.HitachiButtonPAFC;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -28,7 +27,7 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButton_PAFC.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButtonPAFC.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFAAAAAA;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
@@ -42,7 +41,7 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButton_P
     }
 
     @Override
-    public void render(HitachiButton_PAFC.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(HitachiButtonPAFC.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -128,7 +127,7 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButton_P
         buttonUpLight.setDimension(1F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
-        //buttonUpLight.setDefaultColor(DEFAULT_COLOR);
+        buttonUpLight.setDefaultColor(DEFAULT_COLOR);
         buttonUpLight.setHoverColor(HOVER_COLOR);
         buttonUpLight.setPressedColor(PRESSED_COLOR);
 
@@ -164,7 +163,7 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButton_P
             line.RenderLine(holdingLinker, trackPosition);
 
 
-            HitachiButton_PAFC.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            HitachiButtonPAFC.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -222,7 +221,12 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButton_P
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFFFFFFF);
+                if (unlocked) {
+                    liftArrowView.setColor(0xFFFFFFFF);
+                } else {
+                    liftArrowView.setColor(0xFF000000);
+                }
+
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);

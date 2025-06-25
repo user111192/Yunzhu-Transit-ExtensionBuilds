@@ -13,8 +13,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HitachiButton_PAFC extends LiftButtonsBase {
-    public HitachiButton_PAFC() {
+public class HitachiButtonPAFC extends LiftButtonsBase {
+    public HitachiButtonPAFC() {
         super(true, true);
     }
 
@@ -36,7 +36,7 @@ public class HitachiButton_PAFC extends LiftButtonsBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new HitachiButton_PAFC.BlockEntity(blockPos, blockState);
+        return new HitachiButtonPAFC.BlockEntity(blockPos, blockState);
     }
 
     /**
@@ -57,10 +57,10 @@ public class HitachiButton_PAFC extends LiftButtonsBase {
         tooltip.add(TextHelper.translatable("tooltip.warning_block_testing").formatted(TextFormatting.RED));
     }
 
-/**
- * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension
- * 主要功能是通过CompoundTag来读取和写入特定位置集合
- */
+    /**
+     * 表示一个可追踪位置的方块实体，扩展自BlockEntityExtension
+     * 主要功能是通过CompoundTag来读取和写入特定位置集合
+     */
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
             super(BlockEntityTypes.HITACHI_BUTTON_PAFC.get(), pos, state);
