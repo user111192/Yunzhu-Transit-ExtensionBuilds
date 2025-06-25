@@ -147,14 +147,24 @@ public class RenderTonicDMScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                         4,
                         fontColor);
                 liftFloorDisplayView.setTextureId(textureId);
-                liftFloorDisplayView.setWidth(2.6F / 16);
+                liftFloorDisplayView.setWidth(1.12F / 16);
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
-                liftFloorDisplayView.setDisplayLength(2, 0.005F);
                 liftFloorDisplayView.setLetterSpacing(0);
-                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? -0.5F / 16 : 2.5f / 16, 0.5F / 16, 0, 0);
+                liftFloorDisplayView.setMargin(liftDirection != LiftDirection.NONE ? (float) 0.25 / 16 : (float) 3.195 / 16, (float) 0.5 / 16, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                if (liftFloorDisplayView.getTextLength() >= 3) {
+                    liftFloorDisplayView.setBasicsAttributes(world,
+                            blockPos,
+                            sortedPositionsAndLifts.get(i).right(),
+                            FontList.instance.getFont("tonic-led-thin"),
+                            4,
+                            fontColor);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                } else {
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
+                }
 
 
                 final LiftArrowView liftArrowView = new LiftArrowView();

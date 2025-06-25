@@ -51,6 +51,7 @@ public class FontList {
             loadFont("hitachi-lcd-seg", "font/hitachi-lcd-segmented.ttf");
             loadFont("schindler_m_series_segment", "font/schindler_m_series_segment.ttf");
             loadFont("tonic-led", "font/tonic-led.ttf");
+            loadFont("tonic-led-thin", "font/tonic-thin.ttf");
             loadFont("mitsubishi_old_segmented_1", "font/mitsubishi_old_segmented_1.ttf");
             fontsLoaded = true;
         }
