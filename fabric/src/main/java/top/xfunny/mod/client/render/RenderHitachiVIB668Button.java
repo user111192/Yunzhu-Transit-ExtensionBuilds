@@ -38,7 +38,7 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up_light.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
-
+    private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public RenderHitachiVIB668Button(Argument dispatcher) {
         super(dispatcher);
     }
@@ -61,6 +61,7 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        final boolean unlocked = IBlock.getStatePropertySafe(blockState, UNLOCKED);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
@@ -211,7 +212,12 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFDEF6FF);
+                if (unlocked) {
+                    liftArrowView.setColor(0xFFDEF6FF);
+                } else {
+                    liftArrowView.setColor(0xFF000000);
+                }
+
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);

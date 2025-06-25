@@ -39,7 +39,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
     private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_b.png");
     private final Identifier BUTTON_LIGHT_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");
     private final Identifier BUTTON_LIGHT_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_light.png");
-
+    private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public RenderKoneKDS330Button1(Argument dispatcher) {
         super(dispatcher);
     }
@@ -60,6 +60,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        final boolean unlocked = IBlock.getStatePropertySafe(blockState, UNLOCKED);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
@@ -211,7 +212,13 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFFFFFFF);
+                // If unlocked, display the arrow.
+                if (unlocked) {
+                    liftArrowView.setColor(0xFFFFFFFF);
+                } else {
+                    liftArrowView.setColor(0xFF000000);
+                }
+
 
                 //创建一个linear layout用于组合数字和箭头
                 final LinearLayout numberLayout = new LinearLayout(true);

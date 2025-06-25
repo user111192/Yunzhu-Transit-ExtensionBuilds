@@ -1,4 +1,4 @@
-package top.xfunny.mod.packet;
+package org.mtr.mod.packet;
 
 import org.mtr.mapping.holder.BlockEntity;
 import org.mtr.mapping.holder.BlockPos;
@@ -9,23 +9,22 @@ import org.mtr.mapping.tool.PacketBufferReceiver;
 import org.mtr.mapping.tool.PacketBufferSender;
 import org.mtr.mod.Init;
 import org.mtr.mod.block.BlockLiftTrackFloor;
-import top.xfunny.mod.block.EmptyFloor;
 
-public final class PacketUpdateLiftTrackFloorConfig extends PacketHandler {
+public final class PacketUpdateLiftEmptyFloorConfig extends PacketHandler {
 
     private final BlockPos blockPos;
     private final String floorNumber;
     private final String floorDescription;
     private final boolean shouldDing;
 
-    public PacketUpdateLiftTrackFloorConfig(PacketBufferReceiver packetBufferReceiver) {
+    public PacketUpdateLiftEmptyFloorConfig(PacketBufferReceiver packetBufferReceiver) {
         blockPos = BlockPos.fromLong(packetBufferReceiver.readLong());
         floorNumber = packetBufferReceiver.readString();
         floorDescription = packetBufferReceiver.readString();
         shouldDing = packetBufferReceiver.readBoolean();
     }
 
-    public PacketUpdateLiftTrackFloorConfig(BlockPos blockPos, String floorNumber, String floorDescription, boolean shouldDing) {
+    public PacketUpdateLiftEmptyFloorConfig(BlockPos blockPos, String floorNumber, String floorDescription, boolean shouldDing) {
         this.blockPos = blockPos;
         this.floorNumber = floorNumber;
         this.floorDescription = floorDescription;
@@ -50,8 +49,6 @@ public final class PacketUpdateLiftTrackFloorConfig extends PacketHandler {
         if (entity != null && entity.data instanceof BlockLiftTrackFloor.BlockEntity) {
             ((BlockLiftTrackFloor.BlockEntity) entity.data).setData(floorNumber, floorDescription, shouldDing);
             // TODO update lift floor
-        } else if (entity != null && entity.data instanceof EmptyFloor.BlockEntity) {
-            ((EmptyFloor.BlockEntity) entity.data).setData(floorNumber, floorDescription);
         }
     }
 }

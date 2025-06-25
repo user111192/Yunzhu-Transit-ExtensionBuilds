@@ -38,7 +38,7 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mwb_up_light.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mwb_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mwb_down_light.png");
-
+    private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
     public RenderHitachiVIB820Button(Argument dispatcher) {
         super(dispatcher);
     }
@@ -61,6 +61,7 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
+        final boolean unlocked = IBlock.getStatePropertySafe(blockState, UNLOCKED);
         LiftButtonsBase.LiftButtonDescriptor buttonDescriptor = new LiftButtonsBase.LiftButtonDescriptor(false, false);
 
         final StoredMatrixTransformations storedMatrixTransformations = new StoredMatrixTransformations(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
@@ -211,8 +212,11 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
-                liftArrowView.setColor(0xFFDEF6FF);
-
+                if (unlocked) {
+                    liftArrowView.setColor(0xFFDEF6FF);
+                } else {
+                    liftArrowView.setColor(0xFF000000);
+                }
 
                 final LinearLayout numberLayout = new LinearLayout(true);
                 numberLayout.setBasicsAttributes(world, blockPos);
