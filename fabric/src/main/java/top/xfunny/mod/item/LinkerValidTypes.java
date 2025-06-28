@@ -70,6 +70,8 @@ public class LinkerValidTypes {
             MitsubishiMPVFButton1.class,
             MitsubishiMPVFScreen1VerticalOdd.class,
             MitsubishiMPVFScreen1VerticalEven.class,
+            MitsubishiNexWayLantern1HorizontalOdd.class,
+            MitsubishiNexWayLantern1HorizontalEven.class,
             MitsubishiNexWayScreen1Even.class,
             MitsubishiNexWayScreen1Odd.class,
             MitsubishiNexWayScreen2Even.class,

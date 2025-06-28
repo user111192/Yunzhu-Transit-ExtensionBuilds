@@ -88,7 +88,7 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         buttonLayout.setBasicsAttributes(world, blockPos);
         buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
-        buttonLayout.setMargin(0, 1.2F / 16, 0, 0);
+        buttonLayout.setMargin(0, 0.4F / 16, 0, 0);
 
         final LinearLayout buttonContainer = new LinearLayout(true);
         buttonContainer.setBasicsAttributes(world, blockPos);
@@ -146,6 +146,8 @@ public class RenderThyssenkruppTEGL1Button1 extends BlockEntityRenderer<Thyssenk
         buttonDownLight.setDefaultColor(ARGB_WHITE);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
+        buttonDownLight.setFlip(false, true);
+
 
 
         final LineComponent line = new LineComponent();
