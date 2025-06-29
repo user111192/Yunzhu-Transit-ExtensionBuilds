@@ -17,22 +17,21 @@ import top.xfunny.mod.Init;
 import top.xfunny.mod.block.KoneKDS330Button2;
 import top.xfunny.mod.block.SchindlerMSeriesButton;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.view.Gravity;
-import top.xfunny.mod.client.view.LayoutSize;
-import top.xfunny.mod.client.view.LiftButtonView;
-import top.xfunny.mod.client.view.LineComponent;
+import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
 public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Button2.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private final int HOVER_COLOR = 0xFFFFFFFF;
-    private final int PRESSED_COLOR = 0xFFFFFFFF;
+    private static final int HOVER_COLOR = 0xFFCCCCCC;
+    private static final int PRESSED_COLOR = 0xFFFFFFFF;
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button.png");
-    private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_b.png");
+    private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button.png");//todo
     private final Identifier BUTTON_LIGHT_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");
-    private final Identifier BUTTON_LIGHT_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_down_button_light.png");
+    private final Identifier BUTTON_LIGHT_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");//todo
 
     public RenderKoneKDS330Button2(Argument dispatcher) {
         super(dispatcher);
@@ -50,6 +49,8 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
             return;
         }
 
+        final DefaultButtonsKeyMapping keyMapping = blockEntity.getKeyMapping();
+
         final BlockPos blockPos = blockEntity.getPos2();
         final BlockState blockState = world.getBlockState(blockPos);
         final Direction facing = IBlock.getStatePropertySafe(blockState, FACING);
@@ -64,40 +65,72 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
             graphicsHolder.translate(0, 0, 7.5F / 16 - SMALL_OFFSET);
         });
 
-        final FrameLayout parentLayout = new FrameLayout();
-        parentLayout.setBasicsAttributes(world, blockPos);
-        parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions((float) 6 / 16, (float) 8 / 16);
-        parentLayout.setPosition((float) -0.1875, 0.0265F);
-        parentLayout.setWidth(LayoutSize.MATCH_PARENT);
-        parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+        final FrameLayout buttonUpLayout = new FrameLayout();
+        buttonUpLayout.setBasicsAttributes(world, blockPos);
+        buttonUpLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        buttonUpLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
+        buttonUpLayout.setPosition(-2.25F/16, 5.275F/16);
+        buttonUpLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonUpLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        final LiftButtonView button = new LiftButtonView();
-        button.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        button.setLight(255);
-        button.setHover(false);
-        button.setDefaultColor(0xFFFFFFFF);
-        button.setPressedColor(0xFFFFFFFF);//按钮按下时颜色
-        button.setHoverColor(0xFFFFFFFF);//准星瞄准时的颜色
-        button.setTexture(BUTTON_TEXTURE_UP, BUTTON_TEXTURE_DOWN, true);//按钮贴图
-        button.setWidth(0.9F / 16);//按钮宽度
-        button.setHeight(0.9F / 16);//按钮高度
-        button.setSpacing(3.565F / 16);//两个按钮的间距
-        button.setGravity(Gravity.CENTER);//让按钮在父容器（buttonLayout）中居中
+        final FrameLayout buttonDownLayout = new FrameLayout();
+        buttonDownLayout.setBasicsAttributes(world, blockPos);
+        buttonDownLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
+        buttonDownLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
+        buttonDownLayout.setPosition(-2.25F/16, 0.725F/16);
+        buttonDownLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonDownLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        final LiftButtonView buttonLight = new LiftButtonView();
-        buttonLight.setBasicsAttributes(world, blockPos, buttonDescriptor, true, false, false, false);
-        buttonLight.setLight(light);
-        buttonLight.setHover(true);
-        buttonLight.setDefaultColor(0xFFFFFFFF);
-        buttonLight.setPressedColor(PRESSED_COLOR);
-        buttonLight.setHoverColor(HOVER_COLOR);
-        buttonLight.setTexture(BUTTON_LIGHT_TEXTURE_UP, BUTTON_LIGHT_TEXTURE_DOWN, false);
-        buttonLight.setWidth(0.9F / 16);
-        buttonLight.setHeight(0.9F / 16);
-        buttonLight.setClientMedian(0.3);
-        buttonLight.setSpacing(3.565F / 16);
-        buttonLight.setGravity(Gravity.CENTER);
+        final FrameLayout buttonUpGroup = new FrameLayout();
+        buttonUpGroup.setBasicsAttributes(world, blockPos);
+        buttonUpGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonUpGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonUpGroup.setGravity(Gravity.CENTER);
+
+        final FrameLayout buttonDownGroup = new FrameLayout();
+        buttonDownGroup.setBasicsAttributes(world, blockPos);
+        buttonDownGroup.setWidth(LayoutSize.WRAP_CONTENT);
+        buttonDownGroup.setHeight(LayoutSize.WRAP_CONTENT);
+        buttonDownGroup.setGravity(Gravity.CENTER);
+
+        ImageView buttonUp = new ImageView();
+        buttonUp.setBasicsAttributes(world, blockPos);
+        buttonUp.setTexture(BUTTON_TEXTURE_UP);
+        buttonUp.setDimension(0.9F / 16);
+        buttonUp.setGravity(Gravity.CENTER);
+        buttonUp.setLight(light);
+
+        ButtonView buttonUpLight = new ButtonView();
+        buttonUpLight.setId("up");
+        buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE_UP);
+        buttonUpLight.setDimension(0.9F / 16);
+        buttonUpLight.setGravity(Gravity.CENTER);
+        buttonUpLight.setLight(light);
+        buttonUpLight.setDefaultColor(DEFAULT_COLOR);
+        buttonUpLight.setHoverColor(HOVER_COLOR);
+        buttonUpLight.setPressedColor(PRESSED_COLOR);
+
+        ImageView buttonDown = new ImageView();
+        buttonDown.setBasicsAttributes(world, blockPos);
+        buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
+        buttonDown.setDimension(0.9F / 16);
+        buttonDown.setGravity(Gravity.CENTER);
+        buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
+
+        ButtonView buttonDownLight = new ButtonView();
+        buttonDownLight.setId("down");
+        buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
+        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE_DOWN);
+        buttonDownLight.setDimension(0.9F / 16);
+        buttonDownLight.setGravity(Gravity.CENTER);
+        buttonDownLight.setLight(light);
+        buttonDownLight.setDefaultColor(DEFAULT_COLOR);
+        buttonDownLight.setHoverColor(HOVER_COLOR);
+        buttonDownLight.setPressedColor(PRESSED_COLOR);
+        buttonDownLight.setFlip(false, true);
+
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockPos);
@@ -113,19 +146,31 @@ public class RenderKoneKDS330Button2 extends BlockEntityRenderer<KoneKDS330Butto
                 instructionDirections.forEach(liftDirection -> {
                     switch (liftDirection) {
                         case DOWN:
-                            buttonLight.setDownButtonLight();
+                            //向下的按钮亮灯
+                            buttonDownLight.activate();
                             break;
                         case UP:
-                            buttonLight.setUpButtonLight();
+                            //向上的按钮亮灯
+                            buttonUpLight.activate();
                             break;
                     }
                 });
             });
         });
 
-        parentLayout.addChild(button);
-        parentLayout.addChild(buttonLight);
+        if (buttonDescriptor.hasUpButton()) {
+            buttonUpGroup.addChild(buttonUp);
+            buttonUpGroup.addChild(buttonUpLight);
+            buttonUpLayout.addChild(buttonUpGroup);
+        }
 
-        parentLayout.render();
+        if (buttonDescriptor.hasDownButton()) {
+            buttonDownGroup.addChild(buttonDown);
+            buttonDownGroup.addChild(buttonDownLight);
+            buttonDownLayout.addChild(buttonDownGroup);
+        }
+
+        buttonDownLayout.render();
+        buttonUpLayout.render();
     }
 }

@@ -17,7 +17,6 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen1Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
-import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
@@ -131,7 +130,7 @@ public class RenderMitsubishiNexWayLantern1Horizontal<T extends LiftButtonsBase.
         lanternArrowDownRight.setLight(light);
         lanternArrowDownRight.setFlip(false,true);
 
-        final NewButtonView downLanternLeft = new NewButtonView();
+        final ButtonView downLanternLeft = new ButtonView();
         downLanternLeft.setBasicsAttributes(world, blockPos);
         downLanternLeft.setTexture(BUTTON_TEXTURE);
         downLanternLeft.setDimension(2.75F / 16);
@@ -140,7 +139,7 @@ public class RenderMitsubishiNexWayLantern1Horizontal<T extends LiftButtonsBase.
         downLanternLeft.setDefaultColor(DEFAULT_COLOR);
         downLanternLeft.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView downLanternRight = new NewButtonView();
+        final ButtonView downLanternRight = new ButtonView();
         downLanternRight.setBasicsAttributes(world, blockPos);
         downLanternRight.setTexture(BUTTON_TEXTURE);
         downLanternRight.setDimension(2.75F / 16);
@@ -149,7 +148,7 @@ public class RenderMitsubishiNexWayLantern1Horizontal<T extends LiftButtonsBase.
         downLanternRight.setDefaultColor(DEFAULT_COLOR);
         downLanternRight.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView upLanternLeft = new NewButtonView();
+        final ButtonView upLanternLeft = new ButtonView();
         upLanternLeft.setBasicsAttributes(world, blockPos);
         upLanternLeft.setTexture(BUTTON_TEXTURE);
         upLanternLeft.setDimension(2.75F / 16);
@@ -158,7 +157,7 @@ public class RenderMitsubishiNexWayLantern1Horizontal<T extends LiftButtonsBase.
         upLanternLeft.setDefaultColor(DEFAULT_COLOR);
         upLanternLeft.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView upLanternRight = new NewButtonView();
+        final ButtonView upLanternRight = new ButtonView();
         upLanternRight.setBasicsAttributes(world, blockPos);
         upLanternRight.setTexture(BUTTON_TEXTURE);
         upLanternRight.setDimension(2.75F / 16);
