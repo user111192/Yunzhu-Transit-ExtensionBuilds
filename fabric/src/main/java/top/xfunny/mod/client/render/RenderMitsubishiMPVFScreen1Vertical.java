@@ -16,7 +16,6 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiMPVFButton1;
-import top.xfunny.mod.block.SchindlerMSeriesScreen2Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -88,7 +87,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         screenLayout.setBackgroundColor(0x00000000);
         screenLayout.setMargin(0, 0, 1.5F/16, 0);
 
-        NewButtonView upLantern = new NewButtonView();
+        ButtonView upLantern = new ButtonView();
         upLantern.setBasicsAttributes(world, blockEntity.getPos2());
         upLantern.setTexture(BUTTON_TEXTURE);
         upLantern.setDimension(1.5F / 16);
@@ -98,7 +97,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         upLantern.setPressedColor(PRESSED_COLOR);
         upLantern.setMargin(0, 0, 0, 0);
 
-        NewButtonView downLantern  = new NewButtonView();
+        ButtonView downLantern  = new ButtonView();
         downLantern.setBasicsAttributes(world, blockEntity.getPos2());
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(1.5F / 16);

@@ -19,6 +19,7 @@ import top.xfunny.mod.ButtonRegistry;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.LiftFloorRegistry;
 import top.xfunny.mod.LiftLanternController;
+import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.GetLiftDetails;
 
 import javax.annotation.Nonnull;
@@ -105,6 +106,8 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         private static final String KEY_LIFT_BUTTON_POSITIONS = "lift_button_position";
         private static final String KEY_SCREEN_ID = "screen_id";
 
+        private DefaultButtonsKeyMapping keyMapping = new DefaultButtonsKeyMapping();
+
 
         public final ObjectOpenHashSet<BlockPos> liftButtonPositions = new ObjectOpenHashSet<>();
         private final LinkedHashSet<BlockPos> trackPositions = new LinkedHashSet<>();
@@ -117,6 +120,14 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
 
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);
+        }
+
+        public DefaultButtonsKeyMapping getKeyMapping() {
+            return keyMapping;
+        }
+
+        public void setKeyMapping(DefaultButtonsKeyMapping keyMapping) {
+            this.keyMapping = keyMapping;
         }
 
         @Override
