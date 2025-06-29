@@ -12,7 +12,7 @@ import top.xfunny.mod.block.base.OldBlockPSDAPGDoorBase;
 
 import javax.annotation.Nonnull;
 
-public class SchindlerQKS9Door1 extends OldBlockPSDAPGDoorBase {
+public class SchindlerQKS9Door1 extends BlockPSDAPGDoorBase {
 
     @Nonnull
     @Override

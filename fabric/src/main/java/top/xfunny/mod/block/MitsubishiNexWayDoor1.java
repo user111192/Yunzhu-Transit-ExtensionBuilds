@@ -12,7 +12,7 @@ import top.xfunny.mod.block.base.OldBlockPSDAPGDoorBase;
 
 import javax.annotation.Nonnull;
 
-public class MitsubishiNexWayDoor1 extends OldBlockPSDAPGDoorBase {
+public class MitsubishiNexWayDoor1 extends BlockPSDAPGDoorBase {
 
     @Nonnull
     @Override

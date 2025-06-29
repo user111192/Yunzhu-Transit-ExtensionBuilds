@@ -12,7 +12,7 @@ import top.xfunny.mod.block.base.OldBlockPSDAPGDoorBase;
 
 import javax.annotation.Nonnull;
 
-public class HitachiB85Door1 extends OldBlockPSDAPGDoorBase {
+public class HitachiB85Door1 extends BlockPSDAPGDoorBase {
 
     @Nonnull
     @Override
