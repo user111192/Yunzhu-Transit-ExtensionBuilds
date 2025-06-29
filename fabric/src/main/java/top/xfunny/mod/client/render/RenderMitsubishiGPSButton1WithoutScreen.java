@@ -14,8 +14,7 @@ import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.MitsubishiMPVFButton1;
-import top.xfunny.mod.block.MitsubishiNexWayButton2WithoutScreen;
+import top.xfunny.mod.block.MitsubishiGPSButton1WithoutScreen;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
@@ -24,19 +23,19 @@ import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 
-public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiMPVFButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiGPSButton1WithoutScreen extends BlockEntityRenderer<MitsubishiGPSButton1WithoutScreen.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_mpvf_button_1.png");
-    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_mpvf_button_1_light.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_gps_button_1.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_gps_button_1_light.png");
 
-    public RenderMitsubishiMPVFButton1(Argument dispatcher) {
+    public RenderMitsubishiGPSButton1WithoutScreen(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiMPVFButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(MitsubishiGPSButton1WithoutScreen.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -95,7 +94,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1.05F / 16);
+        buttonUp.setDimension(0.9F / 16,326,256);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -103,7 +102,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.05F / 16);
+        buttonUpLight.setDimension(0.9F / 16,326,256);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -113,7 +112,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE);
-        buttonDown.setDimension(1.05F / 16);
+        buttonDown.setDimension(0.9F / 16,326,256);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
 
@@ -121,7 +120,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.05F / 16);
+        buttonDownLight.setDimension(0.9F / 16,326,256);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -141,7 +140,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
 
             line.RenderLine(holdingLinker, trackPosition);
 
-            MitsubishiMPVFButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            MitsubishiGPSButton1WithoutScreen.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -169,7 +168,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
 
         if (buttonDescriptor.hasDownButton()) {
             if (buttonDescriptor.hasUpButton()) {
-                downButtonGroup.setMargin(0, 1F / 16, 0, 0);
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }

@@ -16,6 +16,7 @@ import org.mtr.mod.render.RenderLifts;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen1Even;
+import top.xfunny.mod.block.MitsubishiNexWayScreen1SegmentedEven;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -29,14 +30,14 @@ import java.util.Comparator;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
-public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiNexWayScreen1Segmented<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFFEE1A9;
     private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1.png");
     private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1_arrow.png");
     private final boolean isOdd;
 
-    public RenderMitsubishiNexWayScreen1(Argument dispatcher, Boolean isOdd) {
+    public RenderMitsubishiNexWayScreen1Segmented(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
         this.isOdd = isOdd;
     }
@@ -177,7 +178,7 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
 
-            MitsubishiNexWayScreen1Even.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            MitsubishiNexWayScreen1SegmentedEven.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
 
                 LiftDirection pressedButtonDirection = blockEntity.getPressedButtonDirection();
@@ -245,30 +246,17 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("mitsubishi_modern"),//字体
+                        FontList.instance.getFont("mitsubishi_seg_universal"),//字体
                         11,//字号
                         0xFFFA7A24);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_1");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_1_segmented");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
-                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
-                liftFloorDisplayView.setMargin(0.6F / 16, 0, 0.6F / 16, 0);
-                // Three-digits WIP
-//                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
-//                if (liftFloorDisplayView.getTextLength() >= 3) {
-//                    liftFloorDisplayView.setBasicsAttributes(world,
-//                            blockPos,
-//                            sortedPositionsAndLifts.get(i).right(),
-//                            FontList.instance.getFont("mitsubishi_small_sht"),
-//                            11,
-//                            0xFFFA7A24);
-//                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
-//                    liftFloorDisplayView.setMargin(0.7F / 16, 0, 0.5F / 16, 0);
-//                } else {
-//                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
-//                }
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setMargin(0.6F / 16, 0.1F / 16
+                        , 0.6F / 16, 0);
                 screenLayout.addChild(liftFloorDisplayView);
             }
         }

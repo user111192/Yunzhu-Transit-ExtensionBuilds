@@ -29,14 +29,14 @@ import java.util.Comparator;
 
 import static org.mtr.core.data.LiftDirection.NONE;
 
-public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
+public class RenderMitsubishiRyodenScreen1<T extends LiftButtonsBase.BlockEntityBase> extends BlockEntityRenderer<T> implements DirectionHelper, IGui, IBlock {
     private static final int PRESSED_COLOR = 0xFFFEE1A9;
     private static final int DEFAULT_COLOR = 0xFFFFFFFF;
     private static final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1.png");
     private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/mitsubishi_lantern_light_1_arrow.png");
     private final boolean isOdd;
 
-    public RenderMitsubishiNexWayScreen1(Argument dispatcher, Boolean isOdd) {
+    public RenderMitsubishiRyodenScreen1(Argument dispatcher, Boolean isOdd) {
         super(dispatcher);
         this.isOdd = isOdd;
     }
@@ -245,11 +245,11 @@ public class RenderMitsubishiNexWayScreen1<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("mitsubishi_modern"),//字体
+                        FontList.instance.getFont("ryoden-led"),//字体
                         11,//字号
                         0xFFFA7A24);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_1");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId("mitsubishi_ryoden_screen_1");//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);

@@ -13,30 +13,35 @@ import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
+import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
-import top.xfunny.mod.block.MitsubishiMPVFButton1;
-import top.xfunny.mod.block.MitsubishiNexWayButton2WithoutScreen;
+import top.xfunny.mod.block.MitsubishiGPSButton1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ReverseRendering;
 
-public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiMPVFButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+import java.util.Comparator;
+
+public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGPSButton1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
     private static final int PRESSED_COLOR = 0xFFFF8800;
-    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_mpvf_button_1.png");
-    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_mpvf_button_1_light.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_nexway_1_arrow.png");
+    private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_gps_button_1.png");
+    private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/mitsubishi_gps_button_1_light.png");
 
-    public RenderMitsubishiMPVFButton1(Argument dispatcher) {
+    public RenderMitsubishiGPSButton1(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(MitsubishiMPVFButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(MitsubishiGPSButton1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -63,13 +68,28 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         });
 
 
-        final FrameLayout parentLayout = new FrameLayout();
+        final LinearLayout parentLayout = new LinearLayout(true);
         parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions(2.35F / 16, 5.3F / 16);
-        parentLayout.setPosition(-1.175F /16,  1.35F/16);
+        parentLayout.setParentDimensions(4F / 16, 12F / 16);
+        parentLayout.setPosition(-0.125F, 0.0625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
+
+
+        final LinearLayout screenLayout = new LinearLayout(false);
+        screenLayout.setBasicsAttributes(world, blockPos);
+        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
+        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
+        screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+        screenLayout.setMargin(0, 0.7F / 16, 0, 0);
+
+
+        final FrameLayout buttonLayout = new FrameLayout();
+        buttonLayout.setBasicsAttributes(world, blockPos);
+        buttonLayout.setWidth(LayoutSize.MATCH_PARENT);
+        buttonLayout.setHeight(LayoutSize.MATCH_PARENT);
+        buttonLayout.setMargin(0, 1.4F / 16, 0, 0);
 
 
         final LinearLayout buttonContainer = new LinearLayout(true);
@@ -95,7 +115,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(1.05F / 16);
+        buttonUp.setDimension(0.9F / 16,326,256);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -103,7 +123,7 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(1.05F / 16);
+        buttonUpLight.setDimension(0.9F / 16,326,256);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -113,15 +133,16 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE);
-        buttonDown.setDimension(1.05F / 16);
+        buttonDown.setDimension(0.9F / 16,326,256);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
+        buttonDown.setFlip(false, true);
 
         NewButtonView buttonDownLight = new NewButtonView();
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(1.05F / 16);
+        buttonDownLight.setDimension(0.9F / 16,326,256);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -141,7 +162,8 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
 
             line.RenderLine(holdingLinker, trackPosition);
 
-            MitsubishiMPVFButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+
+            MitsubishiGPSButton1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -158,6 +180,70 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
         });
 
 
+        sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockPos.getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
+
+        if (!sortedPositionsAndLifts.isEmpty()) {
+
+            final int count = Math.min(2, sortedPositionsAndLifts.size());
+            final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
+
+
+            for (int i = 0; i < count; i++) {
+
+                final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
+                liftFloorDisplayView.setBasicsAttributes(world,
+                        blockPos,
+                        sortedPositionsAndLifts.get(i).right(),
+                        FontList.instance.getFont("mitsubishi_modern"),
+                        6,
+                        0xFFFA7A24);
+                //liftFloorDisplayView.setDisplayLength(2, 0.05F);
+                liftFloorDisplayView.setTextureId("mitsubishi_gps_button_1_display");
+                liftFloorDisplayView.setWidth(1.3F / 16);
+                liftFloorDisplayView.setHeight(1.7F / 16);
+                liftFloorDisplayView.setMargin(0.1F / 16, 0, 0, 0);
+                liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
+                liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+                if (liftFloorDisplayView.getTextLength() >= 3) {
+                    liftFloorDisplayView.setBasicsAttributes(world,
+                            blockPos,
+                            sortedPositionsAndLifts.get(i).right(),
+                            FontList.instance.getFont("mitsubishi_small_sht"),
+                            6,
+                            0xFFFA7A24);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                    liftFloorDisplayView.setMargin(0.25F / 16, 0, 0, 0);
+                } else {
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
+                }
+
+
+                final LiftArrowView liftArrowView = new LiftArrowView();
+                liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
+                liftArrowView.setTexture(ARROW_TEXTURE);
+                liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
+                liftArrowView.setDimension(0.7F / 16);
+                liftArrowView.setMargin(0, 1.07F / 16, 0, 0);
+                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setColor(0xFFFA7A24);
+
+
+                final LinearLayout numberLayout = new LinearLayout(true);
+                numberLayout.setBasicsAttributes(world, blockPos);
+                numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
+                numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
+                numberLayout.addChild(liftArrowView);
+                numberLayout.addChild(liftFloorDisplayView);
+
+                if (reverseRendering) {
+                    screenLayout.addChild(numberLayout);
+                    screenLayout.reverseChildren();
+                } else {
+                    screenLayout.addChild(numberLayout);
+                }
+            }
+        }
+
         upButtonGroup.addChild(buttonUp);
         upButtonGroup.addChild(buttonUpLight);
         downButtonGroup.addChild(buttonDown);
@@ -169,12 +255,14 @@ public class RenderMitsubishiMPVFButton1 extends BlockEntityRenderer<MitsubishiM
 
         if (buttonDescriptor.hasDownButton()) {
             if (buttonDescriptor.hasUpButton()) {
-                downButtonGroup.setMargin(0, 1F / 16, 0, 0);
+                downButtonGroup.setMargin(0, 0.5F / 16, 0, 0);
             }
             buttonContainer.addChild(downButtonGroup);
         }
 
-        parentLayout.addChild(buttonContainer);
+        buttonLayout.addChild(buttonContainer);
+        parentLayout.addChild(screenLayout);
+        parentLayout.addChild(buttonLayout);
 
         parentLayout.render();
     }

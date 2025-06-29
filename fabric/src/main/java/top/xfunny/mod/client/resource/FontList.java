@@ -53,6 +53,7 @@ public class FontList {
             loadFont("tonic-led", "font/tonic-led.ttf");
             loadFont("tonic-led-thin", "font/tonic-thin.ttf");
             loadFont("mitsubishi_old_segmented_1", "font/mitsubishi_old_segmented_1.ttf");
+            loadFont("ryoden-led", "font/ryoden-led.ttf");
             fontsLoaded = true;
         }
     }
