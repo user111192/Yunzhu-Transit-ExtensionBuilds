@@ -12,7 +12,7 @@ import top.xfunny.mod.block.base.OldBlockPSDAPGDoorBase;
 
 import javax.annotation.Nonnull;
 
-public class KoneMDoor1 extends OldBlockPSDAPGDoorBase {
+public class KoneMDoor1 extends BlockPSDAPGDoorBase {
 
     @Nonnull
     @Override
