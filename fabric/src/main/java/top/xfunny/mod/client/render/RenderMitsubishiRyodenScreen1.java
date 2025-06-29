@@ -130,7 +130,7 @@ public class RenderMitsubishiRyodenScreen1<T extends LiftButtonsBase.BlockEntity
         lanternArrowDownRight.setLight(light);
         lanternArrowDownRight.setFlip(false,true);
 
-        final NewButtonView downLanternLeft = new NewButtonView();
+        final ButtonView downLanternLeft = new ButtonView();
         downLanternLeft.setBasicsAttributes(world, blockPos);
         downLanternLeft.setTexture(BUTTON_TEXTURE);
         downLanternLeft.setDimension(2.75F / 16);
@@ -139,7 +139,7 @@ public class RenderMitsubishiRyodenScreen1<T extends LiftButtonsBase.BlockEntity
         downLanternLeft.setDefaultColor(DEFAULT_COLOR);
         downLanternLeft.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView downLanternRight = new NewButtonView();
+        final ButtonView downLanternRight = new ButtonView();
         downLanternRight.setBasicsAttributes(world, blockPos);
         downLanternRight.setTexture(BUTTON_TEXTURE);
         downLanternRight.setDimension(2.75F / 16);
@@ -148,7 +148,7 @@ public class RenderMitsubishiRyodenScreen1<T extends LiftButtonsBase.BlockEntity
         downLanternRight.setDefaultColor(DEFAULT_COLOR);
         downLanternRight.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView upLanternLeft = new NewButtonView();
+        final ButtonView upLanternLeft = new ButtonView();
         upLanternLeft.setBasicsAttributes(world, blockPos);
         upLanternLeft.setTexture(BUTTON_TEXTURE);
         upLanternLeft.setDimension(2.75F / 16);
@@ -157,7 +157,7 @@ public class RenderMitsubishiRyodenScreen1<T extends LiftButtonsBase.BlockEntity
         upLanternLeft.setDefaultColor(DEFAULT_COLOR);
         upLanternLeft.setPressedColor(PRESSED_COLOR);
 
-        final NewButtonView upLanternRight = new NewButtonView();
+        final ButtonView upLanternRight = new ButtonView();
         upLanternRight.setBasicsAttributes(world, blockPos);
         upLanternRight.setTexture(BUTTON_TEXTURE);
         upLanternRight.setDimension(2.75F / 16);
