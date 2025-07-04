@@ -126,10 +126,14 @@
   "message.floor_auto_setter_status_finished": "搞掂！set好咗%d個樓層號碼",
   "message.floor_auto_setter_status_failed": "操作失敗",
   "tooltip.hitachi_display_cip_71": "顯示器型號：CIP-71",
+  "tooltip.hitachi_display_bx_scl_c6": "顯示器型號：BX-SCL-C6",
   "tooltip.hitachi_display_hip_31": "顯示器型號：HIP-31",
+  "tooltip.hitachi_display_hip_32": "顯示器型號：HIP-32",
+  "tooltip.hitachi_display_hip_43": "顯示器型號：HIP-43",
+  "tooltip.hitachi_display_hip_43_a": "顯示器型號：HIP-43-A",
+  "tooltip.hitachi_display_scl_va_043": "顯示器型號：SCL-VA-043",
   "tooltip.hitachi_button_wl_mo": "按鈕型號：WL-MO",
   "tooltip.hitachi_button_wl_mwb": "按鈕型號：WL-MWB",
   "tooltip.hitachi_button_ml_mo": "按鈕型號：ML-MO",
-  "tooltip.hitachi_display_bx_scl_c6": "顯示器型號：BX-SCL-C6",
   "tooltip.warning_block_testing": "!!!警告：呢個方塊正喺測試中，我哋並唔建議你使用呢個方塊"
 }
