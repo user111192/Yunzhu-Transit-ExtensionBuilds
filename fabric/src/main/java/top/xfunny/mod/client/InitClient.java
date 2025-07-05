@@ -131,6 +131,7 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON, RenderHitachiIVIB221Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON_DOT_MATRIX, RenderHitachiIVIB221ButtonDotMatrix::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB820_BUTTON, RenderHitachiVIB820Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB820_BUTTON_LCD, RenderHitachiVIB820ButtonLCD::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB668_BUTTON, RenderHitachiVIB668Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1, RenderHitachiB85Button1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN, RenderHitachiB85Button1WithoutScreen::new);
