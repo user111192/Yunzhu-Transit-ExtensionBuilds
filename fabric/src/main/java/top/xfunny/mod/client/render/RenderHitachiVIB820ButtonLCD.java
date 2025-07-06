@@ -211,7 +211,7 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
                 liftArrowView.setDimension(0.875F / 16, 472, 436);
                 liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
-                liftArrowView.setAnimationScrolling(true, 0.0F);
+                liftArrowView.setAnimationScrolling(true, 0.05F);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 if (unlocked) {
                     liftArrowView.setColor(0xFF000000);

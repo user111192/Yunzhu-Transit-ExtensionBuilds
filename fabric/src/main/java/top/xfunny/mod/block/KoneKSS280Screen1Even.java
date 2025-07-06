@@ -20,9 +20,9 @@ public class KoneKSS280Screen1Even extends LiftPanelBase {
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch (IBlock.getStatePropertySafe(state, SIDE)) {
             case LEFT:
-                return IBlock.getVoxelShapeByDirection(10.5, 10, 0, 16, 13.25, 0.09, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(14.05, 11.125, 0, 16, 12.8225, 0.5, IBlock.getStatePropertySafe(state, FACING));
             case RIGHT:
-                return IBlock.getVoxelShapeByDirection(0, 9, 0, 5.5, 13.25, 0.09, IBlock.getStatePropertySafe(state, FACING));
+                return IBlock.getVoxelShapeByDirection(0, 11.125, 0, 1.95, 12.8225, 0.4, IBlock.getStatePropertySafe(state, FACING));
             default:
                 return VoxelShapes.empty();
         }

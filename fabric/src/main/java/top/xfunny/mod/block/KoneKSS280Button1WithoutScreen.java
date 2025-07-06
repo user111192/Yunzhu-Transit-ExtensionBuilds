@@ -19,7 +19,7 @@ public class KoneKSS280Button1WithoutScreen extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(6.45, 0.675, 0, 9.55, 8.375, 0.5, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(7.3, 1.775, 0, 8.7, 6.0725, 0.5, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

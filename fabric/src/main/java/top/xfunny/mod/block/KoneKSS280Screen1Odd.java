@@ -18,7 +18,7 @@ public class KoneKSS280Screen1Odd extends LiftPanelBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(2.5, 10, 0, 13.5, 13.25, 0.09, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(6.05, 11.125, 0, 9.95, 12.8225, 0.5, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull
