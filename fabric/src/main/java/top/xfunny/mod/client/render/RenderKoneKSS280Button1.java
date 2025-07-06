@@ -16,7 +16,7 @@ import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
-import top.xfunny.mod.block.KoneKDS330Button1;
+import top.xfunny.mod.block.KoneKSS280Button1;
 import top.xfunny.mod.block.base.LiftButtonsBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -29,23 +29,20 @@ import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
 
-public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
+public class RenderKoneKSS280Button1 extends BlockEntityRenderer<KoneKSS280Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFCCCCCC;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
-    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
+    private static final int DEFAULT_COLOR = 0xFF000000;
     private static final Identifier ARROW_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/kone_arrow_light.png");
-    private final Identifier BUTTON_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button.png");
-    private final Identifier BUTTON_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button.png");//todo
-    private final Identifier BUTTON_LIGHT_TEXTURE_UP = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");
-    private final Identifier BUTTON_LIGHT_TEXTURE_DOWN = new Identifier(Init.MOD_ID, "textures/block/kone_kds330_up_button_light.png");//todo
+    private final Identifier BUTTON_TEXTURE = new Identifier(Init.MOD_ID, "textures/block/kone_kss280_button_1.png");//todo
     private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
-    public RenderKoneKDS330Button1(Argument dispatcher) {
+    public RenderKoneKSS280Button1(Argument dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(KoneKDS330Button1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
+    public void render(KoneKSS280Button1.BlockEntity blockEntity, float tickDelta, GraphicsHolder graphicsHolder1, int light, int overlay) {
         final World world = blockEntity.getWorld2();
         if (world == null) {
             return;
@@ -75,24 +72,24 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         final FrameLayout screenContainer = new FrameLayout();
         screenContainer.setBasicsAttributes(world, blockPos);
         screenContainer.setStoredMatrixTransformations(storedMatrixTransformations1);
-        screenContainer.setParentDimensions(4.5F / 16, 3F / 16);
-        screenContainer.setPosition(-2.25F/16, 3.775F/16);
+        screenContainer.setParentDimensions(2.5F / 16, 3F / 16);
+        screenContainer.setPosition(-1.25F/16, 3.375F/16);
         screenContainer.setWidth(LayoutSize.MATCH_PARENT);
         screenContainer.setHeight(LayoutSize.MATCH_PARENT);
 
         final FrameLayout buttonUpLayout = new FrameLayout();
         buttonUpLayout.setBasicsAttributes(world, blockPos);
         buttonUpLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        buttonUpLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
-        buttonUpLayout.setPosition(-2.25F/16, 6.775F/16);
+        buttonUpLayout.setParentDimensions(2.5F / 16, 3.05F / 16);
+        buttonUpLayout.setPosition(-1.25F/16, 6.575F/16);
         buttonUpLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonUpLayout.setHeight(LayoutSize.MATCH_PARENT);
 
         final FrameLayout buttonDownLayout = new FrameLayout();
         buttonDownLayout.setBasicsAttributes(world, blockPos);
         buttonDownLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        buttonDownLayout.setParentDimensions(4.5F / 16, 3.05F / 16);
-        buttonDownLayout.setPosition(-2.25F/16, 0.725F/16);
+        buttonDownLayout.setParentDimensions(2.5F / 16, 3.05F / 16);
+        buttonDownLayout.setPosition(-1.25F/16, 0.925F/16);
         buttonDownLayout.setWidth(LayoutSize.MATCH_PARENT);
         buttonDownLayout.setHeight(LayoutSize.MATCH_PARENT);
 
@@ -101,7 +98,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER);
-        screenLayout.setMargin(0, 0, 0, 0);
+        screenLayout.setMargin(0.2F/16, 0, 0, 0);
 
         final FrameLayout buttonUpGroup = new FrameLayout();
         buttonUpGroup.setBasicsAttributes(world, blockPos);
@@ -115,37 +112,22 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         buttonDownGroup.setHeight(LayoutSize.WRAP_CONTENT);
         buttonDownGroup.setGravity(Gravity.CENTER);
 
-        ImageView buttonUp = new ImageView();
-        buttonUp.setBasicsAttributes(world, blockPos);
-        buttonUp.setTexture(BUTTON_TEXTURE_UP);
-        buttonUp.setDimension(0.9F / 16);
-        buttonUp.setGravity(Gravity.CENTER);
-        buttonUp.setLight(light);
-
         ButtonView buttonUpLight = new ButtonView();
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
-        buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE_UP);
-        buttonUpLight.setDimension(0.9F / 16);
+        buttonUpLight.setTexture(BUTTON_TEXTURE);
+        buttonUpLight.setDimension(0.7F / 16,569,395);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(DEFAULT_COLOR);
         buttonUpLight.setHoverColor(HOVER_COLOR);
         buttonUpLight.setPressedColor(PRESSED_COLOR);
 
-        ImageView buttonDown = new ImageView();
-        buttonDown.setBasicsAttributes(world, blockPos);
-        buttonDown.setTexture(BUTTON_TEXTURE_DOWN);
-        buttonDown.setDimension(0.9F / 16);
-        buttonDown.setGravity(Gravity.CENTER);
-        buttonDown.setLight(light);
-        buttonDown.setFlip(false, true);
-
         ButtonView buttonDownLight = new ButtonView();
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
-        buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE_DOWN);
-        buttonDownLight.setDimension(0.9F / 16);
+        buttonDownLight.setTexture(BUTTON_TEXTURE);
+        buttonDownLight.setDimension(0.7F / 16,569,395);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(DEFAULT_COLOR);
@@ -166,7 +148,7 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
             line.RenderLine(holdingLinker, trackPosition);
 
             //判断是否渲染上下按钮
-            KoneKDS330Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
+            KoneKSS280Button1.hasButtonsClient(trackPosition, buttonDescriptor, (floorIndex, lift) -> {
                 sortedPositionsAndLifts.add(new ObjectObjectImmutablePair<>(trackPosition, lift));
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
                 instructionDirections.forEach(liftDirection -> {
@@ -198,21 +180,21 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("kone-lcd-segment"),//字体
-                        6,//字号
+                        3,//字号
                         0xFFFFFFFF);//字体颜色
-                liftFloorDisplayView.setTextureId("kone-kds-330-lcd-segment");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setWidth(1.6F / 16);//显示屏宽度
+                liftFloorDisplayView.setTextureId("kone-kss-280-lcd-segment");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setWidth(1.3F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(1.7F / 16);//显示屏高度
-                liftFloorDisplayView.setLetterSpacing(-20);
-                liftFloorDisplayView.setMargin(0, 0, 0, 0);
+                liftFloorDisplayView.setLetterSpacing(-10);
+                liftFloorDisplayView.setMargin(-0.5F/16, -0.6F/16, 0.1F/16, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
 
                 //添加箭头
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.8F / 16);
-                liftArrowView.setMargin(0, 0, 0, 0);
+                liftArrowView.setDimension(0.6F / 16);
+                liftArrowView.setMargin(0, -1F/16, 0, 0.5F/16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 // If unlocked, display the arrow.
@@ -243,13 +225,11 @@ public class RenderKoneKDS330Button1 extends BlockEntityRenderer<KoneKDS330Butto
         screenContainer.addChild(screenLayout);
 
         if (buttonDescriptor.hasUpButton()) {
-            buttonUpGroup.addChild(buttonUp);
             buttonUpGroup.addChild(buttonUpLight);
             buttonUpLayout.addChild(buttonUpGroup);
         }
 
         if (buttonDescriptor.hasDownButton()) {
-            buttonDownGroup.addChild(buttonDown);
             buttonDownGroup.addChild(buttonDownLight);
             buttonDownLayout.addChild(buttonDownGroup);
         }

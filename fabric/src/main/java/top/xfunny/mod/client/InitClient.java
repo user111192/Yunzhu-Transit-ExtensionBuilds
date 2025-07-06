@@ -38,8 +38,12 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.DEWHURST_US91_BUTTON_1_BRAILLE, RenderDewhurstUS91Button1Braille::new);
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KDS330_BUTTON_1, RenderKoneKDS330Button1::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KDS330_BUTTON_2, RenderKoneKDS330Button2::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KDS330_BUTTON_1_WITHOUT_SCREEN, RenderKoneKDS330Button1WithoutScreen::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KDS330_LANTERN_1, RenderKoneKDS330Lantern1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KSS280_BUTTON_1, RenderKoneKSS280Button1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KSS280_BUTTON_1_WITHOUT_SCREEN, RenderKoneKSS280Button1WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KSS280_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderKoneKSS280Screen1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_KSS280_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderKoneKSS280Screen1<>(dispatcher, false));
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_M_BUTTON_1, RenderKoneMButton1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.KONE_M_BUTTON_2, RenderKoneMButton2::new);

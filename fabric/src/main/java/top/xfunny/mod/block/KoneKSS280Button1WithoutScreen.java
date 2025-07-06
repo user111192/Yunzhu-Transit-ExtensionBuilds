@@ -10,8 +10,8 @@ import top.xfunny.mod.block.base.LiftButtonsBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class KoneKDS330Button2 extends LiftButtonsBase {
-    public KoneKDS330Button2() {
+public class KoneKSS280Button1WithoutScreen extends LiftButtonsBase {
+    public KoneKSS280Button1WithoutScreen() {
         super(true, true, 0.3);
     }
 
@@ -25,7 +25,7 @@ public class KoneKDS330Button2 extends LiftButtonsBase {
     @Nonnull
     @Override
     public BlockEntityExtension createBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new KoneKDS330Button2.BlockEntity(blockPos, blockState);
+        return new KoneKSS280Button1WithoutScreen.BlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class KoneKDS330Button2 extends LiftButtonsBase {
 
     public static class BlockEntity extends BlockEntityBase {
         public BlockEntity(BlockPos pos, BlockState state) {
-            super(BlockEntityTypes.KONE_KDS330_BUTTON_2.get(), pos, state);
+            super(BlockEntityTypes.KONE_KSS280_BUTTON_1_WITHOUT_SCREEN.get(), pos, state);
         }
     }
 }
