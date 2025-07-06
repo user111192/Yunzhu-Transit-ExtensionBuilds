@@ -117,6 +117,8 @@ public class BlockEntityTypes {
     public static final BlockEntityTypeRegistryObject<SchindlerSSeriesGreyButton.BlockEntity> SCHINDLER_S_SERIES_GREY_BUTTON;
     public static final BlockEntityTypeRegistryObject<SchindlerLineaButton1White.BlockEntity> SCHINDLER_LINEA_BUTTON_1_WHITE;
     public static final BlockEntityTypeRegistryObject<SchindlerLineaButton1Black.BlockEntity> SCHINDLER_LINEA_BUTTON_1_BLACK;
+    public static final BlockEntityTypeRegistryObject<SchindlerLineaButton2White.BlockEntity> SCHINDLER_LINEA_BUTTON_2_WHITE;
+    public static final BlockEntityTypeRegistryObject<SchindlerLineaButton2Black.BlockEntity> SCHINDLER_LINEA_BUTTON_2_BLACK;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1.BlockEntity> HITACHI_B85_BUTTON_1;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button1WithoutScreen.BlockEntity> HITACHI_B85_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockEntityTypeRegistryObject<HitachiB85Button2.BlockEntity> HITACHI_B85_BUTTON_2;
@@ -250,6 +252,8 @@ public class BlockEntityTypes {
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), SchindlerSSeriesGreyButton.BlockEntity::new, Blocks.SCHINDLER_S_SERIES_GREY_BUTTON::get);
         SCHINDLER_LINEA_BUTTON_1_WHITE = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_linea_button_1_white"), SchindlerLineaButton1White.BlockEntity::new, Blocks.SCHINDLER_LINEA_BUTTON_1_WHITE::get);
         SCHINDLER_LINEA_BUTTON_1_BLACK = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_linea_button_1_black"), SchindlerLineaButton1Black.BlockEntity::new, Blocks.SCHINDLER_LINEA_BUTTON_1_BLACK::get);
+        SCHINDLER_LINEA_BUTTON_2_WHITE = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_linea_button_2_white"), SchindlerLineaButton2White.BlockEntity::new, Blocks.SCHINDLER_LINEA_BUTTON_2_WHITE::get);
+        SCHINDLER_LINEA_BUTTON_2_BLACK = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_linea_button_2_black"), SchindlerLineaButton2Black.BlockEntity::new, Blocks.SCHINDLER_LINEA_BUTTON_2_BLACK::get);
         SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), SchindlerZLine3Keypad1.BlockEntity::new, Blocks.SCHINDLER_Z_LINE_3_KEYPAD_1::get);
 
         THYSSENKRUPP_TEGL1_BUTTON_1 = Init.REGISTRY.registerBlockEntityType(new Identifier(Init.MOD_ID, "thyssenkrupp_te_gl1_button_1"), ThyssenkruppTEGL1Button1.BlockEntity::new, Blocks.THYSSENKRUPP_TEGL1_BUTTON_1::get);
