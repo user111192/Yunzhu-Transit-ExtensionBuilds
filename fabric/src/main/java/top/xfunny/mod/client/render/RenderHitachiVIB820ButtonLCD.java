@@ -11,6 +11,7 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
@@ -24,6 +25,7 @@ import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -68,7 +70,7 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
         StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
         storedMatrixTransformations1.add(graphicsHolder -> {
             graphicsHolder.rotateYDegrees(-facing.asRotation());
-            graphicsHolder.translate(0, 0, 7.55F / 16 - SMALL_OFFSET);
+            graphicsHolder.translate(0, 0, 7.55F / 16 - SMALL_OFFSET / 2);
         });
 
 
@@ -189,19 +191,20 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
             final boolean reverseRendering = count > 1 && ReverseRendering.reverseRendering(facing.rotateYCounterclockwise(), sortedPositionsAndLifts.get(0).left(), sortedPositionsAndLifts.get(1).left());
 
             for (int i = 0; i < count; i++) {
+                Lift lift = sortedPositionsAndLifts.get(i).right();
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                final LiftDirection liftDirection = liftDetails.left();
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
-                        sortedPositionsAndLifts.get(i).right(),
+                        lift,
                         FontList.instance.getFont("hitachi-japan-lcd"),
                         7.5F,
                         0xFF000000);
                 liftFloorDisplayView.setTextureId("hitachi-vib-820-lcd");
-                liftFloorDisplayView.setWidth(1.6F / 16);
-                liftFloorDisplayView.setHeight(1.7F / 16);
-
-                liftFloorDisplayView.setMargin(0, 0, 0, 0);
+                liftFloorDisplayView.setWidth(1.3F / 16);
+                liftFloorDisplayView.setHeight(1.5F / 16);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
@@ -209,7 +212,6 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setDimension(0.875F / 16, 472, 436);
-                liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setAnimationScrolling(true, 0.0F);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
@@ -223,8 +225,17 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
                 numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                numberLayout.addChild(liftArrowView);
-                numberLayout.addChild(liftFloorDisplayView);
+                numberLayout.setMargin(0, 1.37F / 16, 0, 0);
+                numberLayout.setBackgroundColor(0xFFFFFFFF);
+
+                if(liftDirection.equals(LiftDirection.DOWN)){
+                    numberLayout.addChild(liftFloorDisplayView);
+                    numberLayout.addChild(liftArrowView);
+                }else{
+                    numberLayout.addChild(liftArrowView);
+                    numberLayout.addChild(liftFloorDisplayView);
+
+                }
 
                 if (reverseRendering) {
                     screenLayout.addChild(numberLayout);
