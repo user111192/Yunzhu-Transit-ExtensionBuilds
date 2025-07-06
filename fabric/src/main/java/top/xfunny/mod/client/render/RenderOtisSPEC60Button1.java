@@ -31,7 +31,7 @@ import java.util.Comparator;
 public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
     private static final int HOVER_COLOR = 0xFFFFCC66;
-    private static final int PRESSED_COLOR = 0xFFFF8800;
+    private static final int PRESSED_COLOR = 0xFFFF0000;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_spec_60_arrow_1.png");
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_ak10_button_1.png");
     private static final Identifier BUTTON_LIGHT_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_ak10_button_1_light.png");

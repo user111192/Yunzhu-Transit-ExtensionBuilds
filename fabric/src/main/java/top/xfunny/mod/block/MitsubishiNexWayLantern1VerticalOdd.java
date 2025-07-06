@@ -18,7 +18,7 @@ public class MitsubishiNexWayLantern1VerticalOdd extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(5.75, 7, 0, 9.25, 15.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(5.75, 7, 0, 10.25, 15.5, 0.1, IBlock.getStatePropertySafe(state, FACING));
 
     }
 

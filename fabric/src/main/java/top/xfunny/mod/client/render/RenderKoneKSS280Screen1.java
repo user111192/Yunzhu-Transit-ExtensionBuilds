@@ -94,7 +94,6 @@ public class RenderKoneKSS280Screen1<T extends LiftPanelBase.BlockEntityBase> ex
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
-                liftFloorDisplayView.setLetterSpacing(-12);
                 liftFloorDisplayView.setDisplayLength(2, 0);
                 liftFloorDisplayView.setMargin(0.075F / 16, 0, 0, 0);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
