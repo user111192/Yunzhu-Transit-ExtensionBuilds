@@ -225,7 +225,7 @@ public class RenderHitachiVIB820ButtonLCD extends BlockEntityRenderer<HitachiVIB
                 numberLayout.setBasicsAttributes(world, blockPos);
                 numberLayout.setWidth(LayoutSize.WRAP_CONTENT);
                 numberLayout.setHeight(LayoutSize.WRAP_CONTENT);
-                numberLayout.setMargin(0, 1.37F / 16, 0, 0);
+                numberLayout.setMargin(i == 1? 0.35F/16 : 0, 1.37F / 16, 0, 0);
                 numberLayout.setBackgroundColor(0xFFFFFFFF);
 
                 if(liftDirection.equals(LiftDirection.DOWN)){
