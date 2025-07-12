@@ -197,7 +197,7 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
                         FontList.instance.getFont("hitachi-lcd-seg"),
                         7.5F,
                         0xFFDEF6FF);
-                liftFloorDisplayView.setTextureId("hitachi-vib-320-segmented");
+                liftFloorDisplayView.setTextureId("hitachi-vib-820");
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
 

@@ -27,8 +27,12 @@ public class Blocks {
     public static final BlockRegistryObject DEWHURST_US91_BUTTON_1_BRAILLE;
 
     public static final BlockRegistryObject KONE_KDS330_BUTTON_1;
-    public static final BlockRegistryObject KONE_KDS330_BUTTON_2;
+    public static final BlockRegistryObject KONE_KDS330_BUTTON_1_WITHOUT_SCREEN;
     public static final BlockRegistryObject KONE_KDS330_LANTERN_1;
+    public static final BlockRegistryObject KONE_KSS280_BUTTON_1;
+    public static final BlockRegistryObject KONE_KSS280_BUTTON_1_WITHOUT_SCREEN;
+    public static final BlockRegistryObject KONE_KSS280_SCREEN_1_ODD;
+    public static final BlockRegistryObject KONE_KSS280_SCREEN_1_EVEN;
 
     public static final BlockRegistryObject KONE_M_BUTTON_1;
     public static final BlockRegistryObject KONE_M_BUTTON_2;
@@ -108,6 +112,8 @@ public class Blocks {
     public static final BlockRegistryObject SCHINDLER_M_SERIES_SCREEN_4_EVEN;
     public static final BlockRegistryObject SCHINDLER_LINEA_BUTTON_1_WHITE;
     public static final BlockRegistryObject SCHINDLER_LINEA_BUTTON_1_BLACK;
+    public static final BlockRegistryObject SCHINDLER_LINEA_BUTTON_2_WHITE;
+    public static final BlockRegistryObject SCHINDLER_LINEA_BUTTON_2_BLACK;
     public static final BlockRegistryObject SCHINDLER_Z_LINE_3_KEYPAD_1;
 
     public static final BlockRegistryObject THYSSENKRUPP_TEGL1_BUTTON_1;
@@ -125,6 +131,7 @@ public class Blocks {
     public static final BlockRegistryObject HITACHI_VIB221_BUTTON;
     public static final BlockRegistryObject HITACHI_VIB221_BUTTON_DOT_MATRIX;
     public static final BlockRegistryObject HITACHI_VIB820_BUTTON;
+    public static final BlockRegistryObject HITACHI_VIB820_BUTTON_LCD;
     public static final BlockRegistryObject HITACHI_VIB668_BUTTON;
 
     public static final BlockRegistryObject TONIC_DS_SCREEN_1_ODD;
@@ -174,9 +181,13 @@ public class Blocks {
         DEWHURST_US91_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "dewhurst_us91_button_1"), () -> new Block(new DewhurstUS91Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         DEWHURST_US91_BUTTON_1_BRAILLE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "dewhurst_us91_button_1_braille"), () -> new Block(new DewhurstUS91Button1Braille()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
-        KONE_KDS330_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_lcd_surface_button_1"), () -> new Block(new KoneKDS330Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
-        KONE_KDS330_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_nonlcd_surface_button_1"), () -> new Block(new KoneKDS330Button2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
-        KONE_KDS330_LANTERN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_lantern_surface_1"), () -> new Block(new KoneKDS330Lantern1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KDS330_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_surface_button_1"), () -> new Block(new KoneKDS330Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KDS330_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_surface_button_1_without_screen"), () -> new Block(new KoneKDS330Button1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KDS330_LANTERN_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kds330_surface_lantern_1"), () -> new Block(new KoneKDS330Lantern1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KSS280_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kss280_surface_button_1"), () -> new Block(new KoneKSS280Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KSS280_BUTTON_1_WITHOUT_SCREEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kss280_surface_button_1_without_screen"), () -> new Block(new KoneKSS280Button1WithoutScreen()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KSS280_SCREEN_1_ODD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kss280_surface_screen_1_odd"), () -> new Block(new KoneKSS280Screen1Odd()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        KONE_KSS280_SCREEN_1_EVEN = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_kss280_surface_screen_1_even"), () -> new Block(new KoneKSS280Screen1Even()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         KONE_M_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_button_1"), () -> new Block(new KoneMButton1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         KONE_M_BUTTON_2 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "kone_m_button_2"), () -> new Block(new KoneMButton2()), CreativeModeTabs.YTE_LIFT_FIXTURES);
@@ -263,6 +274,8 @@ public class Blocks {
         SCHINDLER_S_SERIES_GREY_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_s_series_grey_button"), () -> new Block(new SchindlerSSeriesGreyButton()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_LINEA_BUTTON_1_WHITE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_linea_button_1_white"), () -> new Block(new SchindlerLineaButton1White()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_LINEA_BUTTON_1_BLACK = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_linea_button_1_black"), () -> new Block(new SchindlerLineaButton1Black()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_LINEA_BUTTON_2_WHITE = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_linea_button_2_white"), () -> new Block(new SchindlerLineaButton2White()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        SCHINDLER_LINEA_BUTTON_2_BLACK = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_linea_button_2_black"), () -> new Block(new SchindlerLineaButton2Black()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         SCHINDLER_Z_LINE_3_KEYPAD_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "schindler_z_line_3_keypad_1"), () -> new Block(new SchindlerZLine3Keypad1()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         HITACHI_VIB320_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib320_button_1"), () -> new Block(new HitachiVIB320Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
@@ -272,6 +285,7 @@ public class Blocks {
         HITACHI_VIB221_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1"), () -> new Block(new HitachiVIB221Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_VIB221_BUTTON_DOT_MATRIX = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib221_button_1_dot_matrix"), () -> new Block(new HitachiVIB221ButtonDotMatrix()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_VIB820_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib820_button_1"), () -> new Block(new HitachiVIB820Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
+        HITACHI_VIB820_BUTTON_LCD = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib820_button_1_lcd"), () -> new Block(new HitachiVIB820ButtonLCD()), CreativeModeTabs.YTE_LIFT_FIXTURES);
         HITACHI_VIB668_BUTTON = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_vib668_button_1"), () -> new Block(new HitachiVIB668Button()), CreativeModeTabs.YTE_LIFT_FIXTURES);
 
         HITACHI_B85_BUTTON_1 = Init.REGISTRY.registerBlockWithBlockItem(new Identifier(Init.MOD_ID, "hitachi_b85_button_1"), () -> new Block(new HitachiB85Button1()), CreativeModeTabs.YTE_LIFT_FIXTURES);

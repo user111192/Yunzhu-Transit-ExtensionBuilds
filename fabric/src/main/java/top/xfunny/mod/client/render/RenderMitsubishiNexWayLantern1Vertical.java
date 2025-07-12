@@ -79,19 +79,12 @@ public class RenderMitsubishiNexWayLantern1Vertical<T extends LiftButtonsBase.Bl
         linearLayout.setWidth(LayoutSize.WRAP_CONTENT);
         linearLayout.setGravity(Gravity.CENTER);
 
-        final FrameLayout screenLayout = new FrameLayout();
-        screenLayout.setBasicsAttributes(world, blockPos);
-        screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
-        screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
-        screenLayout.setGravity(Gravity.CENTER_VERTICAL);
-        screenLayout.setMargin(0, 0, 0, 0);
-
         final FrameLayout lanternGroupLeft = new FrameLayout();
         lanternGroupLeft.setBasicsAttributes(world, blockPos);
         lanternGroupLeft.setWidth(LayoutSize.WRAP_CONTENT);
         lanternGroupLeft.setHeight(LayoutSize.WRAP_CONTENT);
         lanternGroupLeft.setGravity(Gravity.CENTER_VERTICAL);
-        lanternGroupLeft.setMargin(0, 0.5F/16, 0, 0);
+
 
         final FrameLayout lanternGroupRight = new FrameLayout();
         lanternGroupRight.setBasicsAttributes(world, blockPos);
@@ -120,7 +113,6 @@ public class RenderMitsubishiNexWayLantern1Vertical<T extends LiftButtonsBase.Bl
         lanternArrowDownLeft.setGravity(Gravity.CENTER);
         lanternArrowDownLeft.setLight(light);
         lanternArrowDownLeft.setFlip(false,true);
-        lanternGroupLeft.setMargin(0, 0, 0, 0);
 
         final ImageView lanternArrowDownRight = new ImageView();
         lanternArrowDownRight.setBasicsAttributes(world, blockPos);
@@ -241,26 +233,21 @@ public class RenderMitsubishiNexWayLantern1Vertical<T extends LiftButtonsBase.Bl
         });
 
         if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
+            lanternGroupLeft.setMargin(0, 0.5F/16, 0, 0);
             lanternGroupRight.addChild(upLanternRight);
             lanternGroupRight.addChild(lanternArrowUpRight);
             lanternGroupLeft.addChild(downLanternLeft);
             lanternGroupLeft.addChild(lanternArrowDownLeft);
-            linearLayout.addChild(lanternGroupLeft);
-            linearLayout.addChild(screenLayout);
             linearLayout.addChild(lanternGroupRight);
+            linearLayout.addChild(lanternGroupLeft);
 
         } else if (buttonDescriptor.hasDownButton()) {
             lanternGroupLeft.addChild(downLanternLeft);
             lanternGroupLeft.addChild(lanternArrowDownLeft);
             linearLayout.addChild(lanternGroupLeft);
-            linearLayout.addChild(screenLayout);
-            linearLayout.addChild(lanternGroupRight);
-
         } else if (buttonDescriptor.hasUpButton()) {
             lanternGroupRight.addChild(upLanternRight);
             lanternGroupRight.addChild(lanternArrowUpRight);
-            linearLayout.addChild(lanternGroupLeft);
-            linearLayout.addChild(screenLayout);
             linearLayout.addChild(lanternGroupRight);
         }
 

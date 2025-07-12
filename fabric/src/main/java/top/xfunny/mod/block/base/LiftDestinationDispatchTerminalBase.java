@@ -114,7 +114,6 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         public LiftDirection liftDirection = NONE;
         public BlockPos selfPos;
         private String screenId;
-        private LiftDirection pressedButtonDirection;
 
         private char liftIdentifier;
 
@@ -286,12 +285,14 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                         if (liftDirection == NONE) {
                             trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
                         } else if (liftDirection == confirmLiftDirection) {
-                            if (confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber < currentFloorNumber) {
+                            if (confirmLiftDirection == LiftDirection.UP && currentLiftFloorNumber <= currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
-                            } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber > currentFloorNumber) {
+                            } else if (confirmLiftDirection == LiftDirection.DOWN && currentLiftFloorNumber >= currentFloorNumber) {
                                 trackPositionsAndChars2.add(new ObjectObjectImmutablePair<>(currentTrackPosition, currentChar));
                             }
                         }
+
+                        Init.LOGGER.info("liftDirection: " + liftDirection + " ,confirmLiftDirection: " + confirmLiftDirection);
                     }
 
                 });
@@ -324,6 +325,14 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
                 InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift));
 
                 scheduler.schedule(() -> {
+                    liftButtonPositions.forEach(lanternPos -> {// 传递乘客方向至到站灯
+                        BlockEntity lanternBlockEntity = world.getBlockEntity(lanternPos);
+                        if (lanternBlockEntity != null && lanternBlockEntity.data instanceof LiftButtonsBase.BlockEntityBase) {
+                            LiftButtonsBase.BlockEntityBase lanternData = (LiftButtonsBase.BlockEntityBase) lanternBlockEntity.data;
+                            lanternData.setPressedButtonDirection(data.liftDirection);
+                        }
+                    });
+
                     final PressLift pressLift1 = new PressLift();
                     pressLift1.add(destinationPosition[0], data.liftDirection);
                     InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketPressLiftButton(pressLift1));
@@ -378,6 +387,7 @@ public abstract class LiftDestinationDispatchTerminalBase extends BlockExtension
         }
 
         public LiftDirection getPressedButtonDirection() {
+
             return this.liftDirection;
         }
     }
