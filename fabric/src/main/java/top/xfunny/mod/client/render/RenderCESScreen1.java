@@ -90,7 +90,7 @@ public class RenderCESScreen1<T extends LiftPanelBase.BlockEntityBase> extends B
                         FontList.instance.getFont("ces-14x7"),
                         8,
                         0xFFFF8800);
-                liftFloorDisplayView.setTextureId("ces_screen_1");
+                liftFloorDisplayView.setTextureId(String.format("ces_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(2.6F / 16);
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);

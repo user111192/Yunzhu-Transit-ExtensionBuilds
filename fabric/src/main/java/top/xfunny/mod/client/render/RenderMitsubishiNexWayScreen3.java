@@ -15,7 +15,6 @@ import org.mtr.mod.render.QueuedRenderLayer;
 import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.MitsubishiNexWayScreen3Even;
-import top.xfunny.mod.block.TonicDSScreen1Even;
 import top.xfunny.mod.block.base.LiftPanelBase;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
@@ -89,7 +88,8 @@ public class RenderMitsubishiNexWayScreen3<T extends LiftPanelBase.BlockEntityBa
                         FontList.instance.getFont("mitsubishi_modern"),
                         7,
                         0xFFFA7A24);
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_screen_3");
+                liftFloorDisplayView.setTextureId(String.format("mitsubishi_nexway_screen_3_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;
                 liftFloorDisplayView.setWidth(2.6F / 16);
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);

@@ -67,11 +67,11 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         parentLayout.setBasicsAttributes(world, blockPos);
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         parentLayout.setParentDimensions(12.5F / 16, 3.25F / 16);
-        parentLayout.setPosition(isOdd ? -6.25F/16 : -14.25F/16, 10F/16);
+        parentLayout.setPosition(isOdd ? -6.25F / 16 : -14.25F / 16, 10F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
 
-        ButtonView upLantern  = new ButtonView();
+        ButtonView upLantern = new ButtonView();
         upLantern.setBasicsAttributes(world, blockPos);
         upLantern.setTexture(BUTTON_TEXTURE);
         upLantern.setDimension(2F / 16);
@@ -79,9 +79,9 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         upLantern.setLight(light);
         upLantern.setDefaultColor(0xFFFFFFFF);
         upLantern.setPressedColor(PRESSED_COLOR);
-        upLantern.setMargin(1F/16, 0, 3F/16, 0);
+        upLantern.setMargin(1F / 16, 0, 3F / 16, 0);
 
-        ButtonView upLantern1  = new ButtonView();
+        ButtonView upLantern1 = new ButtonView();
         upLantern1.setBasicsAttributes(world, blockPos);
         upLantern1.setTexture(BUTTON_TEXTURE);
         upLantern1.setDimension(2F / 16);
@@ -89,9 +89,9 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         upLantern1.setLight(light);
         upLantern1.setDefaultColor(0xFFFFFFFF);
         upLantern1.setPressedColor(PRESSED_COLOR);
-        upLantern1.setMargin(0, 0, 1.2F/16, 0);
+        upLantern1.setMargin(0, 0, 1.2F / 16, 0);
 
-        ButtonView downLantern  = new ButtonView();
+        ButtonView downLantern = new ButtonView();
         downLantern.setBasicsAttributes(world, blockPos);
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(2F / 16);
@@ -99,10 +99,10 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         downLantern.setLight(light);
         downLantern.setDefaultColor(0xFFFFFFFF);
         downLantern.setPressedColor(PRESSED_COLOR);
-        downLantern.setMargin(1F/16, 0, 3F /16, 0);
-        downLantern.setFlip(false,true);
+        downLantern.setMargin(1F / 16, 0, 3F / 16, 0);
+        downLantern.setFlip(false, true);
 
-        ButtonView downLantern1  = new ButtonView();
+        ButtonView downLantern1 = new ButtonView();
         downLantern1.setBasicsAttributes(world, blockPos);
         downLantern1.setTexture(BUTTON_TEXTURE);
         downLantern1.setDimension(2F / 16);
@@ -110,8 +110,8 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
         downLantern1.setLight(light);
         downLantern1.setDefaultColor(0xFFFFFFFF);
         downLantern1.setPressedColor(PRESSED_COLOR);
-        downLantern1.setFlip(false,true);
-        downLantern1.setMargin(0,0,1.2F/16,0);
+        downLantern1.setFlip(false, true);
+        downLantern1.setMargin(0, 0, 1.2F / 16, 0);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockPos);
@@ -207,7 +207,7 @@ public class RenderKoneMScreen1<T extends LiftButtonsBase.BlockEntityBase> exten
                         7,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("kone_m_screen_1");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId(String.format("kone_m_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()));//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);

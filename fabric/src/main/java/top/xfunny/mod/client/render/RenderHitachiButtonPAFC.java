@@ -32,12 +32,13 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButtonPA
     private static final int HOVER_COLOR = 0xFFAAAAAA;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
     private static final int DEFAULT_COLOR = 0x00FFFFFF;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc6_arrow.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc5_arrow.png");
     private static final Identifier BUTTON_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_button_pafc_up.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_button_pafc_down.png");
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_button_pafc_light_up.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_button_pafc_light_down.png");
     private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+
     public RenderHitachiButtonPAFC(Argument dispatcher) {
         super(dispatcher);
     }
@@ -196,13 +197,15 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButtonPA
                         FontList.instance.getFont("hitachi-led-dot_matrix"),
                         4.5F,
                         0xFFFF4800);
-                liftFloorDisplayView.setTextureId("hitachi_button_pafc");
-                liftFloorDisplayView.setWidth(1.36F / 16);
+                liftFloorDisplayView.setTextureId(String.format("hitachi_button_pafc_display_%d_%s", i, blockEntity.getPos2().asLong()));
+                liftFloorDisplayView.setWidth(1.12F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
 
-                liftFloorDisplayView.setMargin(0.01F, 0.7F / 16, 0, 0);
+                liftFloorDisplayView.setMargin(0.006F, 0.7F / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
+
+
                 if (liftFloorDisplayView.getTextLength() >= 3) {
                     liftFloorDisplayView.setBasicsAttributes(world,
                             blockPos,
@@ -210,12 +213,11 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButtonPA
                             FontList.instance.getFont("hitachi-led-dot_matrix_small"),
                             4.5F,
                             0xFFFF4800);
+                    liftFloorDisplayView.setMargin(0.01F, 0.7F / 16, 0, 0);
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
                 } else {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }
-
-
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
@@ -228,7 +230,6 @@ public class RenderHitachiButtonPAFC extends BlockEntityRenderer<HitachiButtonPA
                 } else {
                     liftArrowView.setColor(0xFF000000);
                 }
-
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);

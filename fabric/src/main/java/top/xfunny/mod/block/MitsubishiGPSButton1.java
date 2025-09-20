@@ -22,7 +22,7 @@ public class MitsubishiGPSButton1 extends LiftButtonsBase {
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final boolean single = !IBlock.getStatePropertySafe(world.getBlockState(pos), SINGLE);
-        return IBlock.getVoxelShapeByDirection(single ? 6.1 : 6.95, 0.6, 0, single ? 9.9 : 9.05, 12.4, 0.05, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(single ? 6.1 : 6.8, 0.6, 0, single ? 9.9 : 9.2, 12.4, 0.05, IBlock.getStatePropertySafe(state, FACING));
     }
 
     /**

@@ -39,6 +39,7 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mwb_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mwb_down_light.png");
     private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+
     public RenderHitachiVIB820Button(Argument dispatcher) {
         super(dispatcher);
     }
@@ -195,13 +196,13 @@ public class RenderHitachiVIB820Button extends BlockEntityRenderer<HitachiVIB820
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi-lcd-seg"),
-                        7.5F,
+                        7.25F,
                         0xFFDEF6FF);
-                liftFloorDisplayView.setTextureId("hitachi-vib-820");
+                liftFloorDisplayView.setTextureId(String.format("hitachi_vib_820_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
-
-                liftFloorDisplayView.setMargin(0, 0, 0, 0);
+                liftFloorDisplayView.setLetterSpacing(5);
+                liftFloorDisplayView.setMargin(0, 0, 0.25F/16, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 

@@ -125,7 +125,7 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         buttonUpLight.setDimension(0.8F / 16);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
-        buttonUpLight.setDefaultColor(ARGB_WHITE,true);
+        buttonUpLight.setDefaultColor(ARGB_WHITE, true);
         buttonUpLight.setHoverColor(HOVER_COLOR);
         buttonUpLight.setPressedColor(PRESSED_COLOR);
 
@@ -144,7 +144,7 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
         buttonDownLight.setDimension(0.8F / 16);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
-        buttonDownLight.setDefaultColor(ARGB_WHITE,true);
+        buttonDownLight.setDefaultColor(ARGB_WHITE, true);
         buttonDownLight.setHoverColor(HOVER_COLOR);
         buttonDownLight.setPressedColor(PRESSED_COLOR);
 
@@ -194,7 +194,8 @@ public class RenderSchindlerLineaButton1White extends BlockEntityRenderer<Schind
                         7,
                         0xFFFF0000);
                 liftFloorDisplayView.setDisplayLength(2, 0.05F);
-                liftFloorDisplayView.setTextureId("schindler_linea_1_display");
+                liftFloorDisplayView.setTextureId(String.format("schindler_linea_1_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;
                 liftFloorDisplayView.setWidth(1.4F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
                 liftFloorDisplayView.setMargin(-0.1F / 16, -0.1F / 16, -0.1F / 16, 0);

@@ -13,6 +13,7 @@ import org.mtr.mod.client.MinecraftClientData;
 import org.mtr.mod.packet.PacketPressLiftButton;
 import top.xfunny.mod.*;
 import top.xfunny.mod.Items;
+import top.xfunny.mod.SoundEvents;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
 import top.xfunny.mod.util.TransformPositionX;
 
@@ -33,14 +34,13 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     private final boolean isOdd;
     private double median = 0.25;//判定按下上、下按钮的分界线
 
-
     public LiftButtonsBase(boolean allowPress, boolean isOdd) {
         super(BlockHelper.createBlockSettings(true, true));
         this.isOdd = isOdd;
         this.allowPress = allowPress;
     }
 
-    public LiftButtonsBase(boolean allowPress, boolean isOdd, double median) {
+    public LiftButtonsBase(boolean allowPress, boolean isOdd, double median) {//todo:即将弃用
         super(BlockHelper.createBlockSettings(true, true));
         this.isOdd = isOdd;
         this.allowPress = allowPress;
@@ -79,8 +79,6 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
     @Override
     // 处理按钮的使用交互
     public ActionResult onUse2(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
-
         // 检查玩家是否拿着刷子，并尝试更新按钮状态
         final ActionResult result = IBlock.checkHoldingBrush(world, player, () -> {
             final boolean unlocked = !IBlock.getStatePropertySafe(state, UNLOCKED);
@@ -242,6 +240,10 @@ public abstract class LiftButtonsBase extends BlockExtension implements Directio
         private LiftDirection pressedButtonDirection;
 
         private DefaultButtonsKeyMapping keyMapping = new DefaultButtonsKeyMapping();
+
+        public boolean lastUpActive = false;
+        public boolean lastDownActive = false;
+
 
         public BlockEntityBase(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
             super(type, blockPos, blockState);

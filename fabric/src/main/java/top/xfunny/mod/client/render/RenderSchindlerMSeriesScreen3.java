@@ -17,12 +17,14 @@ import org.mtr.mod.render.StoredMatrixTransformations;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.block.SchindlerMSeriesScreen3Even;
 import top.xfunny.mod.block.base.LiftButtonsBase;
+import top.xfunny.mod.client.InitClient;
 import top.xfunny.mod.client.resource.FontList;
 import top.xfunny.mod.client.view.*;
 import top.xfunny.mod.client.view.view_group.FrameLayout;
 import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
+import top.xfunny.mod.packet.PacketLanternSoundInstruction;
 import top.xfunny.mod.util.ClientGetLiftDetails;
 
 import java.util.Comparator;
@@ -86,14 +88,14 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         screenLayout.setWidth(LayoutSize.WRAP_CONTENT);
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_VERTICAL);
-        screenLayout.setMargin(0, 0, 1.5F/16, 0);
+        screenLayout.setMargin(0, 0, 1.5F / 16, 0);
 
         final FrameLayout LanternGroupLeft = new FrameLayout();
         LanternGroupLeft.setBasicsAttributes(world, blockPos);
         LanternGroupLeft.setWidth(LayoutSize.WRAP_CONTENT);
         LanternGroupLeft.setHeight(LayoutSize.WRAP_CONTENT);
         LanternGroupLeft.setGravity(Gravity.CENTER_VERTICAL);
-        LanternGroupLeft.setMargin(0, 0, 1.5F/16, 0);
+        LanternGroupLeft.setMargin(0, 0, 1.5F / 16, 0);
 
         final FrameLayout LanternGroupRight = new FrameLayout();
         LanternGroupRight.setBasicsAttributes(world, blockPos);
@@ -131,7 +133,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         upLanternLeft.setDefaultColor(DEFAULT_COLOR);
         upLanternLeft.setPressedColor(PRESSED_COLOR);
 
-        ButtonView upLanternRight  = new ButtonView();
+        ButtonView upLanternRight = new ButtonView();
         upLanternRight.setBasicsAttributes(world, blockEntity.getPos2());
         upLanternRight.setTexture(ARROW_TEXTURE);
         upLanternRight.setDimension(3.25F / 16);
@@ -140,7 +142,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         upLanternRight.setDefaultColor(DEFAULT_COLOR);
         upLanternRight.setPressedColor(PRESSED_COLOR);
 
-        ButtonView downLanternLeft  = new ButtonView();
+        ButtonView downLanternLeft = new ButtonView();
         downLanternLeft.setBasicsAttributes(world, blockEntity.getPos2());
         downLanternLeft.setTexture(ARROW_TEXTURE);
         downLanternLeft.setDimension(3.25F / 16);
@@ -148,9 +150,9 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         downLanternLeft.setLight(light);
         downLanternLeft.setDefaultColor(DEFAULT_COLOR);
         downLanternLeft.setPressedColor(PRESSED_COLOR);
-        downLanternLeft.setFlip(false,true);
+        downLanternLeft.setFlip(false, true);
 
-        ButtonView downLanternRight  = new ButtonView();
+        ButtonView downLanternRight = new ButtonView();
         downLanternRight.setBasicsAttributes(world, blockEntity.getPos2());
         downLanternRight.setTexture(ARROW_TEXTURE);
         downLanternRight.setDimension(3.25F / 16);
@@ -158,7 +160,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         downLanternRight.setLight(light);
         downLanternRight.setDefaultColor(DEFAULT_COLOR);
         downLanternRight.setPressedColor(PRESSED_COLOR);
-        downLanternRight.setFlip(false,true);
+        downLanternRight.setFlip(false, true);
 
 
         final LineComponent line = new LineComponent();
@@ -168,6 +170,7 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
         buttonLine.setBasicsAttributes(world, blockPos);
 
         final ObjectArrayList<ObjectObjectImmutablePair<BlockPos, Lift>> sortedPositionsAndLifts = new ObjectArrayList<>();
+
 
         blockEntity.forEachTrackPosition(trackPosition -> {
             line.RenderLine(holdingLinker, trackPosition);
@@ -183,15 +186,30 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
 
                 final ObjectArraySet<LiftDirection> instructionDirections = lift.hasInstruction(floorIndex);
 
+                if(lift.getDoorValue() == 0){
+                    blockEntity.lastUpActive = false;
+                    blockEntity.lastDownActive = false;
+                }
+
                 if (instructionDirections.isEmpty() && pressedButtonDirection != null && lift.getDoorValue() != 0 && floorNumber.equals(currentFloorNumber)) {
                     switch (pressedButtonDirection) {
                         case DOWN:
                             downLanternLeft.activate();
                             downLanternRight.activate();
+                            if(!blockEntity.lastDownActive) {
+                                InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                blockEntity.lastDownActive = true;
+                                blockEntity.lastUpActive = true;
+                            }
                             break;
                         case UP:
                             upLanternLeft.activate();
                             upLanternRight.activate();
+                            if(!blockEntity.lastDownActive) {
+                                InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                blockEntity.lastDownActive = true;
+                                blockEntity.lastUpActive = true;
+                            }
                             break;
                     }
                 }
@@ -204,10 +222,20 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                                     case DOWN:
                                         downLanternLeft.activate();
                                         downLanternRight.activate();
+                                        if(!blockEntity.lastDownActive) {
+                                            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                            blockEntity.lastDownActive = true;
+                                            blockEntity.lastUpActive = true;
+                                        }
                                         break;
                                     case UP:
                                         upLanternLeft.activate();
                                         upLanternRight.activate();
+                                        if(!blockEntity.lastDownActive) {
+                                            InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                            blockEntity.lastDownActive = true;
+                                            blockEntity.lastUpActive = true;
+                                        }
                                         break;
                                 }
                             }
@@ -216,10 +244,20 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                                 case DOWN:
                                     downLanternLeft.activate();
                                     downLanternRight.activate();
+                                    if(!blockEntity.lastDownActive) {
+                                        InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                        blockEntity.lastDownActive = true;
+                                        blockEntity.lastUpActive = true;
+                                    }
                                     break;
                                 case UP:
                                     upLanternLeft.activate();
                                     upLanternRight.activate();
+                                    if(!blockEntity.lastDownActive) {
+                                        InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketLanternSoundInstruction(blockPos, "schindler_m_series_lantern_1"));
+                                        blockEntity.lastDownActive = true;
+                                        blockEntity.lastUpActive = true;
+                                    }
                                     break;
                             }
                         }
@@ -240,15 +278,16 @@ public class RenderSchindlerMSeriesScreen3<T extends LiftButtonsBase.BlockEntity
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("acmeled"),//字体
-                        5,//字号
+                        FontList.instance.getFont("schindler_m_series_segment"),//字体
+                        4,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("schindler_m_series_screen_3_display");//字体贴图id，不能与其他显示屏的重复
-                liftFloorDisplayView.setLetterSpacing(10);
+                liftFloorDisplayView.setTextureId(String.format("schindler_m_series_screen_3_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);//文字对齐方式，center为居中对齐，left为左对齐，right为右对齐
+                liftFloorDisplayView.setMargin(0.45F/16,0,0,0);
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
 
                 screenLayout.addChild(background);

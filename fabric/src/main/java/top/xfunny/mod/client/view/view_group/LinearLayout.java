@@ -69,7 +69,7 @@ public class LinearLayout implements RenderView {
         if (backgroundColor != 0) {
             StoredMatrixTransformations storedMatrixTransformations1 = storedMatrixTransformations.copy();
             storedMatrixTransformations1.add(graphicsHolder -> {
-                graphicsHolder.translate(0, 0, -SMALL_OFFSET);
+                graphicsHolder.translate(0, 0, -0.6*SMALL_OFFSET);
             });
             MainRenderer.scheduleRender(
                     new Identifier(Init.MOD_ID, "textures/block/white.png"),
@@ -84,7 +84,7 @@ public class LinearLayout implements RenderView {
 
         StoredMatrixTransformations storedMatrixTransformations2 = storedMatrixTransformations.copy();
         storedMatrixTransformations2.add(graphicsHolder -> {
-            graphicsHolder.translate(0, 0, (backgroundColor != 0 ? 2 : 0) * - SMALL_OFFSET / 4);
+            graphicsHolder.translate(0, 0, (backgroundColor != 0 ? 2 : 0) * -SMALL_OFFSET / 3);
         });
 
 

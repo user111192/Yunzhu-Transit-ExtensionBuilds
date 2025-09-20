@@ -7,6 +7,7 @@ import org.mtr.mapping.holder.World;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mod.block.BlockLiftTrackBase;
 import org.mtr.mod.block.IBlock;
+import top.xfunny.mod.Init;
 
 import java.util.ArrayList;
 
@@ -14,72 +15,88 @@ import java.util.ArrayList;
 public class PathFinder implements DirectionHelper {
     ArrayList<BlockPos> mark = new ArrayList<>();
     ;
-    Object[] array = new Object[2];
+    Object[] array = new Object[3];
     ;
 
-    public Object[] findPath(ItemUsageContext context, BlockPos pos) {//调用入口
+    public Object[] findPath(ItemUsageContext context, BlockPos pos) {
         final World world = context.getWorld();
-        checkPosition(world, pos, new BlockPos(0, 0, 0), facingHelper(context, pos));
+        checkPosition(world, pos, new BlockPos(0, 0, 0),new BlockPos(0, 0, 0), facingHelper(context, pos));
         return array;
     }
 
     public Object[] findPath(ItemUsageContext context, BlockPos pos1, BlockPos pos2) {
         final World world = context.getWorld();
         if (world.getBlockState(pos1).getBlock().data instanceof BlockLiftTrackBase) {
-            checkPosition(world, pos1, pos2, facingHelper(context, pos1, pos2));
+            checkPosition(world, pos1, pos2, new BlockPos(0, 0, 0), facingHelper(context, pos1, pos2));
         } else {
-            checkPosition(world, pos2, pos1, facingHelper(context, pos1, pos2));
+            checkPosition(world, pos2, pos1, new BlockPos(0, 0, 0), facingHelper(context, pos1, pos2));
         }
         return array;
     }
 
-    private void checkPosition(World world, BlockPos pos, BlockPos otherPos, boolean facing) {
+    public Object[] findPath(ItemUsageContext context, BlockPos pos1, BlockPos pos2, BlockPos pos3) {
+        final World world = context.getWorld();
+        checkPosition(world, pos3, pos1, pos2, facingHelper(context, pos3, pos3));//pos3为轨道
+        return array;
+    }
+
+    private void checkPosition(World world, BlockPos pos, BlockPos otherPos, BlockPos thirdPos, boolean facing) {
         if (world.getBlockState(pos.up(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            //Init.LOGGER.info("上");
             if (!findMark(pos.up(1))) {
                 array[0] = pos.up(1);
                 array[1] = otherPos.up(1);
+                array[2] = thirdPos.up(1);
+                Init.LOGGER.info("上"+array[0]);
                 mark.add(pos);
+                return;
             }
         }
         if (world.getBlockState(pos.down(1)).getBlock().data instanceof BlockLiftTrackBase) {
-            //Init.LOGGER.info("下");
             if (!findMark(pos.down(1))) {
                 array[0] = pos.down(1);
                 array[1] = otherPos.down(1);
+                array[2] = thirdPos.down(1);
+                Init.LOGGER.info("下"+array[0]);
                 mark.add(pos);
+                return;
             }
         }
         if (world.getBlockState(pos.south(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            //Init.LOGGER.info("南");
             if (!findMark(pos.south(1))) {
+                Init.LOGGER.info("南");
                 array[0] = pos.south(1);
                 array[1] = otherPos.south(1);
+                array[2] = thirdPos.south(1);
                 mark.add(pos);
+                return;
             }
         }
         if (world.getBlockState(pos.north(1)).getBlock().data instanceof BlockLiftTrackBase && facing) {
-            //Init.LOGGER.info("北");
             if (!findMark(pos.north(1))) {
+                Init.LOGGER.info("北");
                 array[0] = pos.north(1);
                 array[1] = otherPos.north(1);
-
+                array[2] = thirdPos.north(1);
                 mark.add(pos);
+                return;
             }
         }
         if (world.getBlockState(pos.east(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            //Init.LOGGER.info("东");
             if (!findMark(pos.east(1))) {
+                Init.LOGGER.info("东");
                 array[0] = pos.east(1);
                 array[1] = otherPos.east(1);
+                array[2] = thirdPos.east(1);
                 mark.add(pos);
+                return;
             }
         }
         if (world.getBlockState(pos.west(1)).getBlock().data instanceof BlockLiftTrackBase && !facing) {
-            //Init.LOGGER.info("西");
             if (!findMark(pos.west(1))) {
+                Init.LOGGER.info("西");
                 array[0] = pos.west(1);
                 array[1] = otherPos.west(1);
+                array[2] = thirdPos.west(1);
                 mark.add(pos);
             }
         }

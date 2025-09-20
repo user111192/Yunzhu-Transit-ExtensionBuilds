@@ -11,6 +11,7 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
@@ -24,6 +25,7 @@ import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -115,7 +117,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
         ImageView buttonUp = new ImageView();
         buttonUp.setBasicsAttributes(world, blockPos);
         buttonUp.setTexture(BUTTON_TEXTURE);
-        buttonUp.setDimension(0.9F / 16,326,256);
+        buttonUp.setDimension(1F / 16, 326, 256);
         buttonUp.setGravity(Gravity.CENTER);
         buttonUp.setLight(light);
 
@@ -123,7 +125,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
         buttonUpLight.setId("up");
         buttonUpLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonUpLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonUpLight.setDimension(0.9F / 16,326,256);
+        buttonUpLight.setDimension(1F / 16, 326, 256);
         buttonUpLight.setGravity(Gravity.CENTER);
         buttonUpLight.setLight(light);
         buttonUpLight.setDefaultColor(ARGB_WHITE);
@@ -133,7 +135,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
         ImageView buttonDown = new ImageView();
         buttonDown.setBasicsAttributes(world, blockPos);
         buttonDown.setTexture(BUTTON_TEXTURE);
-        buttonDown.setDimension(0.9F / 16,326,256);
+        buttonDown.setDimension(1F / 16, 326, 256);
         buttonDown.setGravity(Gravity.CENTER);
         buttonDown.setLight(light);
         buttonDown.setFlip(false, true);
@@ -142,7 +144,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
         buttonDownLight.setId("down");
         buttonDownLight.setBasicsAttributes(world, blockPos, keyMapping);
         buttonDownLight.setTexture(BUTTON_LIGHT_TEXTURE);
-        buttonDownLight.setDimension(0.9F / 16,326,256);
+        buttonDownLight.setDimension(1F / 16, 326, 256);
         buttonDownLight.setGravity(Gravity.CENTER);
         buttonDownLight.setLight(light);
         buttonDownLight.setDefaultColor(ARGB_WHITE);
@@ -189,6 +191,9 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
 
 
             for (int i = 0; i < count; i++) {
+                final Lift lift = sortedPositionsAndLifts.get(i).right();
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                String floorNumber = liftDetails.right().left();
 
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
@@ -198,7 +203,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
                         6,
                         0xFFFA7A24);
                 //liftFloorDisplayView.setDisplayLength(2, 0.05F);
-                liftFloorDisplayView.setTextureId("mitsubishi_gps_button_1_display");
+                liftFloorDisplayView.setTextureId(String.format("mitsubishi_gps_button_1_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.3F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
                 liftFloorDisplayView.setMargin(0.1F / 16, 0, 0, 0);
@@ -208,11 +213,11 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
                     liftFloorDisplayView.setBasicsAttributes(world,
                             blockPos,
                             sortedPositionsAndLifts.get(i).right(),
-                            FontList.instance.getFont("mitsubishi_small_sht"),
+                            FontList.instance.getFont(floorNumber.matches(".*[A-Z].*")?"mitsubishi_small_regular":"mitsubishi_small_sht"),
                             6,
                             0xFFFA7A24);
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
-                    liftFloorDisplayView.setMargin(0.25F / 16, 0, 0, 0);
+                    liftFloorDisplayView.setMargin(0.2F / 16, 0, 0, 0);
                 } else {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }
@@ -223,7 +228,7 @@ public class RenderMitsubishiGPSButton1 extends BlockEntityRenderer<MitsubishiGP
                 liftArrowView.setTexture(ARROW_TEXTURE);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setDimension(0.7F / 16);
-                liftArrowView.setMargin(0, 1.07F / 16, 0, 0);
+                liftArrowView.setMargin(0, 1.6F / 16, 0, 0);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setColor(0xFFFA7A24);
 

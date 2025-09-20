@@ -4,14 +4,15 @@ import top.xfunny.mod.client.DynamicTextureCache;
 import top.xfunny.mod.client.YteRouteMapGenerator;
 
 import java.awt.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class TextureList {
     public static TextureList instance = new TextureList();
 
-
     public DynamicTextureCache.DynamicResource renderFont(String id, String originalText, int textColor, Font font, float fontSize, int letterSpacing) {
-        return DynamicTextureCache.instance.getResource(String.format("%s_%s", id, originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor, font, fontSize, 0, letterSpacing), DynamicTextureCache.DefaultRenderingColor.TRANSPARENT);
+        return DynamicTextureCache.instance.getResource(String.format("%s$%s", id, originalText), () -> YteRouteMapGenerator.generateImage(originalText, textColor, font, fontSize, 0, letterSpacing), DynamicTextureCache.DefaultRenderingColor.TRANSPARENT);
     }
 
     public DynamicTextureCache.DynamicResource getTestLiftButtonsDisplay(String originalText, int textColor) {

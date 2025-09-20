@@ -8,7 +8,6 @@ import top.xfunny.mod.BlockEntityTypes;
 import top.xfunny.mod.Items;
 import top.xfunny.mod.block.base.LiftDestinationDispatchTerminalBase;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
-import top.xfunny.mod.keymapping.SchindlerZLine3Keypad1KeyMapping;
 import top.xfunny.mod.util.ArrayListToString;
 import top.xfunny.mod.util.TransformPositionX;
 
@@ -84,7 +83,7 @@ public class SchindlerZLine3Keypad1 extends LiftDestinationDispatchTerminalBase 
     }
 
     private void processKeyInput(World world, BlockPos pos, SchindlerZLine3Keypad1.BlockEntity data1, LiftDestinationDispatchTerminalBase.BlockEntityBase data, String screenId, String output) {
-        Map<String, Integer> numberKeys = new HashMap<>() {{
+        Map<String, Integer> numberKeys = new HashMap<String, Integer>() {{
             put("number1", 1);
             put("number2", 2);
             put("number3", 3);

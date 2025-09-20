@@ -30,7 +30,7 @@ import java.util.Comparator;
 
 public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Button1.BlockEntity> implements DirectionHelper, IGui, IBlock {
 
-    private static final int HOVER_COLOR = 0xFFFFCC66;
+    private static final int HOVER_COLOR = 0xFFAA0000;
     private static final int PRESSED_COLOR = 0xFFFF0000;
     private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_spec_60_arrow_1.png");
     private static final Identifier BUTTON_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/otis_ak10_button_1.png");
@@ -193,8 +193,9 @@ public class RenderOtisSPEC60Button1 extends BlockEntityRenderer<OtisSPEC60Butto
                         FontList.instance.getFont("otis_series1"),
                         4,
                         0xFFFF0000);
-                liftFloorDisplayView.setDisplayLength(2, 0.05F);
-                liftFloorDisplayView.setTextureId("otis_spec_60_button_1_display");
+                liftFloorDisplayView.setDisplayLength(2, 0);
+                liftFloorDisplayView.setTextureId(String.format("otis_spec_60_button_1_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setLetterSpacing(10);
                 liftFloorDisplayView.setHeight(1.7F / 16);

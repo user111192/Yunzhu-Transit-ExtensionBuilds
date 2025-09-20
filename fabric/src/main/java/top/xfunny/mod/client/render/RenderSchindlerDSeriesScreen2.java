@@ -57,19 +57,19 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
 
         switch (color) {
             case GREEN:
-                this.textureId = "schindler_d_series_screen_2_green_display";
+                this.textureId = "schindler_d_series_screen_2_green_display_%s";
                 this.fontColor = 0xFF00FF00;
                 this.arrowTexture = new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_screen_2_arrow_green.png");
                 break;
 
             case BLUE:
-                this.textureId = "schindler_d_series_screen_2_blue_display";
+                this.textureId = "schindler_d_series_screen_2_blue_display_%s";
                 this.fontColor = 0xFF0000FF;
                 this.arrowTexture = new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_screen_2_arrow_blue.png");
                 break;
 
             case RED:
-                this.textureId = "schindler_d_series_screen_2_red_display";
+                this.textureId = "schindler_d_series_screen_2_red_display_%s";
                 this.fontColor = 0xFFFF0000;
                 this.arrowTexture = new Identifier(Init.MOD_ID, "textures/block/schindler_d_series_screen_2_arrow_red.png");
                 break;
@@ -140,7 +140,7 @@ public class RenderSchindlerDSeriesScreen2<T extends LiftPanelBase.BlockEntityBa
                         FontList.instance.getFont("schindler_led"),
                         10,
                         fontColor);
-                liftFloorDisplayView.setTextureId(textureId);
+                liftFloorDisplayView.setTextureId(String.format(textureId,blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(2.6F / 16);
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);

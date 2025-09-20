@@ -9,8 +9,6 @@ import org.mtr.libraries.it.unimi.dsi.fastutil.objects.ObjectImmutableList;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.*;
 import org.mtr.mod.InitClient;
-import org.mtr.mod.block.BlockRailwaySign;
-import org.mtr.mod.block.BlockRouteSignBase;
 import org.mtr.mod.client.CustomResourceLoader;
 import org.mtr.mod.client.IDrawing;
 import org.mtr.mod.client.MinecraftClientData;
@@ -20,7 +18,7 @@ import org.mtr.mod.packet.PacketUpdateRailwaySignConfig;
 import org.mtr.mod.render.RenderRailwaySign;
 import org.mtr.mod.resource.SignResource;
 import org.mtr.mod.screen.*;
-import top.xfunny.mod.packet.PacketUpdatePATRS01RailwaySignConfig;
+import top.xfunny.mod.block.PATRS01RailwaySign;
 
 import javax.annotation.Nullable;
 
@@ -90,21 +88,18 @@ public class PATRS01RailwaySignScreen extends ScreenExtension implements IGui {
 
         if (world != null) {
             final BlockEntity entity = world.getBlockEntity(signPos);
-            if (entity != null && entity.data instanceof BlockRailwaySign.BlockEntity) {
-                signIds = ((BlockRailwaySign.BlockEntity) entity.data).getSignIds();
-                selectedIds = ((BlockRailwaySign.BlockEntity) entity.data).getSelectedIds();
+            if (entity != null && entity.data instanceof PATRS01RailwaySign.BlockEntity) {
+                signIds = ((PATRS01RailwaySign.BlockEntity) entity.data).getSignIds();
+                selectedIds = ((PATRS01RailwaySign.BlockEntity) entity.data).getSelectedIds();
                 isRailwaySign = true;
             } else {
                 signIds = new String[0];
                 selectedIds = new LongAVLTreeSet();
                 isRailwaySign = false;
-                if (entity != null && entity.data instanceof BlockRouteSignBase.BlockEntityBase) {
-                    selectedIds.add(((BlockRouteSignBase.BlockEntityBase) entity.data).getPlatformId());
-                }
             }
             final Block block = world.getBlockState(signPos).getBlock();
-            if (block.data instanceof BlockRailwaySign) {
-                length = ((BlockRailwaySign) block.data).length;
+            if (block.data instanceof PATRS01RailwaySign) {
+                length = ((PATRS01RailwaySign) block.data).length;
             } else {
                 length = 0;
             }
@@ -218,7 +213,7 @@ public class PATRS01RailwaySignScreen extends ScreenExtension implements IGui {
 
     @Override
     public void onClose2() {
-        InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketUpdatePATRS01RailwaySignConfig(signPos, selectedIds, signIds));
+        InitClient.REGISTRY_CLIENT.sendPacketToServer(new PacketUpdateRailwaySignConfig(signPos, selectedIds, signIds));
         super.onClose2();
     }
 

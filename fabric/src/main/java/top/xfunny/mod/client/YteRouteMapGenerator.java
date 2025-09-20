@@ -9,7 +9,6 @@ import org.mtr.mod.data.IGui;
 import java.awt.*;
 import java.util.Locale;
 
-
 public class YteRouteMapGenerator implements IGui {
     private static int scale;
     private static int lineSize;
@@ -19,30 +18,31 @@ public class YteRouteMapGenerator implements IGui {
     public static NativeImage generateImage(String text, int textColor, Font font, float fontSize, int padding, int letterSpacing) {
         setConstants();
         try {
-            final int totalWidth;
-            final int height = Math.round(scale * 1.5F);
             final int[] dimensions = new int[2];
-            final byte[] pixels = DynamicTextureCache.instance.getTextPixels(text.toUpperCase(Locale.ENGLISH),
+            final byte[] pixels = DynamicTextureCache.instance.getTextPixels(
+                    text.toUpperCase(Locale.ENGLISH),
                     dimensions,
                     90,
                     fontSizeSmall * fontSize,
                     padding,
                     font,
-                    letterSpacing);
+                    letterSpacing
+            );
 
-            totalWidth = DynamicTextureCache.instance.totalWidth;
-
+            final int totalWidth = dimensions[0];
+            final int height = Math.round(scale * 1.5F);
 
             final NativeImage nativeImage = new NativeImage(NativeImageFormat.getAbgrMapped(), totalWidth, height, true);
             nativeImage.fillRect(0, 0, totalWidth, height, 0);
-            YteRouteMapGenerator.drawString(nativeImage, pixels, totalWidth / 2, height / 2, dimensions, IGui.HorizontalAlignment.CENTER, IGui.VerticalAlignment.CENTER, 0x00000000, textColor, false);
-            //YteRouteMapGenerator.clearColor(nativeImage, YteRouteMapGenerator.invertColor(ARGB_BLACK), 19);
 
+            // 使用优化的绘制方法
+            drawStringOptimized(nativeImage, pixels, totalWidth / 2, height / 2, dimensions,
+                    HorizontalAlignment.CENTER, VerticalAlignment.CENTER,
+                    0x00000000, textColor, false);
 
-            //top.xfunny.mod.util.ImageGenerator.saveNativeImageAsPng(nativeImage, "output_image.png");
             return nativeImage;
         } catch (Exception e) {
-
+            // 记录错误但不抛出异常
         }
         return null;
     }
@@ -54,19 +54,56 @@ public class YteRouteMapGenerator implements IGui {
         fontSizeSmall = fontSizeBig / 2;
     }
 
+    // 优化的绘制方法
+    private static void drawStringOptimized(NativeImage nativeImage, byte[] pixels, int x, int y, int[] textDimensions,
+                                            HorizontalAlignment horizontalAlignment,
+                                            VerticalAlignment verticalAlignment,
+                                            int backgroundColor, int textColor, boolean rotate90) {
+        // 提前计算颜色分量
+        final int textR = (textColor >> 16) & 0xFF;
+        final int textG = (textColor >> 8) & 0xFF;
+        final int textB = textColor & 0xFF;
 
-    public static void drawString(NativeImage nativeImage, byte[] pixels, int x, int y, int[] textDimensions, IGui.HorizontalAlignment horizontalAlignment, IGui.VerticalAlignment verticalAlignment, int backgroundColor, int textColor, boolean rotate90) {
+        // 背景不透明时绘制背景
         if (((backgroundColor >> 24) & 0xFF) > 0) {
-            for (int drawX = 0; drawX < textDimensions[rotate90 ? 1 : 0]; drawX++) {
-                for (int drawY = 0; drawY < textDimensions[rotate90 ? 0 : 1]; drawY++) {
-                    drawPixelSafe(nativeImage, (int) horizontalAlignment.getOffset(drawX + x, textDimensions[rotate90 ? 1 : 0]), (int) verticalAlignment.getOffset(drawY + y, textDimensions[rotate90 ? 0 : 1]), backgroundColor);
+            for (int drawY = 0; drawY < textDimensions[rotate90 ? 0 : 1]; drawY++) {
+                for (int drawX = 0; drawX < textDimensions[rotate90 ? 1 : 0]; drawX++) {
+                    drawPixelSafe(nativeImage,
+                            (int) horizontalAlignment.getOffset(drawX + x, textDimensions[rotate90 ? 1 : 0]),
+                            (int) verticalAlignment.getOffset(drawY + y, textDimensions[rotate90 ? 0 : 1]),
+                            backgroundColor);
                 }
             }
         }
+
+        // 优化像素绘制循环
         int drawX = 0;
         int drawY = rotate90 ? textDimensions[0] - 1 : 0;
+
         for (int i = 0; i < textDimensions[0] * textDimensions[1]; i++) {
-            blendPixel(nativeImage, (int) horizontalAlignment.getOffset(x + drawX, textDimensions[rotate90 ? 1 : 0]), (int) verticalAlignment.getOffset(y + drawY, textDimensions[rotate90 ? 0 : 1]), ((pixels[i] & 0xFF) << 24) + (textColor & RGB_WHITE));
+            final int alpha = pixels[i] & 0xFF;
+            if (alpha > 0) { // 只处理非透明像素
+                final int xPos = (int) horizontalAlignment.getOffset(x + drawX, textDimensions[rotate90 ? 1 : 0]);
+                final int yPos = (int) verticalAlignment.getOffset(y + drawY, textDimensions[rotate90 ? 0 : 1]);
+
+                if (Utilities.isBetween(xPos, 0, nativeImage.getWidth() - 1) &&
+                        Utilities.isBetween(yPos, 0, nativeImage.getHeight() - 1)) {
+
+                    final int existingPixel = nativeImage.getColor(xPos, yPos);
+                    final int existingA = (existingPixel >> 24) & 0xFF;
+
+                    if (existingA == 0) {
+                        // 背景完全透明，直接设置颜色
+                        final int newColor = (alpha << 24) | (textB << 16) | (textG << 8) | textR;
+                        nativeImage.setPixelColor(xPos, yPos, newColor);
+                    } else {
+                        // 需要混合时使用优化后的混合算法
+                        blendPixelOptimized(nativeImage, xPos, yPos, alpha, textR, textG, textB);
+                    }
+                }
+            }
+
+            // 更新坐标
             if (rotate90) {
                 drawY--;
                 if (drawY < 0) {
@@ -83,62 +120,28 @@ public class YteRouteMapGenerator implements IGui {
         }
     }
 
-    private static void blendPixel(NativeImage nativeImage, int x, int y, int color) {
-        if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
-            // 1. 读取ABGR格式的像素并正确解析通道
-            final int existingPixel = nativeImage.getColor(x, y);
-            final int a1 = (existingPixel >> 24) & 0xFF;
-            final int r1 = (existingPixel) & 0xFF;       // ABGR中的R分量（实际是存储的B分量）
-            final int g1 = (existingPixel >> 8) & 0xFF;  // G分量
-            final int b1 = (existingPixel >> 16) & 0xFF; // ABGR中的B分量（实际是存储的R分量）
+    // 优化的混合算法
+    private static void blendPixelOptimized(NativeImage nativeImage, int x, int y, int alpha, int r, int g, int b) {
+        final int existingPixel = nativeImage.getColor(x, y);
+        final int existingA = (existingPixel >> 24) & 0xFF;
+        final int existingR = existingPixel & 0xFF;
+        final int existingG = (existingPixel >> 8) & 0xFF;
+        final int existingB = (existingPixel >> 16) & 0xFF;
 
-            // 2. 正确解析文本颜色(ARGB格式)
-            final int a2 = (color >>> 24) & 0xFF;
-            final int r2 = (color >> 16) & 0xFF; // ARGB中的R分量
-            final int g2 = (color >> 8) & 0xFF;  // G分量
-            final int b2 = color & 0xFF;         // B分量
+        // 使用整数运算替代浮点运算
+        final int invAlpha = 255 - alpha;
+        final int newR = (existingR * invAlpha + r * alpha) / 255;
+        final int newG = (existingG * invAlpha + g * alpha) / 255;
+        final int newB = (existingB * invAlpha + b * alpha) / 255;
+        final int newA = Math.min(255, existingA + alpha);
 
-            // 3. 透明背景特殊处理：当背景透明时，RGB设为0而不是255
-            if (a1 == 0) {
-                // 使用标准混合公式计算新颜色
-                if (a2 > 0) {
-                    final float alpha = a2 / 255.0f;
-                    final int r = (int) (r2 * alpha);
-                    final int g = (int) (g2 * alpha);
-                    final int b = (int) (b2 * alpha);
-
-                    // 注意：这里直接使用原色值，因为背景透明不需要混合
-                    final int finalColor = (a2 << 24) | (b << 16) | (g << 8) | r; // 转换为ABGR格式
-                    nativeImage.setPixelColor(x, y, finalColor);
-                }
-            } else {
-                // 4. 非透明背景使用正确混合公式
-                final float alpha1 = a1 / 255.0f;
-                final float alpha2 = a2 / 255.0f;
-                final float outAlpha = alpha1 + alpha2 * (1 - alpha1);
-
-                if (outAlpha > 0) {
-                    final float factor = alpha2 * (1 - alpha1) / outAlpha;
-                    final int r = (int) ((r1 * (1 - factor)) + (r2 * factor));
-                    final int g = (int) ((g1 * (1 - factor)) + (g2 * factor));
-                    final int b = (int) ((b1 * (1 - factor)) + (b2 * factor));
-                    final int a = (int) (outAlpha * 255);
-
-                    // 转换为ABGR格式存储
-                    final int finalColor = (a << 24) | (b << 16) | (g << 8) | r;
-                    nativeImage.setPixelColor(x, y, finalColor);
-                }
-            }
-        }
+        final int finalColor = (newA << 24) | (newB << 16) | (newG << 8) | newR;
+        nativeImage.setPixelColor(x, y, finalColor);
     }
-
 
     private static void drawPixelSafe(NativeImage nativeImage, int x, int y, int color) {
         if (Utilities.isBetween(x, 0, nativeImage.getWidth() - 1) && Utilities.isBetween(y, 0, nativeImage.getHeight() - 1)) {
-            // 6. 直接写入颜色（不再调用invertColor）
             nativeImage.setPixelColor(x, y, color);
         }
     }
-
 }
-

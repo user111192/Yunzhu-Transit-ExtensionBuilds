@@ -197,7 +197,7 @@ public class RenderMitsubishiNexWayButton3Segmented extends BlockEntityRenderer<
                         7,
                         0xFFFA7A24);
                 liftFloorDisplayView.setDisplayLength(2, 0);
-                liftFloorDisplayView.setTextureId("mitsubishi_nexway_button_3_segmented_display");
+                liftFloorDisplayView.setTextureId(String.format("mitsubishi_nexway_button_3_segmented_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.4F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
                 liftFloorDisplayView.setMargin(-0.2F / 16, 0, 0.3F / 16, 0);

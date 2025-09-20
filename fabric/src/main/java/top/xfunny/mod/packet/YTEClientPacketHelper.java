@@ -1,33 +1,30 @@
 package top.xfunny.mod.packet;
 
-import org.mtr.core.data.Lift;
-import org.mtr.core.data.TransportMode;
 import org.mtr.mapping.holder.*;
 import org.mtr.mapping.mapper.ScreenExtension;
-import org.mtr.mod.Init;
-import org.mtr.mod.block.*;
-import org.mtr.mod.client.MinecraftClientData;
-import org.mtr.mod.packet.PacketOpenDashboardScreen;
-import org.mtr.mod.screen.*;
 import top.xfunny.mod.block.PATRS01RailwaySign;
+import top.xfunny.mod.block.TestLiftButtons;
+import top.xfunny.mod.client.screen.GuangzhouRailwaySignScreen;
 import top.xfunny.mod.client.screen.PATRS01RailwaySignScreen;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-/**
- * Since packets are registered serverside, they will fail if any client classes are used (e.g. screens).
- */
 public final class YTEClientPacketHelper {
 
     public static void openBlockEntityScreen(BlockPos blockPos) {
         getBlockEntity(blockPos, blockEntity -> {
             if (blockEntity.data instanceof PATRS01RailwaySign.BlockEntity) {
-                openScreen(new PATRS01RailwaySignScreen(blockPos), screenExtension -> screenExtension instanceof RailwaySignScreen);
+                openScreen(new PATRS01RailwaySignScreen(blockPos),
+                        screenExtension -> screenExtension instanceof PATRS01RailwaySignScreen);
+            }
+            // 测试新屏幕
+            else if (blockEntity.data instanceof TestLiftButtons.BlockEntity) {
+                openScreen(new GuangzhouRailwaySignScreen(blockPos),
+                        screenExtension -> screenExtension instanceof GuangzhouRailwaySignScreen);
             }
         });
     }
-
 
     private static void openScreen(ScreenExtension screenExtension, Predicate<ScreenExtension> isInstance) {
         final MinecraftClient minecraftClient = MinecraftClient.getInstance();

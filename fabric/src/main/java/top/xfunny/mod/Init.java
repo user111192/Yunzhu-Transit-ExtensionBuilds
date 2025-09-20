@@ -7,16 +7,20 @@ import org.mtr.mapping.holder.BlockPos;
 import org.mtr.mapping.holder.Identifier;
 import org.mtr.mapping.holder.MathHelper;
 import org.mtr.mapping.registry.Registry;
-import top.xfunny.mod.packet.PacketOpenBlockEntityScreen;
+import top.xfunny.mod.packet.PacketLanternSoundInstruction;
+import top.xfunny.mod.packet.PacketYTEOpenBlockEntityScreen;
 import top.xfunny.mod.packet.PacketUpdatePATRS01RailwaySignConfig;
 
 public final class Init {
     public static final String MOD_ID = "yte";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger("Yunzhu Transit Extension");
     public static final Registry REGISTRY = new Registry();
+    public static int HAS_UPDATE = -1;
 
 
     public static void init() {
+        //UpdateCheckerUtil.init();
+        SoundEvents.init();
         Blocks.init();
         BlockEntityTypes.init();
         Items.init();
@@ -25,9 +29,9 @@ public final class Init {
 
         //注册mtr packet
         REGISTRY.setupPackets(new Identifier(MOD_ID, "packet"));
-        REGISTRY.registerPacket(PacketOpenBlockEntityScreen.class, PacketOpenBlockEntityScreen::new);
+        REGISTRY.registerPacket(PacketYTEOpenBlockEntityScreen.class, PacketYTEOpenBlockEntityScreen::new);
         REGISTRY.registerPacket(PacketUpdatePATRS01RailwaySignConfig.class, PacketUpdatePATRS01RailwaySignConfig::new);
-
+        REGISTRY.registerPacket(PacketLanternSoundInstruction.class, PacketLanternSoundInstruction::new);
         REGISTRY.init();
     }
 

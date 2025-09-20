@@ -11,6 +11,7 @@ import org.mtr.mapping.mapper.BlockEntityRenderer;
 import org.mtr.mapping.mapper.DirectionHelper;
 import org.mtr.mapping.mapper.GraphicsHolder;
 import org.mtr.mapping.mapper.PlayerHelper;
+import org.mtr.mod.Init;
 import org.mtr.mod.block.IBlock;
 import org.mtr.mod.data.IGui;
 import org.mtr.mod.render.QueuedRenderLayer;
@@ -24,6 +25,7 @@ import top.xfunny.mod.client.view.view_group.LinearLayout;
 import top.xfunny.mod.item.YteGroupLiftButtonsLinker;
 import top.xfunny.mod.item.YteLiftButtonsLinker;
 import top.xfunny.mod.keymapping.DefaultButtonsKeyMapping;
+import top.xfunny.mod.util.ClientGetLiftDetails;
 import top.xfunny.mod.util.ReverseRendering;
 
 import java.util.Comparator;
@@ -179,24 +181,29 @@ public class RenderHitachiB85Button1 extends BlockEntityRenderer<HitachiB85Butto
 
 
             for (int i = 0; i < count; i++) {
+                final Lift lift = sortedPositionsAndLifts.get(i).right();
+                ObjectObjectImmutablePair<LiftDirection, ObjectObjectImmutablePair<String, String>> liftDetails = ClientGetLiftDetails.getLiftDetails(world, lift, Init.positionToBlockPos(lift.getCurrentFloor().getPosition()));
+                String floorNumber = liftDetails.right().left();
+
                 final LiftFloorDisplayView liftFloorDisplayView = new LiftFloorDisplayView();
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("hitachi_b85"),
-                        10,
+                        FontList.instance.getFont(floorNumber.matches("^(-1|1)$")?"hitachi_b85_left":"hitachi_b85"),
+                        8.375F,
                         0xFFFF0000);
                 liftFloorDisplayView.setDisplayLength(2, 0.05F);
-                liftFloorDisplayView.setTextureId("hitachi_b85_screen_1_display");
+                liftFloorDisplayView.setTextureId(String.format("hitachi_b85_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()));
+                liftFloorDisplayView.setLetterSpacing(15);
                 liftFloorDisplayView.setWidth(0.6F / 16);
                 liftFloorDisplayView.setHeight(0.6F / 16);
-                liftFloorDisplayView.setMargin(0.2F / 16, 0.2F / 16, 0, 0);
+                liftFloorDisplayView.setMargin(0.2F / 16, 0.15F / 16, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
 
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.4F / 16);
+                liftArrowView.setDimension(0.5F / 16);
                 liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 liftArrowView.setMargin(0, 0, 0, 0.2F / 16);

@@ -18,7 +18,7 @@ public class MitsubishiGPSButton1WithoutScreen extends LiftButtonsBase {
     @Nonnull
     @Override
     public VoxelShape getOutlineShape2(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return IBlock.getVoxelShapeByDirection(6.95, 1.35, 0, 9.05, 6.65, 0.05, IBlock.getStatePropertySafe(state, FACING));
+        return IBlock.getVoxelShapeByDirection(6.8, 1.35, 0, 9.2, 6.65, 0.05, IBlock.getStatePropertySafe(state, FACING));
     }
 
     @Nonnull

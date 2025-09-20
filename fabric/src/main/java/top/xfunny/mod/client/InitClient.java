@@ -11,15 +11,20 @@ import top.xfunny.mod.Blocks;
 import top.xfunny.mod.Init;
 import top.xfunny.mod.Items;
 import top.xfunny.mod.client.render.*;
+import top.xfunny.mod.config.ClientConfig;
+import top.xfunny.mod.item.YTEItemBlockClickingBase;
 
 
 public final class InitClient {
     public static final RegistryClient REGISTRY_CLIENT = new RegistryClient(Init.REGISTRY);
+    private static final ClientConfig config = new ClientConfig();
     private static long lastMillis = 0;
     private static long gameMillis = 0;
 
 
     public static void init() {
+        initializeConfig();
+
         REGISTRY_CLIENT.registerBlockRenderType(RenderLayer.getCutout(), Blocks.SCHINDLER_QKS9_DOOR_1);
         REGISTRY_CLIENT.registerBlockRenderType(RenderLayer.getCutout(), Blocks.MITSUBISHI_NEXWAY_DOOR_1);
 
@@ -52,9 +57,17 @@ public final class InitClient {
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS_BUTTON_1, RenderMitsubishiGPSButton1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS_BUTTON_1_WITHOUT_SCREEN, RenderMitsubishiGPSButton1WithoutScreen::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_BUTTON_SHUN_HING_PLAZA, RenderMitsubishiButtonShunHingPlaza::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_BUTTON_1, RenderMitsubishiGPS3Button1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_BUTTON_1_WITHOUT_SCREEN, RenderMitsubishiGPS3Button1WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_BUTTON_2, RenderMitsubishiGPS3Button2::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_BUTTON_2_WITHOUT_SCREEN, RenderMitsubishiGPS3Button2WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_BUTTON_SHUN_HING_SQUARE, RenderMitsubishiButtonShunHingSquare::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_RYODEN_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiRyodenScreen1<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_RYODEN_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiRyodenScreen1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_RYODEN_SCREEN_2_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiRyodenScreen2<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_RYODEN_SCREEN_2_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiRyodenScreen2<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiGPS3Screen1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_GPS3_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiGPS3Screen1<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_1, RenderMitsubishiNexWayButton1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_1_SEGMENTED, RenderMitsubishiNexWayButton1Segmented::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_1_WITHOUT_SCREEN, RenderMitsubishiNexWayButton1WithoutScreen::new);
@@ -67,6 +80,9 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_3_WITHOUT_SCREEN, RenderMitsubishiNexWayButton3WithoutScreen::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_4, RenderMitsubishiNexWayButton4::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_4_WITHOUT_SCREEN, RenderMitsubishiNexWayButton4WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_5, RenderMitsubishiNexWayButton5::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_BUTTON_5_WITHOUT_SCREEN, RenderMitsubishiNexWayButton5WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_BUTTON_SHT, RenderMitsubishiButtonSHT::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_MAXIEZ_BUTTON_1_GOLD, RenderMitsubishiMaxiezButton1Gold::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_MAXIEZ_BUTTON_1_SILVER, RenderMitsubishiMaxiezButton1Silver::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_MPVF_BUTTON_1, RenderMitsubishiMPVFButton1::new);
@@ -86,12 +102,25 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_3_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen3<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_3_SEGMENTED_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen3Segmented<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.MITSUBISHI_NEXWAY_SCREEN_3_SEGMENTED_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderMitsubishiNexWayScreen3Segmented<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_NEXWAY_CR_BUTTON_1, RenderShanghaiMitsubishiNexWayCRButton1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_BUTTON_1, RenderShanghaiMitsubishiLehy3Button1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_BUTTON_1_WITHOUT_SCREEN, RenderShanghaiMitsubishiLehy3Button1WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_BUTTON_2, RenderShanghaiMitsubishiLehy3Button2::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_BUTTON_3_LCD, RenderShanghaiMitsubishiLehy3Button3LCD::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderShanghaiMitsubishiLehy3Screen1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderShanghaiMitsubishiLehy3Screen1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_SCREEN_1_WIDE_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderShanghaiMitsubishiLehy3Screen1Wide<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SHANGHAI_MITSUBISHI_LEHY_3_SCREEN_1_WIDE_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderShanghaiMitsubishiLehy3Screen1Wide<>(dispatcher, true));
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.THYSSENKRUPP_TEGL1_BUTTON_1, RenderThyssenkruppTEGL1Button1::new);
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_1, RenderOtisSeries1Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_BUTTON_2, RenderOtisSeries1Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_SCREEN_1, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1Screen(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_LANTERN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1Lantern1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_LANTERN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1Lantern1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_LANTERN_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1LanternScreen1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_1_LANTERN_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries1LanternScreen1<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_BUTTON_1, RenderOtisSeries3Button1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_SCREEN_1_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Screen1<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_SCREEN_1_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Screen1<>(dispatcher, false));
@@ -100,6 +129,10 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_LANTERN_1_ARROW_ODD, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Lantern1Arrow<>(dispatcher, true));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SERIES_3_LANTERN_1_ARROW_EVEN, dispatcher -> new top.xfunny.mod.client.render.RenderOtisSeries3Lantern1Arrow<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_60_BUTTON_1, RenderOtisSPEC60Button1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_90_BUTTON_1_BLACK, RenderOtisSPEC90Button1Black::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_90_BUTTON_1_WHITE, RenderOtisSPEC90Button1White::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_90_BUTTON_2_BLACK, RenderOtisSPEC90Button2Black::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.OTIS_SPEC_90_BUTTON_2_WHITE, RenderOtisSPEC90Button2White::new);
 
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_D_SERIES_D2BUTTON, RenderSchindlerDSeriesD2Button::new);
@@ -128,17 +161,83 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_1_BLACK, RenderSchindlerLineaButton1Black::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_2_WHITE, RenderSchindlerLineaButton2White::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_2_BLACK, RenderSchindlerLineaButton2Black::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_1_BLACK_WITHOUT_SCREEN, RenderSchindlerLineaButton1BlackWithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_1_WHITE_WITHOUT_SCREEN, RenderSchindlerLineaButton1WhiteWithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_2_BLACK_WITHOUT_SCREEN, RenderSchindlerLineaButton2BlackWithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_BUTTON_2_WHITE_WITHOUT_SCREEN, RenderSchindlerLineaButton2WhiteWithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_WHITE_HORIZONTAL_ODD, dispatcher -> new RenderSchindlerLineaScreen1WhiteHorizontal<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_WHITE_HORIZONTAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen1WhiteHorizontal<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_WHITE_VERTICAL_ODD, dispatcher -> new RenderSchindlerLineaScreen1WhiteVertical<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_WHITE_VERTICAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen1WhiteVertical<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_BLACK_HORIZONTAL_ODD, dispatcher -> new RenderSchindlerLineaScreen1BlackHorizontal<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_BLACK_HORIZONTAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen1BlackHorizontal<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_BLACK_VERTICAL_ODD, dispatcher -> new RenderSchindlerLineaScreen1BlackVertical<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_1_BLACK_VERTICAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen1BlackVertical<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_WHITE_HORIZONTAL_ODD, dispatcher -> new RenderSchindlerLineaScreen2WhiteHorizontal<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_WHITE_HORIZONTAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen2WhiteHorizontal<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_WHITE_VERTICAL_ODD, dispatcher -> new RenderSchindlerLineaScreen2WhiteVertical<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_WHITE_VERTICAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen2WhiteVertical<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_BLACK_HORIZONTAL_ODD, dispatcher -> new RenderSchindlerLineaScreen2BlackHorizontal<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_BLACK_HORIZONTAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen2BlackHorizontal<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_BLACK_VERTICAL_ODD, dispatcher -> new RenderSchindlerLineaScreen2BlackVertical<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_LINEA_SCREEN_2_BLACK_VERTICAL_EVEN, dispatcher -> new RenderSchindlerLineaScreen2BlackVertical<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_BUTTON_1, RenderSchindlerFIGSButton1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_TOUCH_BUTTON_1, RenderSchindlerFIGSTouchButton1::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_TOUCH_BUTTON_1_WITHOUT_SCREEN, RenderSchindlerFIGSTouchButton1WithoutScreen::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_BUTTON_1_STEEL, RenderSchindlerFIGSButton1Steel::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_STEEL_ODD, dispatcher -> new RenderSchindlerFIGSScreen1Steel<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_STEEL_EVEN, dispatcher -> new RenderSchindlerFIGSScreen1Steel<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_BLACK_ODD, dispatcher -> new RenderSchindlerFIGSScreen1Black<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_BLACK_EVEN, dispatcher -> new RenderSchindlerFIGSScreen1Black<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_GREY_ODD, dispatcher -> new RenderSchindlerFIGSScreen1Grey<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_FI_GS_SCREEN_1_GREY_EVEN, dispatcher -> new RenderSchindlerFIGSScreen1Grey<>(dispatcher, false));
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.SCHINDLER_Z_LINE_3_KEYPAD_1, dispatcher -> new top.xfunny.mod.client.render.RenderSchindlerZLine3Keypad1(dispatcher, true));
 
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB320_BUTTON, RenderHitachiVIB320Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB320_BUTTON_DOT_MATRIX, RenderHitachiVIB320ButtonDotMatrix::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB322_BUTTON, RenderHitachiIVIB322Button::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB322_BUTTON_DOT_MATRIX, RenderHitachiIVIB322ButtonDotMatrix::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON, RenderHitachiIVIB221Button::new);
-        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON_DOT_MATRIX, RenderHitachiIVIB221ButtonDotMatrix::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB320_BUTTON_HIP43, RenderHitachiVIB320ButtonHIP43::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB322_BUTTON, RenderHitachiVIB322Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB322_BUTTON_DOT_MATRIX, RenderHitachiVIB322ButtonDotMatrix::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB325_BUTTON, RenderHitachiVIB325Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB325_BUTTON_DOT_MATRIX, RenderHitachiVIB325ButtonDotMatrix::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON, RenderHitachiVIB221Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON_DOT_MATRIX, RenderHitachiVIB221ButtonDotMatrix::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON_LCD_SEGMENTED, RenderHitachiVIB221ButtonLCDSegmented::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB221_BUTTON_HIP43, RenderHitachiVIB221ButtonHIP43::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB820_BUTTON, RenderHitachiVIB820Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB820_BUTTON_LCD, RenderHitachiVIB820ButtonLCD::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB68_BUTTON, RenderHitachiVIB68Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB191_BUTTON, RenderHitachiVIB191Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB192_BUTTON, RenderHitachiVIB192Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB820PRO_BUTTON, RenderHitachiVIB820proButton::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HB820_BUTTON, RenderHitachiHB820Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HSB820_BUTTON, RenderHitachiHSB820Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HSB820PRO_BUTTON, RenderHitachiHSB820proButton::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHD820PRO_SCREEN_EVEN, dispatcher -> new RenderHitachiGHD820proScreen<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHD820PRO_SCREEN_ODD, dispatcher -> new RenderHitachiGHD820proScreen<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHI675_SCREEN_EVEN, dispatcher -> new RenderHitachiGHI675Screen<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHI675_SCREEN_ODD, dispatcher -> new RenderHitachiGHI675Screen<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL820_LANTERN_EVEN, dispatcher -> new RenderHitachiGHL820Lantern1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL820_LANTERN_ODD, dispatcher -> new RenderHitachiGHL820Lantern1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL668_LANTERN_EVEN, dispatcher -> new RenderHitachiGHL668Lantern1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL668_LANTERN_ODD, dispatcher -> new RenderHitachiGHL668Lantern1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL673_LANTERN_EVEN, dispatcher -> new RenderHitachiGHL673Lantern1<>(dispatcher, false));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_GHL673_LANTERN_ODD, dispatcher -> new RenderHitachiGHL673Lantern1<>(dispatcher, true));
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB628_BUTTON, RenderHitachiVIB628Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HB628_BUTTON, RenderHitachiHB628Button::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB668_BUTTON, RenderHitachiVIB668Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB658_BUTTON, RenderHitachiVIB658Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HB658_BUTTON, RenderHitachiHB658Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB663_BUTTON, RenderHitachiVIB663Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB681_BUTTON, RenderHitachiVIB681Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB676_BUTTON, RenderHitachiVIB676Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB679_BUTTON, RenderHitachiVIB679Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB673_BUTTON, RenderHitachiVIB673Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB673_BUTTON_HIP43, RenderHitachiVIB673ButtonHIP43::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HB673_BUTTON, RenderHitachiHB673Button::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB181A_BUTTON, RenderHitachiVIB181AButton::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_VIB182A_BUTTON, RenderHitachiVIB182AButton::new);
+        REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_HB181A_BUTTON, RenderHitachiHB181AButton::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1, RenderHitachiB85Button1::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_1_WITHOUT_SCREEN, RenderHitachiB85Button1WithoutScreen::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.HITACHI_B85_BUTTON_2, RenderHitachiB85Button2::new);
@@ -173,10 +272,10 @@ public final class InitClient {
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.PAT_RS01_RAILWAY_SIGN_7_EVEN, RenderPATRS01RailwaySign::new);
         REGISTRY_CLIENT.registerBlockEntityRenderer(BlockEntityTypes.PAT_RS01_RAILWAY_SIGN_7_ODD, RenderPATRS01RailwaySign::new);
 
-        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
-        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_LIFT_BUTTONS_LINK_REMOVER, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
-        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
-        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER, new Identifier(org.mtr.mod.Init.MOD_ID, "selected"), checkItemPredicateTag());
+        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_LIFT_BUTTONS_LINK_CONNECTOR, new Identifier(Init.MOD_ID, "selected"), checkItemPredicateTag());
+        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_LIFT_BUTTONS_LINK_REMOVER, new Identifier(Init.MOD_ID, "selected"), checkItemPredicateTag());
+        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_CONNECTOR, new Identifier(Init.MOD_ID, "selected"), checkItemPredicateTag());
+        REGISTRY_CLIENT.registerItemModelPredicate(Items.YTE_GROUP_LIFT_BUTTONS_LINK_REMOVER, new Identifier(Init.MOD_ID, "selected"), checkItemPredicateTag());
 
         REGISTRY_CLIENT.setupPackets(new Identifier(Init.MOD_ID, "packet"));
 
@@ -188,12 +287,32 @@ public final class InitClient {
 
             DynamicTextureCache.instance.reload();
         });
+
+        // TODO: 发布前请注释此行代码。
+        REGISTRY_CLIENT.eventRegistryClient.registerGuiRendering(RenderWatermark::render);
+
         REGISTRY_CLIENT.init();
     }
 
 
     private static RegistryClient.ModelPredicateProvider checkItemPredicateTag() {
-        return (itemStack, clientWorld, livingEntity) -> itemStack.getOrCreateTag().contains(ItemBlockClickingBase.TAG_POS) ? 1 : 0;
+        return (itemStack, clientWorld, livingEntity) -> {
+            if (itemStack.getOrCreateTag().contains(YTEItemBlockClickingBase.TAG_SECOND_POS)) {
+                return 1F;
+            } else if (itemStack.getOrCreateTag().contains(YTEItemBlockClickingBase.TAG_POS)) {
+                return 0.5F;
+            } else {
+                return 0;
+            }
+        };
+    }
+
+    private static void initializeConfig() {
+        config.readConfig();
+    }
+
+    public static ClientConfig getConfig() {
+        return config;
     }
 
     public static float getGameTick() {

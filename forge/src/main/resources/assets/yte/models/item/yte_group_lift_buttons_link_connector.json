@@ -6,9 +6,15 @@
   "overrides": [
     {
       "predicate": {
-        "mtr:selected": 1
+        "yte:selected": 0.5
       },
       "model": "yte:item/yte_group_lift_buttons_link_connector_selected"
+    },
+    {
+      "predicate": {
+        "yte:selected": 1
+      },
+      "model": "yte:item/yte_group_lift_buttons_link_connector_selected_2"
     }
   ]
 }

@@ -1,0 +1,42 @@
+{
+  "otis_series_1_lantern_1_up": {
+    "sounds": [
+			{
+				"name": "yte:otis_series_1_lantern_1_up",
+				"pitch": 1.0
+			}
+		]
+  },
+  "otis_series_1_lantern_1_down": {
+    "sounds": [
+			{
+				"name": "yte:otis_series_1_lantern_1_down",
+				"pitch": 1.0
+			}
+		]
+  },
+  "schindler_m_series_lantern_1": {
+    "sounds": [
+      {
+        "name": "yte:schindler_m_series_lantern_1",
+        "pitch": 1.0
+      }
+    ]
+  },
+  "mitsubishi_nexway_lantern_1_up": {
+    "sounds": [
+      {
+        "name": "yte:mitsubishi_nexway_lantern_1_up",
+        "pitch": 1.0
+      }
+    ]
+  },
+  "mitsubishi_nexway_lantern_1_down": {
+    "sounds": [
+      {
+        "name": "yte:mitsubishi_nexway_lantern_1_down",
+        "pitch": 1.0
+      }
+    ]
+  }
+}

@@ -1,13 +1,10 @@
 package top.xfunny.mod.keymapping;
 
-import top.xfunny.mod.Init;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultButtonsKeyMapping {
-    final private Map<String, ButtonArea> buttonMap = new HashMap<>();
+    final private Map<String, ButtonArea> buttonMap = new HashMap<String, ButtonArea>();
 
     public void registerButton(String buttonName, float[] location, float[] dimension) {
         if (!buttonMap.containsKey(buttonName)) {

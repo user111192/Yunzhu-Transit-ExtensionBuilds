@@ -40,7 +40,7 @@ public class HitachiVIB820ButtonLCD extends LiftButtonsBase {
 
     @Override
     public void addTooltips(@NotNull ItemStack stack, @Nullable BlockView world, List<MutableText> tooltip, @NotNull TooltipContext options) {
-        tooltip.add(TextHelper.translatable("tooltip.hitachi_display_hip_31").formatted(TextFormatting.GRAY));
+        tooltip.add(TextHelper.translatable("tooltip.hitachi_display_hip_32").formatted(TextFormatting.GRAY));
         tooltip.add(TextHelper.translatable("tooltip.hitachi_button_wl_mwb").formatted(TextFormatting.GRAY));
     }
 

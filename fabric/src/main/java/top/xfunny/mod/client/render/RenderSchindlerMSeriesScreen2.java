@@ -68,7 +68,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions( 18F / 16, 3F / 16);
+        parentLayout.setParentDimensions(18F / 16, 3F / 16);
         parentLayout.setPosition(isOdd ? -0.5625F : -1.0625F, 0.5625F);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
@@ -85,7 +85,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         screenLayout.setHeight(LayoutSize.WRAP_CONTENT);
         screenLayout.setGravity(Gravity.CENTER_VERTICAL);
         screenLayout.setBackgroundColor(0xFF000000);
-        screenLayout.setMargin(0, 0, 1.5F/16, 0);
+        screenLayout.setMargin(0, 0, 1.5F / 16, 0);
 
         ButtonView upLantern = new ButtonView();
         upLantern.setBasicsAttributes(world, blockEntity.getPos2());
@@ -95,9 +95,9 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         upLantern.setLight(light);
         upLantern.setDefaultColor(DEFAULT_COLOR);
         upLantern.setPressedColor(PRESSED_COLOR);
-        upLantern.setMargin(0, 0, 1.5F/16, 0);
+        upLantern.setMargin(0, 0, 1.5F / 16, 0);
 
-        ButtonView upLantern1  = new ButtonView();
+        ButtonView upLantern1 = new ButtonView();
         upLantern1.setBasicsAttributes(world, blockEntity.getPos2());
         upLantern1.setTexture(BUTTON_TEXTURE);
         upLantern1.setDimension(2F / 16);
@@ -106,7 +106,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         upLantern1.setDefaultColor(DEFAULT_COLOR);
         upLantern1.setPressedColor(PRESSED_COLOR);
 
-        ButtonView downLantern  = new ButtonView();
+        ButtonView downLantern = new ButtonView();
         downLantern.setBasicsAttributes(world, blockEntity.getPos2());
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(2F / 16);
@@ -114,10 +114,10 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         downLantern.setLight(light);
         downLantern.setDefaultColor(DEFAULT_COLOR);
         downLantern.setPressedColor(PRESSED_COLOR);
-        downLantern.setFlip(false,true);
-        downLantern.setMargin(0, 0, 1.5F/16, 0);
+        downLantern.setFlip(false, true);
+        downLantern.setMargin(0, 0, 1.5F / 16, 0);
 
-        ButtonView downLantern1  = new ButtonView();
+        ButtonView downLantern1 = new ButtonView();
         downLantern1.setBasicsAttributes(world, blockEntity.getPos2());
         downLantern1.setTexture(BUTTON_TEXTURE);
         downLantern1.setDimension(2F / 16);
@@ -125,7 +125,7 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         downLantern1.setLight(light);
         downLantern1.setDefaultColor(DEFAULT_COLOR);
         downLantern1.setPressedColor(PRESSED_COLOR);
-        downLantern1.setFlip(false,true);
+        downLantern1.setFlip(false, true);
 
         final LineComponent line = new LineComponent();
         line.setBasicsAttributes(world, blockEntity.getPos2());
@@ -198,7 +198,6 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
 
-
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
 
@@ -211,7 +210,8 @@ public class RenderSchindlerMSeriesScreen2<T extends LiftButtonsBase.BlockEntity
                         11,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("schindler_m_series_screen_2_display");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId(String.format("schindler_m_series_screen_2_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);

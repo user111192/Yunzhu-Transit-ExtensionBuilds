@@ -39,6 +39,7 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
     private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+
     public RenderHitachiVIB668Button(Argument dispatcher) {
         super(dispatcher);
     }
@@ -195,13 +196,13 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
                         FontList.instance.getFont("hitachi-lcd-seg"),
-                        7.5F,
+                        7.25F,
                         0xFFDEF6FF);
-                liftFloorDisplayView.setTextureId("hitachi-vib-668-segmented");
+                liftFloorDisplayView.setTextureId(String.format("hitachi_vib_668_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
-
-                liftFloorDisplayView.setMargin(0, 0, 0, 0);
+                liftFloorDisplayView.setLetterSpacing(5);
+                liftFloorDisplayView.setMargin(0, 0, 0.25F/16, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.RIGHT);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
 
@@ -217,7 +218,6 @@ public class RenderHitachiVIB668Button extends BlockEntityRenderer<HitachiVIB668
                 } else {
                     liftArrowView.setColor(0xFF000000);
                 }
-
 
 
                 final LinearLayout numberLayout = new LinearLayout(true);

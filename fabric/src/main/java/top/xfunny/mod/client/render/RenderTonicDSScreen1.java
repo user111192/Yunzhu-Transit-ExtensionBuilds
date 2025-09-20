@@ -88,7 +88,8 @@ public class RenderTonicDSScreen1<T extends LiftPanelBase.BlockEntityBase> exten
                         FontList.instance.getFont("acmeled"),
                         8,
                         0xFFFF0000);
-                liftFloorDisplayView.setTextureId("tonic_ds_screen_1");
+                liftFloorDisplayView.setTextureId(String.format("tonic_ds_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;
                 liftFloorDisplayView.setWidth(2.6F / 16);
                 liftFloorDisplayView.setHeight(2.8F / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_VERTICAL);

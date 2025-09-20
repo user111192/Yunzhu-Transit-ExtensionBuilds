@@ -99,7 +99,8 @@ public class RenderSchindlerMSeriesScreen1 extends BlockEntityRenderer<Schindler
                         FontList.instance.getFont("schindler_m_series"),
                         5,
                         0xFFFF0000);
-                liftFloorDisplayView.setTextureId("schindler_m_series_screen_1_display");
+                liftFloorDisplayView.setTextureId(String.format("schindler_m_series_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()))
+;
                 liftFloorDisplayView.setWidth((float) 2 / 16);
                 liftFloorDisplayView.setHeight((float) 3 / 16);
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);

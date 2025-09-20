@@ -195,7 +195,7 @@ public class RenderKoneMButton1 extends BlockEntityRenderer<KoneMButton1.BlockEn
                         4,
                         0xFFFF0000);
                 liftFloorDisplayView.setDisplayLength(2, 0.05F);
-                liftFloorDisplayView.setTextureId("kone_m_button_1");
+                liftFloorDisplayView.setTextureId(String.format("kone_m_button_1_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.6F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
                 liftFloorDisplayView.setMargin(-0.225F / 16, -0.3F / 16, 0.3F / 16, 0);

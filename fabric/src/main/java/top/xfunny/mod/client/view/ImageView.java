@@ -28,9 +28,12 @@ public class ImageView implements RenderView {
     private float scale;
     private int light = GraphicsHolder.getDefaultLight();
     private float[] uv;
+    private final float[] yawRotationResult = new float[2];
     private QueuedRenderLayer queuedRenderLayer = QueuedRenderLayer.EXTERIOR;
     private boolean needBlink;
+    private boolean needYawRotate;
     private float blinkInterval = 0.5f;
+    private float yawRotationSpeed = 0.5f;
 
     public ImageView() {
         this.uv = new float[]{1, 1, 0, 0};
@@ -125,14 +128,23 @@ public class ImageView implements RenderView {
                     false,
                     queuedRenderLayer,
                     (graphicsHolder, offset) -> {
+                        float[] yawRotationResult = new float[2];
+
+                        if(needYawRotate){
+                            yawRotationResult = scale(gameTick);
+                        }
+
+                        float width2 =  yawRotationResult[0] == 0 ? width :  yawRotationResult[0];
+                        float x2 =  yawRotationResult[1] == 0 ? x :  yawRotationResult[1];
+
                         // 应用矩阵变换
                         storedMatrixTransformations1.transform(graphicsHolder, offset);
                         // 绘制纹理
                         IDrawing.drawTexture(
                                 graphicsHolder,
-                                x,
+                                x2,
                                 y,
-                                width,
+                                width2,
                                 height,
                                 uv[0],
                                 uv[1],
@@ -147,6 +159,16 @@ public class ImageView implements RenderView {
             );
         }
 
+    }
+
+    private float[] scale(float gameTick){
+        float multiplier = (float) Math.sin(gameTick * yawRotationSpeed * 3) * 0.5f + 0.5f;
+        float width2  = width * multiplier;
+        float x2 = x + (width - width2) * 0.5f;
+        yawRotationResult[0] = width2;
+        yawRotationResult[1] = x2;
+
+        return yawRotationResult;
     }
 
     // 计算尺寸
@@ -223,6 +245,11 @@ public class ImageView implements RenderView {
     public void setAnimationBliking(boolean needBlink, float blinkInterval) {
         this.needBlink = needBlink;
         this.blinkInterval = blinkInterval;
+    }
+
+    public void setAnimationYawRotation(boolean needYawRotate, float yawRotationSpeed) {
+        this.needYawRotate = needYawRotate;
+        this.yawRotationSpeed = yawRotationSpeed;
     }
 
     @Override

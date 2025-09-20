@@ -180,6 +180,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                         blockPos, FontList.instance.getFont("wqy-microhei"),
                         7,
                         0xFFFF0000);
+                textView.setTextureId(String.format("test_lift_buttons_speed_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 textView.setWidth(2F / 16);
                 textView.setHeight(1F / 16);
                 textView.setDisplayLength(10, 0.2F);
@@ -197,7 +198,7 @@ public class RenderTestLiftButtons4 extends BlockEntityRenderer<TestLiftButtons.
                         6,//字号
                         0xFFFF0000);//字体颜色
                 liftFloorDisplayView.setDisplayLength(3, 0.05F);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("testliftbuttonsdisplay");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId(String.format("test_lift_buttons_display_%d_%s", i, blockEntity.getPos2().asLong()));//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(3F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(3F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER_HORIZONTAL);

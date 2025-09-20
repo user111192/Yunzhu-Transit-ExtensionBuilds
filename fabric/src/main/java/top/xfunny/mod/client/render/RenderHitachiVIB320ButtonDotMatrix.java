@@ -33,12 +33,13 @@ public class RenderHitachiVIB320ButtonDotMatrix extends BlockEntityRenderer<Hita
     private static final int HOVER_COLOR = 0xAAFFFFFF;
     private static final int PRESSED_COLOR = 0xFFFFFFFF;
     private static final int DEFAULT_COLOR = 0x00FFFFFF;
-    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc6_arrow.png");
+    private static final Identifier ARROW_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/hitachi_bxsclc5_arrow.png");
     private static final Identifier BUTTON_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up.png");
     private static final Identifier LIGHT_UP_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_up_light.png");
     private static final Identifier BUTTON_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down.png");
     private static final Identifier LIGHT_DOWN_TEXTURE = new Identifier(top.xfunny.mod.Init.MOD_ID, "textures/block/wl_mo_down_light.png");
     private static final BooleanProperty UNLOCKED = BooleanProperty.of("unlocked");
+
     public RenderHitachiVIB320ButtonDotMatrix(Argument dispatcher) {
         super(dispatcher);
     }
@@ -194,13 +195,12 @@ public class RenderHitachiVIB320ButtonDotMatrix extends BlockEntityRenderer<Hita
                 liftFloorDisplayView.setBasicsAttributes(world,
                         blockPos,
                         sortedPositionsAndLifts.get(i).right(),
-                        FontList.instance.getFont("hitachi-led-dot_matrix"),
-                        6F,
+                        FontList.instance.getFont("hitachi-bxsclc5"),
+                        5F,
                         0xFFFF4800);
-                liftFloorDisplayView.setTextureId("hitachi-vib-320-dot-matrix");
+                liftFloorDisplayView.setTextureId(String.format("hitachi_vib_320_dot_matrix_display_%d_%s", i, blockEntity.getPos2().asLong()));
                 liftFloorDisplayView.setWidth(1.5F / 16);
                 liftFloorDisplayView.setHeight(1.7F / 16);
-
                 liftFloorDisplayView.setMargin(0.01F, 0, 0, 0);
                 liftFloorDisplayView.setTextAlign(TextView.HorizontalTextAlign.CENTER);
                 liftFloorDisplayView.addStoredMatrixTransformations(graphicsHolder -> graphicsHolder.translate(0, 0, -SMALL_OFFSET));
@@ -208,22 +208,20 @@ public class RenderHitachiVIB320ButtonDotMatrix extends BlockEntityRenderer<Hita
                     liftFloorDisplayView.setBasicsAttributes(world,
                             blockPos,
                             sortedPositionsAndLifts.get(i).right(),
-                            FontList.instance.getFont("hitachi-led-dot_matrix_small"),
-                            6F,
+                            FontList.instance.getFont("hitachi-bxsclc5-compact"),
+                            5F,
                             0xFFFF4800);
-                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FORCE_FIT_WIDTH);
+                    liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.FIT_WIDTH);
                 } else {
                     liftFloorDisplayView.setAdaptMode(LiftFloorDisplayView.AdaptMode.ASPECT_FILL);
                 }
 
 
-
                 final LiftArrowView liftArrowView = new LiftArrowView();
                 liftArrowView.setBasicsAttributes(world, blockPos, sortedPositionsAndLifts.get(i).right(), LiftArrowView.ArrowType.AUTO);
                 liftArrowView.setTexture(ARROW_TEXTURE);
-                liftArrowView.setDimension(0.6F / 16, 384, 512);
-                liftArrowView.setMargin(0, 1.37F / 16, 0, 0);
-                liftArrowView.setGravity(Gravity.CENTER_HORIZONTAL);
+                liftArrowView.setDimension(0.475F / 16, 384, 512);
+                liftArrowView.setMargin(0.6F / 16, 1.75F / 16, 0, -0.3F/16);
                 liftArrowView.setQueuedRenderLayer(QueuedRenderLayer.LIGHT_TRANSLUCENT);
                 if (unlocked) {
                     liftArrowView.setColor(0xFFFFFFFF);

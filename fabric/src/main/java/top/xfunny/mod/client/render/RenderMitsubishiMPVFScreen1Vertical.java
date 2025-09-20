@@ -68,7 +68,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         final FrameLayout parentLayout = new FrameLayout();
         parentLayout.setBasicsAttributes(world, blockEntity.getPos2());
         parentLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
-        parentLayout.setParentDimensions( 1.825F / 16, 3.225F / 16);
+        parentLayout.setParentDimensions(1.825F / 16, 3.225F / 16);
         parentLayout.setPosition(isOdd ? -0.9125F / 16 : -8.9125F / 16, 4.225F / 16);
         parentLayout.setWidth(LayoutSize.MATCH_PARENT);
         parentLayout.setHeight(LayoutSize.MATCH_PARENT);
@@ -83,7 +83,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         screenLayout.setBasicsAttributes(world, blockEntity.getPos2());
         screenLayout.setStoredMatrixTransformations(storedMatrixTransformations1);
         screenLayout.setParentDimensions(1.825F / 16, 1F / 16);
-        screenLayout.setPosition(isOdd? -0.9125F / 16 : -8.9125F / 16, 2.35F / 16);
+        screenLayout.setPosition(isOdd ? -0.9125F / 16 : -8.9125F / 16, 2.35F / 16);
         screenLayout.setWidth(LayoutSize.MATCH_PARENT);
         screenLayout.setHeight(LayoutSize.MATCH_PARENT);
         screenLayout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -97,7 +97,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         upLantern.setDefaultColor(DEFAULT_COLOR);
         upLantern.setPressedColor(PRESSED_COLOR);
 
-        ButtonView downLantern  = new ButtonView();
+        ButtonView downLantern = new ButtonView();
         downLantern.setBasicsAttributes(world, blockEntity.getPos2());
         downLantern.setTexture(BUTTON_TEXTURE);
         downLantern.setDimension(1.5F / 16);
@@ -105,7 +105,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         downLantern.setLight(light);
         downLantern.setDefaultColor(DEFAULT_COLOR);
         downLantern.setPressedColor(PRESSED_COLOR);
-        downLantern.setFlip(false,true);
+        downLantern.setFlip(false, true);
 
 
         final LineComponent line = new LineComponent();
@@ -173,7 +173,6 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         sortedPositionsAndLifts.sort(Comparator.comparingInt(sortedPositionAndLift -> blockEntity.getPos2().getManhattanDistance(new Vector3i(sortedPositionAndLift.left().data))));
 
 
-
         if (!sortedPositionsAndLifts.isEmpty()) {
             final int count = 1;
 
@@ -186,7 +185,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
                         5,//字号
                         0xFFFA7A24);//字体颜色
                 liftFloorDisplayView.setDisplayLength(2, 0);//true开启滚动，开启滚动时的字数条件(>)，滚动速度
-                liftFloorDisplayView.setTextureId("mitsubishi_mpvf_screen_1");//字体贴图id，不能与其他显示屏的重复
+                liftFloorDisplayView.setTextureId(String.format("mitsubishi_mpvf_screen_1_display_%d_%s", i, blockEntity.getPos2().asLong()));//字体贴图id，不能与其他显示屏的重复
                 liftFloorDisplayView.setWidth(2F / 16);//显示屏宽度
                 liftFloorDisplayView.setHeight(2F / 16);//显示屏高度
                 liftFloorDisplayView.setGravity(Gravity.CENTER);
@@ -201,7 +200,7 @@ public class RenderMitsubishiMPVFScreen1Vertical<T extends LiftButtonsBase.Block
         });
 
         if (buttonDescriptor.hasDownButton() && buttonDescriptor.hasUpButton()) {
-            downLantern.setMargin(0, 0.25F/16, 0, 0);
+            downLantern.setMargin(0, 0.25F / 16, 0, 0);
             linearLayout.addChild(upLantern);
             linearLayout.addChild(downLantern);
         } else if (buttonDescriptor.hasDownButton()) {
